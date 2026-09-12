@@ -38,6 +38,7 @@ subject are grouped. Blocked by: OPEN-03, OPEN-06.
 ## 5. Preprocessing — TBD
 Resampling, interpolation, filtering, normalisation (fit on training partition only), handling of
 pressure-scale differences and the User01 sensor replacement. Blocked by: OPEN-11, OPEN-17.
+P0 input: User01 rows carry the provenance label `sensor_phase` s1/s2 (D-019). Phase-aware handling is decided here.
 
 ## 6. Windowing and features — TBD
 Window length/stride; movement-derived feature set; contact-structure feature set; admissible event
@@ -48,6 +49,7 @@ Baselines (training-mean, prior-study method), candidate models, hyperparameter 
 
 ## 8. Personalization protocol — TBD
 Adaptation data budgets, buffer length, fine-tuning scope, no tuning on the test span.
+For User01, whether adaptation and test spans may cross the `sensor_phase` boundary (D-019) is decided here (OPEN-11, OPEN-21).
 
 ## 9. Metrics and statistics — TBD
 Primary: MAE, RMSE per target, per subject and subject-averaged. Uncertainty over subjects/sessions.

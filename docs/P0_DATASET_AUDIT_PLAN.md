@@ -4,9 +4,9 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9 done; A6, A12 partly (2026-09-13); A10, A11, A13 pending |
+| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9, A10 done; A6, A12 partly (2026-09-13); A11, A13 pending |
 | Starting point | `docs/initial_dataset_inventory.md` |
-| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07 and User06 source excluded: D-017 (supersedes D-013) |
+| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07 and User06 source excluded: D-017 (supersedes D-013); User01 `sensor_phase`: D-019 |
 
 ## Goal
 
@@ -136,8 +136,14 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 
 ### A6. Sampling interval distribution — **partly done within A7 (2026-09-12)**
 - **Status:** step distributions per primary timeline (and reference groups) are in A7 (3 s nominal, p99 5 s,
-  0-s double readings, 6–15 s sample losses). Still pending: change points per period (e.g. User01 phase_a
-  2 s vs later 3 s) and rows-per-minute for the legacy sources.
+  0-s double readings, 6–15 s sample losses).
+- **User01 change points: done within A10 (2026-09-13).** Regimes:
+  - 2 s in phase_a;
+  - 3 s from 2025-11-05;
+  - a temporary 2 s regime 2026-01-03…07;
+  - 3 s with wider jitter from 2026-01-08;
+  - no change at the sensor boundary.
+- Still pending: other sources and rows-per-minute for the legacy sources.
 - **Purpose:** Describe the real sampling process per source, device and firmware period.
 - **Input:** De-duplicated (in memory) subject-device timelines.
 - **Method:** Δt histograms and quantiles; rows per minute; change points in the nominal interval
@@ -223,16 +229,36 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Expected artifact:** `outputs/qa/p0/pressure_quality/`.
 - **Decision it may influence:** OPEN-17, channel inclusion, compatibility of legacy sources.
 
-### A10. User01 sensor phase analysis
+### A10. User01 sensor phase analysis — **done (2026-09-13)**
+- **As implemented:**
+  - Per session, night and day: pressure, 4095, active channels, zeros, T/H, sampling, movement labels and
+    scale-free activity proxies.
+  - Change-point scan without using the known date: robust standardised median differences for windows 1, 3, 7
+    and 14; per-metric and consensus ranking with one candidate per event; step vs linear fit.
+  - Pre/post comparison over ±1/3/7/14 units, whole periods and placebo windows, with Cliff's δ, Wasserstein and
+    KS (no p-values).
+  - Channel profiles, 4095 detail, behavioural/T-H confounds, and sampling regimes per day.
+  - Comparison at the other candidate events.
+  - Code: `src/data/sensor_phase.py`, `scripts/audit_user01_sensor_phase.py`; tests:
+    `tests/test_sensor_phase.py`.
+- **Artifacts:** `outputs/qa/p0/user01_phase/`; report `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md`.
+- **Result:**
+  - The boundary is the 9.4 h gap 2026-01-25 08:07:26 → 17:31:21. It is the strongest change point
+    (consensus rank 1 at w = 3 and 7).
+  - Nights ±14: complete separation of the 4095 share (16 % → 0), p95 (−51 %) and active channels (+0.9). It is
+    a step, not a drift.
+  - T/H, duration, clock time and sampling are continuous across it.
+  - D-019 (Accepted): `sensor_phase` s1/s2 as a provenance label.
+  - Other acquisition changes inside s1 (2025-12-17 activity change at the log-format change; the early-January
+    2 s episode): OPEN-21.
+  - All 77 of A9's User01 zero runs ≥ 30 min on unloaded channels fall in s1. This is consistent with the
+    contact-distribution change (§4 of the report).
 - **Purpose:** Measure the effect of known changes in User01's collection: phase_a/b/c, the
   2025-12-17 log-format change, the heating-season start and the 2026-01-25 pressure-sensor replacement.
 - **Input:** User01 parsed rows; operational dates from DATA_POLICY §5 / D-008.
-- **Baseline from A9:** the sensor change is a step between the morning and evening recordings of 2026-01-25.
-  Rows with a channel at 4095 fall from 22.1 % to 0.002 %, and the pressure-sum median from 4,420 to 2,976.
-  User01's long zero runs on unloaded channels are still to be compared before/after.
 - **Method:** Pressure distributions, saturation, occupancy and event rates, and T/H distributions in
   windows before/after each change date (descriptive comparison, no model).
-- **Expected artifact:** `outputs/qa/p0/user01_phases/phase_comparison.csv`, figures.
+- **Expected artifact:** `outputs/qa/p0/user01_phase/`, figures.
 - **Decision it may influence:** OPEN-11, OPEN-14; constraints for the chronological personalization
   design (adaptation vs test spans must not be confounded with a hardware change).
 
@@ -286,6 +312,10 @@ Tracked as issue drafts in `docs/issues/` (to be filed on GitHub):
    - Is 4095 ADC clipping or a firmware cap, and does the new sensor use the same range?
    - Was mat 22482 moved, replaced or damaged around 2026-08-20 (P1 nearly silent afterwards)?
    - What is the physical position of P1–P6, and does `FSR_k` in the legacy CSVs equal P_k?
+6. User01 collection history (A10; OPEN-21, OPEN-17):
+   - Which sensor model and range were used before and after 2026-01-25?
+   - Did the 2025-12-17 log-format/firmware change also change pressure reporting (threshold, filtering)?
+   - Why was the sampling at 2 s on 2026-01-03…07?
 
 ## Exit criteria (data freeze)
 
@@ -295,7 +325,8 @@ P0 is complete when:
 - [ ] OPEN-05, -06, -07, -08, -09, -12, -13, -14, -16 decided (Accepted entries in `DECISIONS.md`)
 - [ ] Pressure input-validity rule decided (D-018); OPEN-19 and OPEN-20 answered, or their consequences documented
 - [ ] Canonical interim dataset v1 built under `data/interim/` from the accepted rules: parsed,
-      de-duplicated, provenance columns, quality flags; **no** resampling, interpolation or normalisation
+      de-duplicated, provenance columns (incl. `sensor_phase`, D-019), quality flags; **no** resampling,
+      interpolation or normalisation
 - [ ] Interim dataset manifest with SHA-256 committed; raw integrity verified
 - [ ] `docs/P0_DATASET_AUDIT_REPORT.md` written; README roadmap updated
 - [ ] Tests pass; PR merged into `main`; tag `p0-data-freeze` created on the merge commit

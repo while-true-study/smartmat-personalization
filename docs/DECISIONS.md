@@ -47,7 +47,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-08 | Timestamp policy: year inference for MM-DD rows, legacy minute-resolution rows, timezone, and the out-of-order steps. | PI | P0 | interim tables | — |
 | OPEN-09 | Handling of temp/humid sentinel zeros (chunk starts) and glitch values (−254, 256, 262). **A8 evidence (2026-09-13):**<br>• Invalid-candidate targets are 0.10 % of primary rows (4,132 of 4,136,059); no missing or non-finite values.<br>• Joint zeros (T = H = 0) arise from two mechanisms: single-row start sentinels at a recording/chunk start (125 / 51 / 61 / 118 rows in User01 / 22480 / 22482 / User07), and dropout episodes. 86 % of all zero rows fall in two episodes: User01 2025-12-28 daytime, and 22482 night 2026-08-08/09.<br>• All 147 extreme values (T −254, 171–256; H 135–262) are in that 22482 night.<br>• No abrupt jump or spike exists between valid observations within 5 s (max 1–2 °C, p99.9 1 %RH).<br>• The 148 same-second target conflicts are ±1 quantisation steps (119) or zero-vs-reading (29).<br>Flagging proposed as D-016 (Proposed); episode-level exclusion, clipping, interpolation and jump thresholds are not decided. | PI | P0 | targets | `docs/P0_A8_TARGET_QUALITY_REPORT.md`; D-016 |
 | OPEN-10 | Target definition under heater control: the T/H sensor measures a heater-controlled microclimate. Is heater state a covariate, a stratifier, or excluded? **A8 note (2026-09-13):** long constant-temperature runs (≥ 1 h cover 84 % of 22480 and 80 % of User07 recording time; 22480 is at 28–30 °C in 96 % of rows) while humidity keeps moving. This is consistent with 1 °C quantisation of a stable or regulated microclimate, not a frozen sensor. The cause and whether regulated periods are meaningful targets remain open. | PI | P2 (informed by P0/P1) | RQ1–RQ3 | `docs/P0_A8_TARGET_QUALITY_REPORT.md` §5 |
-| OPEN-11 | User01 pressure-sensor replacement on 2026-01-25: treat as distribution shift boundary? Effect on the chronological adaptation protocol. **A9 baseline evidence (2026-09-13):** a step, not a drift, between the morning and evening recordings of 2026-01-25. Rows with a channel at 4095: 22.1 % before, 18 rows (0.002 %) after. Pressure-sum median 4,420 → 2,976, p95 10,157 → 5,022. Mean active channels 2.07 → 3.55. The full before/after comparison is A10. | PI | P0 analysis, P2 decision | RQ2 | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5 |
+| OPEN-11 | User01 pressure-sensor replacement on 2026-01-25: treat as distribution shift boundary? Effect on the chronological adaptation protocol. **A9 baseline evidence (2026-09-13):** a step, not a drift, between the morning and evening recordings of 2026-01-25. Rows with a channel at 4095: 22.1 % before, 18 rows (0.002 %) after. Pressure-sum median 4,420 → 2,976, p95 10,157 → 5,022. Mean active channels 2.07 → 3.55. The full before/after comparison is A10. **A10 evidence (2026-09-13):**<br>• The change sits in the 9.4 h recording gap 2026-01-25 08:07:26 → 17:31:21. It is the strongest change point of the User01 series (core consensus rank 1 for nights and sessions at w = 3 and 7).<br>• Nights ±14: the 4095 share drops from 16.0 % to 0, p95 from 10,889 to 5,355 and the median from 6,087 to 3,361; active channels rise from 2.72 to 3.66. Cliff's δ = ±1 with complete separation; placebo windows show no separation.<br>• The step fits better than a line. Duration, clock time, temperature, humidity and sampling are continuous across the gap.<br>• High values compress (P2/P3/P5 about ⅓ when active), while P1/P5/P6 respond more often.<br>**The boundary question is answered by D-019** (`sensor_phase` s1/s2, provenance only). Still open for P2: phase-aware preprocessing, scaling and evaluation, and whether adaptation/test spans may cross the boundary. | PI | P2 (handling) | RQ2 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md`; D-019 |
 | OPEN-12 | **Moot after D-017** (User06 source excluded; relevant only if it were ever re-admitted). Adopt "`.` before P1 is a delimiter" for User06 files 1003–1011 in preprocessing (strong evidence; see inventory §8.3). A1: under this reading User06 rows align exactly with User03 rows, which have a separate `FSR1` column. | PI | — | nothing (source excluded) | `docs/P0_A1_PROVENANCE_REPORT.md` §4.4; D-017 |
 | OPEN-13 | Whether and how auxiliary subjects enter training pools. After D-017 the auxiliary pool is User02 legacy and User03 legacy, both minute-resolution. User03 legacy rows are the same measurements as part of the invalid User06 recording; whether the setting issue also affects them is unconfirmed. A9 (2026-09-13): User02 legacy P5 is at 4095 in 50.8 % of rows (runs up to ≈ 112 min); User03 legacy P3–P5 at 4095 in 7–10 % of rows. | PI | P0 | RQ1 | D-017; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §3 |
 | OPEN-14 | Metadata date inconsistencies (e.g. heating start written as 2026-11-18, log-format change as 2026-12-17; data suggest 2025). | data provider | P0 | covariate timeline | — |
@@ -57,6 +57,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-18 | Public release: absolute dates or relative day indices. | PI + provider | P7 | release | — |
 | OPEN-19 | User02/22482 channel P1 from 2026-08-20 (A9): active share 0.49 → 0.13, median when active 759 → 26, p99 2,007 → 371. P6 active share 0.57 → 0.28 over the same dates. P2–P5 unchanged; the other mat (22480) shows no such drop. Was the mat moved, replaced or damaged? Use of 22482 data after that date as test/adaptation data depends on it. | data provider + PI | P0 (question), P2 (handling) | User02 splits | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5 |
 | OPEN-20 | Physical layout of P1–P6 on the mat and the legacy `FSR_k` ↔ P_k mapping (positional assumption). A9: the strongest positive correlations are P1–P4, P2–P5, P3–P6 on all current mats. This is compatible with, but not proof of, paired positions. Needed before any spatial or channel-selection feature. | data provider | P0 (question), P2 | spatial features | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6 |
+| OPEN-21 | Other User01 acquisition changes inside `sensor_phase` s1 (A10):<br>• **2025-12-17**, the documented log-format change (first compressed log): active channels 1.51 → 2.49 and dominant-channel switches 29 → 92 /h, both with complete separation over ±7 nights. The 4095 share is unchanged.<br>• **2026-01-03…07**: a temporary 2 s sampling regime, with the 4095 share dipping for about a week.<br>• From **2026-01-08**: 3 s sampling with wider jitter.<br>• **2025-12-25**: an undocumented +49 % pressure-sum level shift.<br>Did firmware/logging changes alter pressure reporting? Should acquisition-period labels (log format, sampling regime) be carried as further provenance fields? Not merged into `sensor_phase`. | data provider + PI | P0 (question), P2 (handling) | RQ2 spans within User01 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md` §6, §8 |
 
 ---
 
@@ -347,3 +348,40 @@ fitted on training data only where applicable):
 - the User01 sensor-change boundary (OPEN-11);
 - the 22482 P1 shift (OPEN-19);
 - channel selection or spatial features (OPEN-20).
+
+## D-019 — User01 `sensor_phase` provenance label (boundary 2026-01-25)
+Date: 2026-09-13
+Status: Accepted (provenance label only; handling open, OPEN-11)
+Context: The provider documents a pressure-sensor replacement for User01 on 2026-01-25. A10 tested this boundary
+against the data without assuming it (`docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md`).
+Decision:
+- The canonical interim dataset carries a provenance column `sensor_phase`.
+- For User01:
+  - `s1` = rows up to 2026-01-25 08:07:26, the last row before the recording gap;
+  - `s2` = rows from 2026-01-25 17:31:21, the first row after it.
+  - No row lies in between.
+- All other subject/device timelines are `s1` (no documented sensor change). Changing that needs its own decision
+  (e.g. OPEN-19).
+- The label changes no value. It implies no normalisation, clipping, rescaling, exclusion or phase-specific model.
+- The boundary is fixed now, before any model exists. It must not be moved in response to model results.
+- `s1/s2` are distinct from the provider's `phase_a/b/c` source folders. `s1` spans phase_a, phase_b and phase_c
+  up to the gap.
+Evidence: A10 §2–§8.
+- The boundary is a single recording gap on the documented date. The file after it is the provider's
+  "sensor changed" file.
+- It is the strongest change point of the User01 series. The core consensus ranks it first for nights and
+  sessions at w = 3 and 7, with a large margin.
+- Nights ±14: the 4095 share, pressure-sum p95 and active channels are completely separated (Cliff's δ = ±1).
+  Placebo windows show no separation.
+- It is a step rather than a drift (one-step R² 0.79–0.99 vs line 0.59–0.76).
+- 4095 disappears immediately: 22.1 % of rows before, 18 isolated cells after, the first 50 h later.
+- Duration, clock time, temperature, humidity, sampling and a scale-free movement proxy are continuous across the
+  gap.
+Consequence:
+- Later phases can report, stratify or constrain by `sensor_phase` without redefining it.
+- Decided in P2 (OPEN-11, OPEN-17):
+  - phase-aware preprocessing or scaling;
+  - whether User01 adaptation/test spans may cross the boundary;
+  - per-phase reporting in LOSO.
+- Other acquisition changes inside `s1` (2025-12-17 log-format/activity change, the early-January sampling
+  episode) are not part of this label (OPEN-21).
