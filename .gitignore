@@ -1,5 +1,7 @@
 # ---------------------------------------------------------------------------
 # RAW DATA — never commit (docs/DATA_POLICY.md)
+# Everything under data/raw/ is ignored, including subfolders. The only exception is
+# data/raw/README.md (policy text, no raw filenames or identifiers; DECISIONS D-011).
 # ---------------------------------------------------------------------------
 /스마트 매트 데이터 정리/
 /data/raw/*

@@ -9,7 +9,10 @@ Data rules: `docs/DATA_POLICY.md`. Evaluation rules: `docs/RESEARCH_PROTOCOL.md`
 
 ```
 README.md, AGENTS.md, CLAUDE.md   entry points (AGENTS/CLAUDE only point to docs/)
+.github/                          pull_request_template.md (phase PR = research record)
 docs/                             canonical documentation (this folder)
+  P<n>_*_PLAN.md / _REPORT.md     phase plans and reports
+  issues/                         drafts of research issues before they are filed on GitHub
 configs/                          YAML configuration; the only place paths and mappings are defined
   paths.yaml                      raw_root, protected roots, output locations
   subject_mapping.yaml            subject / device / source / dataset-role mapping
@@ -87,10 +90,59 @@ Each run writes to `outputs/<kind>/<run_id>/` and includes:
 Outputs are not committed. Numbers used in the paper are exported to `paper/tables/` by a script,
 never typed by hand.
 
-## 6. Documentation and Git
+## 6. Documentation and Git workflow
 
+Phases, their exit criteria and the meaning of freeze tags are defined in `RESEARCH_PROTOCOL.md` §5.
+This section defines only the Git mechanics that implement them.
+
+### 6.1 Documentation
 - `docs/` holds the only definition of each rule; other files link to it rather than restating it.
-- Every research decision gets a dated entry in `docs/DECISIONS.md`.
-- Never commit raw or derived data, restricted metadata or credentials. The raw manifest is the only
-  data-adjacent file under version control.
-- Commit messages: imperative mood, reference the decision ID when relevant (e.g. `D-006`).
+- Every research decision is recorded in `docs/DECISIONS.md` using the decision format defined there.
+
+### 6.2 Branches
+One branch per phase, created from an up-to-date `main` **only after the previous phase is merged**.
+Branches are not created in advance.
+
+| Phase | Branch |
+|---|---|
+| P0 | `research/p0-data-freeze` |
+| P1 | `research/p1-domain-eda` |
+| P2 | `research/p2-split-freeze` |
+| P3 | `experiment/p3-loso-baseline` |
+| P4 | `experiment/p4-feature-ablation` |
+| P5 | `experiment/p5-personalization` |
+| P6 | `analysis/p6-robustness-statistics` |
+| P7 | `release/p7-public-data` |
+| P8 | `paper/p8-manuscript` |
+
+### 6.3 `main` policy
+`main` always: passes all tests, has verified raw integrity, contains only completed phases, and is
+reproducible from a clean checkout. Unfinished experiments and exploratory code never go directly to
+`main`. Pure typo/formatting fixes to documentation may go to `main` directly; anything that affects
+data policy, protocol or results goes through the phase branch and its PR.
+
+### 6.4 Pull Requests
+Each phase ends with one PR into `main`, written with `.github/pull_request_template.md`. The PR
+description is the phase's research record; items that do not apply are marked `N/A`, not deleted.
+A PR is merged only when tests and raw-integrity checks pass on its head commit.
+
+### 6.5 Tags
+Annotated tags, created on `main` after the phase PR is merged, only for the freeze points listed in
+`RESEARCH_PROTOCOL.md` §5 (`p0-data-freeze`, `p2-protocol-freeze`, `p3-loso-baseline`,
+`p5-personalization`, `v1.0-paper`). Tags are never moved, deleted or re-pointed; a correction gets a
+new tag (e.g. `p0-data-freeze-r2`) and a decision entry.
+
+### 6.6 Commits
+- One commit = one logical research or development change. Do not split artificially.
+- Message: a single line in imperative mood that states the research step, e.g.
+  `Add cross-subject provenance audit`, `Freeze primary dataset cohort`. Avoid meaningless messages
+  (`update`, `fix`, `changes`, `test`).
+- No AI/tool attribution of any kind in messages, trailers or footers (e.g. `Co-Authored-By` for an AI,
+  `Generated with …`, `AI-generated`). The existing Git author configuration is used unchanged.
+
+### 6.7 Public repository hygiene
+The repository is public. Never commit: raw data, derived data other than the raw manifest, restricted
+metadata, personal names, messenger or other personal identifiers, tokens/passwords/secrets, or local
+absolute paths. Public-facing material uses anonymous subject IDs only (`DATA_POLICY.md` §5).
+Before each commit, check staged files for these items; `data/raw/README.md` is the only tracked file
+under `data/raw/`.

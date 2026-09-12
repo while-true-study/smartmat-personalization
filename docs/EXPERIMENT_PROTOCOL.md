@@ -4,6 +4,8 @@
 > Nothing in this file may be used to generate splits, windows, processed data or models yet.
 > Each section is filled in by a dated `DECISIONS.md` entry; the protocol is frozen as `v1.0`
 > only when every section is decided and the open items listed under "Blocked by" are closed.
+> Freezing happens at the end of phase P2 (tag `p2-protocol-freeze`), before any model result is seen
+> (`RESEARCH_PROTOCOL.md` §5).
 
 Governing rules: `docs/RESEARCH_PROTOCOL.md` (L1–L12) and `docs/DATA_POLICY.md`.
 
