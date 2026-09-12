@@ -62,7 +62,7 @@ The supplied raw package `스마트 매트 데이터 정리/` sits at the reposi
 | device_id | physical mat ID as string, or `unknown` / `unresolved` / `not_applicable` | `22482` |
 | source_id | as in `configs/subject_mapping.yaml` | `user02_mat_22482` |
 | file_id | `rf_` + 10 hex of SHA-1(source_relpath) | `rf_3fa1c09b2e` |
-| session_id | reserved: `<subject_id>_<device_id>_<YYYYMMDD>` of session start; definition pending (OPEN-06) | `User02_22480_20260719` |
+| session_id | `<subject_id>\|<device_id>\|S<nnnn>` (canonical_v1; D-024) | `User02\|22480\|S0001` |
 | split_id | `<protocol_version>_<scheme>` | `v0.1_loso` |
 | run_id | `<YYYYMMDD-HHMMSS>_<short-name>` | `20261001-142233_loso-baseline` |
 
