@@ -18,6 +18,7 @@ is on the mat); mode C only uses k-grams whose rows are all informative and not 
 """
 from __future__ import annotations
 
+import hashlib
 from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -54,6 +55,12 @@ class SourceData:
     file_idx: np.ndarray  # int32 index into `files`
     # firmware movement label: 1 = "absent" (NM / 자리비움), 0 = another movement label, -1 = no label
     firmware_absent: np.ndarray | None = None
+    # provenance of each row: original line number in its file, 64-bit code of the raw event text,
+    # and index into `chunk_keys` of the enclosing JSON upload-chunk key (-1 = outside any chunk)
+    line_no: np.ndarray | None = None
+    event_code: np.ndarray | None = None
+    chunk_idx: np.ndarray | None = None
+    chunk_keys: list[str] = field(default_factory=list)
 
     @property
     def n(self) -> int:
@@ -65,7 +72,9 @@ class SourceData:
     @classmethod
     def from_rows(cls, source_id: str, subject_id: str, device_id: str,
                   files_rows: Iterable[tuple[str, Sequence[DataRow]]]) -> "SourceData":
-        files, ts, vals, fidx, absent = [], [], [], [], []
+        files, ts, vals, fidx, absent, line_no, ev, chunk = [], [], [], [], [], [], [], []
+        chunk_keys: list[str] = []
+        chunk_index: dict[tuple[int, str], int] = {}
         for label, rows in files_rows:
             i = len(files)
             files.append(label)
@@ -78,6 +87,16 @@ class SourceData:
                 vals.append(v)
                 fidx.append(i)
                 absent.append(-1 if r.movement is None else int(r.movement == "absent"))
+                line_no.append(r.line_no)
+                ev.append(text_code(r.event_raw))
+                if r.chunk_key is None:
+                    chunk.append(-1)
+                else:
+                    key = (i, r.chunk_key)
+                    if key not in chunk_index:
+                        chunk_index[key] = len(chunk_keys)
+                        chunk_keys.append(r.chunk_key)
+                    chunk.append(chunk_index[key])
         arr = np.array(vals, dtype=np.float64).reshape(-1, len(CHANNELS))
         present = arr != MISSING
         if np.any(arr[present] != np.round(arr[present])):
@@ -86,21 +105,33 @@ class SourceData:
             raise ValueError(f"{source_id}: sensor values outside the int16 range")
         return cls(source_id, subject_id, device_id, files,
                    np.array(ts, dtype=np.int64), arr.astype(np.int16), np.array(fidx, dtype=np.int32),
-                   np.array(absent, dtype=np.int8))
+                   np.array(absent, dtype=np.int8), np.array(line_no, dtype=np.int32),
+                   np.array(ev, dtype=np.uint64), np.array(chunk, dtype=np.int32), chunk_keys)
 
     @classmethod
     def concat(cls, parts: Sequence["SourceData"], source_id: str, subject_id: str, device_id: str) -> "SourceData":
-        files, offs = [], []
+        files, offs, chunk_keys, coffs = [], [], [], []
         for p in parts:
             offs.append(len(files))
             files.extend(p.files)
+            coffs.append(len(chunk_keys))
+            chunk_keys.extend(p.chunk_keys)
+
+        def cat(name):
+            if not parts or any(getattr(p, name) is None for p in parts):
+                return None
+            return np.concatenate([getattr(p, name) for p in parts])
+
+        chunk = None
+        if parts and all(p.chunk_idx is not None for p in parts):
+            chunk = np.concatenate([np.where(p.chunk_idx >= 0, p.chunk_idx + o, -1) for p, o in zip(parts, coffs)])
         return cls(
             source_id, subject_id, device_id, files,
             np.concatenate([p.ts for p in parts]) if parts else np.array([], np.int64),
             np.concatenate([p.values for p in parts]) if parts else np.empty((0, len(CHANNELS)), np.int16),
             np.concatenate([p.file_idx + o for p, o in zip(parts, offs)]) if parts else np.array([], np.int32),
-            np.concatenate([p.firmware_absent for p in parts])
-            if parts and all(p.firmware_absent is not None for p in parts) else None,
+            cat("firmware_absent"), cat("line_no"), cat("event_code"), chunk.astype(np.int32) if chunk is not None else None,
+            chunk_keys,
         )
 
 
@@ -132,6 +163,27 @@ def _mix(x: np.ndarray) -> np.ndarray:
         x = (x ^ (x >> np.uint64(30))) * np.uint64(0xBF58476D1CE4E5B9)
         x = (x ^ (x >> np.uint64(27))) * np.uint64(0x94D049BB133111EB)
         return x ^ (x >> np.uint64(31))
+
+
+mix64 = _mix  # public name for other analysis modules
+
+_TEXT_CODES: dict[str, int] = {}
+_CODE_TEXTS: dict[int, str] = {}
+
+
+def text_code(text: str) -> int:
+    """Stable 64-bit code of a short text field (e.g. the raw event column)."""
+    code = _TEXT_CODES.get(text)
+    if code is None:
+        code = int.from_bytes(hashlib.blake2b(text.encode("utf-8"), digest_size=8).digest(), "little")
+        _TEXT_CODES[text] = code
+        _CODE_TEXTS[code] = text
+    return code
+
+
+def code_text(code: int) -> str | None:
+    """Reverse lookup for codes created in this process."""
+    return _CODE_TEXTS.get(int(code))
 
 
 def common_channels(a: SourceData, b: SourceData) -> tuple[str, ...]:
@@ -232,6 +284,11 @@ def _longest_streak(cond: np.ndarray) -> int:
     return int((np.flatnonzero(d == -1) - np.flatnonzero(d == 1)).max())
 
 
+def first_positions(needles: np.ndarray, hay: np.ndarray) -> np.ndarray:
+    """Index of the first occurrence of each needle in hay, or -1."""
+    return _first_positions(needles, hay)
+
+
 def _first_positions(needles: np.ndarray, hay: np.ndarray) -> np.ndarray:
     """Index of the first occurrence of each needle in hay, or -1."""
     if hay.size == 0 or needles.size == 0:
@@ -244,28 +301,37 @@ def _first_positions(needles: np.ndarray, hay: np.ndarray) -> np.ndarray:
     return np.where(found, order[idx_c], -1)
 
 
-def _ordered_run(ha_f: np.ndarray, hb_f: np.ndarray, pos: np.ndarray, file_a: np.ndarray) -> int:
-    """Longest run of consecutive a-rows that also sit on consecutive b-rows.
+def aligned_runs(ha_f: np.ndarray, hb_f: np.ndarray, pos: np.ndarray, file_a: np.ndarray) -> list[tuple[int, int, int]]:
+    """Maximal runs of consecutive a-rows that also sit on consecutive b-rows: (a_start, b_start, length).
 
-    An alignment continues from the previous b position when possible, so repeated
-    fingerprints (e.g. identical rows within one minute) do not break a genuine copy.
-    Cost is proportional to the number of matched rows.
+    `pos[j]` is a b-position whose fingerprint equals `ha_f[j]` (or -1). An alignment continues from
+    the previous b position when possible, so repeated fingerprints (e.g. identical rows within one
+    minute) do not break a genuine copy. Runs never cross a file boundary of a. Cost is proportional
+    to the number of matched rows.
     """
-    hits = np.flatnonzero(pos >= 0)
-    best = run = 0
+    runs: list[tuple[int, int, int]] = []
+    start_a = start_b = -1
+    run = 0
     prev_j, prev_b = -2, -2
     nb = hb_f.size
-    for j in hits:
+    for j in np.flatnonzero(pos >= 0):
         if run and j == prev_j + 1 and file_a[j] == file_a[prev_j] and prev_b + 1 < nb and hb_f[prev_b + 1] == ha_f[j]:
             prev_b += 1
             run += 1
         else:
+            if run:
+                runs.append((start_a, start_b, run))
             prev_b = int(pos[j])
-            run = 1
+            start_a, start_b, run = int(j), prev_b, 1
         prev_j = j
-        if run > best:
-            best = run
-    return best
+    if run:
+        runs.append((start_a, start_b, run))
+    return runs
+
+
+def _ordered_run(ha_f: np.ndarray, hb_f: np.ndarray, pos: np.ndarray, file_a: np.ndarray) -> int:
+    """Longest aligned run (see `aligned_runs`)."""
+    return max((r[2] for r in aligned_runs(ha_f, hb_f, pos, file_a)), default=0)
 
 
 def _day(ts: np.ndarray) -> np.ndarray:

@@ -4,7 +4,7 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2 done (2026-09-12); A3–A13 pending |
+| Status | In progress — A1, A2, A5 (incl. A3, A4) done (2026-09-12); A6–A13 pending |
 | Starting point | `docs/initial_dataset_inventory.md` |
 | Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07: D-013 |
 
@@ -93,7 +93,7 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Decision it may influence:** OPEN-02, OPEN-03 (use of two streams), L8 grouping, User02 inclusion
   in the primary cohort.
 
-### A3. Duplicate rows
+### A3. Duplicate rows — **done within A5 (2026-09-12)**
 - **Purpose:** Quantify exact duplicate rows within files and where they occur.
 - **Input:** Parsed rows per file.
 - **Method:** Count exact duplicates (all fields), split into consecutive vs non-consecutive, and locate
@@ -101,7 +101,7 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Expected artifact:** `outputs/qa/p0/duplicates/within_file_duplicates.csv`.
 - **Decision it may influence:** OPEN-07 (de-duplication rule).
 
-### A4. Duplicate timestamps
+### A4. Duplicate timestamps — **done within A5 (2026-09-12)**
 - **Purpose:** Distinguish harmless repeated rows from conflicting records sharing one timestamp.
 - **Input:** Parsed rows per subject-device timeline.
 - **Method:** For each repeated timestamp, classify as identical content, same T/H but different pressure,
@@ -109,7 +109,7 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Expected artifact:** `outputs/qa/p0/duplicates/timestamp_conflicts.csv`.
 - **Decision it may influence:** OPEN-07, OPEN-08.
 
-### A5. Cross-file overlaps
+### A5. Cross-file overlaps — **done (2026-09-12)**
 - **Purpose:** Map how adjacent daily files repeat upload chunks, and whether overlapping content is
   always identical.
 - **Input:** Parsed rows with JSON chunk keys; `cross_file_time_overlap.csv` from the inventory audit.
@@ -118,6 +118,20 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
   rule would keep or drop (counting only — no interim data are written).
 - **Expected artifact:** `outputs/qa/p0/overlaps/chunk_index.csv`, `overlap_conflicts.csv`,
   `dedup_rule_counts.csv`.
+- **As implemented (covers A3 and A4):**
+  - Relations R1–R5 are kept apart per subject + device group: exact duplicates (all fields),
+    metadata-only differences, conflicting timestamps (classified by origin, adjacency, sentinel and control
+    event), repeated sequences (between files and within a file) and time overlap without shared rows.
+  - Also produced: every time-overlapping file pair, repeated upload-chunk keys, file-boundary gap bins, a
+    cross-device diagnostic, and simulated policy impacts A1/A/B/C.
+  - Code: `src/data/duplicates.py`, `scripts/audit_cross_file_duplicates.py`; tests: `tests/test_duplicates.py`.
+- **Artifacts:** `outputs/qa/p0/duplicates/`; report `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md`.
+- **Result:**
+  - Primary-group overlaps are exact duplicate blocks (187,190 cross-file copies + one 600-row within-file
+    block); copies never disagree.
+  - 10,997 same-second timestamps with different readings originate inside single files.
+  - Source file ≠ session is confirmed.
+  - De-duplication proposed as D-014 (Proposed); session threshold not chosen.
 - **Decision it may influence:** OPEN-07, OPEN-06.
 
 ### A6. Sampling interval distribution
