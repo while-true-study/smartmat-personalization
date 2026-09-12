@@ -45,8 +45,8 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6; `docs/P0_A7_TEMPORAL_GAP_REPORT.md`; D-015 |
 | OPEN-07 | De-duplication policy for ~204 k identical rows shared by adjacent files, and for repeated rows/timestamps within files. **A5 evidence (2026-09-12):** in the primary groups all file overlaps are exact duplicate blocks (18 pairs; all 300 repeated chunk keys identical). Repeated copies never disagree (0 between-file conflicts). Cross-file exact copies: 187,190 rows (4.33 %), plus one 600-row chunk repeated inside `sm22482_0816`. Separately, 10,997 same-second timestamps carry two *different* readings inside one file (not duplicates), 272 adjacent same-second rows are identical, and 4 rows differ only in event text. Proposal: D-014 (Proposed). A7 note: removing copied blocks row for row removes 187,814 rows in the primary groups. That is 24 more than A1 + 600, because 24 same-second identical pairs were copied along with their chunk; the originals remain. | PI | P0 | interim tables | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md`; `docs/P0_A7_TEMPORAL_GAP_REPORT.md` §1; D-014 |
 | OPEN-08 | Timestamp policy: year inference for MM-DD rows, legacy minute-resolution rows, timezone, and the out-of-order steps. | PI | P0 | interim tables | — |
-| OPEN-09 | Handling of temp/humid sentinel zeros (chunk starts) and glitch values (−254, 256, 262). | PI | P0 | targets | — |
-| OPEN-10 | Target definition under heater control: the T/H sensor measures a heater-controlled microclimate. Is heater state a covariate, a stratifier, or excluded? | PI | P2 (informed by P0/P1) | RQ1–RQ3 | — |
+| OPEN-09 | Handling of temp/humid sentinel zeros (chunk starts) and glitch values (−254, 256, 262). **A8 evidence (2026-09-13):**<br>• Invalid-candidate targets are 0.10 % of primary rows (4,132 of 4,136,059); no missing or non-finite values.<br>• Joint zeros (T = H = 0) arise from two mechanisms: single-row start sentinels at a recording/chunk start (125 / 51 / 61 / 118 rows in User01 / 22480 / 22482 / User07), and dropout episodes. 86 % of all zero rows fall in two episodes: User01 2025-12-28 daytime, and 22482 night 2026-08-08/09.<br>• All 147 extreme values (T −254, 171–256; H 135–262) are in that 22482 night.<br>• No abrupt jump or spike exists between valid observations within 5 s (max 1–2 °C, p99.9 1 %RH).<br>• The 148 same-second target conflicts are ±1 quantisation steps (119) or zero-vs-reading (29).<br>Flagging proposed as D-016 (Proposed); episode-level exclusion, clipping, interpolation and jump thresholds are not decided. | PI | P0 | targets | `docs/P0_A8_TARGET_QUALITY_REPORT.md`; D-016 |
+| OPEN-10 | Target definition under heater control: the T/H sensor measures a heater-controlled microclimate. Is heater state a covariate, a stratifier, or excluded? **A8 note (2026-09-13):** long constant-temperature runs (≥ 1 h cover 84 % of 22480 and 80 % of User07 recording time; 22480 is at 28–30 °C in 96 % of rows) while humidity keeps moving. This is consistent with 1 °C quantisation of a stable or regulated microclimate, not a frozen sensor. The cause and whether regulated periods are meaningful targets remain open. | PI | P2 (informed by P0/P1) | RQ1–RQ3 | `docs/P0_A8_TARGET_QUALITY_REPORT.md` §5 |
 | OPEN-11 | User01 pressure-sensor replacement on 2026-01-25: treat as distribution shift boundary? Effect on the chronological adaptation protocol. | PI | P0 analysis, P2 decision | RQ2 | — |
 | OPEN-12 | Adopt "`.` before P1 is a delimiter" for User06 files 1003–1011 in preprocessing (strong evidence; see inventory §8.3). A1: under this reading User06 rows align exactly with User03 rows, which have a separate `FSR1` column. | PI | P0 | User06 use | `docs/P0_A1_PROVENANCE_REPORT.md` §4.4 |
 | OPEN-13 | Whether and how auxiliary subjects enter training pools. | PI | P0 | RQ1 | — |
@@ -256,3 +256,30 @@ Evidence: `docs/P0_A7_TEMPORAL_GAP_REPORT.md`.
 Consequence: If accepted, 22482 nights stay whole across export losses (58 instead of 71 sessions). Genuine
 non-aligned interruptions > 30 min remain breaks. Isolated single-chunk recordings, the split grouping level
 (session vs night) and windowing across within-session gaps stay open for P2.
+
+## D-016 — Flag known target sentinel and glitch patterns as invalid targets (values kept)
+Date: 2026-09-13
+Status: **Proposed** (not accepted; decide at P0 exit with D-014/D-015)
+Context: Temperature and humidity are the regression targets. A8 found a small set of values that cannot be
+physical readings of an indoor sleeping microclimate, with clear, repeated patterns.
+Decision (proposed):
+- In the canonical interim dataset, mark the target as invalid, per channel, with a cause-preserving state:
+  - the joint zero pattern T = 0 and H = 0 (`target_zero_sentinel`), in both channels;
+  - values outside the candidate plausibility band (T < −10 or > 60 °C; H > 100 %RH), together with a zero in the
+    other channel of the same row (`target_extreme_glitch`). Currently only the 22482 night 2026-08-08/09.
+- Raw values are never replaced, clipped, interpolated or deleted. Rows keep their provenance and their
+  pressure data.
+- Also stored as context, not as validity: zero-run class (start sentinel / dropout run), chunk position,
+  |Δ| to the previous valid value with its Δt, constant-run length, and same-second group id
+  (`quality_flag_schema.csv`).
+Evidence: `docs/P0_A8_TARGET_QUALITY_REPORT.md` §3–§7.
+- 4,132 rows (0.10 %) of the primary groups; no other value lies outside the band.
+- The patterns are exact and repeated.
+- Their neighbours show normal readings.
+Consequence: If accepted, models and metrics exclude flagged targets in a traceable way.
+Not covered by this proposal:
+- excluding whole dropout/glitch episodes;
+- jump or outlier thresholds;
+- treatment of the ±1 same-second pairs;
+- interpolation, clipping or smoothing (P2).
+The candidate band is a descriptive parameter and must not be tightened after model results are seen.

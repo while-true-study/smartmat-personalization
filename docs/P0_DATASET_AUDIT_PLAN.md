@@ -4,7 +4,7 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2, A5 (incl. A3, A4), A7 done; A6 partly (2026-09-12); A8–A13 pending |
+| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8 done; A6, A12 partly (2026-09-13); A9–A11, A13 pending |
 | Starting point | `docs/initial_dataset_inventory.md` |
 | Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07: D-013 |
 
@@ -167,7 +167,24 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Expected artifact:** `outputs/qa/p0/gaps/gap_distribution.csv`, `session_threshold_sweep.csv`.
 - **Decision it may influence:** OPEN-06 (session definition).
 
-### A8. T/H missing / sentinel / glitch
+### A8. T/H missing / sentinel / glitch — **done (2026-09-13)**
+- **As implemented:**
+  - Per-channel cause-preserving states on the A5/A7 audit timeline; candidate patterns with counts, dates and
+    files.
+  - Context of every suspicious row: chunk/file/session position, gap before, same second, control event,
+    repeated block, neighbouring valid values.
+  - Zero runs split into start sentinels and dropout runs.
+  - Jumps between valid observations by Δt class, spikes, constant runs with a sensor-freeze check, per-session
+    target statistics.
+  - Same-second target conflicts (A5 function) classified; policies A/B/C simulated; distributions by
+    device/month; User02 device bias reproduced; flag schema proposed.
+  - Code: `src/data/target_quality.py`, `scripts/audit_target_quality.py`; tests: `tests/test_target_quality.py`.
+- **Artifacts:** `outputs/qa/p0/target_quality/`; report `docs/P0_A8_TARGET_QUALITY_REPORT.md`.
+- **Result:**
+  - 0.10 % invalid-candidate targets: start sentinels plus two dropout/glitch episodes.
+  - No abrupt jumps within 5 s; same-second target conflicts are ±1 steps or zero-vs-reading.
+  - Long constant temperature on 22480 and User07 with humidity still varying.
+  - D-016 (Proposed): flag known sentinel/glitch patterns, keep values.
 - **Purpose:** Characterise invalid target values before any target is defined.
 - **Input:** Parsed rows; chunk keys.
 - **Method:** Joint zeros (`temp == 0 and humid == 0`) and their position relative to chunk start;
@@ -204,7 +221,9 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
   coverage figure.
 - **Decision it may influence:** OPEN-04, OPEN-16; scope of P1 domain-shift EDA.
 
-### A12. Target distribution comparison
+### A12. Target distribution comparison — **partly done within A8 (2026-09-13)**
+- **Status:** distributions by subject/device and month, daily and session medians are in A8 §8. Still pending:
+  hour-of-day profiles and heater-episode shares.
 - **Purpose:** Describe how temperature and humidity differ across subjects, periods and heater states,
   so cohort and target decisions are made knowingly.
 - **Input:** Parsed rows with A8 quality flags applied as masks (in memory).
