@@ -52,6 +52,8 @@ class SourceData:
     ts: np.ndarray        # int64, seconds since 1970-01-01 of the parsed naive local timestamp
     values: np.ndarray    # int16 (n, len(CHANNELS)); MISSING where a channel is absent
     file_idx: np.ndarray  # int32 index into `files`
+    # firmware movement label: 1 = "absent" (NM / 자리비움), 0 = another movement label, -1 = no label
+    firmware_absent: np.ndarray | None = None
 
     @property
     def n(self) -> int:
@@ -63,7 +65,7 @@ class SourceData:
     @classmethod
     def from_rows(cls, source_id: str, subject_id: str, device_id: str,
                   files_rows: Iterable[tuple[str, Sequence[DataRow]]]) -> "SourceData":
-        files, ts, vals, fidx = [], [], [], []
+        files, ts, vals, fidx, absent = [], [], [], [], []
         for label, rows in files_rows:
             i = len(files)
             files.append(label)
@@ -75,6 +77,7 @@ class SourceData:
                 ts.append((r.ts - _EPOCH) // timedelta(seconds=1))
                 vals.append(v)
                 fidx.append(i)
+                absent.append(-1 if r.movement is None else int(r.movement == "absent"))
         arr = np.array(vals, dtype=np.float64).reshape(-1, len(CHANNELS))
         present = arr != MISSING
         if np.any(arr[present] != np.round(arr[present])):
@@ -82,7 +85,8 @@ class SourceData:
         if np.any((arr[present] <= MISSING) | (arr[present] > np.iinfo(np.int16).max)):
             raise ValueError(f"{source_id}: sensor values outside the int16 range")
         return cls(source_id, subject_id, device_id, files,
-                   np.array(ts, dtype=np.int64), arr.astype(np.int16), np.array(fidx, dtype=np.int32))
+                   np.array(ts, dtype=np.int64), arr.astype(np.int16), np.array(fidx, dtype=np.int32),
+                   np.array(absent, dtype=np.int8))
 
     @classmethod
     def concat(cls, parts: Sequence["SourceData"], source_id: str, subject_id: str, device_id: str) -> "SourceData":
@@ -95,14 +99,18 @@ class SourceData:
             np.concatenate([p.ts for p in parts]) if parts else np.array([], np.int64),
             np.concatenate([p.values for p in parts]) if parts else np.empty((0, len(CHANNELS)), np.int16),
             np.concatenate([p.file_idx + o for p, o in zip(parts, offs)]) if parts else np.array([], np.int32),
+            np.concatenate([p.firmware_absent for p in parts])
+            if parts and all(p.firmware_absent is not None for p in parts) else None,
         )
 
 
-def load_sources(root: Path, manifest_rows: Sequence[dict]) -> dict[str, SourceData]:
-    """Parse every sensor file of the manifest (read-only) into one SourceData per source_id."""
+def load_sources(root: Path, manifest_rows: Sequence[dict],
+                 source_ids: Iterable[str] | None = None) -> dict[str, SourceData]:
+    """Parse the sensor files of the manifest (read-only) into one SourceData per source_id."""
+    wanted = set(source_ids) if source_ids is not None else None
     by_source: dict[str, list[dict]] = {}
     for r in manifest_rows:
-        if str(r["is_sensor_data"]) in ("True", "true", "1"):
+        if str(r["is_sensor_data"]) in ("True", "true", "1") and (wanted is None or r["source_id"] in wanted):
             by_source.setdefault(r["source_id"], []).append(r)
     out = {}
     for sid, recs in by_source.items():

@@ -156,6 +156,11 @@ not. Control: User02 legacy shares 0 % with User06. The same physical recording 
 subject IDs (OPEN-01). Neither may be used until resolved, and never both (L7).
 
 ### 7.4 Concurrent recordings on two devices of User02
+> Update 2026-09-12: analysed reproducibly by P0-A2 (`docs/P0_A2_USER02_DEVICE_REPORT.md`). The −2 °C / −19 %RH
+> differences and the 253 h of joint recording are reproduced. **Correction:** 22482 does not "often record around
+> the clock". Both devices record at night (daytime share 0.3 % / 2.4 %); multi-night file spans caused the
+> earlier reading. A2 also finds no pressure or occupancy coupling between the mats.
+
 53 file pairs from 22480 and 22482 overlap in time: about 505 h in total (253 h of minutes with rows from
 both devices). In jointly recorded minutes both mats register occupancy (movement label ≠ `NM`) 66.8 % of the
 time, only 22480 23.3 %, only 22482 7.8 %. Same-minute temperature differs by a median −2 °C
@@ -166,6 +171,9 @@ streams of one night must stay in the same split group (L8).
 ## 8. Filename / device and structural anomalies
 
 ### 8.1 Device prefix mismatch (quarantined)
+> Update 2026-09-12: see P0-A2 §9 for the full evidence table. The files record 18.6 h within the span below (not
+> around the clock) and fill 22482's timeline seamlessly.
+
 `user02/mat_22480/_prefix_mismatch/sm22482_0824.txt` and `sm22482_0825.txt`:
 - stored in the 22480 archive by the provider, filename prefix `sm22482_`, JSON root key `smartmat_22482`;
 - 0824 and 0825 are the only dates for which `mat_22480/` has a file and `mat_22482/` does not

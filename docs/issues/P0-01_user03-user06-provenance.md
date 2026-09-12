@@ -4,7 +4,9 @@
 > and body, then replace the "Tracking" cell of OPEN-01 in `docs/DECISIONS.md` with the issue link.
 
 **Phase:** P0 — Dataset Audit & Data Freeze · **Open decision:** OPEN-01 · **Type:** provenance / subject identity
-**Status:** evidence quantified (P0-A1, 2026-09-12); identity unconfirmed — waiting for the data provider
+**Status:** evidence quantified (P0-A1, 2026-09-12). Identity answered: User03 and User06 are different
+people (PI, 2026-09-12). **Measurement provenance still open** — waiting for the data provider. Meanwhile the
+overlapping recording is provisionally quarantined from primary evaluation (D-013).
 
 ## Evidence
 Reproducible analysis P0-A1 (`docs/P0_A1_PROVENANCE_REPORT.md`, code `scripts/audit_cross_subject_provenance.py`),
@@ -42,14 +44,18 @@ independent subject recordings.** The data cannot tell whose recording it is.
   (User02 legacy and the shared User03/User06 recording), not three.
 
 ## Required clarification (data provider)
-1. Are "User03" and "User06" the same person?
-2. If not, who was recorded on the nights 2025-10-06 → 10-13, and how was the User03 legacy CSV produced?
-3. Which subject ID should the shared recording carry, and do User06's extra nights (10-03…10-05, 10-14)
-   belong to the same person?
+1. ~~Are "User03" and "User06" the same person?~~ Answered 2026-09-12: they are different people.
+2. Since they are different people, whose body was on the mat during the nights 2025-10-06 → 10-13, and how was
+   the User03 legacy CSV produced? For example: exported from the User06 device, a shared device, or mis-filed?
+3. Which subject should the overlapping measurements be attributed to, and do User06's extra nights
+   (10-03…10-05, 10-14) belong to User06?
 
 ## Blocking decision
-OPEN-01 → a decision entry that states which source/subject ID survives and which is excluded.
-Blocks: any use of User03 or User06 data; OPEN-13 (auxiliary use); OPEN-16 (cohort).
+OPEN-01 → a decision entry (superseding D-013) that states to which subject the overlapping measurements
+belong and whether they may be used.
+Blocks: any use of the overlapping recording; OPEN-13 (auxiliary use). The provisional primary cohort
+(User01, User02, User07) is not blocked.
 
 ## Handling until resolved
-Subject mapping is unchanged. Neither source is used in any analysis beyond provenance/QA checks.
+Subject mapping unchanged; User03 and User06 stay distinct subjects. The overlapping recording is provisionally
+quarantined from primary evaluation (D-013). Neither subject is deleted or finally excluded.

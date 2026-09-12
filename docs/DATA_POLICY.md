@@ -71,7 +71,9 @@ never be split across train/test as if independent, and never be counted as two 
 table or statistic. `tests/test_subject_mapping.py` enforces the mapping.
 
 Open identity questions (do not resolve by assumption; see `DECISIONS.md`):
-- OPEN-01: `user03_legacy` rows are all contained in `user06_auxiliary` (seconds truncated).
+- OPEN-01: `user03_legacy` rows are all contained in `user06_auxiliary` (seconds truncated). User03 and User06
+  are different people (D-013); the overlapping recording is provisionally quarantined from primary
+  evaluation until its measurement provenance is clarified.
 - OPEN-02: device attribution of the two `_prefix_mismatch` files.
 - OPEN-03: the two User02 mats recorded simultaneously for about 505 h.
 - OPEN-04: device IDs of every other source are unknown.

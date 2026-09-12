@@ -29,9 +29,9 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 
 | ID | Question | Owner | Resolve in | Blocks | Tracking |
 |---|---|---|---|---|---|
-| OPEN-01 | `user03_legacy` is a seconds-truncated copy of `user06_auxiliary` for 2025-10-06…10-12 (99.99–100 % of User03 rows found in User06). Same person, mislabelled folder, or derived export? Which ID survives? **A1 evidence (2026-09-12):** 100 % of User03 rows (minute-level) and 100 % of its 5-row value sequences occur in User06; offsets 0–59 s; each User03 file is a contiguous excerpt of one User06 night file; ordered runs up to 13,180 sequences. Overlap is inconsistent with independent subject recordings; identity still unconfirmed. No other subject pair shares any data. | data provider | P0 | any use of User03/User06 | `docs/issues/P0-01_user03-user06-provenance.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §4; `outputs/qa/p0/provenance/` |
-| OPEN-02 | Device of `user02/mat_22480/_prefix_mismatch/sm22482_0824.txt` and `…_0825.txt`. Evidence favours 22482 (filename prefix, JSON root key `smartmat_22482`, the only dates with a 22480 file but no 22482 file). A1: the two files share no rows with either device's files (not duplicates). | data provider | P0 | use of those 2 files | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5 |
-| OPEN-03 | Physical setup of User02's mats 22480/22482: they overlap for ~505 h and both register occupancy in 66.8 % of jointly recorded minutes, with different temperature/humidity. Same bed (body regions)? Different locations? How to use two concurrent streams (separate, one, fused)? A1: 46 co-recorded dates, 0 shared rows or sequences — concurrent but distinct streams. | provider + PI | P0 | User02 in primary cohort | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5 |
+| OPEN-01 | **Identity answered:** User03 ≠ User06 (PI, 2026-09-12; D-013). **Still open: measurement provenance** — why the rows of `user03_legacy` are contained in User06's recordings of 2025-10-06…10-13, and to which subject those measurements belong. Until then the overlapping recording is provisionally quarantined from primary evaluation (D-013). Original question: `user03_legacy` is a seconds-truncated copy of `user06_auxiliary` for 2025-10-06…10-12 (99.99–100 % of User03 rows found in User06). **A1 evidence (2026-09-12):** 100 % of User03 rows (minute-level) and 100 % of its 5-row value sequences occur in User06; offsets 0–59 s; each User03 file is a contiguous excerpt of one User06 night file; ordered runs up to 13,180 sequences. Overlap is inconsistent with independent subject recordings; identity still unconfirmed. No other subject pair shares any data. | data provider | P0 | any use of User03/User06 | `docs/issues/P0-01_user03-user06-provenance.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §4; `outputs/qa/p0/provenance/` |
+| OPEN-02 | Device of `user02/mat_22480/_prefix_mismatch/sm22482_0824.txt` and `…_0825.txt`. Evidence favours 22482 (filename prefix, JSON root key `smartmat_22482`, the only dates with a 22480 file but no 22482 file). A1: the two files share no rows with either device's files (not duplicates). **A2 evidence (2026-09-12):** they fill 22482's timeline seamlessly (start 30 min after 22482's last row, end 3 s before its next row), record simultaneously with 22480's own stream for 7.0 h, and match 22482's humidity regime (22480 − quarantined: −2 °C / −16 %RH vs typical 22480 − 22482: −2 / −19). Strong, consistent evidence for 22482; attribution still `unresolved` pending provider confirmation. | data provider | P0 | use of those 2 files | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` §9 |
+| OPEN-03 | Physical setup of User02's mats 22480/22482: they overlap for ~505 h and both register occupancy in 66.8 % of jointly recorded minutes, with different temperature/humidity. Same bed (body regions)? Different locations? How to use two concurrent streams (separate, one, fused)? A1: 46 co-recorded dates, 0 shared rows or sequences — concurrent but distinct streams. **A2 evidence (2026-09-12):** 253 h simultaneous recording (76 % of 22480's time); no pressure coupling (|r| ≤ 0.03 for all descriptors, no lag peak within ±30 s, movement-event coincidence at chance level, no clock offset found within ±12 h); occupancy agreement at chance under all 14 definitions (κ −0.07…0.00, "both active" 18–90 % depending on threshold); persistent T/H offset (22480 − 22482: −2 °C, −19 %RH; humidity lower on 46/46 dates); different channel-load patterns. Physical placement and the use policy for the two streams remain unresolved. | provider + PI | P0 | User02 in primary cohort | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` |
 | OPEN-04 | Device IDs of User01, User07, User02 legacy, User03, User06. Recording periods hand over day-to-day (User01 → User07 → User02), suggesting reused mats. Subject and device may be confounded. | data provider | P0 | RQ1 interpretation | — |
 | OPEN-05 | Move the raw package into `data/raw/` or keep it at `스마트 매트 데이터 정리/`? | PI | P0 | nothing (path is configurable) | — |
 | OPEN-06 | Session definition (files ≠ sessions: files overlap and some span 30–57 h). | PI | P0 | splits | — |
@@ -44,7 +44,7 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 | OPEN-13 | Whether and how auxiliary subjects enter training pools. | PI | P0 | RQ1 | — |
 | OPEN-14 | Metadata date inconsistencies (e.g. heating start written as 2026-11-18, log-format change as 2026-12-17; data suggest 2025). | data provider | P0 | covariate timeline | — |
 | OPEN-15 | Admissibility of firmware movement labels (UM/DM/LM/RM/NM) as model inputs / movement-derived features. | PI | P2 | RQ3 | — |
-| OPEN-16 | Final primary cohort. Three candidates give only three LOSO folds; statistical plan must reflect this. | PI | P0 | RQ1 | — |
+| OPEN-16 | Final primary cohort. Three candidates give only three LOSO folds; statistical plan must reflect this. Provisional primary cohort: User01, User02, User07 (D-013). | PI | P0 | RQ1 | — |
 | OPEN-17 | Pressure-scale differences between subjects/periods (User01 saturates at 4095; User02 max 3731; User07 max 4023): normalisation strategy that respects L3/L11. | PI | P2 | preprocessing | — |
 | OPEN-18 | Public release: absolute dates or relative day indices. | PI + provider | P7 | release | — |
 
@@ -186,3 +186,24 @@ resolved. During P0 no model training, window generation, resampling, interpolat
 split generation, feature extraction or hyperparameter search is performed.
 Evidence: `docs/initial_dataset_inventory.md` §7–§10.
 Consequence: P0 ends with the cohort decision and the `p0-data-freeze` tag after merge into `main`.
+
+## D-013 — User03 ≠ User06; provisional quarantine of their overlapping recording; provisional primary cohort
+Date: 2026-09-12
+Status: Accepted (provisional — to be superseded once the data provider clarifies the measurement provenance)
+Context: P0-A1 found that 100 % of `user03_legacy` sensor rows (107,256, minute resolution) and 100 % of its
+value sequences are contained in `user06_auxiliary` recordings of the nights 2025-10-06 → 10-13. The PI
+relayed that User03 and User06 are different people.
+Decision:
+- User03 and User06 remain two distinct subjects (User03 ≠ User06). They are not merged.
+- Whether the overlapping measurements are independent is unresolved. The overlap covers all of `user03_legacy`
+  and the User06 nights 2025-10-06 → 10-13 that contain it.
+- Until the provider clarifies the provenance, this overlapping recording is **provisionally quarantined**:
+  it is not used in primary evaluation. Any other use (e.g. an auxiliary training pool) needs its own decision
+  (OPEN-13). Neither subject is deleted or finally excluded. User06's non-overlapping recordings keep their
+  auxiliary role.
+- User01, User02 and User07 form the **provisional primary cohort**. P0 continues on that basis.
+Evidence: `docs/P0_A1_PROVENANCE_REPORT.md` §4; `outputs/qa/p0/provenance/`; PI statement of 2026-09-12 that
+User03 and User06 are different users.
+Consequence: OPEN-01 is narrowed to measurement provenance. `configs/subject_mapping.yaml` is unchanged
+(roles stay `auxiliary`); the quarantine will be encoded in the cohort definition when the cohort is frozen at
+P0 exit. OPEN-16 (final cohort) stays open.

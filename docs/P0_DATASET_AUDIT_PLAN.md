@@ -4,9 +4,9 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1 done (2026-09-12); A2–A13 pending |
+| Status | In progress — A1, A2 done (2026-09-12); A3–A13 pending |
 | Starting point | `docs/initial_dataset_inventory.md` |
-| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012 |
+| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07: D-013 |
 
 ## Goal
 
@@ -60,7 +60,7 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Decision it may influence:** OPEN-01 (which subject ID and source survive), OPEN-13, OPEN-16,
   leakage rule L7.
 
-### A2. User02 device overlap
+### A2. User02 device overlap — **done (2026-09-12)**
 - **Purpose:** Characterise the concurrent recording of mats 22480 and 22482 and test the device
   attribution of the two quarantined files.
 - **Input:** `user02_mat_22480`, `user02_mat_22482`, `user02_mat_22480_prefix_mismatch`.
@@ -71,6 +71,25 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
   files compared with 22480 and 22482 over neighbouring dates.
 - **Expected artifact:** `outputs/qa/p0/user02_devices/joint_coverage.csv`, `co_occupancy.csv`,
   `movement_xcorr.csv`, `quarantine_attribution.csv`.
+- **As implemented:**
+  - Coverage uses a per-second grid with coverage gap rules of 10/60/300 s.
+  - Cross-device comparisons pair existing rows by nearest timestamp (exact / ±1 / ±3 s), with no resampling.
+  - Pressure coupling is tested by correlation at lag 0 and over −30…+30 s with ±24 h controls, by
+    movement-event coincidence, and by a supplementary ±12 h clock-offset scan (pooled and per date).
+  - Occupancy is evaluated under 14 definitions.
+  - T/H is compared on paired rows, per date, and with the inventory's per-minute method.
+  - Device distributions and a rule-based evidence table for the quarantined files are produced.
+  - Code: `src/data/device_overlap.py`, `scripts/audit_user02_devices.py`; tests: `tests/test_device_overlap.py`.
+- **Artifacts:** `outputs/qa/p0/user02_devices/` (`device_summary.csv`, `temporal_overlap.csv`,
+  `aligned_device_comparison.csv`, `lagged_correlation.csv`, `event_lag_scan*.csv`, `daily_th_difference.csv`,
+  `occupancy_sensitivity.csv`, `device_distributions.csv`, `daily_device_profile.csv`,
+  `prefix_mismatch_evidence.csv`); report `docs/P0_A2_USER02_DEVICE_REPORT.md`.
+- **Result:**
+  - 253 h of simultaneous recording, but no pressure or occupancy coupling between the mats.
+  - Persistent T/H offset (−2 °C / −19 %RH) and different channel-load patterns: device behaves as a domain
+    factor within User02.
+  - Quarantined files: strong evidence for 22482, still unresolved.
+  - OPEN-02/03 remain open pending the provider.
 - **Decision it may influence:** OPEN-02, OPEN-03 (use of two streams), L8 grouping, User02 inclusion
   in the primary cohort.
 
