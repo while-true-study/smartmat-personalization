@@ -39,8 +39,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.data import paths  # noqa: E402
 from src.data.duplicates import (  # noqa: E402
     cross_device_equality, duplicate_counts, file_boundaries, file_ranges, metadata_only_differences,
-    overlapping_file_pairs, policy_impact, repeated_chunk_keys, repeated_sequences, row_keys, timestamp_conflicts,
-    within_file_repeated_blocks,
+    overlapping_file_pairs, policy_impact, repeated_chunk_keys, repeated_sequences, row_keys, subject_device_groups,
+    timestamp_conflicts, within_file_repeated_blocks,
 )
 from src.data.io_guard import write_csv, write_json  # noqa: E402
 from src.data.manifest import read_manifest, sha256_file, verify_raw_integrity  # noqa: E402
@@ -87,14 +87,7 @@ def main() -> int:
         print(f"ERROR: raw/manifest mismatch: { {k: v[:5] for k, v in integrity.items()} }", file=sys.stderr)
         return 2
 
-    groups: dict[tuple[str, str], dict] = {}
-    for r in manifest:
-        if r["is_sensor_data"] != "True":
-            continue
-        g = groups.setdefault((r["subject_id"], r["device_id"]), {"sources": set(), "families": set(), "roles": set()})
-        g["sources"].add(r["source_id"])
-        g["families"].add(r["format_family"])
-        g["roles"].add(r["dataset_role"])
+    groups = subject_device_groups(manifest)
 
     summary, ranges_out, pairs_out, seqs_out, conf_out, meta_out, pol_out = [], [], [], [], [], [], []
     bnd_out, chunk_out = [], []

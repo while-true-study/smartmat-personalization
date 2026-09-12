@@ -3,3 +3,5 @@
 numpy==2.4.4
 PyYAML==6.0.3
 pytest==9.0.2
+# optional: QA figures of scripts/audit_temporal_gaps.py (skipped if not installed; no effect on results)
+matplotlib==3.10.9

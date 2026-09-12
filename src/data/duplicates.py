@@ -186,16 +186,83 @@ def overlapping_file_pairs(src: SourceData, keys: RowKeys) -> list[dict]:
     return out
 
 
+def pair_runs(src: SourceData, keys: RowKeys, pair: dict) -> tuple[np.ndarray, np.ndarray, list[tuple[int, int, int]]]:
+    """Row indices of the two files of an overlapping pair and their aligned runs (a_start, b_start, length)."""
+    ia = np.flatnonzero(src.file_idx == pair["_fa"])
+    ib = np.flatnonzero(src.file_idx == pair["_fb"])
+    pos = first_positions(keys.st[ia], keys.st[ib])
+    return ia, ib, aligned_runs(keys.st[ia], keys.st[ib], pos, np.zeros(ia.size, np.int32))
+
+
+def within_file_runs(src: SourceData, keys: RowKeys, f: int) -> tuple[np.ndarray, np.ndarray, list[tuple[int, int, int]]]:
+    """For one file: row indices, positions of later copies, and runs (copy_start, original_start, length)."""
+    idx = np.flatnonzero(src.file_idx == f)
+    full = keys.full[idx]
+    pos = first_positions(full, full)                  # earliest identical row in the same file
+    rep = np.flatnonzero(pos != np.arange(idx.size))   # rows that are later copies
+    return idx, rep, aligned_runs(full[rep], full, pos[rep], np.zeros(rep.size, np.int32))
+
+
+def _block_rows(src: SourceData, keys: RowKeys, pairs: list[dict], min_len: int):
+    """Yield (original_rows, copy_rows) of every repeated block of >= min_len fully identical rows."""
+    for p in pairs:
+        if not p["shared_sensor_target_rows"]:
+            continue
+        ia, ib, runs = pair_runs(src, keys, p)
+        for a0, b0, length in runs:
+            if length >= min_len:
+                ra, rb = ia[a0:a0 + length], ib[b0:b0 + length]
+                same = keys.full[rb] == keys.full[ra]
+                yield ra[same], rb[same]
+    for f in range(len(src.files)):
+        idx, rep, runs = within_file_runs(src, keys, f)
+        for a0, b0, length in runs:
+            if length >= min_len:
+                yield idx[b0:b0 + length], idx[rep[a0:a0 + length]]
+
+
+def upload_copy_mask(src: SourceData, keys: RowKeys, pairs: list[dict], min_len: int = 10) -> np.ndarray:
+    """Audit-only view: rows that are later, fully identical copies of a repeated block (>= min_len rows).
+
+    Between files, the copy in the later-starting file of each overlapping pair is marked; inside one
+    file, the later occurrence of a repeated block is marked. Same-second rows with different values,
+    isolated identical rows and anything outside a repeated block are never marked. Nothing is removed.
+    """
+    mask = np.zeros(src.n, bool)
+    for _, copies in _block_rows(src, keys, pairs, min_len):
+        mask[copies] = True
+    return mask
+
+
+def repeated_block_members(src: SourceData, keys: RowKeys, pairs: list[dict], min_len: int = 10) -> np.ndarray:
+    """Rows that belong to a repeated block, as original or as copy (for gap-context flags)."""
+    mask = np.zeros(src.n, bool)
+    for orig, copies in _block_rows(src, keys, pairs, min_len):
+        mask[orig] = True
+        mask[copies] = True
+    return mask
+
+
+def subject_device_groups(manifest_rows: list[dict]) -> dict[tuple[str, str], dict]:
+    """Sensor sources grouped by (subject_id, device_id) with their format families and dataset roles."""
+    groups: dict[tuple[str, str], dict] = {}
+    for r in manifest_rows:
+        if str(r["is_sensor_data"]) != "True":
+            continue
+        g = groups.setdefault((r["subject_id"], r["device_id"]), {"sources": set(), "families": set(), "roles": set()})
+        g["sources"].add(r["source_id"])
+        g["families"].add(r["format_family"])
+        g["roles"].add(r["dataset_role"])
+    return groups
+
+
 def repeated_sequences(src: SourceData, keys: RowKeys, pairs: list[dict], min_len: int = 10) -> list[dict]:
     """Contiguous blocks (row order in each file) shared by two files of the group."""
     out = []
     for p in pairs:
         if not p["shared_sensor_target_rows"]:
             continue
-        ia = np.flatnonzero(src.file_idx == p["_fa"])
-        ib = np.flatnonzero(src.file_idx == p["_fb"])
-        pos = first_positions(keys.st[ia], keys.st[ib])
-        runs = aligned_runs(keys.st[ia], keys.st[ib], pos, np.zeros(ia.size, np.int32))
+        ia, ib, runs = pair_runs(src, keys, p)
         in_runs = 0
         for a0, b0, length in runs:
             if length < min_len:
@@ -223,13 +290,10 @@ def within_file_repeated_blocks(src: SourceData, keys: RowKeys, min_len: int = 1
     """Contiguous blocks that occur twice inside the same file (e.g. an upload chunk written again)."""
     out = []
     for f in range(len(src.files)):
-        idx = np.flatnonzero(src.file_idx == f)
-        full = keys.full[idx]
-        pos = first_positions(full, full)                  # earliest identical row in the same file
-        rep = np.flatnonzero(pos != np.arange(idx.size))   # rows that are later copies
+        idx, rep, runs = within_file_runs(src, keys, f)
         if rep.size < min_len:
             continue
-        for a0, b0, length in aligned_runs(full[rep], full, pos[rep], np.zeros(rep.size, np.int32)):
+        for a0, b0, length in runs:
             if length < min_len:
                 continue
             copy, orig = idx[rep[a0:a0 + length]], idx[b0:b0 + length]

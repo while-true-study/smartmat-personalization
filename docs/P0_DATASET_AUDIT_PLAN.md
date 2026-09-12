@@ -4,7 +4,7 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2, A5 (incl. A3, A4) done (2026-09-12); A6–A13 pending |
+| Status | In progress — A1, A2, A5 (incl. A3, A4), A7 done; A6 partly (2026-09-12); A8–A13 pending |
 | Starting point | `docs/initial_dataset_inventory.md` |
 | Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07: D-013 |
 
@@ -134,7 +134,10 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
   - De-duplication proposed as D-014 (Proposed); session threshold not chosen.
 - **Decision it may influence:** OPEN-07, OPEN-06.
 
-### A6. Sampling interval distribution
+### A6. Sampling interval distribution — **partly done within A7 (2026-09-12)**
+- **Status:** step distributions per primary timeline (and reference groups) are in A7 (3 s nominal, p99 5 s,
+  0-s double readings, 6–15 s sample losses). Still pending: change points per period (e.g. User01 phase_a
+  2 s vs later 3 s) and rows-per-minute for the legacy sources.
 - **Purpose:** Describe the real sampling process per source, device and firmware period.
 - **Input:** De-duplicated (in memory) subject-device timelines.
 - **Method:** Δt histograms and quantiles; rows per minute; change points in the nominal interval
@@ -142,7 +145,20 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Expected artifact:** `outputs/qa/p0/sampling/interval_distribution.csv`, histogram figures.
 - **Decision it may influence:** OPEN-08; input to the resampling decision taken in P2 (not in P0).
 
-### A7. Temporal gap distribution
+### A7. Temporal gap distribution — **done (2026-09-12)**
+- **As implemented:**
+  - Two timelines per primary subject/device: raw, and an audit-only view without A5's repeated-block copies.
+  - Descriptive step classes and 13 gap buckets, upload-chunk alignment (n × 1,800 s ± 10 s) against its
+    chance rate, and gap context (file boundary, clock time, pressure/NM, T/H, events).
+  - Threshold sweep 1–120 min with and without bridging lost chunks; candidate-session night structure; QA figures.
+  - Code: `src/data/temporal.py`, `scripts/audit_temporal_gaps.py`; tests: `tests/test_temporal_gaps.py`.
+- **Artifacts:** `outputs/qa/p0/temporal/`; report `docs/P0_A7_TEMPORAL_GAP_REPORT.md`.
+- **Result:**
+  - Bimodal gaps; 5–90 min plateau for User01/22480/User07.
+  - 22482 loses 1–3 upload chunks at morning file cuts (13/13 aligned gaps at file boundaries).
+  - Recording is quantised in 30-min chunks.
+  - A vs B identical in session structure.
+  - Candidate policy D-015 (Proposed): > 30 min, with chunk-aligned 1–3-chunk gaps bridged.
 - **Purpose:** Provide the evidence base for a session definition.
 - **Input:** De-duplicated subject-device timelines.
 - **Method:** Gap-length distribution within and across files; number and length of candidate sessions
@@ -214,6 +230,11 @@ Tracked as issue drafts in `docs/issues/` (to be filed on GitHub):
 2. User02 dual-device recording protocol and the two quarantined files (OPEN-02, OPEN-03) —
    `P0-02_user02-dual-device-protocol.md`.
 3. Device IDs of all other sources (OPEN-04) and metadata date inconsistencies (OPEN-14).
+4. Upload/export mechanics (A5, A7; OPEN-06, OPEN-07):
+   - Are recordings stored and uploaded only as whole 30-minute chunks?
+   - Why are 1–3 chunks lost at the morning file cuts of 22482?
+   - Why do adjacent daily exports repeat chunks?
+   - What causes the recurring ≈ 2-minute logging pauses?
 
 ## Exit criteria (data freeze)
 

@@ -34,8 +34,16 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 | OPEN-03 | Physical setup of User02's mats 22480/22482: they overlap for ~505 h and both register occupancy in 66.8 % of jointly recorded minutes, with different temperature/humidity. Same bed (body regions)? Different locations? How to use two concurrent streams (separate, one, fused)? A1: 46 co-recorded dates, 0 shared rows or sequences — concurrent but distinct streams. **A2 evidence (2026-09-12):** 253 h simultaneous recording (76 % of 22480's time); no pressure coupling (|r| ≤ 0.03 for all descriptors, no lag peak within ±30 s, movement-event coincidence at chance level, no clock offset found within ±12 h); occupancy agreement at chance under all 14 definitions (κ −0.07…0.00, "both active" 18–90 % depending on threshold); persistent T/H offset (22480 − 22482: −2 °C, −19 %RH; humidity lower on 46/46 dates); different channel-load patterns. Physical placement and the use policy for the two streams remain unresolved. | provider + PI | P0 | User02 in primary cohort | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` |
 | OPEN-04 | Device IDs of User01, User07, User02 legacy, User03, User06. Recording periods hand over day-to-day (User01 → User07 → User02), suggesting reused mats. Subject and device may be confounded. | data provider | P0 | RQ1 interpretation | — |
 | OPEN-05 | Move the raw package into `data/raw/` or keep it at `스마트 매트 데이터 정리/`? | PI | P0 | nothing (path is configurable) | — |
-| OPEN-06 | Session definition (files ≠ sessions: files overlap and some span 30–57 h). **A5 evidence (2026-09-12):** confirmed quantitatively. Files hold parts of two nights (internal gap > 2 h in User01 12, 22480 3, 22482 29, User07 3 files). 22482 nights are split across files at 06:1x–09:1x with recording continuing 2–5 s later (10 boundaries), and 13 cuts lost exactly 1–3 upload chunks (n × 1,800 s + 3–8 s). 18 primary-group boundaries overlap through repeated chunks. For User01/22480/User07 most boundaries (139/150, 41/44, 97/99) fall in > 2 h gaps. No gap threshold chosen; pending A7. | PI | P0 | splits | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6 |
-| OPEN-07 | De-duplication policy for ~204 k identical rows shared by adjacent files, and for repeated rows/timestamps within files. **A5 evidence (2026-09-12):** in the primary groups all file overlaps are exact duplicate blocks (18 pairs; all 300 repeated chunk keys identical). Repeated copies never disagree (0 between-file conflicts). Cross-file exact copies: 187,190 rows (4.33 %), plus one 600-row chunk repeated inside `sm22482_0816`. Separately, 10,997 same-second timestamps carry two *different* readings inside one file (not duplicates), 272 adjacent same-second rows are identical, and 4 rows differ only in event text. Proposal: D-014 (Proposed). | PI | P0 | interim tables | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md`; D-014 |
+| OPEN-06 | Session definition (files ≠ sessions: files overlap and some span 30–57 h). **A5 evidence (2026-09-12):** confirmed quantitatively. Files hold parts of two nights (internal gap > 2 h in User01 12, 22480 3, 22482 29, User07 3 files). 22482 nights are split across files at 06:1x–09:1x with recording continuing 2–5 s later (10 boundaries), and 13 cuts lost exactly 1–3 upload chunks (n × 1,800 s + 3–8 s). 18 primary-group boundaries overlap through repeated chunks. For User01/22480/User07 most boundaries (139/150, 41/44, 97/99) fall in > 2 h gaps. No gap threshold chosen; pending A7. **A7 evidence (2026-09-12):**
+- Sampling is 3 s nominal (p99 5 s) on all primary timelines.
+- Gaps are bimodal: ≤ 5 min or > 2 h, with only 1–19 gaps per timeline between them.
+- User01/User07 have a recurring ≈ 2-min pause (120–140 s), unrelated to upload chunks.
+- Thresholds < 5 min fragment nights. 5–90 min is a plateau (≈ 1 session per night) for User01, 22480 and User07.
+- 22482 has no plateau because 13 gaps are exactly 1–3 lost upload chunks at morning file cuts (mat mostly occupied on both sides). Bridging them gives 1.12–1.24 sessions per night.
+- Session lengths are quantised in 30-min chunks.
+- Timeline A vs de-duplicated view: identical session structure.
+Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6; `docs/P0_A7_TEMPORAL_GAP_REPORT.md`; D-015 |
+| OPEN-07 | De-duplication policy for ~204 k identical rows shared by adjacent files, and for repeated rows/timestamps within files. **A5 evidence (2026-09-12):** in the primary groups all file overlaps are exact duplicate blocks (18 pairs; all 300 repeated chunk keys identical). Repeated copies never disagree (0 between-file conflicts). Cross-file exact copies: 187,190 rows (4.33 %), plus one 600-row chunk repeated inside `sm22482_0816`. Separately, 10,997 same-second timestamps carry two *different* readings inside one file (not duplicates), 272 adjacent same-second rows are identical, and 4 rows differ only in event text. Proposal: D-014 (Proposed). A7 note: removing copied blocks row for row removes 187,814 rows in the primary groups. That is 24 more than A1 + 600, because 24 same-second identical pairs were copied along with their chunk; the originals remain. | PI | P0 | interim tables | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md`; `docs/P0_A7_TEMPORAL_GAP_REPORT.md` §1; D-014 |
 | OPEN-08 | Timestamp policy: year inference for MM-DD rows, legacy minute-resolution rows, timezone, and the out-of-order steps. | PI | P0 | interim tables | — |
 | OPEN-09 | Handling of temp/humid sentinel zeros (chunk starts) and glitch values (−254, 256, 262). | PI | P0 | targets | — |
 | OPEN-10 | Target definition under heater control: the T/H sensor measures a heater-controlled microclimate. Is heater state a covariate, a stratifier, or excluded? | PI | P2 (informed by P0/P1) | RQ1–RQ3 | — |
@@ -225,3 +233,26 @@ all 300 repeated chunk keys have identical content; 0 between-file value conflic
 (4.3 %) of 4,323,873 primary-group rows.
 Consequence: If accepted, no information is lost (copies are identical). Same-second conflicts (10,997), their
 alignment and resampling remain for P2. Minute-resolution legacy sources are out of scope of this proposal.
+
+## D-015 — Candidate session boundary: gap > 30 min, with lost upload chunks bridged
+Date: 2026-09-12
+Status: **Proposed** (not accepted; decide at P0 exit together with D-014, after provider input on upload mechanics)
+Context: Sessions cannot be files or calendar days (A5, A7). A rule is needed to group each per-device timeline
+into recording sessions without altering data. The rule must not depend on any model result; none exists yet.
+Decision (proposed):
+- Build sessions per subject + device on the de-duplicated timeline (D-014 view).
+- A new session starts after a gap > 30 min.
+- A gap of exactly 1–3 upload chunks (n × 1,800 s ± 10 s, n ≤ 3) is recorded as a missing interval inside the
+  session, not as a break.
+- Session membership is a label only. No timestamp, row or gap is changed.
+- Within-session gaps (≈ 2-min pauses, 6–15 s sample losses, bridged missing chunks) must be handled explicitly
+  by the windowing rule (P2).
+Evidence: `docs/P0_A7_TEMPORAL_GAP_REPORT.md`.
+- 5–90 min is a plateau for User01/22480/User07.
+- The ≈ 2-min pauses rule out thresholds < 5 min.
+- 13/13 chunk-aligned 22482 gaps sit at file cuts with recording continuing on both sides in most cases.
+- Resulting sessions per night: 1.04 / 1.04 / 1.16 / 1.02.
+- The exact value is insensitive within ±15 min (≤ 5 sessions change per timeline).
+Consequence: If accepted, 22482 nights stay whole across export losses (58 instead of 71 sessions). Genuine
+non-aligned interruptions > 30 min remain breaks. Isolated single-chunk recordings, the split grouping level
+(session vs night) and windowing across within-session gaps stay open for P2.
