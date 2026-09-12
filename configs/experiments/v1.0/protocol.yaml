@@ -1,0 +1,148 @@
+# Evaluation protocol v1.0 (P2 freeze). Human-readable definition: docs/EXPERIMENT_PROTOCOL.md.
+# Rationale: docs/DECISIONS.md D-029 … D-042. Every value was fixed before any model result existed.
+# Changing any value is a protocol change: new DECISIONS entry + new protocol_version (RESEARCH_PROTOCOL §6).
+
+protocol_version: v1.0
+
+data:                                   # D-029
+  dataset_version: canonical_v1
+  primary_file: data/interim/canonical_v1/primary.parquet
+  dataset_role: primary_candidate       # the only role read; auxiliary.parquet is never read by protocol v1.0
+  subjects: [User01, User02, User07]    # D-020
+  excluded_subjects: [User06]           # D-017 (not in canonical_v1)
+  auxiliary_subjects_not_used: [User03] # D-023; User02 legacy is auxiliary too and lives only in auxiliary.parquet
+
+grouping:                               # D-030
+  night_offset_hours: 12                # night_id = date(timestamp - 12 h), naive local time (local_unspecified)
+  timezone_status: local_unspecified
+
+loso:                                   # D-031
+  split_id: v1.0_loso
+  outer_folds:                          # fold -> held-out subject; every source/device/session of it is test
+    1: User01
+    2: User02
+    3: User07
+  inner: subject_level_two_way          # inner A: train = first remaining subject, val = second; inner B: swapped
+
+window:                                 # D-032
+  duration_s: 40
+  bin_s: 5
+  n_steps: 8
+  stride_s: 20
+  max_gap_s: 5
+  step_value: last_observation_in_bin   # ties within a second: last row in canonical order (within_timestamp_order)
+  target_row: last_step                 # T/H of the row used at the last step (window end); no future row
+  boundaries: [subject_id, device_id, session_id, sensor_phase, channel_quality_phase, partition, night_id_for_rq2]
+  sensitivity_candidates_s: [20, 30]    # pre-declared robustness windows (P6), same bin/stride-ratio rule
+
+scaling:                                # D-033, D-034
+  pressure: {method: fixed_physical_range, divisor: 4095.0}   # no fitted input scaler; 4095 kept as observed
+  targets: {method: zscore_train_only, fit_on: training_partition_labelled_windows}
+  metrics_in_original_units: true
+
+targets:                                # D-034
+  names: [temperature, humidity]
+  joint_model: true
+  label_rule: both_targets_valid_at_target_row   # target_temp_valid & target_humidity_valid (D-025); no repair
+
+phases:                                 # D-035
+  sensor_phase: provenance_boundary_stratification_only
+  channel_quality_phase: provenance_boundary_stratification_only
+  exclude_phases: []                    # no phase is removed from any partition
+
+user02_devices:                         # D-036
+  policy: separate_streams_same_subject
+  devices: ["22480", "22482"]
+
+personalization:                        # D-037
+  split_id: v1.0_personalization
+  unit: subject_night
+  budgets_nights: [0, 1, 3, 7, 14]
+  buffer_nights: 1
+  primary_test_from_ordinal: 16         # = max budget + buffer + 1; identical test nights for every budget
+  base_model: loso_fold_model           # the RQ1 model of the fold in which the subject is held out
+  fine_tuning:
+    scope: all_parameters
+    optimizer: adamw
+    lr_factor_of_selected_lr: 0.1
+    weight_decay: same_as_selected
+    epochs: 10
+    batch_size: 256
+    early_stopping: none
+    refit_scalers: false
+
+inputs:                                 # D-038, D-039
+  pressure_columns: [P1, P2, P3, P4, P5, P6]
+  families:
+    RAW: [raw]
+    MOVEMENT: [movement]
+    CONTACT: [contact]
+    RAW+MOVEMENT: [raw, movement]
+    RAW+CONTACT: [raw, contact]
+    RAW+MOVEMENT+CONTACT: [raw, movement, contact]
+  primary_family: RAW
+  forbidden_fields:                     # never a model input (also enforced by an allowlist in the leakage gate)
+    - temperature
+    - humidity
+    - target_temp_valid
+    - target_humidity_valid
+    - target_quality_flag
+    - event_raw
+    - event_redacted
+    - firmware_movement_label
+    - control_event
+    - heater_state
+    - subject_id
+    - device_id
+    - source_id
+    - source_file
+    - source_file_id
+    - session_id
+    - sensor_phase
+    - channel_quality_phase
+    - channel_quality_flag
+    - timestamp
+    - timestamp_raw
+    - night_id
+    - month
+    - season
+    - hour_of_day
+    - day_index
+
+models:                                 # D-040
+  baselines: [training_mean, tcn_raw]
+  tcn:
+    kind: causal_residual_tcn
+    dilations: [1, 2, 4]                # 3 residual blocks, 2 causal convolutions each
+    head: last_step_linear_2_outputs
+    loss: mse_on_train_standardised_targets
+    search_space:
+      channels: [32, 64]
+      kernel_size: [2, 3]
+      dropout: [0.1, 0.3]
+      lr: [0.001, 0.0003]
+    fixed:
+      optimizer: adamw
+      weight_decay: 0.0001
+      batch_size: 256
+      max_epochs: 50
+      early_stopping_patience: 5
+  selection:
+    data: inner_validation_only
+    criterion: mean_over_inner_splits_of_mean_standardised_mae   # (MAE_T/sd_T + MAE_H/sd_H)/2, sd from inner train
+    seed_for_selection: 0
+    final_model: retrain_on_outer_training_pool
+    final_epochs: round_mean_of_inner_best_epochs
+  seeds: [0, 1, 2]
+
+metrics:                                # D-041
+  primary: [mae, rmse]
+  per_target: true
+  aggregation: per_subject_then_unweighted_mean_over_3_subjects
+  secondary: [bias, window_weighted_pooled, device_stratified, phase_stratified, night_level_distribution]
+  statistical_unit: night_within_subject
+  bootstrap: {unit: night, resamples: 2000, seed: 0, level: 0.95}
+
+artifacts:                              # D-042
+  split_dir: data/splits
+  manifest: data/splits/v1.0_manifest.json

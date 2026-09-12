@@ -17,13 +17,15 @@ configs/                          YAML configuration; the only place paths and m
   paths.yaml                      raw_root, protected roots, output locations
   subject_mapping.yaml            subject / device / source / dataset-role mapping, sensor and channel-quality phases
   canonical_v1.yaml               canonical interim dataset v1 parameters (D-028)
+  experiments/<version>/          frozen evaluation-protocol parameters (v1.0: protocol.yaml; D-029)
 data/
   raw/                            reserved raw location (see DATA_POLICY §1); read-only
   interim/                        derived, not yet model-ready
     canonical_v1/                 canonical interim dataset v1 (Parquet; git-ignored; DATA_POLICY §4.1)
     manifest/                     raw_file_manifest.csv (+ .meta.json) and canonical_v1_* manifests — committed
   processed/                      model-ready tables produced by a frozen protocol version
-  splits/                         split definitions (created before windowing; RESEARCH_PROTOCOL L1)
+  splits/                         split definitions (created before windowing; RESEARCH_PROTOCOL L1); v1.0 files and
+                                  v1.0_manifest.json are committed (D-042)
 src/
   data/                           raw access, provenance, parsing, audit helpers
   features/  models/  training/  evaluation/
@@ -143,7 +145,8 @@ new tag (e.g. `p0-data-freeze-r2`) and a decision entry.
   `Generated with …`, `AI-generated`). The existing Git author configuration is used unchanged.
 
 ### 6.7 Public repository hygiene
-The repository is public. Never commit: raw data, derived data other than the raw manifest, restricted
+The repository is public. Never commit: raw data, derived data other than the raw manifest, the canonical_v1
+manifests (D-028) and the protocol split definitions under `data/splits/` (group assignments without values; D-042), restricted
 metadata, personal names, messenger or other personal identifiers, tokens/passwords/secrets, or local
 absolute paths. Public-facing material uses anonymous subject IDs only (`DATA_POLICY.md` §5).
 Before each commit, check staged files for these items; `data/raw/README.md` is the only tracked file

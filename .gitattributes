@@ -1,0 +1,2 @@
+# Frozen split files are hashed; keep LF in every checkout (D-042).
+data/splits/** text eol=lf
