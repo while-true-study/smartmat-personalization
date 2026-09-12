@@ -145,6 +145,10 @@ Within files, 110 files contain repeated identical rows and 283 contain repeated
 (largest counts in the minute-resolution legacy CSVs, where they are partly an artefact of lost seconds).
 
 ### 7.3 Rows shared across different subjects — **User03 ⊂ User06**
+> Update 2026-09-12: reproduced and extended to all subject pairs by P0-A1
+> (`docs/P0_A1_PROVENANCE_REPORT.md`). Sensor values match for 100 % of User03 rows; the "99.99 %" below came
+> from also comparing event text, which differs in one row. No other subject pair shares data.
+
 Every row of `user03_legacy` (99.99–100 % per file) equals a row of `user06_auxiliary` after truncating
 User06 timestamps to the minute. For 2025-10-09 the two sequences are identical row for row (15,717 rows);
 for 10-11 both files have 14,531 rows. User06 additionally covers 10-03…10-05 and 10-13 that User03 does
@@ -239,4 +243,5 @@ python -m pytest
 ```
 
 The User03/User06 containment (§7.3) and User02 co-occupancy (§7.4) figures come from one-off read-only
-checks run during this inventory. They are to be added to `audit_dataset.py` in the next P0 step.
+checks run during this inventory. The containment check is now reproducible as P0-A1
+(`scripts/audit_cross_subject_provenance.py`); the co-occupancy check is planned as P0-A2.

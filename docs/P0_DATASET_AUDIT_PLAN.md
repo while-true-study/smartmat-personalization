@@ -4,7 +4,7 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — plan only; no P0 analysis beyond the initial inventory has been run |
+| Status | In progress — A1 done (2026-09-12); A2–A13 pending |
 | Starting point | `docs/initial_dataset_inventory.md` |
 | Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012 |
 
@@ -39,7 +39,7 @@ Raw data stay read-only (`DATA_POLICY.md` §1).
 Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (time) → A8, A9, A10
 (quality) → A13 → A11, A12 (coverage and target distributions).
 
-### A1. Cross-subject duplicate / provenance analysis
+### A1. Cross-subject duplicate / provenance analysis — **done (2026-09-12)**
 - **Purpose:** Establish whether any recording appears under more than one subject ID (known case:
   User03 ⊂ User06), and rule it out for all other subject pairs.
 - **Input:** All sensor files in the manifest; parsed rows (`src/data/raw_parser.py`).
@@ -48,8 +48,15 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
   compute containment in both directions, per date. For matching dates, check row-by-row sequence
   alignment and characterise the transformation (truncated seconds, changed separators, dropped rows,
   file-boundary shifts). Negative control: source pairs with no expected relation (e.g. User02 legacy vs User06).
-- **Expected artifact:** `outputs/qa/p0/provenance/cross_source_containment.csv` (pair × date ×
-  resolution), `alignment_summary.csv`, short report section.
+- **As implemented:** the third mode became a timestamp-free 5-row value sequence over all common channels
+  (P1–P6, temp, humid) instead of a pressure-only row fingerprint with timestamp, so that re-dated copies are
+  also detected. Matches are split into informative (pressure > 0) and empty-mat rows. Comparisons run on
+  all 10 subject pairs and all 45 source pairs. Code: `src/data/provenance.py`,
+  `scripts/audit_cross_subject_provenance.py`; tests: `tests/test_provenance.py`.
+- **Artifacts:** `outputs/qa/p0/provenance/cross_subject_provenance_summary.csv`, `…_by_date.csv`,
+  `…_by_source.csv`, `cross_subject_file_correspondence.csv`; report `docs/P0_A1_PROVENANCE_REPORT.md`.
+- **Result:** only User03 – User06 overlaps (User03: 100 % in minute and sequence modes); all other pairs share
+  nothing. OPEN-01 remains unresolved pending provider confirmation.
 - **Decision it may influence:** OPEN-01 (which subject ID and source survive), OPEN-13, OPEN-16,
   leakage rule L7.
 

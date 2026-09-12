@@ -4,38 +4,52 @@
 > and body, then replace the "Tracking" cell of OPEN-01 in `docs/DECISIONS.md` with the issue link.
 
 **Phase:** P0 — Dataset Audit & Data Freeze · **Open decision:** OPEN-01 · **Type:** provenance / subject identity
+**Status:** evidence quantified (P0-A1, 2026-09-12); identity unconfirmed — waiting for the data provider
 
 ## Evidence
-From the initial inventory (`docs/initial_dataset_inventory.md` §7.3), read-only analysis:
-- Every row of source `user03_legacy` (7 nightly files, 2025-10-06 → 2025-10-13) equals a row of source
-  `user06_auxiliary` after truncating User06 timestamps to the minute: 99.99–100 % containment per file.
-- For the night starting 2025-10-09 the two sequences are identical row for row (15,717 rows). For the
-  night starting 2025-10-11 both files have exactly 14,531 rows.
-- User06 additionally covers 2025-10-03…10-05 and 10-13, which User03 does not.
-- Negative control: `user02_legacy_csv` (same period, same export format) shares 0 % of rows with User06.
-- The User03 files are spreadsheet-style CSV exports (seconds dropped, decimal points turned into
-  commas in settings lines); User06 files are the original device logs with second resolution.
-- Side result: this alignment confirms that `.` between timestamp and P1 in User06 files 1003–1011 is a
-  delimiter (OPEN-12).
+Reproducible analysis P0-A1 (`docs/P0_A1_PROVENANCE_REPORT.md`, code `scripts/audit_cross_subject_provenance.py`),
+read-only, all 10 subject pairs × 3 comparison modes:
+
+| Mode | User03 rows / sequences found in User06 | User06 rows / sequences found in User03 |
+|---|---|---|
+| A — exact timestamp + values | 10.94 % | 1.12 % |
+| B — timestamp floored to the minute + values | **100.00 %** (107,256 / 107,256) | 65.35 % |
+| C — 5-row value sequences, no timestamp | **100.00 %** (73,048 / 73,048) | 77.87 % |
+
+- Offsets between matched rows (User06 − User03) are always 0–59 s (median 29 s), which is the signature
+  of timestamps truncated to the minute.
+- Each of the 7 User03 files corresponds to exactly one User06 file of the same night. Its whole content is a
+  contiguous excerpt of that file: the User06 rows missing from User03 lie only at the start or end of the night.
+  The longest block of identical value sequences in identical order spans 13,180 sequences (one full night).
+- User06 additionally contains the nights starting 2025-10-03…10-05 and the early hours of 2025-10-14, which
+  User03 does not.
+- **No other subject pair shares any row or sequence**, in any mode. This includes User02 legacy, which was
+  recorded on the same dates in the same export format (negative control).
+- The User03 export is a spreadsheet-style CSV (seconds dropped, one event label normalised); User06 files are
+  device logs with second resolution.
+- Side result: User06 files 1003–1011 match User03 only when `.` before P1 is read as a delimiter (OPEN-12).
+
+Interpretation limited to the data: **the observed overlap is inconsistent with treating the two sources as
+independent subject recordings.** The data cannot tell whose recording it is.
 
 ## Research impact
-- The same physical recording currently exists under two subject IDs. Using both would double-count one
-  person, inflate the number of subjects, and leak data between "different" subjects (RESEARCH_PROTOCOL L7).
-- Both sources are auxiliary, so the primary cohort is not directly affected, but any use of auxiliary
-  subjects (training pools, robustness checks) is blocked.
-- If User03 and User06 are actually different people, one folder is mislabelled and the label of the
-  shared recording is unknown.
+- The data indicate that one physical recording exists under two subject IDs. Using both would double-count
+  it, inflate the number of subjects, and leak data between "different" subjects (RESEARCH_PROTOCOL L7).
+- Both sources are auxiliary, so the primary cohort (User01, User02, User07) is not affected. A1 found no
+  overlap involving the primary candidates. Any use of auxiliary subjects (training pools, robustness checks)
+  is blocked.
+- Whatever the answer, the auxiliary pool holds at most two independent October-2025 recording streams
+  (User02 legacy and the shared User03/User06 recording), not three.
 
 ## Required clarification (data provider)
 1. Are "User03" and "User06" the same person?
-2. If not, who was recorded on 2025-10-06 → 10-13, and how was the User03 legacy CSV produced?
-3. Which subject ID should the shared recording carry?
+2. If not, who was recorded on the nights 2025-10-06 → 10-13, and how was the User03 legacy CSV produced?
+3. Which subject ID should the shared recording carry, and do User06's extra nights (10-03…10-05, 10-14)
+   belong to the same person?
 
 ## Blocking decision
 OPEN-01 → a decision entry that states which source/subject ID survives and which is excluded.
 Blocks: any use of User03 or User06 data; OPEN-13 (auxiliary use); OPEN-16 (cohort).
 
 ## Handling until resolved
-Neither source is used in any analysis beyond provenance checks. P0 analysis A1
-(`docs/P0_DATASET_AUDIT_PLAN.md`) re-implements the containment check reproducibly and extends it to all
-subject pairs.
+Subject mapping is unchanged. Neither source is used in any analysis beyond provenance/QA checks.

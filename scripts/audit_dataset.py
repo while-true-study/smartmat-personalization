@@ -28,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.data import paths  # noqa: E402
 from src.data.io_guard import write_csv, write_json, write_text  # noqa: E402
-from src.data.manifest import find_duplicate_groups, read_manifest, sha256_file  # noqa: E402
+from src.data.manifest import find_duplicate_groups, read_manifest, sha256_file, verify_raw_integrity  # noqa: E402
 from src.data.raw_parser import parse_file  # noqa: E402
 from src.data.subject_mapping import resolve_source  # noqa: E402
 
@@ -301,13 +301,9 @@ def main() -> int:
         r["is_sensor_data"] = r["is_sensor_data"] == "True"
 
     # 1. integrity: raw must still match the manifest
-    changed = [r["source_relpath"] for r in manifest if sha256_file(root / r["source_relpath"]) != r["sha256"]]
-    on_disk = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()}
-    missing = sorted({r["source_relpath"] for r in manifest} - on_disk)
-    unlisted = sorted(on_disk - {r["source_relpath"] for r in manifest})
-    if changed or missing or unlisted:
-        print(f"ERROR: raw/manifest mismatch. changed={changed[:5]} missing={missing[:5]} unlisted={unlisted[:5]}",
-              file=sys.stderr)
+    integrity = verify_raw_integrity(root, manifest)
+    if any(integrity.values()):
+        print(f"ERROR: raw/manifest mismatch: { {k: v[:5] for k, v in integrity.items()} }", file=sys.stderr)
         return 2
 
     out_dir = paths.audit_output_dir()
