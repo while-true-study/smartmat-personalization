@@ -1,0 +1,15 @@
+dataset_version,dataset_file,subject_id,source_id,device_id,role,quality_status,sensor_phase,channel_quality_phase,rows_raw,rows_copies_removed,rows_canonical,sessions,first_timestamp,last_timestamp,target_valid_rows,pressure_valid_rows,status,pressure_upper_bound_rows,status_reason,status_decision
+canonical_v1,primary,User01,user01_phase_a,unknown,primary_candidate,ok,s1,normal,56244,0,56244,6,2025-08-25 22:21:51,2025-09-01 01:54:16,56244,56244,included,24310,,
+canonical_v1,primary,User01,user01_phase_b,unknown,primary_candidate,ok,s1,normal,792627,9192,783435,61,2025-11-05 19:23:17,2026-01-01 07:41:55,781132,783435,included,186989,,
+canonical_v1,primary,User01,user01_phase_c,unknown,primary_candidate,ok,s1,normal,381211,22198,359013,24,2026-01-01 17:54:37,2026-01-25 08:07:26,358981,359013,included,53110,,
+canonical_v1,primary,User01,user01_phase_c,unknown,primary_candidate,ok,s2,normal,1018738,65226,953512,66,2026-01-25 17:31:21,2026-04-02 06:40:38,953435,953512,included,18,,
+canonical_v1,primary,User02,user02_mat_22480,22480,primary_candidate,ok,not_applicable,normal,431471,33007,398464,47,2026-07-19 19:54:06,2026-09-05 01:11:05,398406,398464,included,17,,
+canonical_v1,primary,User02,user02_mat_22482,22482,primary_candidate,ok,not_applicable,normal,357308,9601,347707,32,2026-07-19 19:41:56,2026-08-19 08:56:10,346254,347707,included,0,,
+canonical_v1,primary,User02,user02_mat_22482,22482,primary_candidate,ok,not_applicable,p1_response_shift,261014,31209,229805,25,2026-08-20 21:37:33,2026-09-11 06:20:19,229750,229805,included,0,,
+canonical_v1,primary,User02,user02_mat_22482,22482,primary_candidate,ok,not_applicable,p1_transition,16804,0,16804,1,2026-08-19 19:58:23,2026-08-20 09:58:32,16796,16804,included,0,,
+canonical_v1,primary,User07,user07,unknown,primary_candidate,ok,not_applicable,normal,1008456,17381,991075,102,2026-04-03 19:00:58,2026-07-19 05:11:33,990929,991075,included,0,,
+canonical_v1,auxiliary,User02,user02_legacy_csv,unknown,auxiliary,ok,not_applicable,normal,71370,0,71370,7,2025-10-05 00:50:00,2025-10-13 07:10:00,71370,71370,included,36375,,
+canonical_v1,auxiliary,User03,user03_legacy,unknown,auxiliary,ok,not_applicable,normal,107256,0,107256,7,2025-10-06 21:33:00,2025-10-13 09:15:00,107236,107256,included,25932,,
+canonical_v1,none,User01,user01_metadata,not_applicable,restricted_metadata,ok,not_loaded,not_loaded,0,0,0,0,,,,,not_sensor_data,,restricted_metadata,D-008
+canonical_v1,none,User02,user02_mat_22480_prefix_mismatch,unresolved,quarantined,ok,not_loaded,not_loaded,22205,0,0,0,,,,,quarantined,,quarantined,D-006
+canonical_v1,none,User06,user06_auxiliary,unknown,excluded_invalid,invalid,not_loaded,not_loaded,164185,0,0,0,,,,,excluded,,provider_confirmed_setting_issue,D-017

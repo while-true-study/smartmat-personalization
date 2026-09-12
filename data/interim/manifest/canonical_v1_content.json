@@ -1,0 +1,91 @@
+{
+  "dataset_version": "canonical_v1",
+  "schema_version": "1.0",
+  "config_hash_sha256": "a5c09e425f090b7e88c5e5b08f8b88ed1361252047e2284c40b3da6990e6db29",
+  "raw_manifest_sha256": "f5a27acc59cc7429c0d3ecb0d3985f5f92e5b7d13c6a2156c36687798b94ee88",
+  "canonical_schema": [
+    "canonical_row_id:string",
+    "dataset_role:dictionary<values=string, indices=int32, ordered=0>",
+    "subject_id:dictionary<values=string, indices=int32, ordered=0>",
+    "source_id:dictionary<values=string, indices=int32, ordered=0>",
+    "device_id:dictionary<values=string, indices=int32, ordered=0>",
+    "timestamp_raw:string",
+    "timestamp:timestamp[s]",
+    "timestamp_resolution:dictionary<values=string, indices=int32, ordered=0>",
+    "timestamp_format:dictionary<values=string, indices=int32, ordered=0>",
+    "timestamp_year_source:dictionary<values=string, indices=int32, ordered=0>",
+    "timezone_status:dictionary<values=string, indices=int32, ordered=0>",
+    "sensor_phase:dictionary<values=string, indices=int32, ordered=0>",
+    "channel_quality_phase:dictionary<values=string, indices=int32, ordered=0>",
+    "channel_quality_flag:dictionary<values=string, indices=int32, ordered=0>",
+    "P1:int16",
+    "P2:int16",
+    "P3:int16",
+    "P4:int16",
+    "P5:int16",
+    "P6:int16",
+    "temperature:int16",
+    "humidity:int16",
+    "target_temp_valid:bool",
+    "target_humidity_valid:bool",
+    "target_quality_flag:dictionary<values=string, indices=int32, ordered=0>",
+    "pressure_schema:dictionary<values=string, indices=int32, ordered=0>",
+    "pressure_valid:bool",
+    "pressure_upper_bound_channels:int8",
+    "pressure_all_zero:bool",
+    "pressure_frame_constant_run_s:int32",
+    "pressure_quality_flag:dictionary<values=string, indices=int32, ordered=0>",
+    "event_raw:string",
+    "event_redacted:bool",
+    "log_container:dictionary<values=string, indices=int32, ordered=0>",
+    "session_id:dictionary<values=string, indices=int32, ordered=0>",
+    "gap_before_s:int64",
+    "session_bridged_gap:bool",
+    "source_file:dictionary<values=string, indices=int32, ordered=0>",
+    "source_file_id:dictionary<values=string, indices=int32, ordered=0>",
+    "source_row:int32",
+    "chunk_key:dictionary<values=string, indices=int32, ordered=0>",
+    "same_timestamp_group_id:string",
+    "same_timestamp_group_size:int16",
+    "within_timestamp_order:int16",
+    "duplicate_group_id:string",
+    "duplicate_count:int16"
+  ],
+  "provenance_schema": [
+    "duplicate_group_id:string",
+    "canonical_row_id:string",
+    "subject_id:dictionary<values=string, indices=int32, ordered=0>",
+    "device_id:dictionary<values=string, indices=int32, ordered=0>",
+    "source_file:dictionary<values=string, indices=int32, ordered=0>",
+    "source_file_id:dictionary<values=string, indices=int32, ordered=0>",
+    "source_row:int32",
+    "occurrence_order:int16",
+    "is_canonical:bool"
+  ],
+  "datasets": {
+    "primary": {
+      "rows": 4136059,
+      "streams": 4,
+      "content_sha256": "26b970a4edce2bd57767c62666d08cf46d274e675c78ed604b1116892a97dd0a"
+    },
+    "auxiliary": {
+      "rows": 178626,
+      "streams": 2,
+      "content_sha256": "a0457edabbd9c1d4f74d7bf30a81c9b5638e99fc0bd239dba5fa453942ad2302"
+    }
+  },
+  "duplicate_provenance": {
+    "rows": 358823,
+    "content_sha256": "b39ed4d2fe73aa8f24912ad2e11f8d87206718f11e2326e680227a65a010c112"
+  },
+  "reconciliation": {
+    "raw_sensor_rows_total": 4688889,
+    "excluded_rows": 164185,
+    "quarantined_rows": 22205,
+    "auxiliary_raw_rows": 178626,
+    "primary_raw_rows": 4323873,
+    "primary_copies_removed": 187814,
+    "primary_canonical_rows": 4136059,
+    "auxiliary_canonical_rows": 178626
+  }
+}

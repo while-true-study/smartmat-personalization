@@ -13,6 +13,8 @@ from typing import Any
 from src.data.paths import load_config
 
 UNKNOWN_DEVICE_VALUES = {"unknown", "unresolved", "not_applicable"}
+# Roles whose sources may enter analyses; every other role is excluded (raw files are never touched).
+ANALYSIS_ROLES = {"primary_candidate", "auxiliary"}
 
 
 @dataclass(frozen=True)
@@ -25,6 +27,14 @@ class SourceInfo:
     format_family: str
     year_hint: int | None = None
     device_id_candidates: tuple[str, ...] = ()
+    quality_status: str = "ok"
+    exclusion_reason: str = ""
+    exclusion_confirmed_by: str = ""
+    exclusion_decision: str = ""
+
+    @property
+    def analysis_eligible(self) -> bool:
+        return self.dataset_role in ANALYSIS_ROLES and self.quality_status != "invalid"
 
 
 @dataclass(frozen=True)
@@ -73,9 +83,54 @@ def sources() -> tuple[SourceInfo, ...]:
                 format_family=s["format_family"],
                 year_hint=s.get("year_hint"),
                 device_id_candidates=tuple(str(d) for d in s.get("device_id_candidates", [])),
+                quality_status=str(s.get("quality_status", "ok")),
+                exclusion_reason=str(s.get("exclusion_reason", "")),
+                exclusion_confirmed_by=str(s.get("exclusion_confirmed_by", "")),
+                exclusion_decision=str(s.get("exclusion_decision", "")),
             )
         )
     return tuple(out)
+
+
+def analysis_source_ids() -> set[str]:
+    """Sources that may enter analyses (primary candidates and auxiliary, not invalid)."""
+    return {s.source_id for s in sources() if s.analysis_eligible}
+
+
+def excluded_sources() -> list[dict]:
+    """Excluded sources with their reason: the basis of the exclusion list in a future release manifest (P7)."""
+    return [{"source_id": s.source_id, "subject_id": s.subject_id, "dataset_role": s.dataset_role,
+             "quality_status": s.quality_status, "exclusion_reason": s.exclusion_reason or s.dataset_role,
+             "exclusion_confirmed_by": s.exclusion_confirmed_by, "exclusion_decision": s.exclusion_decision}
+            for s in sources() if not s.analysis_eligible]
+
+
+def _phase_bounds(spec: list[dict]) -> list[tuple[int, int]]:
+    """(last_row of phase i, first_row of phase i+1) as epoch seconds of the naive local time."""
+    from datetime import datetime
+
+    epoch = datetime(1970, 1, 1)
+    sec = lambda s: int((datetime.fromisoformat(s) - epoch).total_seconds())  # noqa: E731
+    return [(sec(a["last_row"]), sec(b["first_row"])) for a, b in zip(spec[:-1], spec[1:])]
+
+
+def sensor_phase_spec(subject_id: str) -> tuple[list[tuple[int, int]], tuple[str, ...]]:
+    """Sensor-phase boundaries (last_row_before, first_row_after as epoch seconds of the naive local time) and
+    phase names for a subject (D-019). Subjects without an entry have a single phase 's1'."""
+    spec = (mapping_config().get("sensor_phases") or {}).get(subject_id)
+    if not spec:
+        return [], ("s1",)
+    return _phase_bounds(spec), tuple(p["phase"] for p in spec)
+
+
+def channel_quality_spec(device_id: str) -> tuple[list[tuple[int, int]], tuple[str, ...], dict[str, str]]:
+    """Channel-quality phase boundaries, names and affected channels per phase for a device timeline (D-022).
+    Devices without an entry (including 'unknown') have a single phase 'normal' with no affected channel."""
+    spec = (mapping_config().get("channel_quality_phases") or {}).get(str(device_id))
+    if not spec:
+        return [], ("normal",), {"normal": ""}
+    return (_phase_bounds(spec), tuple(p["phase"] for p in spec),
+            {p["phase"]: ";".join(p.get("channels", [])) for p in spec})
 
 
 def to_relpath(path_like: str) -> str:

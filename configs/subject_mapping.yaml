@@ -12,13 +12,28 @@ subjects:
   User01: {cohort: primary_candidate}
   User02: {cohort: primary_candidate}   # new mat logs are primary candidates; legacy CSVs are auxiliary
   User03: {cohort: auxiliary}
-  User06: {cohort: auxiliary}
+  User06: {cohort: no_valid_source}     # distinct subject kept; its only source is excluded_invalid (D-017)
   User07: {cohort: primary_candidate}
 
 # Physical mat / source device IDs -> subject. Device IDs are provenance metadata only.
 device_subject_map:
   "22480": User02
   "22482": User02
+
+# Sensor phases (D-019): provenance labels only, never a correction. A boundary is a recording gap given by the
+# last row of the earlier phase and the first row of the later one. Timelines not listed here are "s1".
+sensor_phases:
+  User01:
+    - {phase: s1, last_row: "2026-01-25 08:07:26"}
+    - {phase: s2, first_row: "2026-01-25 17:31:21"}
+
+# Channel-quality phases (D-022): provenance labels per device timeline, never a correction or an exclusion.
+# Boundaries are recording gaps (last row of one phase, first row of the next). Devices not listed are "normal".
+channel_quality_phases:
+  "22482":
+    - {phase: normal, last_row: "2026-08-19 08:56:10"}
+    - {phase: p1_transition, first_row: "2026-08-19 19:58:23", last_row: "2026-08-20 09:58:32", channels: [p1]}
+    - {phase: p1_response_shift, first_row: "2026-08-20 21:37:33", channels: [p1]}
 
 # Filename patterns that encode a device ID (checked against the folder-declared device).
 filename_device_patterns:
@@ -28,7 +43,12 @@ filename_device_patterns:
 #   primary_candidate   - candidate for the main experiment pool (not yet frozen)
 #   auxiliary           - kept separate from the main pool; use only under an explicit protocol
 #   quarantined         - provenance conflict; excluded from every analysis until resolved
+#   excluded_invalid    - source confirmed invalid; raw kept for provenance, excluded from every analysis,
+#                         model evaluation and public release (analytical exclusion, never physical deletion)
 #   restricted_metadata - non-sensor participant metadata; never used as data, never released
+#
+# Optional exclusion provenance (for excluded sources; also feeds the future release manifest, P7):
+#   quality_status, exclusion_reason, exclusion_confirmed_by, exclusion_decision
 #
 # year_hint: year assumed for MM-DD timestamps ONLY when no JSON log key can anchor the year.
 #            Used for inventory date ranges; rows dated this way are counted as year_source=config_hint.
@@ -100,12 +120,16 @@ sources:
     dataset_role: auxiliary
     format_family: legacy_csv_ymd_hm
 
-  - source_id: user06_auxiliary
+  - source_id: user06_auxiliary          # id kept unchanged for provenance continuity
     raw_subdir: user06_auxiliary
     subject_id: User06
     device_id: unknown
-    dataset_role: auxiliary
+    dataset_role: excluded_invalid
     format_family: plain_ymd_hms
+    quality_status: invalid
+    exclusion_reason: provider_confirmed_setting_issue
+    exclusion_confirmed_by: data_provider
+    exclusion_decision: D-017
 
   - source_id: user07
     raw_subdir: user07

@@ -1,6 +1,6 @@
 # Research Protocol
 
-Research questions, evaluation principles and leakage-prevention rules.
+Research questions, research lifecycle (P0–P8), evaluation principles and leakage-prevention rules.
 Concrete split/preprocessing/model settings belong in `docs/EXPERIMENT_PROTOCOL.md`; data rules in
 `docs/DATA_POLICY.md`. Any deviation from this document must be recorded in `docs/DECISIONS.md`
 **before** the affected experiment is run.
@@ -63,16 +63,51 @@ Feature-family definitions are pending (EXPERIMENT_PROTOCOL §6). Working meanin
 | L4 | **Held-out subject is untouchable.** It is never used for validation, early stopping, hyperparameter tuning, model/feature selection, threshold choice or normalisation statistics. Validation data come from training subjects only (nested scheme). |
 | L5 | **Personalization is chronological.** Adaptation data for a subject strictly precede that subject's test data in time, with a buffer gap between them (length set in EXPERIMENT_PROTOCOL). No shuffling across time. Hyperparameters of adaptation are not tuned on the subject's test span. |
 | L6 | **Subject-level exclusion covers all sources.** When a subject is held out, all of its sources, including auxiliary legacy data (e.g. User02 `legacy_csv` when User02 is tested), are excluded from training and validation. |
-| L7 | **Duplicated recordings are resolved first.** Data that exist under two subject IDs (OPEN-01: User03 ⊂ User06) or in two files (adjacent-file overlap) are de-duplicated before splitting; the same physical recording never appears twice. |
+| L7 | **Duplicated recordings are resolved first.** Data that exist under two subject IDs (OPEN-01: User03 ⊂ User06; resolved by excluding the invalid User06 source, D-017) or in two files (adjacent-file overlap) are de-duplicated before splitting; the same physical recording never appears twice. |
 | L8 | **Concurrent devices are one group.** Simultaneous recordings of one subject on several devices (User02: 22480 and 22482) belong to the same split group and never straddle train/test. |
 | L9 | **No target leakage through inputs.** Inputs must not contain the targets or quantities computed from them: temperature/humidity of any device, heater-control events or set-points (AHON/AHOF, BHSDOWN, BCSUP, FOH, STEMP, SLIMIT, …, which the firmware derives from temperature). Firmware movement labels (UM/DM/LM/RM/NM) are derived from pressure only according to the provider's legend and are admissible candidates, pending OPEN-15. |
 | L10 | **Calendar leakage is declared.** Date, season or time-of-day inputs can proxy for temperature. They are excluded by default and, if used, are declared and ablated. |
 | L11 | **No normalisation using the test subject's statistics** (e.g. per-subject z-scoring with test-span statistics) unless it is part of the declared personalization protocol and uses adaptation-span data only. |
 | L12 | **Leakage validation gate.** Before any training run, automated checks verify L1–L11 against the saved split files (disjoint groups, chronological order, scaler-fit provenance, excluded sources). If any check fails, training does not start. The check report is stored with the run. |
 
-## 5. What counts as a protocol change
+## 5. Research lifecycle (canonical workflow)
+
+The study proceeds through nine fixed phases, in order. A phase is complete only when its exit
+criteria are met, its decisions are recorded in `DECISIONS.md`, and its Pull Request is merged into
+`main`. The next phase starts only after that merge. Git mechanics (branches, PRs, tags, commits):
+`CONVENTIONS.md` §6.
+
+| Phase | Name | Purpose | Exit criteria | Freeze tag |
+|---|---|---|---|---|
+| P0 | Dataset Audit & Data Freeze | Understand the raw data; settle provenance, subject/device identity, quality handling and cohort. | Identity conflicts resolved or excluded; cohort decided; data-level policies (de-duplication, timestamps, sentinels, sessions) accepted; canonical interim dataset built with provenance and checksums. | `p0-data-freeze` |
+| P1 | Domain-shift EDA | Characterise shift between subjects, devices, periods and seasons before any modelling. | Documented shift analysis that informs, but is not tuned against, the protocol. | — |
+| P2 | Evaluation Protocol & Split Freeze | Fix preprocessing, windowing, splits, metrics and leakage checks **before any model result is seen**. | `EXPERIMENT_PROTOCOL.md` v1.0 frozen; split files saved with SHA-256; leakage checks implemented and passing. | `p2-protocol-freeze` |
+| P3 | Strict LOSO Baseline | Answer RQ1 under the frozen protocol. | Baselines and LOSO results reproduced from a clean checkout. | `p3-loso-baseline` |
+| P4 | Feature Ablation | Answer RQ3 (movement-derived vs contact-structure features). | Ablation results under the frozen protocol. | — |
+| P5 | User Personalization | Answer RQ2 (chronological fine-tuning, adaptation budget). | Main personalization experiment complete and reproduced. | `p5-personalization` |
+| P6 | Robustness & Statistical Analysis | Uncertainty, sensitivity and robustness of P3–P5 results. | Pre-declared statistics reported for all subjects and folds. | — |
+| P7 | Reproducibility & Public Data Release | Release a derived, anonymised dataset and an end-to-end reproduction path. | Release subset approved (DATA_POLICY §5); reproduction verified from scratch. | — |
+| P8 | Manuscript & Final Release | Paper, figures and tables generated from tagged code and data. | Every reported number traced to a run; final freeze. | `v1.0-paper` |
+
+Lifecycle rules:
+
+1. **Order is fixed.** Work belonging to a later phase is not started early. Findings in a later phase
+   that require changing an earlier phase's decision are handled by a new decision entry (§6), never by
+   silently editing frozen artifacts.
+2. **Tags mark freezes, not progress.** A tag is created only when the state it names is actually
+   frozen and merged into `main`. Tagged states are never moved or rewritten.
+3. **P2 precedes all model results.** No model is trained on the study data before `p2-protocol-freeze`
+   exists (exploratory models on synthetic data for code testing are allowed).
+4. **Each phase's PR is its research record** (purpose, decisions, findings, validation, limitations,
+   artifacts), using `.github/pull_request_template.md`.
+
+## 6. What counts as a protocol change
 
 Any change to cohort, inclusion/exclusion, de-duplication, session definition, split, windowing,
 preprocessing, feature set, model family, hyperparameter search space, metric or adaptation budget.
-Record it in `DECISIONS.md` (with rationale that does not reference test results) and bump the
-protocol version in `EXPERIMENT_PROTOCOL.md`.
+Record it in `DECISIONS.md` as a new decision (with rationale that does not reference test results) and
+bump the protocol version in `EXPERIMENT_PROTOCOL.md`.
+
+If the change is made **after any experimental result has been seen**, the new decision must say so
+explicitly, name the results that were seen, and the superseded decision keeps its entry with status
+`Superseded`. Results produced under both versions are reported, not only the favourable one.

@@ -17,3 +17,5 @@ protected_roots:
 
 manifest_path: "data/interim/manifest/raw_file_manifest.csv"
 audit_output_dir: "outputs/qa/dataset_audit"
+# P0 analyses write to <p0_qa_dir>/<analysis>/ (docs/P0_DATASET_AUDIT_PLAN.md)
+p0_qa_dir: "outputs/qa/p0"

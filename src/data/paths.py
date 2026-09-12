@@ -43,3 +43,7 @@ def manifest_path() -> Path:
 
 def audit_output_dir() -> Path:
     return repo_path(path_config()["audit_output_dir"])
+
+
+def p0_output_dir(analysis: str) -> Path:
+    return repo_path(path_config()["p0_qa_dir"]) / analysis

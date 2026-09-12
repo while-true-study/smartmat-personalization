@@ -1,29 +1,76 @@
 # smartmat-mdpi-personalization
 
-Research repository for an MDPI journal study on multi-channel smart-mat pressure time series.
-It extends prior pressure-based temperature/humidity regression to test:
+Companion research repository for an MDPI journal study on multi-channel smart-mat pressure time series.
 
-1. cross-subject generalization to unseen subjects,
-2. chronological user-adaptive fine-tuning,
-3. the contribution of movement-derived and contact-structure features.
+## Purpose
 
-**Status (2026-09-12):** repository bootstrap and P0 raw-data inventory only. No preprocessing,
-splitting, windowing or model training has been done. See `docs/EXPERIMENT_PROTOCOL.md`.
+Earlier work estimated temperature and relative humidity from a smart mat's six pressure channels. This study asks whether such estimates hold up under strict, deployment-like evaluation, and
+whether short user-specific adaptation helps.
 
-## Start here
+## Research Questions
 
-- `AGENTS.md` — entry point for contributors and coding agents
-- `docs/` — canonical rules: `DATA_POLICY`, `RESEARCH_PROTOCOL`, `EXPERIMENT_PROTOCOL`, `CONVENTIONS`, `DECISIONS`
-- `docs/initial_dataset_inventory.md` — what the raw data contain and the issues found
+- **RQ1 — Cross-subject generalization:** how well does a model trained on other people estimate
+  temperature/humidity for an unseen subject (strict leave-one-subject-out)?
+- **RQ2 — Chronological personalization:** does fine-tuning on a user's earliest data improve accuracy on
+  that user's later data, and how much adaptation data is needed?
+- **RQ3 — Feature contribution:** what do movement-derived and contact-structure features each contribute?
+
+## Research Roadmap
+
+- [x] P0 Dataset Audit & Data Freeze (`research/p0-data-freeze`; merge and `p0-data-freeze` tag pending review)
+- [ ] P1 Domain-shift EDA
+- [ ] P2 Evaluation Protocol & Split Freeze
+- [ ] P3 Strict LOSO Baseline
+- [ ] P4 Feature Ablation
+- [ ] P5 User Personalization
+- [ ] P6 Robustness & Statistical Analysis
+- [ ] P7 Reproducibility & Public Data Release
+- [ ] P8 Manuscript & Final Release
+
+Current status: P0 is closed.
+- The data audit is summarised in `docs/P0_DATASET_AUDIT_REPORT.md`, and the frozen policies are in
+  `docs/DECISIONS.md`.
+- The canonical interim dataset v1 (parsed, provenance-preserving, de-duplicated, quality-flagged,
+  session-labelled) is built with `scripts/build_canonical_v1.py`. Its manifests are committed under
+  `data/interim/manifest/`.
+- P1 has not started. No splitting, windowing or model training has been done, so there are no results yet.
+Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
+
+## Repository structure
+
+```
+docs/       canonical rules, decisions, dataset inventory, phase plans   ← start here (via AGENTS.md)
+configs/    paths and the subject/device/source mapping
+src/        library code (raw access guard, provenance, parsing, audit)
+scripts/    command-line entry points
+tests/      pytest suite (subject mapping, raw immutability, provenance, parsing)
+data/       raw (local only, git-ignored) · interim · processed · splits
+outputs/    generated QA / EDA / metrics / predictions / figures (not committed)
+paper/      manuscript, tables and figures (generated from tagged code)
+```
+
+## Reproducibility philosophy
+
+- **Raw data are immutable.** Raw data stay local and read-only; every file is checked against a
+  committed SHA-256 manifest before any processing.
+- **Provenance everywhere.** Every derived record traces back to its raw file, subject and device.
+  Subjects appear only under anonymous IDs (`User01`, …).
+- **Decide first, then look.** Data policies, splits and the evaluation protocol are frozen and
+  recorded (`docs/DECISIONS.md`) before model results are seen. Any later change becomes a new,
+  explicit decision.
+- **Leakage is tested, not assumed.** No subject, session or device-concurrent recording spans train
+  and test, and training does not start unless the leakage checks pass.
+- **Phases are auditable.** Each phase ends with a Pull Request that records its purpose, decisions,
+  findings and validation. Freeze points are tagged.
 
 ## Setup
 
 ```bash
 python -m pip install -r requirements.txt
-python scripts/build_manifest.py     # checksum manifest of raw files (verifies them against the existing one)
-python scripts/audit_dataset.py      # P0 inventory audit -> outputs/qa/dataset_audit/
+python scripts/build_manifest.py     # verify raw files against the committed manifest
+python scripts/audit_dataset.py      # inventory audit -> outputs/qa/dataset_audit/
+python scripts/build_canonical_v1.py # canonical interim dataset v1 -> data/interim/canonical_v1/ (+ manifests)
 python -m pytest
 ```
 
-Raw data are not part of this repository. The delivered package is expected at
-`스마트 매트 데이터 정리/` (configured in `configs/paths.yaml`) and is read-only.
+Raw data are not distributed with this repository (`data/raw/README.md`).

@@ -102,6 +102,17 @@ def read_manifest(path: str | Path) -> list[dict]:
         return list(csv.DictReader(fh))
 
 
+def verify_raw_integrity(root: Path, manifest_rows: list[dict]) -> dict[str, list[str]]:
+    """Compare raw files on disk with the manifest. All lists empty means raw is intact."""
+    listed = {r["source_relpath"]: r["sha256"] for r in manifest_rows}
+    on_disk = {p.relative_to(root).as_posix() for p in iter_raw_files(root)}
+    return {
+        "changed": sorted(p for p in listed.keys() & on_disk if sha256_file(root / p) != listed[p]),
+        "missing": sorted(listed.keys() - on_disk),
+        "unlisted": sorted(on_disk - listed.keys()),
+    }
+
+
 def compare_manifests(old: list[dict], new: list[dict]) -> dict[str, list[str]]:
     """Detect raw changes between two manifests (same raw_root)."""
     o = {r["source_relpath"]: r["sha256"] for r in old}

@@ -68,6 +68,20 @@ def write_csv(path: str | Path, rows: Iterable[dict[str, Any]], columns: Sequenc
     return Path(path)
 
 
+def write_parquet(path: str | Path, tables: Iterable[Any], schema: Any) -> Path:
+    """Write pyarrow tables (same schema) as one Parquet file, one row group per table."""
+    import pyarrow.parquet as pq
+
+    with open_for_write(path, "wb") as fh:
+        writer = pq.ParquetWriter(fh, schema, compression="zstd", use_dictionary=True)
+        try:
+            for t in tables:
+                writer.write_table(t)
+        finally:
+            writer.close()
+    return Path(path)
+
+
 def read_bytes(path: str | Path) -> bytes:
     """Read-only access; the only way raw files are opened."""
     with open(path, "rb") as fh:

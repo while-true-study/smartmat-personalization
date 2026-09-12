@@ -4,6 +4,8 @@
 > Nothing in this file may be used to generate splits, windows, processed data or models yet.
 > Each section is filled in by a dated `DECISIONS.md` entry; the protocol is frozen as `v1.0`
 > only when every section is decided and the open items listed under "Blocked by" are closed.
+> Freezing happens at the end of phase P2 (tag `p2-protocol-freeze`), before any model result is seen
+> (`RESEARCH_PROTOCOL.md` §5).
 
 Governing rules: `docs/RESEARCH_PROTOCOL.md` (L1–L12) and `docs/DATA_POLICY.md`.
 
@@ -18,15 +20,22 @@ Governing rules: `docs/RESEARCH_PROTOCOL.md` (L1–L12) and `docs/DATA_POLICY.md
 ## 1. Cohort and inclusion — TBD
 Primary cohort, auxiliary usage, exclusion criteria (defined without looking at model results).
 Blocked by: OPEN-01, OPEN-03, OPEN-13, OPEN-16.
+P0 input: primary cohort User01, User02, User07 (D-020). Each LOSO fold is also a held-out period and device/firmware
+domain; claims are limited as in `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §6.
 
 ## 2. Interim data construction — TBD
 Parsing rules per format family, timestamp/year policy, de-duplication, handling of non-data lines,
 sentinel/glitch values. Output: `data/interim/` with full provenance.
 Blocked by: OPEN-07, OPEN-08, OPEN-09, OPEN-12.
+**Settled in P0:** canonical_v1 (D-014, D-018, D-022–D-028), `data/interim/canonical_v1/`. P2 starts from it and
+does not re-parse raw.
 
 ## 3. Session definition — TBD
 How continuous recordings are delimited (gap threshold, night boundary), how concurrent devices of a
 subject are grouped. Blocked by: OPEN-03, OPEN-06.
+**Settled in P0:** `session_id` per subject + device stream (D-024); the two User02 mats stay separate streams
+(D-027). Still open for P2: how the streams of one subject are grouped for splits, and window continuity across
+within-session gaps.
 
 ## 4. Splits (defined before windowing) — TBD
 - RQ1: leave-one-subject-out over the primary cohort; nested validation from training subjects only.
@@ -36,6 +45,7 @@ subject are grouped. Blocked by: OPEN-03, OPEN-06.
 ## 5. Preprocessing — TBD
 Resampling, interpolation, filtering, normalisation (fit on training partition only), handling of
 pressure-scale differences and the User01 sensor replacement. Blocked by: OPEN-11, OPEN-17.
+P0 input: User01 rows carry the provenance label `sensor_phase` s1/s2 (D-019). Phase-aware handling is decided here.
 
 ## 6. Windowing and features — TBD
 Window length/stride; movement-derived feature set; contact-structure feature set; admissible event
@@ -46,6 +56,7 @@ Baselines (training-mean, prior-study method), candidate models, hyperparameter 
 
 ## 8. Personalization protocol — TBD
 Adaptation data budgets, buffer length, fine-tuning scope, no tuning on the test span.
+For User01, whether adaptation and test spans may cross the `sensor_phase` boundary (D-019) is decided here (OPEN-11, OPEN-21).
 
 ## 9. Metrics and statistics — TBD
 Primary: MAE, RMSE per target, per subject and subject-averaged. Uncertainty over subjects/sessions.

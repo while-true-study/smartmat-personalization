@@ -3,3 +3,7 @@
 numpy==2.4.4
 PyYAML==6.0.3
 pytest==9.0.2
+# canonical interim dataset v1 (Parquet, typed columns; scripts/build_canonical_v1.py, D-028)
+pyarrow==24.0.0
+# optional: QA figures of scripts/audit_temporal_gaps.py (skipped if not installed; no effect on results)
+matplotlib==3.10.9
