@@ -143,6 +143,13 @@ Subject-level evaluation keeps both mats under User02. Which mat or mats feed a 
   be able to flag it before P0 closes.
 - Its start time and affected channels need a provider answer. Failing that, a short characterisation audit
   (A9b, below).
+- *Update 2026-09-13 (A9b, D-022):*
+  - The shift is P1-only, abrupt and persistent. It is fully present from 2026-08-20 21:37:33, after a transition
+    recording on the night 2026-08-19.
+  - It is flagged by `channel_quality_phase` / `channel_quality_flag`. With the A9b boundary the shifted slice is
+    192.0 h in 21 nights; User02 without it keeps 447.7 h in 45 nights. OPEN-19 is closed as class B.
+  - The P6 decline is a separate change from 2026-08-25 (OPEN-03).
+  - The event row below (status `unresolved_anomaly`) is kept as A11 recorded it.
 
 **Timeline events** (`schema_firmware_events.csv`). Each status stays separate:
 
@@ -242,13 +249,12 @@ P0 primary cohort = User01, User02, User07.**
 ## 7. Remaining uncertainties
 
 1. **OPEN-04:** mat identity and possible reuse for User01 and User07. Answerable only by the provider.
-2. **OPEN-19:** cause and exact start of the 22482 P1 anomaly. Non-blocking for the cohort; the flag definition is
-   needed before P0 closure. Recommended **A9b (short):** characterise the onset, whether P1 still responds at all,
-   and the P6 change; propose a device-period flag.
+2. ~~**OPEN-19:** cause and exact start of the 22482 P1 anomaly.~~ Resolved for P0 by A9b and D-022 (flagged,
+   class B, non-blocking). Only the physical cause remains a provider question.
 3. **OPEN-03:** physical setup of the two User02 mats. The interim dataset can keep both as device streams; the use
    policy is P2.
 4. **OPEN-21:** the acquisition changes inside User01 s1.
 5. **OPEN-14:** metadata dates (heating start). Heating state is not observable in the data, so it cannot be
    placed on the timeline reliably.
-6. The auxiliary sources cover 8 days in October 2025. User03 legacy is the same measurement as the invalid User06
-   recording (OPEN-13).
+6. The auxiliary sources cover 8 days in October 2025. User03 legacy is valid User03 data (D-021); whether auxiliary
+   data are used is OPEN-13.

@@ -55,7 +55,7 @@ Every derived record must be traceable back to raw. Derived tables carry at leas
 | User02 | `user02/mat_22482` | `22482` | Physical mat 22482 |
 | User02 | `user02/mat_22480/_prefix_mismatch` | unresolved (22480 or 22482) | Quarantined; see §4 |
 | User02 | `user02/legacy_csv` | unknown | Legacy CSV export, 2025-10 |
-| User03 | `user03_legacy` | unknown | Legacy CSV export; auxiliary (D-017) |
+| User03 | `user03_legacy` | unknown | Legacy CSV export; valid auxiliary source (D-017, D-021) |
 | User06 | `user06_auxiliary` | unknown | Distinct subject; this source is `excluded_invalid` (provider-confirmed setting issue, D-017). Raw kept. |
 | User07 | `user07` | unknown | Folder name was anonymised by the provider |
 
@@ -73,7 +73,7 @@ table or statistic. `tests/test_subject_mapping.py` enforces the mapping.
 Identity questions (do not resolve by assumption; see `DECISIONS.md`):
 - OPEN-01 — **closed by D-017.** `user03_legacy` rows are contained in `user06_auxiliary`. User03 and User06 are
   different people, and the provider confirmed the User06 source is invalid. It is excluded from analysis; the
-  raw files are kept. User03 legacy stays auxiliary, with the caveat noted in D-017.
+  raw files are kept. User03 legacy is valid User03 data and stays auxiliary (D-021).
 - OPEN-02: device attribution of the two `_prefix_mismatch` files.
 - OPEN-03: the two User02 mats recorded simultaneously for about 505 h.
 - OPEN-04: device IDs of every other source are unknown. A11 found no ID in any other file, so mat reuse cannot be
@@ -81,6 +81,12 @@ Identity questions (do not resolve by assumption; see `DECISIONS.md`):
 
 Sensor phases (D-019) are provenance labels per subject timeline, configured in `configs/subject_mapping.yaml`
 (`sensor_phases`). User01 has `s1` and `s2`; every other timeline is `s1`. A phase is never a subject.
+
+Channel-quality phases (D-022) are provenance labels per device timeline, configured in
+`configs/subject_mapping.yaml` (`channel_quality_phases`).
+- 22482 has `normal`, `p1_transition` and `p1_response_shift`; every other timeline is `normal`.
+- The column `channel_quality_flag` names the affected channel (`p1`).
+- Flagged values are never changed, removed or imputed. Their use is decided in P2.
 
 ## 4. Dataset roles
 

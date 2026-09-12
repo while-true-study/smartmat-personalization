@@ -27,6 +27,14 @@ sensor_phases:
     - {phase: s1, last_row: "2026-01-25 08:07:26"}
     - {phase: s2, first_row: "2026-01-25 17:31:21"}
 
+# Channel-quality phases (D-022): provenance labels per device timeline, never a correction or an exclusion.
+# Boundaries are recording gaps (last row of one phase, first row of the next). Devices not listed are "normal".
+channel_quality_phases:
+  "22482":
+    - {phase: normal, last_row: "2026-08-19 08:56:10"}
+    - {phase: p1_transition, first_row: "2026-08-19 19:58:23", last_row: "2026-08-20 09:58:32", channels: [p1]}
+    - {phase: p1_response_shift, first_row: "2026-08-20 21:37:33", channels: [p1]}
+
 # Filename patterns that encode a device ID (checked against the folder-declared device).
 filename_device_patterns:
   - '^sm(?P<device_id>\d{5})_'

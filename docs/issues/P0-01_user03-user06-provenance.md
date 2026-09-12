@@ -9,9 +9,8 @@ setting problem and that the User06 source should be left out. Resulting handlin
 - User03 ≠ User06; the subjects are not merged.
 - `user06_auxiliary` is `excluded_invalid`: excluded from all analyses, models and public analysis data; the raw
   files are kept unchanged.
-- `user03_legacy` stays auxiliary.
-- Residual caveat: User03 legacy rows are the same measurements as part of the User06 recording. Whether the
-  setting problem affects them too is not stated; check before any auxiliary use (OPEN-13).
+- `user03_legacy` stays auxiliary. It is valid User03 data (PI, 2026-09-13; D-021). Only the User06 source is
+  invalid. Whether auxiliary data are used at all is OPEN-13.
 
 If this issue is filed on GitHub, file it as closed with this resolution.
 
@@ -68,4 +67,4 @@ Blocks: any use of the overlapping recording; OPEN-13 (auxiliary use). The provi
 
 ## Handling (final, D-017)
 User03 and User06 stay distinct subjects. The User06 source is `excluded_invalid` (analytical exclusion; raw
-archive untouched). User03 legacy remains auxiliary.
+archive untouched). User03 legacy remains a valid auxiliary source (D-021).

@@ -4,9 +4,9 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9, A10, A11 done; A6, A12 partly (2026-09-13); A13 pending; A9b (22482 P1, short) recommended |
+| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9, A9b, A10, A11 done; A6, A12 partly (2026-09-13); A13 pending. No further anomaly audits planned; next: P0 closure and canonical data freeze |
 | Starting point | `docs/initial_dataset_inventory.md` |
-| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; User06 source excluded: D-017 (supersedes D-013); User01 `sensor_phase`: D-019; primary cohort User01/User02/User07: D-020 |
+| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; User06 source excluded: D-017 (supersedes D-013); User01 `sensor_phase`: D-019; primary cohort User01/User02/User07: D-020; User03 legacy valid auxiliary: D-021; 22482 `channel_quality_phase`: D-022 |
 
 ## Goal
 
@@ -229,6 +229,24 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Expected artifact:** `outputs/qa/p0/pressure_quality/`.
 - **Decision it may influence:** OPEN-17, channel inclusion, compatibility of legacy sources.
 
+### A9b. User02 / 22482 P1 channel anomaly — **done (2026-09-13)**
+- **As implemented:**
+  - Change points on 22482's nightly, session and daily channel summaries without using the A9 date; hourly
+    onset; ±1/3/7-night and whole-period comparisons; recovery.
+  - Per-channel shift classification; 22480 and T/H as controls; schema/firmware/event timeline; occupancy
+    confound; impact.
+  - Code: `src/data/channel_anomaly.py`, `scripts/audit_user02_channel_anomaly.py`; tests:
+    `tests/test_channel_anomaly.py`.
+- **Artifacts:** `outputs/qa/p0/user02_channel_anomaly/`; report `docs/P0_A9B_USER02_CHANNEL_ANOMALY_REPORT.md`.
+- **Result:**
+  - P1 collapses in the recording of the night 2026-08-19 (onset ≈ 08-20 02:00) and is fully shifted from
+    2026-08-20 21:37:33.
+  - The change is abrupt, persistent and P1-only; the pressure sum without P1 is stable.
+  - There is no concurrent 22480, T/H, schema or firmware change.
+  - User02 stays eligible.
+  - OPEN-19 closed as class B by D-022 (`channel_quality_phase` / `channel_quality_flag`). The later 22482 P6
+    decline (2026-08-25) is an observed distribution shift under OPEN-03.
+
 ### A10. User01 sensor phase analysis — **done (2026-09-13)**
 - **As implemented:**
   - Per session, night and day: pressure, 4095, active channels, zeros, T/H, sampling, movement labels and
@@ -318,7 +336,7 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 
 Tracked as issue drafts in `docs/issues/` (to be filed on GitHub):
 1. ~~Relation between User03 legacy and User06 (OPEN-01)~~ — resolved 2026-09-13 (D-017): the User06 source is
-   invalid and excluded. Follow-up: does the same setting problem affect the User03 legacy measurements (OPEN-13)?
+   invalid and excluded. User03 legacy is valid auxiliary data (PI, D-021).
 2. User02 dual-device recording protocol and the two quarantined files (OPEN-02, OPEN-03) —
    `P0-02_user02-dual-device-protocol.md`.
 3. Device IDs of all other sources (OPEN-04) and metadata date inconsistencies (OPEN-14).
@@ -349,36 +367,41 @@ P0 is complete when:
 - [ ] OPEN-05, -06, -07, -08, -09, -12, -13, -14, -16 decided (Accepted entries in `DECISIONS.md`)
   (OPEN-16 closed by D-020; OPEN-12 moot after D-017 and to be closed formally)
 - [ ] Pressure input-validity rule decided (D-018); OPEN-19 and OPEN-20 answered, or their consequences documented
+  (OPEN-19 closed by D-022; OPEN-20 consequences documented in A9, needed only for spatial features in P2)
 - [ ] Canonical interim dataset v1 built under `data/interim/` from the accepted rules: parsed,
-      de-duplicated, provenance columns (incl. `sensor_phase`, D-019), quality flags; **no** resampling,
-      interpolation or normalisation
+      de-duplicated, provenance columns (incl. `sensor_phase`, D-019, and `channel_quality_phase` /
+      `channel_quality_flag`, D-022), quality flags; **no** resampling, interpolation or normalisation
 - [ ] Interim dataset manifest with SHA-256 committed; raw integrity verified
 - [ ] `docs/P0_DATASET_AUDIT_REPORT.md` written; README roadmap updated
 - [ ] Tests pass; PR merged into `main`; tag `p0-data-freeze` created on the merge commit
 
-### Remaining work before closure (as of A11, 2026-09-13)
+### Remaining work before closure (as of A9b, 2026-09-13)
 
-- **Decisions (PI):**
+No further anomaly audits are planned unless a new blocking issue appears. Next step: **P0 Closure & Canonical
+Data Freeze**.
+
+- **Decisions (PI), blocking:**
   - accept or revise the proposed D-014 (de-duplication), D-015 (sessions), D-016 (target flags) and D-018
     (pressure validity);
   - OPEN-08 (timestamp policy);
-  - OPEN-13 (auxiliary use);
-  - OPEN-03, P0 part (device streams);
+  - OPEN-13 (auxiliary use, or explicit deferral);
+  - OPEN-03, P0 part (both mats as separate device streams);
+  - OPEN-02 (keep the two files quarantined, or attribute them to 22482);
   - OPEN-05 (raw location);
   - close OPEN-12 formally.
-- **Provider:**
-  - OPEN-19 (22482 P1);
+- **Provider, non-blocking (consequences documented):**
+  - OPEN-04 (mat identity);
   - OPEN-14 (metadata dates);
   - OPEN-20 (channel layout);
   - OPEN-21 (User01 acquisition changes);
-  - OPEN-04 (mat identity).
-- **Analyses:**
-  - A9b (short: 22482 P1 onset and flag), if the provider cannot answer;
-  - A13 (legacy timestamps), needed only if auxiliary data are used;
+  - cause of the 22482 P1 shift (flagged by D-022).
+- **Optional analyses** (only if the decisions need them):
+  - A13 (legacy timestamps), if auxiliary data are used;
   - A12 remainder (hour-of-day, heater episodes);
   - A6 remainder (legacy rows per minute).
 - **Build:**
   - canonical interim dataset v1 with provenance columns (`subject_id`, `source_id`, `device_id` where recorded,
-    `sensor_phase`, `pressure_schema`, `log_container`, `sampling_regime`) and quality flags;
+    `sensor_phase`, `channel_quality_phase`, `channel_quality_flag`, `pressure_schema`, `log_container`,
+    `sampling_regime`) and quality flags;
   - its manifest;
   - `docs/P0_DATASET_AUDIT_REPORT.md`.

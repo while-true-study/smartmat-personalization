@@ -23,6 +23,8 @@ import numpy as np
 
 DAY_S = 86400
 USABLE_DAY_MIN = 60                      # audit-valid recording minutes for a "usable" day (descriptive)
+# Structural cohort thresholds (A11): active hours, recording nights, T/H coverage, nights per chronological part
+MIN_HOURS, MIN_NIGHTS, MIN_TARGET_COVERAGE, MIN_SPLIT_NIGHTS = 100, 20, 0.95, 7
 SEASONS = {12: "winter", 1: "winter", 2: "winter", 3: "spring", 4: "spring", 5: "spring",
            6: "summer", 7: "summer", 8: "summer", 9: "autumn", 10: "autumn", 11: "autumn"}
 ELIGIBILITY = ("eligible", "eligible_with_caveat", "not_eligible")

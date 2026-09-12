@@ -32,7 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.data import paths  # noqa: E402
 from src.data.coverage import (  # noqa: E402
-    DAY_S, USABLE_DAY_MIN, check, chronological_capacity, coverage_summary, daily_labels, daily_step_regime,
+    DAY_S, MIN_HOURS, MIN_NIGHTS, MIN_SPLIT_NIGHTS, MIN_TARGET_COVERAGE, USABLE_DAY_MIN, check, chronological_capacity, coverage_summary, daily_labels, daily_step_regime,
     day_of, eligibility, minutes, month_of, month_range, monthly_coverage, overlap, quarter_of, regime_runs,
     season_of,
 )
@@ -48,7 +48,6 @@ from src.data.target_quality import channel_states, channel_values  # noqa: E402
 
 PRIMARY_SUBJECTS = ("User01", "User02", "User07")
 SCHEMA_NAMES = {0: "p6_t_h", 1: "p6_t_h_device_column", 2: "nonstandard"}
-MIN_HOURS, MIN_NIGHTS, MIN_TARGET_COVERAGE, MIN_SPLIT_NIGHTS = 100, 20, 0.95, 7   # structural thresholds
 P1_ANOMALY_22482 = datetime(2026, 8, 20)                                           # A9 / OPEN-19 marker
 # Structural caveats already on record (DECISIONS.md); A11 only lists them, it does not re-derive them.
 KNOWN_CAVEATS = {

@@ -105,19 +105,32 @@ def excluded_sources() -> list[dict]:
             for s in sources() if not s.analysis_eligible]
 
 
+def _phase_bounds(spec: list[dict]) -> list[tuple[int, int]]:
+    """(last_row of phase i, first_row of phase i+1) as epoch seconds of the naive local time."""
+    from datetime import datetime
+
+    epoch = datetime(1970, 1, 1)
+    sec = lambda s: int((datetime.fromisoformat(s) - epoch).total_seconds())  # noqa: E731
+    return [(sec(a["last_row"]), sec(b["first_row"])) for a, b in zip(spec[:-1], spec[1:])]
+
+
 def sensor_phase_spec(subject_id: str) -> tuple[list[tuple[int, int]], tuple[str, ...]]:
     """Sensor-phase boundaries (last_row_before, first_row_after as epoch seconds of the naive local time) and
     phase names for a subject (D-019). Subjects without an entry have a single phase 's1'."""
-    from datetime import datetime
-
     spec = (mapping_config().get("sensor_phases") or {}).get(subject_id)
     if not spec:
         return [], ("s1",)
-    names = tuple(p["phase"] for p in spec)
-    epoch = datetime(1970, 1, 1)
-    sec = lambda s: int((datetime.fromisoformat(s) - epoch).total_seconds())  # noqa: E731
-    bounds = [(sec(a["last_row"]), sec(b["first_row"])) for a, b in zip(spec[:-1], spec[1:])]
-    return bounds, names
+    return _phase_bounds(spec), tuple(p["phase"] for p in spec)
+
+
+def channel_quality_spec(device_id: str) -> tuple[list[tuple[int, int]], tuple[str, ...], dict[str, str]]:
+    """Channel-quality phase boundaries, names and affected channels per phase for a device timeline (D-022).
+    Devices without an entry (including 'unknown') have a single phase 'normal' with no affected channel."""
+    spec = (mapping_config().get("channel_quality_phases") or {}).get(str(device_id))
+    if not spec:
+        return [], ("normal",), {"normal": ""}
+    return (_phase_bounds(spec), tuple(p["phase"] for p in spec),
+            {p["phase"]: ";".join(p.get("channels", [])) for p in spec})
 
 
 def to_relpath(path_like: str) -> str:
