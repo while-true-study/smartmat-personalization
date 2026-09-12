@@ -1,0 +1,82 @@
+{
+  "protocol_version": "v1.0",
+  "protocol_file": "configs/experiments/v1.0/protocol.yaml",
+  "protocol_sha256": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84",
+  "hash_rule": "SHA-256 of the file bytes with CRLF normalised to LF",
+  "canonical": {
+    "dataset_version": "canonical_v1",
+    "schema_version": "1.0",
+    "primary_content_sha256": "26b970a4edce2bd57767c62666d08cf46d274e675c78ed604b1116892a97dd0a",
+    "primary_file_sha256": "1b34342b9906d2882b6831bc5c04cb7082a067a6574026227e1e4219804673c8",
+    "config_hash_sha256": "a5c09e425f090b7e88c5e5b08f8b88ed1361252047e2284c40b3da6990e6db29",
+    "raw_manifest_sha256": "f5a27acc59cc7429c0d3ecb0d3985f5f92e5b7d13c6a2156c36687798b94ee88"
+  },
+  "files": {
+    "v1.0_loso/outer_folds.csv": {
+      "sha256": "59e53c903f8c5a70f8e8bcb8cd2917d314c8e2114b408b7806fada89eb76da86",
+      "rows": 1092
+    },
+    "v1.0_loso/inner_folds.csv": {
+      "sha256": "567fadee4b731639593e4d1cc8610024a0d07ef3cb2f2dc3457ef753a96230df",
+      "rows": 1456
+    },
+    "v1.0_personalization/chronological.csv": {
+      "sha256": "8007cfcd4e057cbb7771ea8327ceabc615c5c3ca5a4a08f47ecc73a8393eff59",
+      "rows": 1835
+    }
+  },
+  "schemes": {
+    "loso": {
+      "split_id": "v1.0_loso",
+      "outer_folds": {
+        "1": "User01",
+        "2": "User02",
+        "3": "User07"
+      },
+      "inner": "subject_level_two_way",
+      "sessions_per_subject": {
+        "User01": 157,
+        "User02": 105,
+        "User07": 102
+      }
+    },
+    "personalization": {
+      "split_id": "v1.0_personalization",
+      "unit": "subject_night",
+      "budgets_nights": [
+        0,
+        1,
+        3,
+        7,
+        14
+      ],
+      "buffer_nights": 1,
+      "primary_test_from_ordinal": 16,
+      "nights_per_subject": {
+        "User01": 151,
+        "User02": 51,
+        "User07": 100
+      },
+      "primary_test_nights_per_subject": {
+        "User01": 136,
+        "User02": 36,
+        "User07": 85
+      },
+      "night_definition": "date(timestamp - 12 h), naive local time (local_unspecified)"
+    }
+  },
+  "generator": {
+    "scripts/build_p2_splits.py": "7ac25dba41b7e758c0021768dcae61e1ec29d126ce0368a78d1d8b1a79ac7ecb",
+    "src/evaluation/splits.py": "c397521bcbe2c163be026327a72a5d94fd2bb6dcad3e5b257658b12ad52ef9ff",
+    "src/evaluation/p2_protocol.py": "3e3ca97eba0256509525eded7ec2af9a41ebc9c9222140875879c7cf134e910d",
+    "src/evaluation/protocol.py": "4641fce8a1bec4e49bb8ce071a0ee4e36b85c39edf4959abffbbbc50e51c4e08",
+    "configs/experiments/v1.0/protocol.yaml": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84"
+  },
+  "build": {
+    "generated_at": "2026-09-13T07:44:29",
+    "seed": 0,
+    "git_commit": "61edfafb397df43236bd04f185b11a1376c61a10",
+    "git_dirty_tracked_files": true,
+    "python": "3.12.1"
+  }
+}

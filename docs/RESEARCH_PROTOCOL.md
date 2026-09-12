@@ -16,7 +16,7 @@ and whether short user-specific adaptation helps.
 Measured quantities (per raw row): six pressure channels (`P1`–`P6`, 12-bit ADC, 0–4095),
 temperature (`temp`, integer °C), relative humidity (`humid`, integer %RH), and a firmware event field
 (movement label and heater-control events). The mat is a **heated mat** whose firmware controls a
-heater from temperature readings; this matters for leakage (L9) and target definition (OPEN-10).
+heater from temperature readings; this matters for leakage (L9) and target definition (OPEN-10, closed by D-038).
 
 ## 2. Research questions
 
@@ -29,7 +29,7 @@ heater from temperature readings; this matters for leakage (L9) and target defin
 - **RQ3 — Feature contribution.** What do movement-derived features and contact-structure features
   each contribute (ablation under the RQ1 and RQ2 protocols)?
 
-Feature-family definitions are pending (EXPERIMENT_PROTOCOL §6). Working meaning:
+Feature families are fixed in EXPERIMENT_PROTOCOL §8 (D-039). Working meaning:
 *movement-derived* = features describing change of pressure over time (shifts, turnovers, activity);
 *contact-structure* = features describing the spatial distribution of pressure across channels at a time.
 
@@ -65,7 +65,7 @@ Feature-family definitions are pending (EXPERIMENT_PROTOCOL §6). Working meanin
 | L6 | **Subject-level exclusion covers all sources.** When a subject is held out, all of its sources, including auxiliary legacy data (e.g. User02 `legacy_csv` when User02 is tested), are excluded from training and validation. |
 | L7 | **Duplicated recordings are resolved first.** Data that exist under two subject IDs (OPEN-01: User03 ⊂ User06; resolved by excluding the invalid User06 source, D-017) or in two files (adjacent-file overlap) are de-duplicated before splitting; the same physical recording never appears twice. |
 | L8 | **Concurrent devices are one group.** Simultaneous recordings of one subject on several devices (User02: 22480 and 22482) belong to the same split group and never straddle train/test. |
-| L9 | **No target leakage through inputs.** Inputs must not contain the targets or quantities computed from them: temperature/humidity of any device, heater-control events or set-points (AHON/AHOF, BHSDOWN, BCSUP, FOH, STEMP, SLIMIT, …, which the firmware derives from temperature). Firmware movement labels (UM/DM/LM/RM/NM) are derived from pressure only according to the provider's legend and are admissible candidates, pending OPEN-15. |
+| L9 | **No target leakage through inputs.** Inputs must not contain the targets or quantities computed from them: temperature/humidity of any device, heater-control events or set-points (AHON/AHOF, BHSDOWN, BCSUP, FOH, STEMP, SLIMIT, …, which the firmware derives from temperature). Firmware movement labels (UM/DM/LM/RM/NM) are derived from pressure only according to the provider's legend and were admissible candidates pending OPEN-15; protocol v1.0 does not use them as inputs (D-038). |
 | L10 | **Calendar leakage is declared.** Date, season or time-of-day inputs can proxy for temperature. They are excluded by default and, if used, are declared and ablated. |
 | L11 | **No normalisation using the test subject's statistics** (e.g. per-subject z-scoring with test-span statistics) unless it is part of the declared personalization protocol and uses adaptation-span data only. |
 | L12 | **Leakage validation gate.** Before any training run, automated checks verify L1–L11 against the saved split files (disjoint groups, chronological order, scaler-fit provenance, excluded sources). If any check fails, training does not start. The check report is stored with the run. |

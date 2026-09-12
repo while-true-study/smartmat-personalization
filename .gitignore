@@ -27,6 +27,11 @@
 !/data/processed/.gitkeep
 /data/splits/*
 !/data/splits/.gitkeep
+# protocol v1.0 split definitions are committed: group assignments and time spans only, no sensor or target
+# values (D-042)
+!/data/splits/v1.0_loso/
+!/data/splits/v1.0_personalization/
+!/data/splits/v1.0_manifest.json
 
 # ---------------------------------------------------------------------------
 # Generated outputs (QA reports, metrics, predictions, checkpoints, figures)
