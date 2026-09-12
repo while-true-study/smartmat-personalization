@@ -19,8 +19,8 @@ whether short user-specific adaptation helps.
 
 - [x] P0 Dataset Audit & Data Freeze (merged; tag `p0-data-freeze`)
 - [x] P1 Domain-shift EDA (merged; `docs/P1_DOMAIN_SHIFT_EDA_REPORT.md`)
-- [ ] P2 Evaluation Protocol & Split Freeze  ← **current phase** (`research/p2-split-freeze`)
-- [ ] P3 Strict LOSO Baseline
+- [x] P2 Evaluation Protocol & Split Freeze (merged; tag `p2-protocol-freeze`)
+- [ ] P3 Strict LOSO Baseline  ← **current phase** (`experiment/p3-loso-baseline`)
 - [ ] P4 Feature Ablation
 - [ ] P5 User Personalization
 - [ ] P6 Robustness & Statistical Analysis
@@ -34,8 +34,9 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
   session-labelled) is built with `scripts/build_canonical_v1.py`. Its manifests are committed under
   `data/interim/manifest/`.
 - P1 (domain-shift EDA) is complete: `docs/P1_DOMAIN_SHIFT_EDA_REPORT.md`.
-- P2 (evaluation protocol and split freeze) is the current phase. No model has been trained, so there are no model
-  results yet.
+- P2 (evaluation protocol and split freeze) is complete: protocol v1.0 (`docs/EXPERIMENT_PROTOCOL.md`), tag
+  `p2-protocol-freeze`.
+- P3 (strict LOSO baseline) is the current phase.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
