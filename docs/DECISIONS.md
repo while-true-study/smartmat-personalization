@@ -29,7 +29,7 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 
 | ID | Question | Owner | Resolve in | Blocks | Tracking |
 |---|---|---|---|---|---|
-| OPEN-01 | **Identity answered:** User03 ≠ User06 (PI, 2026-09-12; D-013). **Still open: measurement provenance** — why the rows of `user03_legacy` are contained in User06's recordings of 2025-10-06…10-13, and to which subject those measurements belong. Until then the overlapping recording is provisionally quarantined from primary evaluation (D-013). Original question: `user03_legacy` is a seconds-truncated copy of `user06_auxiliary` for 2025-10-06…10-12 (99.99–100 % of User03 rows found in User06). **A1 evidence (2026-09-12):** 100 % of User03 rows (minute-level) and 100 % of its 5-row value sequences occur in User06; offsets 0–59 s; each User03 file is a contiguous excerpt of one User06 night file; ordered runs up to 13,180 sequences. Overlap is inconsistent with independent subject recordings; identity still unconfirmed. No other subject pair shares any data. | data provider | P0 | any use of User03/User06 | `docs/issues/P0-01_user03-user06-provenance.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §4; `outputs/qa/p0/provenance/` |
+| OPEN-01 | **Closed 2026-09-13 by D-017:** provider confirmed the User06 source is invalid (setting issue). User06 source `excluded_invalid` (raw kept); User03 legacy stays auxiliary; subjects not merged. History: **Identity answered:** User03 ≠ User06 (PI, 2026-09-12; D-013). **Still open: measurement provenance** — why the rows of `user03_legacy` are contained in User06's recordings of 2025-10-06…10-13, and to which subject those measurements belong. Until then the overlapping recording is provisionally quarantined from primary evaluation (D-013). Original question: `user03_legacy` is a seconds-truncated copy of `user06_auxiliary` for 2025-10-06…10-12 (99.99–100 % of User03 rows found in User06). **A1 evidence (2026-09-12):** 100 % of User03 rows (minute-level) and 100 % of its 5-row value sequences occur in User06; offsets 0–59 s; each User03 file is a contiguous excerpt of one User06 night file; ordered runs up to 13,180 sequences. Overlap is inconsistent with independent subject recordings; identity still unconfirmed. No other subject pair shares any data. | data provider | P0 | any use of User03/User06 | `docs/issues/P0-01_user03-user06-provenance.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §4; `outputs/qa/p0/provenance/` |
 | OPEN-02 | Device of `user02/mat_22480/_prefix_mismatch/sm22482_0824.txt` and `…_0825.txt`. Evidence favours 22482 (filename prefix, JSON root key `smartmat_22482`, the only dates with a 22480 file but no 22482 file). A1: the two files share no rows with either device's files (not duplicates). **A2 evidence (2026-09-12):** they fill 22482's timeline seamlessly (start 30 min after 22482's last row, end 3 s before its next row), record simultaneously with 22480's own stream for 7.0 h, and match 22482's humidity regime (22480 − quarantined: −2 °C / −16 %RH vs typical 22480 − 22482: −2 / −19). Strong, consistent evidence for 22482; attribution still `unresolved` pending provider confirmation. A5: the gap between the two quarantined files (1,804 s) and their start relative to 22482 (1,806 s) follow 22482's lost-upload-chunk pattern (n × 1,800 s + a few s). | data provider | P0 | use of those 2 files | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` §9; `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6 |
 | OPEN-03 | Physical setup of User02's mats 22480/22482: they overlap for ~505 h and both register occupancy in 66.8 % of jointly recorded minutes, with different temperature/humidity. Same bed (body regions)? Different locations? How to use two concurrent streams (separate, one, fused)? A1: 46 co-recorded dates, 0 shared rows or sequences — concurrent but distinct streams. **A2 evidence (2026-09-12):** 253 h simultaneous recording (76 % of 22480's time); no pressure coupling (|r| ≤ 0.03 for all descriptors, no lag peak within ±30 s, movement-event coincidence at chance level, no clock offset found within ±12 h); occupancy agreement at chance under all 14 definitions (κ −0.07…0.00, "both active" 18–90 % depending on threshold); persistent T/H offset (22480 − 22482: −2 °C, −19 %RH; humidity lower on 46/46 dates); different channel-load patterns. Physical placement and the use policy for the two streams remain unresolved. | provider + PI | P0 | User02 in primary cohort | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` |
 | OPEN-04 | Device IDs of User01, User07, User02 legacy, User03, User06. Recording periods hand over day-to-day (User01 → User07 → User02), suggesting reused mats. Subject and device may be confounded. | data provider | P0 | RQ1 interpretation | — |
@@ -47,14 +47,16 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-08 | Timestamp policy: year inference for MM-DD rows, legacy minute-resolution rows, timezone, and the out-of-order steps. | PI | P0 | interim tables | — |
 | OPEN-09 | Handling of temp/humid sentinel zeros (chunk starts) and glitch values (−254, 256, 262). **A8 evidence (2026-09-13):**<br>• Invalid-candidate targets are 0.10 % of primary rows (4,132 of 4,136,059); no missing or non-finite values.<br>• Joint zeros (T = H = 0) arise from two mechanisms: single-row start sentinels at a recording/chunk start (125 / 51 / 61 / 118 rows in User01 / 22480 / 22482 / User07), and dropout episodes. 86 % of all zero rows fall in two episodes: User01 2025-12-28 daytime, and 22482 night 2026-08-08/09.<br>• All 147 extreme values (T −254, 171–256; H 135–262) are in that 22482 night.<br>• No abrupt jump or spike exists between valid observations within 5 s (max 1–2 °C, p99.9 1 %RH).<br>• The 148 same-second target conflicts are ±1 quantisation steps (119) or zero-vs-reading (29).<br>Flagging proposed as D-016 (Proposed); episode-level exclusion, clipping, interpolation and jump thresholds are not decided. | PI | P0 | targets | `docs/P0_A8_TARGET_QUALITY_REPORT.md`; D-016 |
 | OPEN-10 | Target definition under heater control: the T/H sensor measures a heater-controlled microclimate. Is heater state a covariate, a stratifier, or excluded? **A8 note (2026-09-13):** long constant-temperature runs (≥ 1 h cover 84 % of 22480 and 80 % of User07 recording time; 22480 is at 28–30 °C in 96 % of rows) while humidity keeps moving. This is consistent with 1 °C quantisation of a stable or regulated microclimate, not a frozen sensor. The cause and whether regulated periods are meaningful targets remain open. | PI | P2 (informed by P0/P1) | RQ1–RQ3 | `docs/P0_A8_TARGET_QUALITY_REPORT.md` §5 |
-| OPEN-11 | User01 pressure-sensor replacement on 2026-01-25: treat as distribution shift boundary? Effect on the chronological adaptation protocol. | PI | P0 analysis, P2 decision | RQ2 | — |
-| OPEN-12 | Adopt "`.` before P1 is a delimiter" for User06 files 1003–1011 in preprocessing (strong evidence; see inventory §8.3). A1: under this reading User06 rows align exactly with User03 rows, which have a separate `FSR1` column. | PI | P0 | User06 use | `docs/P0_A1_PROVENANCE_REPORT.md` §4.4 |
-| OPEN-13 | Whether and how auxiliary subjects enter training pools. | PI | P0 | RQ1 | — |
+| OPEN-11 | User01 pressure-sensor replacement on 2026-01-25: treat as distribution shift boundary? Effect on the chronological adaptation protocol. **A9 baseline evidence (2026-09-13):** a step, not a drift, between the morning and evening recordings of 2026-01-25. Rows with a channel at 4095: 22.1 % before, 18 rows (0.002 %) after. Pressure-sum median 4,420 → 2,976, p95 10,157 → 5,022. Mean active channels 2.07 → 3.55. The full before/after comparison is A10. | PI | P0 analysis, P2 decision | RQ2 | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5 |
+| OPEN-12 | **Moot after D-017** (User06 source excluded; relevant only if it were ever re-admitted). Adopt "`.` before P1 is a delimiter" for User06 files 1003–1011 in preprocessing (strong evidence; see inventory §8.3). A1: under this reading User06 rows align exactly with User03 rows, which have a separate `FSR1` column. | PI | — | nothing (source excluded) | `docs/P0_A1_PROVENANCE_REPORT.md` §4.4; D-017 |
+| OPEN-13 | Whether and how auxiliary subjects enter training pools. After D-017 the auxiliary pool is User02 legacy and User03 legacy, both minute-resolution. User03 legacy rows are the same measurements as part of the invalid User06 recording; whether the setting issue also affects them is unconfirmed. A9 (2026-09-13): User02 legacy P5 is at 4095 in 50.8 % of rows (runs up to ≈ 112 min); User03 legacy P3–P5 at 4095 in 7–10 % of rows. | PI | P0 | RQ1 | D-017; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §3 |
 | OPEN-14 | Metadata date inconsistencies (e.g. heating start written as 2026-11-18, log-format change as 2026-12-17; data suggest 2025). | data provider | P0 | covariate timeline | — |
 | OPEN-15 | Admissibility of firmware movement labels (UM/DM/LM/RM/NM) as model inputs / movement-derived features. | PI | P2 | RQ3 | — |
-| OPEN-16 | Final primary cohort. Three candidates give only three LOSO folds; statistical plan must reflect this. Provisional primary cohort: User01, User02, User07 (D-013). | PI | P0 | RQ1 | — |
-| OPEN-17 | Pressure-scale differences between subjects/periods (User01 saturates at 4095; User02 max 3731; User07 max 4023): normalisation strategy that respects L3/L11. | PI | P2 | preprocessing | — |
+| OPEN-16 | Final primary cohort. Three candidates give only three LOSO folds; statistical plan must reflect this. Provisional primary cohort: User01, User02, User07 (D-013, restated in D-017). | PI | P0 | RQ1 | — |
+| OPEN-17 | Pressure-scale differences between subjects/periods (User01 saturates at 4095; User02 max 3731; User07 max 4023): normalisation strategy that respects L3/L11. **A9 evidence (2026-09-13):**<br>• All sources have six populated channels. There are no missing channels, no non-standard layouts and no out-of-range or non-integer values.<br>• 4095 is a pile-up at the ceiling (275,601 cells vs 789 at 4094). 99.99 % of these cells are in User01 before the sensor change. 22480 has 17 cells; 22482 and User07 have none.<br>• Every non-zero constant run ≥ 1 min is a 4095 plateau. There is no interior-value stuck channel and no frozen frame on the current mats.<br>• Pressure-sum medians: User01 3,817 (old sensor ≈ 4,420, new ≈ 2,976) vs 1,764–2,037 on the current mats. Channel profiles differ (22482 more even).<br>Proposed input-validity rule D-018; 4095 handling and scaling stay open (P2, training data only). | PI | P2 | preprocessing | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md`; D-018 |
 | OPEN-18 | Public release: absolute dates or relative day indices. | PI + provider | P7 | release | — |
+| OPEN-19 | User02/22482 channel P1 from 2026-08-20 (A9): active share 0.49 → 0.13, median when active 759 → 26, p99 2,007 → 371. P6 active share 0.57 → 0.28 over the same dates. P2–P5 unchanged; the other mat (22480) shows no such drop. Was the mat moved, replaced or damaged? Use of 22482 data after that date as test/adaptation data depends on it. | data provider + PI | P0 (question), P2 (handling) | User02 splits | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5 |
+| OPEN-20 | Physical layout of P1–P6 on the mat and the legacy `FSR_k` ↔ P_k mapping (positional assumption). A9: the strongest positive correlations are P1–P4, P2–P5, P3–P6 on all current mats. This is compatible with, but not proof of, paired positions. Needed before any spatial or channel-selection feature. | data provider | P0 (question), P2 | spatial features | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6 |
 
 ---
 
@@ -95,7 +97,7 @@ two concurrent streams are used remains open (OPEN-03).
 
 ## D-004 — Dataset roles
 Date: 2026-09-12
-Status: Accepted (as candidates; cohort not frozen)
+Status: Accepted (as candidates; cohort not frozen). The User06 role is superseded by D-017 (`excluded_invalid`).
 Context: Sources differ in firmware, timestamp policy and completeness.
 Decision: Primary candidates = User01, User02 (new mat logs), User07; auxiliary = User02 legacy CSV,
 User03 legacy, User06; restricted metadata = `user01/metadata`.
@@ -197,7 +199,7 @@ Consequence: P0 ends with the cohort decision and the `p0-data-freeze` tag after
 
 ## D-013 — User03 ≠ User06; provisional quarantine of their overlapping recording; provisional primary cohort
 Date: 2026-09-12
-Status: Accepted (provisional — to be superseded once the data provider clarifies the measurement provenance)
+Status: Superseded by D-017 (User03/User06 part; the provisional primary cohort is restated in D-017)
 Context: P0-A1 found that 100 % of `user03_legacy` sensor rows (107,256, minute resolution) and 100 % of its
 value sequences are contained in `user06_auxiliary` recordings of the nights 2025-10-06 → 10-13. The PI
 relayed that User03 and User06 are different people.
@@ -283,3 +285,65 @@ Not covered by this proposal:
 - treatment of the ±1 same-second pairs;
 - interpolation, clipping or smoothing (P2).
 The candidate band is a descriptive parameter and must not be tightened after model results are seen.
+
+## D-017 — User06 source excluded as invalid (provider-confirmed); User03 kept as auxiliary
+Date: 2026-09-13
+Status: Accepted (supersedes D-013)
+Context: A1 showed that `user03_legacy` is, row for row, a contiguous excerpt of the `user06_auxiliary`
+recordings (100 % of User03 rows at minute resolution and of its value sequences). D-013 kept User03 ≠ User06
+and provisionally quarantined the overlapping recording. The data provider has since confirmed that the User06
+data are wrong because of a setting problem at the time, and that the User06 source should be left out.
+Decision:
+- User03 and User06 remain two distinct subjects. They are not merged.
+- The current `user06_auxiliary` source is classified `excluded_invalid` (`quality_status: invalid`,
+  `exclusion_reason: provider_confirmed_setting_issue`, `configs/subject_mapping.yaml`).
+- The User06 source is excluded from every downstream analysis, from model training and evaluation, and from
+  any canonical or public analysis dataset. Excluded sources are listed, with reason and decision ID, in the
+  future release manifest (P7).
+- The raw archive is **not** modified or deleted. Analytical exclusion, never physical deletion.
+- `user03_legacy` keeps its `auxiliary` role, with its existing limitations (minute resolution; auxiliary use needs
+  its own decision, OPEN-13).
+- Historical audit results (inventory, A1–A8) are not rewritten. They document the data as delivered. Analyses
+  from A9 onward apply this exclusion.
+Evidence: `docs/P0_A1_PROVENANCE_REPORT.md` §4; provider confirmation relayed by the PI on 2026-09-13.
+Consequence:
+- Provisional primary cohort unchanged: User01, User02, User07.
+- User03 legacy: auxiliary. User06 current source: `excluded_invalid`. User06 has no valid source (cohort
+  `no_valid_source`).
+- OPEN-01 is closed.
+- The committed raw manifest now carries `dataset_role = excluded_invalid` for the 11 User06 files; only those
+  11 cells changed, checksums are unchanged. Re-running historical audit scripts reproduces their numbers; only
+  role labels of User06 rows differ. Verified on 2026-09-13 by re-running A1, A2, A5, A7 and A8 against saved
+  outputs: every value is identical except 27 role cells in A1 `cross_subject_provenance_by_source.csv` and 1 in
+  A5 `duplicate_summary.csv` (User06 `auxiliary` → `excluded_invalid`).
+- Caveat for any future use of User03 legacy: its rows are the same measurements as part of the invalid User06
+  recording. D-017 attributes them to User03, but the provider has not said whether the setting problem also
+  affects them. This must be addressed before User03 legacy is used (OPEN-13).
+
+## D-018 — Pressure input-validity rule: raw layout and encoding only (values kept)
+Date: 2026-09-13
+Status: **Proposed** (not accepted; decide at P0 exit with D-014/D-015/D-016)
+Context: P1–P6 are the model inputs. A9 checked channel presence, layout, encoding, zeros, the 4095 ceiling,
+constant runs and scale on the analysis-eligible sources.
+Decision (proposed):
+- In the canonical interim dataset, a row's pressure input is **invalid** only if:
+  - the raw line layout is not a recognised six-channel layout (`pressure_schema = nonstandard`), or fewer
+    than six channels are present (`pressure_channels_present < 6`); absent channels are never filled with 0;
+  - or any channel is < 0, > 4095 or non-integer (`pressure_impossible_encoding`).
+- 4095 is kept as a value and flagged with the number of channels at 4095. It is not treated as missing,
+  capped or excluded.
+- All-zero frames, constant-run length, same-second group and the provider period label (e.g. User01 before/after
+  2026-01-25) are stored as context columns. They are not validity flags.
+- Raw values are never replaced, clipped, normalised, imputed or deleted. Channels are not removed.
+Evidence: `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6–§8.
+- The rule changes 0 rows of the current data (policies A and B). It guards the canonical builder against layout
+  and encoding errors.
+- A stuck heuristic (policy C) would flag 7,129 User01 rows. All of them are 4095 plateaus of the old sensor,
+  not frozen hardware, so a heuristic is not proposed.
+Consequence: If accepted, pressure validity is decided by raw evidence only. Not covered by this proposal (P2,
+fitted on training data only where applicable):
+- saturation handling;
+- scaling/normalisation (OPEN-17);
+- the User01 sensor-change boundary (OPEN-11);
+- the 22482 P1 shift (OPEN-19);
+- channel selection or spatial features (OPEN-20).

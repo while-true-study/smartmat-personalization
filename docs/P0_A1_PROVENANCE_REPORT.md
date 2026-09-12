@@ -14,6 +14,11 @@
 This analysis quantifies evidence. It does not change the subject mapping, remove or merge rows, or decide
 which data are used.
 
+> **Update 2026-09-13 — resolved by D-017.** The data provider confirmed that the User06 source is invalid
+> (setting issue). It is now `excluded_invalid`: excluded from all analyses, raw kept. User03 legacy stays
+> auxiliary. The results below are the historical provenance evidence as found on 2026-09-12 and are kept
+> unchanged.
+
 ---
 
 ## 1. Purpose

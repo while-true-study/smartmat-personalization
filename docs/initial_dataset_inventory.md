@@ -5,7 +5,7 @@
 | Date | 2026-09-12 |
 | Scope | Read-only inventory of the delivered raw package. No cleaning, resampling, interpolation, windowing, splitting or normalisation was performed. |
 | Raw root | `스마트 매트 데이터 정리/raw` (`configs/paths.yaml`) |
-| Manifest | `data/interim/manifest/raw_file_manifest.csv`, SHA-256 `dcf25e98b7d6f3a7…` |
+| Manifest | `data/interim/manifest/raw_file_manifest.csv`, SHA-256 `dcf25e98b7d6f3a7…` (version used here; rebuilt 2026-09-13 as `f5a27acc59cc7429…` for the D-017 role label of the 11 User06 files only — raw file checksums unchanged) |
 | Code | `scripts/build_manifest.py`, `scripts/audit_dataset.py`, parser `src/data/raw_parser.py` |
 | Machine-readable results | `outputs/qa/dataset_audit/` (`file_audit.csv`, `source_summary.csv`, `subject_summary.csv`, `issues.csv`, `cross_file_time_overlap.csv`, `event_vocabulary.csv`, `audit_summary.json`) |
 
@@ -33,7 +33,7 @@ Policy references: identity and roles in `DATA_POLICY.md`; open questions (OPEN-
 | User01 | primary | unknown | 152, 151 with rows (+2 xlsx) | 2,248,820 | 2025-08-25 22:21 | 2026-04-02 06:40 |
 | User02 | primary (mats) + auxiliary (legacy) + quarantined | 22480, 22482, unknown (legacy), unresolved (2 files) | 103 | 1,160,172 | 2025-10-05 00:50 | 2026-09-11 06:20 |
 | User03 | auxiliary | unknown | 7 | 107,256 | 2025-10-06 21:33 | 2025-10-13 09:15 |
-| User06 | auxiliary | unknown | 11 | 164,185 | 2025-10-03 19:39 | 2025-10-14 01:05 |
+| User06 | auxiliary (2026-09-12; now `excluded_invalid`, D-017) | unknown | 11 | 164,185 | 2025-10-03 19:39 | 2025-10-14 01:05 |
 | User07 | primary | unknown | 100 | 1,008,456 | 2026-04-03 19:00 | 2026-07-19 05:11 |
 
 Five subject IDs exist; no other subject appears in any file. Device IDs appear only for User02.
@@ -148,6 +148,9 @@ Within files, 110 files contain repeated identical rows and 283 contain repeated
 > Update 2026-09-12: reproduced and extended to all subject pairs by P0-A1
 > (`docs/P0_A1_PROVENANCE_REPORT.md`). Sensor values match for 100 % of User03 rows; the "99.99 %" below came
 > from also comparing event text, which differs in one row. No other subject pair shares data.
+> Update 2026-09-13 (D-017): the provider confirmed the User06 source is invalid (setting issue). It is excluded
+> from analysis as `excluded_invalid`; raw files are kept. User03 legacy stays auxiliary. This inventory keeps
+> describing the data as delivered.
 
 Every row of `user03_legacy` (99.99–100 % per file) equals a row of `user06_auxiliary` after truncating
 User06 timestamps to the minute. For 2025-10-09 the two sequences are identical row for row (15,717 rows);

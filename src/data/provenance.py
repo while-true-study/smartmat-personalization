@@ -34,6 +34,7 @@ CHANNELS: tuple[str, ...] = ("p1", "p2", "p3", "p4", "p5", "p6", "temp", "humid"
 PRESSURE_CHANNELS: tuple[str, ...] = CHANNELS[:6]
 MISSING = np.int16(-32768)
 MODES: tuple[str, ...] = ("A_exact_ts_values", "B_minute_ts_values", "C_value_sequence")
+SCHEMA_CODES = {"p6_t_h": 0, "dev_p6_t_h": 1}   # anything else -> 2 (nonstandard)
 DEFAULT_K = 5
 _EPOCH = datetime(1970, 1, 1)
 _MODE_SEED = {m: np.uint64(((i + 1) * 0x9E3779B97F4A7C15) % 2**64) for i, m in enumerate(MODES)}
@@ -61,6 +62,8 @@ class SourceData:
     event_code: np.ndarray | None = None
     chunk_idx: np.ndarray | None = None
     chunk_keys: list[str] = field(default_factory=list)
+    # row schema of the raw line: 0 = timestamp,P1..P6,temp,humid,event; 1 = with device_id column; 2 = other
+    schema_code: np.ndarray | None = None
 
     @property
     def n(self) -> int:
@@ -72,7 +75,7 @@ class SourceData:
     @classmethod
     def from_rows(cls, source_id: str, subject_id: str, device_id: str,
                   files_rows: Iterable[tuple[str, Sequence[DataRow]]]) -> "SourceData":
-        files, ts, vals, fidx, absent, line_no, ev, chunk = [], [], [], [], [], [], [], []
+        files, ts, vals, fidx, absent, line_no, ev, chunk, schema = [], [], [], [], [], [], [], [], []
         chunk_keys: list[str] = []
         chunk_index: dict[tuple[int, str], int] = {}
         for label, rows in files_rows:
@@ -81,14 +84,19 @@ class SourceData:
             for r in rows:
                 if r.ts is None:
                     continue
-                v = list(r.pressure[:6]) + [MISSING] * (6 - min(6, len(r.pressure)))
-                v += [MISSING if r.temp is None else r.temp, MISSING if r.humid is None else r.humid]
+                if r.schema in SCHEMA_CODES:
+                    v = list(r.pressure[:6]) + [MISSING] * (6 - min(6, len(r.pressure)))
+                    v += [MISSING if r.temp is None else r.temp, MISSING if r.humid is None else r.humid]
+                else:
+                    # unknown layout (e.g. 5 values + T/H): values cannot be mapped to P1..P6/T/H, so none is assigned
+                    v = [MISSING] * len(CHANNELS)
                 ts.append((r.ts - _EPOCH) // timedelta(seconds=1))
                 vals.append(v)
                 fidx.append(i)
                 absent.append(-1 if r.movement is None else int(r.movement == "absent"))
                 line_no.append(r.line_no)
                 ev.append(text_code(r.event_raw))
+                schema.append(SCHEMA_CODES.get(r.schema, 2))
                 if r.chunk_key is None:
                     chunk.append(-1)
                 else:
@@ -106,7 +114,8 @@ class SourceData:
         return cls(source_id, subject_id, device_id, files,
                    np.array(ts, dtype=np.int64), arr.astype(np.int16), np.array(fidx, dtype=np.int32),
                    np.array(absent, dtype=np.int8), np.array(line_no, dtype=np.int32),
-                   np.array(ev, dtype=np.uint64), np.array(chunk, dtype=np.int32), chunk_keys)
+                   np.array(ev, dtype=np.uint64), np.array(chunk, dtype=np.int32), chunk_keys,
+                   np.array(schema, dtype=np.int8))
 
     @classmethod
     def concat(cls, parts: Sequence["SourceData"], source_id: str, subject_id: str, device_id: str) -> "SourceData":
@@ -131,7 +140,7 @@ class SourceData:
             np.concatenate([p.values for p in parts]) if parts else np.empty((0, len(CHANNELS)), np.int16),
             np.concatenate([p.file_idx + o for p, o in zip(parts, offs)]) if parts else np.array([], np.int32),
             cat("firmware_absent"), cat("line_no"), cat("event_code"), chunk.astype(np.int32) if chunk is not None else None,
-            chunk_keys,
+            chunk_keys, cat("schema_code"),
         )
 
 

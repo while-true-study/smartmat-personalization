@@ -243,11 +243,20 @@ def repeated_block_members(src: SourceData, keys: RowKeys, pairs: list[dict], mi
     return mask
 
 
-def subject_device_groups(manifest_rows: list[dict]) -> dict[tuple[str, str], dict]:
-    """Sensor sources grouped by (subject_id, device_id) with their format families and dataset roles."""
+def subject_device_groups(manifest_rows: list[dict], eligible_only: bool = False) -> dict[tuple[str, str], dict]:
+    """Sensor sources grouped by (subject_id, device_id) with their format families and dataset roles.
+
+    eligible_only=True keeps only analysis-eligible sources (D-017: excluded_invalid, quarantined and
+    restricted sources are left out). Historical audits (A1-A8) use the default and see all delivered data.
+    """
+    from src.data.subject_mapping import analysis_source_ids
+
+    eligible = analysis_source_ids() if eligible_only else None
     groups: dict[tuple[str, str], dict] = {}
     for r in manifest_rows:
         if str(r["is_sensor_data"]) != "True":
+            continue
+        if eligible is not None and r["source_id"] not in eligible:
             continue
         g = groups.setdefault((r["subject_id"], r["device_id"]), {"sources": set(), "families": set(), "roles": set()})
         g["sources"].add(r["source_id"])

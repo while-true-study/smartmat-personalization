@@ -8,8 +8,8 @@ import pytest
 from src.data import paths
 from src.data.manifest import read_manifest
 from src.data.subject_mapping import (
-    UNKNOWN_DEVICE_VALUES, device_subject_map, mapping_config, resolve_file, resolve_source, sources,
-    subject_for_device, subject_ids,
+    UNKNOWN_DEVICE_VALUES, analysis_source_ids, device_subject_map, excluded_sources, mapping_config, resolve_file,
+    resolve_source, sources, subject_for_device, subject_ids,
 )
 
 USER02_DEVICES = {"22480", "22482"}
@@ -91,8 +91,28 @@ def test_dataset_roles_match_policy():
     assert role["user07"] == "primary_candidate"
     assert role["user02_legacy_csv"] == "auxiliary"
     assert role["user03_legacy"] == "auxiliary"
-    assert role["user06_auxiliary"] == "auxiliary"
+    assert role["user06_auxiliary"] == "excluded_invalid"          # D-017 (provider-confirmed invalid source)
     assert role["user01_metadata"] == "restricted_metadata"
+
+
+def test_user06_source_is_excluded_but_subject_is_kept_and_not_merged():
+    s06 = resolve_source("user06_auxiliary/1003_log.txt")
+    s03 = resolve_source("user03_legacy/user3_20251006_log.csv")
+    assert "User06" in subject_ids() and "User03" in subject_ids()
+    assert s06.subject_id == "User06" and s03.subject_id == "User03"     # never merged
+    assert s06.quality_status == "invalid" and not s06.analysis_eligible
+    assert s06.exclusion_reason == "provider_confirmed_setting_issue" and s06.exclusion_decision == "D-017"
+    assert s03.analysis_eligible and s03.dataset_role == "auxiliary"
+
+
+def test_analysis_sources_and_exclusion_list():
+    eligible = analysis_source_ids()
+    assert "user06_auxiliary" not in eligible
+    assert "user02_mat_22480_prefix_mismatch" not in eligible and "user01_metadata" not in eligible
+    assert {"user01_phase_a", "user02_mat_22480", "user02_mat_22482", "user07", "user03_legacy"} <= eligible
+    excluded = {e["source_id"]: e for e in excluded_sources()}
+    assert excluded["user06_auxiliary"]["exclusion_reason"] == "provider_confirmed_setting_issue"
+    assert excluded["user06_auxiliary"]["exclusion_confirmed_by"] == "data_provider"
 
 
 def test_user02_legacy_is_same_subject_as_new_user02():

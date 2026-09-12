@@ -55,8 +55,8 @@ Every derived record must be traceable back to raw. Derived tables carry at leas
 | User02 | `user02/mat_22482` | `22482` | Physical mat 22482 |
 | User02 | `user02/mat_22480/_prefix_mismatch` | unresolved (22480 or 22482) | Quarantined; see §4 |
 | User02 | `user02/legacy_csv` | unknown | Legacy CSV export, 2025-10 |
-| User03 | `user03_legacy` | unknown | Legacy CSV export; see open issue OPEN-01 |
-| User06 | `user06_auxiliary` | unknown | See open issue OPEN-01 |
+| User03 | `user03_legacy` | unknown | Legacy CSV export; auxiliary (D-017) |
+| User06 | `user06_auxiliary` | unknown | Distinct subject; this source is `excluded_invalid` (provider-confirmed setting issue, D-017). Raw kept. |
 | User07 | `user07` | unknown | Folder name was anonymised by the provider |
 
 User02 rule (confirmed by the data provider, DECISIONS D-003):
@@ -70,10 +70,10 @@ device_id  ∈ {22480, 22482}
 never be split across train/test as if independent, and never be counted as two subjects in any
 table or statistic. `tests/test_subject_mapping.py` enforces the mapping.
 
-Open identity questions (do not resolve by assumption; see `DECISIONS.md`):
-- OPEN-01: `user03_legacy` rows are all contained in `user06_auxiliary` (seconds truncated). User03 and User06
-  are different people (D-013); the overlapping recording is provisionally quarantined from primary
-  evaluation until its measurement provenance is clarified.
+Identity questions (do not resolve by assumption; see `DECISIONS.md`):
+- OPEN-01 — **closed by D-017.** `user03_legacy` rows are contained in `user06_auxiliary`. User03 and User06 are
+  different people, and the provider confirmed the User06 source is invalid. It is excluded from analysis; the
+  raw files are kept. User03 legacy stays auxiliary, with the caveat noted in D-017.
 - OPEN-02: device attribution of the two `_prefix_mismatch` files.
 - OPEN-03: the two User02 mats recorded simultaneously for about 505 h.
 - OPEN-04: device IDs of every other source are unknown.
@@ -83,12 +83,17 @@ Open identity questions (do not resolve by assumption; see `DECISIONS.md`):
 | Role | Sources | Meaning |
 |---|---|---|
 | `primary_candidate` | User01 (all phases), User02 `mat_22480`, User02 `mat_22482`, User07 | Candidate pool for the main experiments. Not frozen until `EXPERIMENT_PROTOCOL.md` is. |
-| `auxiliary` | User02 `legacy_csv`, User03 `legacy`, User06 | Kept separate from the main pool. Usable only under an explicit protocol (e.g. extra training subjects, robustness checks), never as test data for the main claims unless decided. |
+| `auxiliary` | User02 `legacy_csv`, User03 `legacy` | Kept separate from the main pool. Usable only under an explicit protocol (e.g. extra training subjects, robustness checks), never as test data for the main claims unless decided. |
 | `quarantined` | `user02/mat_22480/_prefix_mismatch/*` | Provenance conflict. Excluded from every analysis until resolved. The subject (User02) is certain; only the device is not. |
+| `excluded_invalid` | `user06_auxiliary` (D-017) | Source confirmed invalid (`quality_status: invalid`, with `exclusion_reason`). Excluded from every analysis, model training/evaluation and public dataset. **Analytical exclusion only**: the raw files stay in the archive, unchanged, for provenance. |
 | `restricted_metadata` | `user01/metadata/*.xlsx` | Participant metadata. Never model input, never copied, never released (§5). |
 
 Roles are subject-level for leakage purposes: when a subject is held out, **all** of that subject's
 sources (including auxiliary legacy data) are excluded from training (`RESEARCH_PROTOCOL.md`, L6).
+
+Code selects analysable sources only through `src/data/subject_mapping.analysis_source_ids()`
+(roles `primary_candidate` and `auxiliary`, not `invalid`). No analysis may read an excluded source,
+except audits that explicitly document the delivered data (inventory, provenance).
 
 ## 5. Privacy and release
 
@@ -112,5 +117,11 @@ Regardless, the following apply to everything that leaves the private workspace
    processed data; audit outputs redact long digit runs (`src/data/raw_parser.redact`).
 4. Public data releases are built as a separate, derived release subset with its own manifest.
    The private raw package is never published as-is (provider README, "Before publication").
+   - Sources that are not analysis-eligible (`excluded_invalid`, `quarantined`, `restricted_metadata`) are not
+     part of the canonical public analysis dataset. **The User06 source is not released as analysis data.**
+   - The release manifest lists every excluded source with `source_id`, `exclusion_reason`,
+     `exclusion_confirmed_by` and `exclusion_decision`. The fields come from `configs/subject_mapping.yaml`
+     via `src/data/subject_mapping.excluded_sources()`. This documents what was left out and why, without
+     publishing it.
 5. Exact calendar dates combined with health events can re-identify a person. Whether public
    releases use absolute dates or relative day indices is an open decision (OPEN-18).

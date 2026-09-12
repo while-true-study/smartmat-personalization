@@ -3,10 +3,20 @@
 > Issue draft (GitHub CLI was not available when this was written). File it on GitHub with this title
 > and body, then replace the "Tracking" cell of OPEN-01 in `docs/DECISIONS.md` with the issue link.
 
-**Phase:** P0 — Dataset Audit & Data Freeze · **Open decision:** OPEN-01 · **Type:** provenance / subject identity
-**Status:** evidence quantified (P0-A1, 2026-09-12). Identity answered: User03 and User06 are different
-people (PI, 2026-09-12). **Measurement provenance still open** — waiting for the data provider. Meanwhile the
-overlapping recording is provisionally quarantined from primary evaluation (D-013).
+**Phase:** P0 — Dataset Audit & Data Freeze · **Open decision:** OPEN-01 (closed) · **Type:** provenance / subject identity
+**Status: Resolved 2026-09-13 (D-017).** The data provider confirmed that the User06 data are wrong because of a
+setting problem and that the User06 source should be left out. Resulting handling:
+- User03 ≠ User06; the subjects are not merged.
+- `user06_auxiliary` is `excluded_invalid`: excluded from all analyses, models and public analysis data; the raw
+  files are kept unchanged.
+- `user03_legacy` stays auxiliary.
+- Residual caveat: User03 legacy rows are the same measurements as part of the User06 recording. Whether the
+  setting problem affects them too is not stated; check before any auxiliary use (OPEN-13).
+
+If this issue is filed on GitHub, file it as closed with this resolution.
+
+History: evidence quantified (P0-A1, 2026-09-12); identity answered (User03 and User06 are different people, PI,
+2026-09-12); provisional quarantine (D-013, superseded).
 
 ## Evidence
 Reproducible analysis P0-A1 (`docs/P0_A1_PROVENANCE_REPORT.md`, code `scripts/audit_cross_subject_provenance.py`),
@@ -56,6 +66,6 @@ belong and whether they may be used.
 Blocks: any use of the overlapping recording; OPEN-13 (auxiliary use). The provisional primary cohort
 (User01, User02, User07) is not blocked.
 
-## Handling until resolved
-Subject mapping unchanged; User03 and User06 stay distinct subjects. The overlapping recording is provisionally
-quarantined from primary evaluation (D-013). Neither subject is deleted or finally excluded.
+## Handling (final, D-017)
+User03 and User06 stay distinct subjects. The User06 source is `excluded_invalid` (analytical exclusion; raw
+archive untouched). User03 legacy remains auxiliary.

@@ -4,9 +4,9 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8 done; A6, A12 partly (2026-09-13); A9–A11, A13 pending |
+| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9 done; A6, A12 partly (2026-09-13); A10, A11, A13 pending |
 | Starting point | `docs/initial_dataset_inventory.md` |
-| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07: D-013 |
+| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07 and User06 source excluded: D-017 (supersedes D-013) |
 
 ## Goal
 
@@ -193,19 +193,43 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Expected artifact:** `outputs/qa/p0/targets/th_quality_flags.csv`.
 - **Decision it may influence:** OPEN-09 (flagging/exclusion rules), OPEN-10.
 
-### A9. Pressure channel consistency
+### A9. Pressure channel consistency — **done (2026-09-13)**
+- **As implemented:**
+  - First analysis on analysis-eligible sources only (D-017). The User06 source, quarantined files and
+    restricted metadata are not loaded. Excluded sources are listed with their reason.
+  - Main groups User01, 22480, 22482, User07 on the A5/A7 audit timeline. User02/User03 legacy are reference
+    only.
+  - Per channel: statistics per phase, zero and 4095 boundary runs, and constant runs in four cross-channel
+    categories (≥ 1 min / 5 min / 30 min / 1 h). Also identical-frame runs, cross-channel shares and
+    correlations, and |Δ| ≤ 5 s.
+  - Scale by source/month/week/day, with the User01 2026-01-25 sensor change as baseline evidence only.
+  - Schema per file; policies A/B/C simulated; flag schema proposed.
+  - Code: `src/data/pressure_quality.py`, `scripts/audit_pressure_quality.py`; tests:
+    `tests/test_pressure_quality.py`. Parser safeguard: unrecognised layouts are never mapped onto P1–P6.
+  - The planned channel-order check using the User03/User06 overlap is dropped: the User06 source is excluded
+    (D-017). The `FSR_k` ↔ P_k mapping goes to the provider (OPEN-20).
+- **Artifacts:** `outputs/qa/p0/pressure_quality/`; report `docs/P0_A9_PRESSURE_QUALITY_REPORT.md`.
+- **Result:**
+  - Six populated channels everywhere. No missing channel, non-standard layout or impossible value.
+  - 4095 appears only in User01 before the sensor change (plus 17 cells on 22480). All non-zero constant runs are
+    4095 plateaus; no stuck channel or frozen frame on the current mats.
+  - Sensor change visible as a step. New shift: 22482 P1 from 2026-08-20 (OPEN-19).
+  - D-018 (Proposed): input validity from raw layout and encoding only. The stuck heuristic (policy C) is
+    rejected: it would remove only User01 4095 plateaus.
 - **Purpose:** Check that the six channels are comparable across sources and periods.
 - **Input:** Parsed rows.
 - **Method:** Per-channel distributions, zero rate, saturation (4095) rate and stuck/constant runs by
-  subject, device and period; channel-order sanity between legacy `FSR1–6` and `P1–6` using the
-  User03/User06 overlap; all-zero-row rates.
-- **Expected artifact:** `outputs/qa/p0/pressure/channel_stats.csv`.
+  subject, device and period; all-zero-row rates.
+- **Expected artifact:** `outputs/qa/p0/pressure_quality/`.
 - **Decision it may influence:** OPEN-17, channel inclusion, compatibility of legacy sources.
 
 ### A10. User01 sensor phase analysis
 - **Purpose:** Measure the effect of known changes in User01's collection: phase_a/b/c, the
   2025-12-17 log-format change, the heating-season start and the 2026-01-25 pressure-sensor replacement.
 - **Input:** User01 parsed rows; operational dates from DATA_POLICY §5 / D-008.
+- **Baseline from A9:** the sensor change is a step between the morning and evening recordings of 2026-01-25.
+  Rows with a channel at 4095 fall from 22.1 % to 0.002 %, and the pressure-sum median from 4,420 to 2,976.
+  User01's long zero runs on unloaded channels are still to be compared before/after.
 - **Method:** Pressure distributions, saturation, occupancy and event rates, and T/H distributions in
   windows before/after each change date (descriptive comparison, no model).
 - **Expected artifact:** `outputs/qa/p0/user01_phases/phase_comparison.csv`, figures.
@@ -236,6 +260,9 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 ### A13. Legacy timestamp reliability
 - **Purpose:** Decide whether minute-resolution legacy sources can be used and how.
 - **Input:** `user02_legacy_csv`, `user03_legacy`, and User06 as the parent log of User03.
+- **Note (D-017):** the User06 source is now `excluded_invalid`. Using it only as a reference for how the legacy
+  export transformed timestamps would be a provenance-QA use, not an analysis of User06. Confirm this use (or
+  drop it) before A13 runs.
 - **Method:** Use the User03 ↔ User06 alignment as ground truth for the export transformation (seconds
   truncation, row order, dropped rows); check whether within-minute order preserves time order; estimate
   achievable time resolution for User02 legacy, which has no parent log.
@@ -245,7 +272,8 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 ## Clarifications needed from the data provider
 
 Tracked as issue drafts in `docs/issues/` (to be filed on GitHub):
-1. Relation between User03 legacy and User06 (OPEN-01) — `P0-01_user03-user06-provenance.md`.
+1. ~~Relation between User03 legacy and User06 (OPEN-01)~~ — resolved 2026-09-13 (D-017): the User06 source is
+   invalid and excluded. Follow-up: does the same setting problem affect the User03 legacy measurements (OPEN-13)?
 2. User02 dual-device recording protocol and the two quarantined files (OPEN-02, OPEN-03) —
    `P0-02_user02-dual-device-protocol.md`.
 3. Device IDs of all other sources (OPEN-04) and metadata date inconsistencies (OPEN-14).
@@ -254,6 +282,10 @@ Tracked as issue drafts in `docs/issues/` (to be filed on GitHub):
    - Why are 1–3 chunks lost at the morning file cuts of 22482?
    - Why do adjacent daily exports repeat chunks?
    - What causes the recurring ≈ 2-minute logging pauses?
+5. Pressure hardware (A9; OPEN-17, OPEN-19, OPEN-20):
+   - Is 4095 ADC clipping or a firmware cap, and does the new sensor use the same range?
+   - Was mat 22482 moved, replaced or damaged around 2026-08-20 (P1 nearly silent afterwards)?
+   - What is the physical position of P1–P6, and does `FSR_k` in the legacy CSVs equal P_k?
 
 ## Exit criteria (data freeze)
 
@@ -261,6 +293,7 @@ P0 is complete when:
 - [ ] OPEN-01, -02, -03 resolved, or the affected data excluded by a decision entry
 - [ ] OPEN-04 answered, or its consequences for RQ1 documented
 - [ ] OPEN-05, -06, -07, -08, -09, -12, -13, -14, -16 decided (Accepted entries in `DECISIONS.md`)
+- [ ] Pressure input-validity rule decided (D-018); OPEN-19 and OPEN-20 answered, or their consequences documented
 - [ ] Canonical interim dataset v1 built under `data/interim/` from the accepted rules: parsed,
       de-duplicated, provenance columns, quality flags; **no** resampling, interpolation or normalisation
 - [ ] Interim dataset manifest with SHA-256 committed; raw integrity verified
