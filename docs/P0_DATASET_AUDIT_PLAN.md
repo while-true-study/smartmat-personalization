@@ -4,9 +4,9 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9, A9b, A10, A11 done; A6, A12 partly (2026-09-13); A13 pending. No further anomaly audits planned; next: P0 closure and canonical data freeze |
+| Status | **Closed 2026-09-13 (closure gate passed; merge and tag pending PI review)**. A1, A2, A5 (incl. A3, A4), A7, A8, A9, A9b, A10, A11 done; A6, A12 partly; A13 not needed for the frozen policies. Canonical interim dataset v1 built (D-028). Final report: `docs/P0_DATASET_AUDIT_REPORT.md` |
 | Starting point | `docs/initial_dataset_inventory.md` |
-| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; User06 source excluded: D-017 (supersedes D-013); User01 `sensor_phase`: D-019; primary cohort User01/User02/User07: D-020; User03 legacy valid auxiliary: D-021; 22482 `channel_quality_phase`: D-022 |
+| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; User06 source excluded: D-017 (supersedes D-013); User01 `sensor_phase`: D-019; primary cohort User01/User02/User07: D-020; User03 legacy valid auxiliary: D-021; 22482 `channel_quality_phase`: D-022; P0 closure: D-014 and D-018 accepted, D-023 … D-028 |
 
 ## Goal
 
@@ -358,50 +358,64 @@ Tracked as issue drafts in `docs/issues/` (to be filed on GitHub):
 
 ## Exit criteria (data freeze)
 
-P0 is complete when:
-- [ ] OPEN-01, -02, -03 resolved, or the affected data excluded by a decision entry
-  (status 2026-09-13: OPEN-01 closed by D-017; OPEN-02 quarantined by D-006 but not yet decided; OPEN-03 open.
-  A decision to keep both mats as separate device streams in the interim data would close OPEN-03's P0 part.)
-- [ ] OPEN-04 answered, or its consequences for RQ1 documented (consequences documented in A11 §3, §5; awaiting
-  PI sign-off)
-- [ ] OPEN-05, -06, -07, -08, -09, -12, -13, -14, -16 decided (Accepted entries in `DECISIONS.md`)
-  (OPEN-16 closed by D-020; OPEN-12 moot after D-017 and to be closed formally)
-- [ ] Pressure input-validity rule decided (D-018); OPEN-19 and OPEN-20 answered, or their consequences documented
-  (OPEN-19 closed by D-022; OPEN-20 consequences documented in A9, needed only for spatial features in P2)
-- [ ] Canonical interim dataset v1 built under `data/interim/` from the accepted rules: parsed,
-      de-duplicated, provenance columns (incl. `sensor_phase`, D-019, and `channel_quality_phase` /
-      `channel_quality_flag`, D-022), quality flags; **no** resampling, interpolation or normalisation
-- [ ] Interim dataset manifest with SHA-256 committed; raw integrity verified
-- [ ] `docs/P0_DATASET_AUDIT_REPORT.md` written; README roadmap updated
-- [ ] Tests pass; PR merged into `main`; tag `p0-data-freeze` created on the merge commit
+Status at P0 closure (2026-09-13). Evidence is in `docs/P0_DATASET_AUDIT_REPORT.md` and D-023 … D-028.
 
-### Remaining work before closure (as of A9b, 2026-09-13)
+- [x] OPEN-01, -02, -03 resolved, or the affected data excluded by a decision entry: OPEN-01 by D-017; OPEN-02
+  quarantined and excluded from canonical_v1 (D-006, D-023); OPEN-03, P0 part, by D-027.
+- [x] OPEN-04 answered, or its consequences for RQ1 documented: consequences documented (A11 §3, §5); the
+  provider question is deferred as non-blocking.
+- [x] OPEN-05, -06, -07, -08, -09, -12, -13, -16 decided:
+  - OPEN-05: D-005;
+  - OPEN-06: D-024;
+  - OPEN-07: D-014;
+  - OPEN-08: D-026;
+  - OPEN-09: D-025;
+  - OPEN-12: moot, closed;
+  - OPEN-13: D-023;
+  - OPEN-16: D-020.
+- [x] OPEN-14 deferred to P1/P2 as non-blocking. *Amendment at closure:* the criterion listed OPEN-14 as a P0
+  decision, but no frozen P0 policy depends on the metadata dates, and the one date that matters (the sensor
+  change) is confirmed by data (D-019).
+- [x] Pressure input-validity rule decided (D-018, accepted). OPEN-19 closed by D-022. OPEN-20 consequences
+  documented (A9); it is needed only for spatial features (P2).
+- [x] Canonical interim dataset v1 built under `data/interim/canonical_v1/` from the accepted rules: parsed,
+  de-duplicated, provenance columns (incl. `sensor_phase`, `channel_quality_phase`/`channel_quality_flag`),
+  quality flags; **no** resampling, interpolation or normalisation (D-028).
+- [x] Interim dataset manifests with content and file SHA-256 committed (`data/interim/manifest/canonical_v1_*`);
+  raw integrity verified.
+- [x] `docs/P0_DATASET_AUDIT_REPORT.md` written; README roadmap updated.
+- [ ] Tests pass (done); PR merged into `main`; tag `p0-data-freeze` created on the merge commit. The merge and
+  tag are pending the PI's review and are not done by the build.
 
-No further anomaly audits are planned unless a new blocking issue appears. Next step: **P0 Closure & Canonical
-Data Freeze**.
+### Closure gate (2026-09-13)
 
-- **Decisions (PI), blocking:**
-  - accept or revise the proposed D-014 (de-duplication), D-015 (sessions), D-016 (target flags) and D-018
-    (pressure validity);
-  - OPEN-08 (timestamp policy);
-  - OPEN-13 (auxiliary use, or explicit deferral);
-  - OPEN-03, P0 part (both mats as separate device streams);
-  - OPEN-02 (keep the two files quarantined, or attribute them to 22482);
-  - OPEN-05 (raw location);
-  - close OPEN-12 formally.
-- **Provider, non-blocking (consequences documented):**
-  - OPEN-04 (mat identity);
-  - OPEN-14 (metadata dates);
-  - OPEN-20 (channel layout);
-  - OPEN-21 (User01 acquisition changes);
-  - cause of the 22482 P1 shift (flagged by D-022).
-- **Optional analyses** (only if the decisions need them):
-  - A13 (legacy timestamps), if auxiliary data are used;
-  - A12 remainder (hour-of-day, heater episodes);
-  - A6 remainder (legacy rows per minute).
-- **Build:**
-  - canonical interim dataset v1 with provenance columns (`subject_id`, `source_id`, `device_id` where recorded,
-    `sensor_phase`, `channel_quality_phase`, `channel_quality_flag`, `pressure_schema`, `log_container`,
-    `sampling_regime`) and quality flags;
-  - its manifest;
-  - `docs/P0_DATASET_AUDIT_REPORT.md`.
+| Gate | Status | Evidence |
+|---|---|---|
+| canonical cohort frozen | pass | D-020, D-023 |
+| excluded / quarantine policy frozen | pass | D-017, D-006, D-023 |
+| duplicate policy frozen | pass | D-014 (accepted) |
+| session policy frozen | pass | D-024 |
+| timestamp policy frozen | pass | D-026 |
+| target quality policy frozen | pass | D-025 |
+| pressure validity policy frozen | pass | D-018 (accepted) |
+| User01 sensor phase frozen | pass | D-019 |
+| 22482 channel-quality phase frozen | pass | D-022 |
+| auxiliary policy frozen | pass | D-023 |
+| canonical interim v1 built | pass | `canonical_v1_content.json`; two identical builds |
+| manifest reconciliation passed | pass | `canonical_v1_summary.csv` (build fails otherwise) |
+| tests passed | pass | full suite |
+| raw integrity passed | pass | 377 files, SHA-256 and mtime unchanged |
+| no private identifiers | pass | privacy / absolute-path scan of committed files and manifests |
+| P0 final report written | pass | `docs/P0_DATASET_AUDIT_REPORT.md` |
+
+### Handoff
+
+- P1 and P2 read canonical_v1, never raw.
+- Non-blocking open items move on:
+  - OPEN-04, OPEN-14 (P1/P2 interpretation);
+  - OPEN-10, OPEN-11, OPEN-15, OPEN-17, OPEN-20, OPEN-21 (P2);
+  - OPEN-18 (P7);
+  - the cause of the 22482 P1 shift (provider).
+- The analyses A6 (legacy rows per minute), A12 (hour-of-day, heater episodes) and A13 (legacy timestamps) are
+  not needed for the frozen policies. A12 moves to P1 EDA; A13 is needed only if a secondary protocol uses
+  auxiliary data.

@@ -1,0 +1,42 @@
+# Canonical interim dataset v1 (P0 closure). Policy: docs/DECISIONS.md D-023 … D-028.
+# Every value here is part of the config hash recorded with the build. Changing any of them is a new dataset
+# version, never an edit of canonical_v1.
+
+dataset_version: canonical_v1
+schema_version: "1.0"
+output_dir: data/interim/canonical_v1
+manifest_dir: data/interim/manifest
+
+# D-026: timestamps are naive local times; no timezone is known, none is invented.
+timezone_status: local_unspecified
+
+# D-014 (accepted): remove only repeated upload/export copies (blocks of >= min_block_rows fully identical rows)
+# within one subject + device stream. Not applied to minute-resolution legacy sources.
+deduplication:
+  min_block_rows: 10
+  apply_to_minute_resolution: false
+
+# D-024: a new session starts after a gap > gap_s. A gap of n x chunk_s +/- tolerance_s (n = 1..max_chunks) at a
+# file boundary of a listed device is a known missing-upload-chunk interval kept inside the session and flagged.
+session:
+  gap_s: 1800
+  bridge:
+    devices: ["22482"]
+    chunk_s: 1800
+    tolerance_s: 10
+    max_chunks: 3
+    require_file_boundary: true
+
+# D-025: target validity band (descriptive plausibility band from A8; never tightened after model results).
+targets:
+  temp_band: [-10, 60]
+  humid_band: [0, 100]
+
+# D-018 (accepted): structural pressure validity.
+pressure:
+  channels: 6
+  min: 0
+  max: 4095
+
+# Event text: digit runs of this length or longer (e.g. messenger IDs in control events) are masked.
+event_redaction_min_digits: 8

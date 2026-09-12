@@ -17,7 +17,7 @@ whether short user-specific adaptation helps.
 
 ## Research Roadmap
 
-- [ ] P0 Dataset Audit & Data Freeze  ← **current phase** (`research/p0-data-freeze`)
+- [x] P0 Dataset Audit & Data Freeze (`research/p0-data-freeze`; merge and `p0-data-freeze` tag pending review)
 - [ ] P1 Domain-shift EDA
 - [ ] P2 Evaluation Protocol & Split Freeze
 - [ ] P3 Strict LOSO Baseline
@@ -27,9 +27,13 @@ whether short user-specific adaptation helps.
 - [ ] P7 Reproducibility & Public Data Release
 - [ ] P8 Manuscript & Final Release
 
-Current status: the raw data have been inventoried (`docs/initial_dataset_inventory.md`), and P0
-provenance and quality questions are open (`docs/P0_DATASET_AUDIT_PLAN.md`, `docs/DECISIONS.md`).
-No preprocessing, splitting or model training has been done, so there are no results yet.
+Current status: P0 is closed.
+- The data audit is summarised in `docs/P0_DATASET_AUDIT_REPORT.md`, and the frozen policies are in
+  `docs/DECISIONS.md`.
+- The canonical interim dataset v1 (parsed, provenance-preserving, de-duplicated, quality-flagged,
+  session-labelled) is built with `scripts/build_canonical_v1.py`. Its manifests are committed under
+  `data/interim/manifest/`.
+- P1 has not started. No splitting, windowing or model training has been done, so there are no results yet.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
@@ -65,6 +69,7 @@ paper/      manuscript, tables and figures (generated from tagged code)
 python -m pip install -r requirements.txt
 python scripts/build_manifest.py     # verify raw files against the committed manifest
 python scripts/audit_dataset.py      # inventory audit -> outputs/qa/dataset_audit/
+python scripts/build_canonical_v1.py # canonical interim dataset v1 -> data/interim/canonical_v1/ (+ manifests)
 python -m pytest
 ```
 

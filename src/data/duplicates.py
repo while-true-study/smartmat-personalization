@@ -234,6 +234,28 @@ def upload_copy_mask(src: SourceData, keys: RowKeys, pairs: list[dict], min_len:
     return mask
 
 
+def upload_copy_map(src: SourceData, keys: RowKeys, pairs: list[dict], min_len: int = 10) -> np.ndarray:
+    """Per row: index of the original it copies (the rows `upload_copy_mask` marks), else -1.
+
+    A row marked by several pairs maps to its earliest original. Chains (a copy of a copy) resolve to the first
+    original that is not itself a copy. Copies are fully identical to their original (timestamp, values, event).
+    """
+    orig = np.full(src.n, -1, np.int64)
+    for o, c in _block_rows(src, keys, pairs, min_len):
+        cur = orig[c]
+        take = (cur < 0) | (o < cur)
+        orig[c[take]] = o[take]
+    for _ in range(src.n + 1):
+        nxt = np.where(orig >= 0, orig[np.maximum(orig, 0)], -1)
+        chain = (orig >= 0) & (nxt >= 0)
+        if not chain.any():
+            break
+        orig[chain] = nxt[chain]
+    if ((orig >= 0) & (orig[np.maximum(orig, 0)] >= 0)).any():
+        raise ValueError("unresolved copy chain")
+    return orig
+
+
 def repeated_block_members(src: SourceData, keys: RowKeys, pairs: list[dict], min_len: int = 10) -> np.ndarray:
     """Rows that belong to a repeated block, as original or as copy (for gap-context flags)."""
     mask = np.zeros(src.n, bool)

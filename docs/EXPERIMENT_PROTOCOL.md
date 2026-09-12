@@ -27,10 +27,15 @@ domain; claims are limited as in `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §
 Parsing rules per format family, timestamp/year policy, de-duplication, handling of non-data lines,
 sentinel/glitch values. Output: `data/interim/` with full provenance.
 Blocked by: OPEN-07, OPEN-08, OPEN-09, OPEN-12.
+**Settled in P0:** canonical_v1 (D-014, D-018, D-022–D-028), `data/interim/canonical_v1/`. P2 starts from it and
+does not re-parse raw.
 
 ## 3. Session definition — TBD
 How continuous recordings are delimited (gap threshold, night boundary), how concurrent devices of a
 subject are grouped. Blocked by: OPEN-03, OPEN-06.
+**Settled in P0:** `session_id` per subject + device stream (D-024); the two User02 mats stay separate streams
+(D-027). Still open for P2: how the streams of one subject are grouped for splits, and window continuity across
+within-session gaps.
 
 ## 4. Splits (defined before windowing) — TBD
 - RQ1: leave-one-subject-out over the primary cohort; nested validation from training subjects only.

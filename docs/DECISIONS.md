@@ -30,11 +30,11 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 | ID | Question | Owner | Resolve in | Blocks | Tracking |
 |---|---|---|---|---|---|
 | OPEN-01 | **Closed 2026-09-13 by D-017:** provider confirmed the User06 source is invalid (setting issue). User06 source `excluded_invalid` (raw kept); User03 legacy stays auxiliary; subjects not merged. History: **Identity answered:** User03 ≠ User06 (PI, 2026-09-12; D-013). **Still open: measurement provenance** — why the rows of `user03_legacy` are contained in User06's recordings of 2025-10-06…10-13, and to which subject those measurements belong. Until then the overlapping recording is provisionally quarantined from primary evaluation (D-013). Original question: `user03_legacy` is a seconds-truncated copy of `user06_auxiliary` for 2025-10-06…10-12 (99.99–100 % of User03 rows found in User06). **A1 evidence (2026-09-12):** 100 % of User03 rows (minute-level) and 100 % of its 5-row value sequences occur in User06; offsets 0–59 s; each User03 file is a contiguous excerpt of one User06 night file; ordered runs up to 13,180 sequences. Overlap is inconsistent with independent subject recordings; identity still unconfirmed. No other subject pair shares any data. | data provider | P0 | any use of User03/User06 | `docs/issues/P0-01_user03-user06-provenance.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §4; `outputs/qa/p0/provenance/` |
-| OPEN-02 | Device of `user02/mat_22480/_prefix_mismatch/sm22482_0824.txt` and `…_0825.txt`. Evidence favours 22482 (filename prefix, JSON root key `smartmat_22482`, the only dates with a 22480 file but no 22482 file). A1: the two files share no rows with either device's files (not duplicates). **A2 evidence (2026-09-12):** they fill 22482's timeline seamlessly (start 30 min after 22482's last row, end 3 s before its next row), record simultaneously with 22480's own stream for 7.0 h, and match 22482's humidity regime (22480 − quarantined: −2 °C / −16 %RH vs typical 22480 − 22482: −2 / −19). Strong, consistent evidence for 22482; attribution still `unresolved` pending provider confirmation. A5: the gap between the two quarantined files (1,804 s) and their start relative to 22482 (1,806 s) follow 22482's lost-upload-chunk pattern (n × 1,800 s + a few s). | data provider | P0 | use of those 2 files | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` §9; `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6 |
-| OPEN-03 | Physical setup of User02's mats 22480/22482: they overlap for ~505 h and both register occupancy in 66.8 % of jointly recorded minutes, with different temperature/humidity. Same bed (body regions)? Different locations? How to use two concurrent streams (separate, one, fused)? A1: 46 co-recorded dates, 0 shared rows or sequences — concurrent but distinct streams. **A2 evidence (2026-09-12):** 253 h simultaneous recording (76 % of 22480's time); no pressure coupling (|r| ≤ 0.03 for all descriptors, no lag peak within ±30 s, movement-event coincidence at chance level, no clock offset found within ±12 h); occupancy agreement at chance under all 14 definitions (κ −0.07…0.00, "both active" 18–90 % depending on threshold); persistent T/H offset (22480 − 22482: −2 °C, −19 %RH; humidity lower on 46/46 dates); different channel-load patterns. Physical placement and the use policy for the two streams remain unresolved. **A9b (2026-09-13):** after 22482's recording gap of 2026-08-24/25 (where the two quarantined files lie, OPEN-02), 22482's P6 active share falls from 0.63 to 0.23 (δ −1.0) and its pressure-sum median from 2,031 to 1,324. Over the same nights 22480's P1 activity and pressure sum rise (δ +0.88 / +0.71). This is consistent with load moving between the mats, not with a channel fault. It is recorded as an observed distribution shift, not flagged; the cause is unresolved. | provider + PI | P0 | User02 in primary cohort | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` |
-| OPEN-04 | Device IDs of User01, User07, User02 legacy, User03, User06. Recording periods hand over day-to-day (User01 → User07 → User02), suggesting reused mats. Subject and device may be confounded. **A11 evidence (2026-09-13):**<br>• A hardware ID is recorded only for the User02 mats: folder, filename, JSON root key in every file, and a row column from 08-29/08-31. Each ID maps to User02 only.<br>• User01 (all phases), User07 and both legacy sources carry no ID in filename, JSON key or rows.<br>• Hand-overs: User01 → User07 in 36.3 h; User07 → User02 mats in 14.5 h. This is consistent with moved mats but is not evidence.<br>**Reuse cannot be checked from the data; unresolved.** Consequences for RQ1 are documented: subject, period and device configuration are confounded in every fold (A11 §5). | data provider | P0 (question); consequences documented | RQ1 interpretation | `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §3, §5 |
-| OPEN-05 | Move the raw package into `data/raw/` or keep it at `스마트 매트 데이터 정리/`? | PI | P0 | nothing (path is configurable) | — |
-| OPEN-06 | Session definition (files ≠ sessions: files overlap and some span 30–57 h). **A5 evidence (2026-09-12):** confirmed quantitatively. Files hold parts of two nights (internal gap > 2 h in User01 12, 22480 3, 22482 29, User07 3 files). 22482 nights are split across files at 06:1x–09:1x with recording continuing 2–5 s later (10 boundaries), and 13 cuts lost exactly 1–3 upload chunks (n × 1,800 s + 3–8 s). 18 primary-group boundaries overlap through repeated chunks. For User01/22480/User07 most boundaries (139/150, 41/44, 97/99) fall in > 2 h gaps. No gap threshold chosen; pending A7. **A7 evidence (2026-09-12):**
+| OPEN-02 | **Closed for P0 2026-09-13 by D-023:** both files stay quarantined and are not part of canonical_v1. Attribution to 22482 (strong evidence) remains a provider question; non-blocking. Device of `user02/mat_22480/_prefix_mismatch/sm22482_0824.txt` and `…_0825.txt`. Evidence favours 22482 (filename prefix, JSON root key `smartmat_22482`, the only dates with a 22480 file but no 22482 file). A1: the two files share no rows with either device's files (not duplicates). **A2 evidence (2026-09-12):** they fill 22482's timeline seamlessly (start 30 min after 22482's last row, end 3 s before its next row), record simultaneously with 22480's own stream for 7.0 h, and match 22482's humidity regime (22480 − quarantined: −2 °C / −16 %RH vs typical 22480 − 22482: −2 / −19). Strong, consistent evidence for 22482; attribution still `unresolved` pending provider confirmation. A5: the gap between the two quarantined files (1,804 s) and their start relative to 22482 (1,806 s) follow 22482's lost-upload-chunk pattern (n × 1,800 s + a few s). | data provider | deferred (non-blocking) | use of those 2 files | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` §9; `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6 |
+| OPEN-03 | **P0 part closed 2026-09-13 by D-027:** both mats are kept as separate device streams of User02; no merge, fusion or deletion. The use policy moves to P2. Physical setup of User02's mats 22480/22482: they overlap for ~505 h and both register occupancy in 66.8 % of jointly recorded minutes, with different temperature/humidity. Same bed (body regions)? Different locations? How to use two concurrent streams (separate, one, fused)? A1: 46 co-recorded dates, 0 shared rows or sequences — concurrent but distinct streams. **A2 evidence (2026-09-12):** 253 h simultaneous recording (76 % of 22480's time); no pressure coupling (|r| ≤ 0.03 for all descriptors, no lag peak within ±30 s, movement-event coincidence at chance level, no clock offset found within ±12 h); occupancy agreement at chance under all 14 definitions (κ −0.07…0.00, "both active" 18–90 % depending on threshold); persistent T/H offset (22480 − 22482: −2 °C, −19 %RH; humidity lower on 46/46 dates); different channel-load patterns. Physical placement and the use policy for the two streams remain unresolved. **A9b (2026-09-13):** after 22482's recording gap of 2026-08-24/25 (where the two quarantined files lie, OPEN-02), 22482's P6 active share falls from 0.63 to 0.23 (δ −1.0) and its pressure-sum median from 2,031 to 1,324. Over the same nights 22480's P1 activity and pressure sum rise (δ +0.88 / +0.71). This is consistent with load moving between the mats, not with a channel fault. It is recorded as an observed distribution shift, not flagged; the cause is unresolved. | provider + PI | P2 (use policy) | model input for User02 | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` |
+| OPEN-04 | **Non-blocking; deferred to P1/P2 interpretation** (consequences documented in A11). Device IDs of User01, User07, User02 legacy, User03, User06. Recording periods hand over day-to-day (User01 → User07 → User02), suggesting reused mats. Subject and device may be confounded. **A11 evidence (2026-09-13):**<br>• A hardware ID is recorded only for the User02 mats: folder, filename, JSON root key in every file, and a row column from 08-29/08-31. Each ID maps to User02 only.<br>• User01 (all phases), User07 and both legacy sources carry no ID in filename, JSON key or rows.<br>• Hand-overs: User01 → User07 in 36.3 h; User07 → User02 mats in 14.5 h. This is consistent with moved mats but is not evidence.<br>**Reuse cannot be checked from the data; unresolved.** Consequences for RQ1 are documented: subject, period and device configuration are confounded in every fold (A11 §5). | data provider | P1/P2 (non-blocking) | RQ1 interpretation | `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §3, §5 |
+| OPEN-05 | **Closed 2026-09-13:** the raw package stays in place (D-005); canonical_v1 reads it through `configs/paths.yaml`. Move the raw package into `data/raw/` or keep it at `스마트 매트 데이터 정리/`? | PI | closed | nothing (path is configurable) | D-005 |
+| OPEN-06 | **Closed 2026-09-13 by D-024.** Session definition (files ≠ sessions: files overlap and some span 30–57 h). **A5 evidence (2026-09-12):** confirmed quantitatively. Files hold parts of two nights (internal gap > 2 h in User01 12, 22480 3, 22482 29, User07 3 files). 22482 nights are split across files at 06:1x–09:1x with recording continuing 2–5 s later (10 boundaries), and 13 cuts lost exactly 1–3 upload chunks (n × 1,800 s + 3–8 s). 18 primary-group boundaries overlap through repeated chunks. For User01/22480/User07 most boundaries (139/150, 41/44, 97/99) fall in > 2 h gaps. No gap threshold chosen; pending A7. **A7 evidence (2026-09-12):**
 - Sampling is 3 s nominal (p99 5 s) on all primary timelines.
 - Gaps are bimodal: ≤ 5 min or > 2 h, with only 1–19 gaps per timeline between them.
 - User01/User07 have a recurring ≈ 2-min pause (120–140 s), unrelated to upload chunks.
@@ -43,21 +43,21 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 - Session lengths are quantised in 30-min chunks.
 - Timeline A vs de-duplicated view: identical session structure.
 Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6; `docs/P0_A7_TEMPORAL_GAP_REPORT.md`; D-015 |
-| OPEN-07 | De-duplication policy for ~204 k identical rows shared by adjacent files, and for repeated rows/timestamps within files. **A5 evidence (2026-09-12):** in the primary groups all file overlaps are exact duplicate blocks (18 pairs; all 300 repeated chunk keys identical). Repeated copies never disagree (0 between-file conflicts). Cross-file exact copies: 187,190 rows (4.33 %), plus one 600-row chunk repeated inside `sm22482_0816`. Separately, 10,997 same-second timestamps carry two *different* readings inside one file (not duplicates), 272 adjacent same-second rows are identical, and 4 rows differ only in event text. Proposal: D-014 (Proposed). A7 note: removing copied blocks row for row removes 187,814 rows in the primary groups. That is 24 more than A1 + 600, because 24 same-second identical pairs were copied along with their chunk; the originals remain. | PI | P0 | interim tables | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md`; `docs/P0_A7_TEMPORAL_GAP_REPORT.md` §1; D-014 |
-| OPEN-08 | Timestamp policy: year inference for MM-DD rows, legacy minute-resolution rows, timezone, and the out-of-order steps. | PI | P0 | interim tables | — |
-| OPEN-09 | Handling of temp/humid sentinel zeros (chunk starts) and glitch values (−254, 256, 262). **A8 evidence (2026-09-13):**<br>• Invalid-candidate targets are 0.10 % of primary rows (4,132 of 4,136,059); no missing or non-finite values.<br>• Joint zeros (T = H = 0) arise from two mechanisms: single-row start sentinels at a recording/chunk start (125 / 51 / 61 / 118 rows in User01 / 22480 / 22482 / User07), and dropout episodes. 86 % of all zero rows fall in two episodes: User01 2025-12-28 daytime, and 22482 night 2026-08-08/09.<br>• All 147 extreme values (T −254, 171–256; H 135–262) are in that 22482 night.<br>• No abrupt jump or spike exists between valid observations within 5 s (max 1–2 °C, p99.9 1 %RH).<br>• The 148 same-second target conflicts are ±1 quantisation steps (119) or zero-vs-reading (29).<br>Flagging proposed as D-016 (Proposed); episode-level exclusion, clipping, interpolation and jump thresholds are not decided. | PI | P0 | targets | `docs/P0_A8_TARGET_QUALITY_REPORT.md`; D-016 |
-| OPEN-10 | Target definition under heater control: the T/H sensor measures a heater-controlled microclimate. Is heater state a covariate, a stratifier, or excluded? **A8 note (2026-09-13):** long constant-temperature runs (≥ 1 h cover 84 % of 22480 and 80 % of User07 recording time; 22480 is at 28–30 °C in 96 % of rows) while humidity keeps moving. This is consistent with 1 °C quantisation of a stable or regulated microclimate, not a frozen sensor. The cause and whether regulated periods are meaningful targets remain open. | PI | P2 (informed by P0/P1) | RQ1–RQ3 | `docs/P0_A8_TARGET_QUALITY_REPORT.md` §5 |
+| OPEN-07 | **Closed 2026-09-13 by D-014 (accepted), implemented in canonical_v1 (D-028).** De-duplication policy for ~204 k identical rows shared by adjacent files, and for repeated rows/timestamps within files. **A5 evidence (2026-09-12):** in the primary groups all file overlaps are exact duplicate blocks (18 pairs; all 300 repeated chunk keys identical). Repeated copies never disagree (0 between-file conflicts). Cross-file exact copies: 187,190 rows (4.33 %), plus one 600-row chunk repeated inside `sm22482_0816`. Separately, 10,997 same-second timestamps carry two *different* readings inside one file (not duplicates), 272 adjacent same-second rows are identical, and 4 rows differ only in event text. Proposal: D-014 (Proposed). A7 note: removing copied blocks row for row removes 187,814 rows in the primary groups. That is 24 more than A1 + 600, because 24 same-second identical pairs were copied along with their chunk; the originals remain. | PI | P0 | interim tables | `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md`; `docs/P0_A7_TEMPORAL_GAP_REPORT.md` §1; D-014 |
+| OPEN-08 | **Closed 2026-09-13 by D-026.** Timestamp policy: year inference for MM-DD rows, legacy minute-resolution rows, timezone, and the out-of-order steps. | PI | closed | interim tables | D-026 |
+| OPEN-09 | **Closed 2026-09-13 by D-025.** Handling of temp/humid sentinel zeros (chunk starts) and glitch values (−254, 256, 262). **A8 evidence (2026-09-13):**<br>• Invalid-candidate targets are 0.10 % of primary rows (4,132 of 4,136,059); no missing or non-finite values.<br>• Joint zeros (T = H = 0) arise from two mechanisms: single-row start sentinels at a recording/chunk start (125 / 51 / 61 / 118 rows in User01 / 22480 / 22482 / User07), and dropout episodes. 86 % of all zero rows fall in two episodes: User01 2025-12-28 daytime, and 22482 night 2026-08-08/09.<br>• All 147 extreme values (T −254, 171–256; H 135–262) are in that 22482 night.<br>• No abrupt jump or spike exists between valid observations within 5 s (max 1–2 °C, p99.9 1 %RH).<br>• The 148 same-second target conflicts are ±1 quantisation steps (119) or zero-vs-reading (29).<br>Flagging proposed as D-016 (Proposed); episode-level exclusion, clipping, interpolation and jump thresholds are not decided. | PI | P0 | targets | `docs/P0_A8_TARGET_QUALITY_REPORT.md`; D-016 |
+| OPEN-10 | **Deferred to P2.** Target definition under heater control: the T/H sensor measures a heater-controlled microclimate. Is heater state a covariate, a stratifier, or excluded? **A8 note (2026-09-13):** long constant-temperature runs (≥ 1 h cover 84 % of 22480 and 80 % of User07 recording time; 22480 is at 28–30 °C in 96 % of rows) while humidity keeps moving. This is consistent with 1 °C quantisation of a stable or regulated microclimate, not a frozen sensor. The cause and whether regulated periods are meaningful targets remain open. | PI | P2 (informed by P0/P1) | RQ1–RQ3 | `docs/P0_A8_TARGET_QUALITY_REPORT.md` §5 |
 | OPEN-11 | User01 pressure-sensor replacement on 2026-01-25: treat as distribution shift boundary? Effect on the chronological adaptation protocol. **A9 baseline evidence (2026-09-13):** a step, not a drift, between the morning and evening recordings of 2026-01-25. Rows with a channel at 4095: 22.1 % before, 18 rows (0.002 %) after. Pressure-sum median 4,420 → 2,976, p95 10,157 → 5,022. Mean active channels 2.07 → 3.55. The full before/after comparison is A10. **A10 evidence (2026-09-13):**<br>• The change sits in the 9.4 h recording gap 2026-01-25 08:07:26 → 17:31:21. It is the strongest change point of the User01 series (core consensus rank 1 for nights and sessions at w = 3 and 7).<br>• Nights ±14: the 4095 share drops from 16.0 % to 0, p95 from 10,889 to 5,355 and the median from 6,087 to 3,361; active channels rise from 2.72 to 3.66. Cliff's δ = ±1 with complete separation; placebo windows show no separation.<br>• The step fits better than a line. Duration, clock time, temperature, humidity and sampling are continuous across the gap.<br>• High values compress (P2/P3/P5 about ⅓ when active), while P1/P5/P6 respond more often.<br>**The boundary question is answered by D-019** (`sensor_phase` s1/s2, provenance only). Still open for P2: phase-aware preprocessing, scaling and evaluation, and whether adaptation/test spans may cross the boundary. | PI | P2 (handling) | RQ2 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md`; D-019 |
-| OPEN-12 | **Moot after D-017** (User06 source excluded; relevant only if it were ever re-admitted). Adopt "`.` before P1 is a delimiter" for User06 files 1003–1011 in preprocessing (strong evidence; see inventory §8.3). A1: under this reading User06 rows align exactly with User03 rows, which have a separate `FSR1` column. | PI | — | nothing (source excluded) | `docs/P0_A1_PROVENANCE_REPORT.md` §4.4; D-017 |
-| OPEN-13 | Whether and how auxiliary sources enter training pools. After D-017 the auxiliary pool is User02 legacy and User03 legacy, both minute-resolution and both valid data (User03 confirmed by the PI, D-021). A9 (2026-09-13): User02 legacy P5 is at 4095 in 50.8 % of rows (runs up to ≈ 112 min); User03 legacy P3–P5 at 4095 in 7–10 % of rows. | PI | P0 | RQ1 | D-017; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §3 |
-| OPEN-14 | Metadata date inconsistencies (e.g. heating start written as 2026-11-18, log-format change as 2026-12-17; data suggest 2025). | data provider | P0 | covariate timeline | — |
+| OPEN-12 | **Closed 2026-09-13: moot after D-017** (User06 source excluded; relevant only if it were ever re-admitted). Adopt "`.` before P1 is a delimiter" for User06 files 1003–1011 in preprocessing (strong evidence; see inventory §8.3). A1: under this reading User06 rows align exactly with User03 rows, which have a separate `FSR1` column. | PI | — | nothing (source excluded) | `docs/P0_A1_PROVENANCE_REPORT.md` §4.4; D-017 |
+| OPEN-13 | **Closed 2026-09-13 by D-023:** auxiliary sources are preserved in canonical_v1 as a separate file and are not used in primary LOSO, personalization or primary metrics; secondary/sensitivity use needs its own protocol. Whether and how auxiliary sources enter training pools. After D-017 the auxiliary pool is User02 legacy and User03 legacy, both minute-resolution and both valid data (User03 confirmed by the PI, D-021). A9 (2026-09-13): User02 legacy P5 is at 4095 in 50.8 % of rows (runs up to ≈ 112 min); User03 legacy P3–P5 at 4095 in 7–10 % of rows. | PI | closed | RQ1 | D-023; D-017; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §3 |
+| OPEN-14 | **Non-blocking; deferred to P1/P2.** No frozen P0 policy depends on these dates; the sensor-change date is confirmed by the data (D-019). Metadata date inconsistencies (e.g. heating start written as 2026-11-18, log-format change as 2026-12-17; data suggest 2025). | data provider | P1/P2 (non-blocking) | covariate timeline | — |
 | OPEN-15 | Admissibility of firmware movement labels (UM/DM/LM/RM/NM) as model inputs / movement-derived features. | PI | P2 | RQ3 | — |
 | OPEN-16 | **Closed 2026-09-13 by D-020:** canonical P0 primary cohort User01, User02, User07. History: final primary cohort; three candidates give only three LOSO folds; the statistical plan must reflect this (carried into P2). Provisional cohort: D-013, restated in D-017. A11: all three pass every structural check, each `eligible_with_caveat`. | PI | P0 | RQ1 | D-020; `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §4 |
 | OPEN-17 | Pressure-scale differences between subjects/periods (User01 saturates at 4095; User02 max 3731; User07 max 4023): normalisation strategy that respects L3/L11. **A9 evidence (2026-09-13):**<br>• All sources have six populated channels. There are no missing channels, no non-standard layouts and no out-of-range or non-integer values.<br>• 4095 is a pile-up at the ceiling (275,601 cells vs 789 at 4094). 99.99 % of these cells are in User01 before the sensor change. 22480 has 17 cells; 22482 and User07 have none.<br>• Every non-zero constant run ≥ 1 min is a 4095 plateau. There is no interior-value stuck channel and no frozen frame on the current mats.<br>• Pressure-sum medians: User01 3,817 (old sensor ≈ 4,420, new ≈ 2,976) vs 1,764–2,037 on the current mats. Channel profiles differ (22482 more even).<br>Proposed input-validity rule D-018; 4095 handling and scaling stay open (P2, training data only). | PI | P2 | preprocessing | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md`; D-018 |
 | OPEN-18 | Public release: absolute dates or relative day indices. | PI + provider | P7 | release | — |
 | OPEN-19 | **Closed 2026-09-13 by D-022 — class B, non-blocking but flagged.** A9b re-derived the change without assuming the date:<br>• The P1 response collapses in the recording of the night 2026-08-19 (hourly onset ≈ 08-20 02:00) and is fully shifted from 2026-08-20 21:37:33.<br>• The collapse is abrupt: complete separation over ±3/±7 nights; step R² 0.83 vs line 0.60.<br>• It is persistent to the last night (recovered fraction ≈ 0).<br>• It is P1-only: the other channels have \|δ\| ≤ 0.51, and the pressure sum without P1 is stable.<br>• 22480 and T/H show no concurrent shift, and no schema/firmware boundary is nearby.<br>The P6 decline is a separate later change (2026-08-25), recorded under OPEN-03. Cause still asked of the provider; handling in P2. Original text: User02/22482 channel P1 from 2026-08-20 (A9): active share 0.49 → 0.13, median when active 759 → 26, p99 2,007 → 371. P6 active share 0.57 → 0.28 over the same dates. P2–P5 unchanged; the other mat (22480) shows no such drop. Was the mat moved, replaced or damaged? Use of 22482 data after that date as test/adaptation data depends on it. **A11 (2026-09-13):**<br>• The affected slice is 202.0 h in 22 nights (41 % of 22482's hours); 64.9 h of it are also covered by 22480.<br>• Without it, User02 keeps 438.8 h in 45 nights.<br>• **Not blocking for the cohort** (D-020). It is a device-period quality issue whose flag (start, channels) must be defined before P0 closes: provider answer, or the short audit A9b. | data provider + PI | P2 (handling) | User02 splits | D-022; `docs/P0_A9B_USER02_CHANNEL_ANOMALY_REPORT.md`; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5; `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §3 |
-| OPEN-20 | Physical layout of P1–P6 on the mat and the legacy `FSR_k` ↔ P_k mapping (positional assumption). A9: the strongest positive correlations are P1–P4, P2–P5, P3–P6 on all current mats. This is compatible with, but not proof of, paired positions. Needed before any spatial or channel-selection feature. | data provider | P0 (question), P2 | spatial features | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6 |
-| OPEN-21 | Other User01 acquisition changes inside `sensor_phase` s1 (A10):<br>• **2025-12-17**, the documented log-format change (first compressed log): active channels 1.51 → 2.49 and dominant-channel switches 29 → 92 /h, both with complete separation over ±7 nights. The 4095 share is unchanged.<br>• **2026-01-03…07**: a temporary 2 s sampling regime, with the 4095 share dipping for about a week.<br>• From **2026-01-08**: 3 s sampling with wider jitter.<br>• **2025-12-25**: an undocumented +49 % pressure-sum level shift.<br>Did firmware/logging changes alter pressure reporting? Should acquisition-period labels (log format, sampling regime) be carried as further provenance fields? Not merged into `sensor_phase`. | data provider + PI | P0 (question), P2 (handling) | RQ2 spans within User01 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md` §6, §8 |
+| OPEN-20 | Physical layout of P1–P6 on the mat and the legacy `FSR_k` ↔ P_k mapping (positional assumption). A9: the strongest positive correlations are P1–P4, P2–P5, P3–P6 on all current mats. This is compatible with, but not proof of, paired positions. Needed before any spatial or channel-selection feature. | data provider | P2 (non-blocking) | spatial features | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6 |
+| OPEN-21 | Other User01 acquisition changes inside `sensor_phase` s1 (A10):<br>• **2025-12-17**, the documented log-format change (first compressed log): active channels 1.51 → 2.49 and dominant-channel switches 29 → 92 /h, both with complete separation over ±7 nights. The 4095 share is unchanged.<br>• **2026-01-03…07**: a temporary 2 s sampling regime, with the 4095 share dipping for about a week.<br>• From **2026-01-08**: 3 s sampling with wider jitter.<br>• **2025-12-25**: an undocumented +49 % pressure-sum level shift.<br>Did firmware/logging changes alter pressure reporting? Should acquisition-period labels (log format, sampling regime) be carried as further provenance fields? Not merged into `sensor_phase`. | data provider + PI | P2 (non-blocking) | RQ2 spans within User01 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md` §6, §8 |
 
 ---
 
@@ -128,7 +128,7 @@ Consequence: Excluded from all analyses until OPEN-02 is resolved. Silent reassi
 
 ## D-007 — Audit-only parsing interpretations (non-binding for preprocessing)
 Date: 2026-09-12
-Status: Accepted (audit scope only)
+Status: Accepted (audit scope only); the year inference and line reading are adopted for canonical_v1 by D-026
 Context: The inventory needed dated rows from several raw format families.
 Decision: The P0 audit parser (`src/data/raw_parser.py`) reads files line by line (the JSON-like files
 are not valid JSON), infers the year of `MM-DD` rows from the enclosing JSON log key, else the next key
@@ -221,7 +221,7 @@ P0 exit. OPEN-16 (final cohort) stays open.
 
 ## D-014 — Remove repeated upload-chunk copies when building the canonical interim dataset
 Date: 2026-09-12
-Status: **Proposed** (not accepted; to be decided together with OPEN-06/08/09 at P0 exit)
+Status: Accepted 2026-09-13 at P0 closure, unchanged; implemented in canonical_v1 (D-028)
 Context: Adjacent raw files repeat upload chunks, and one chunk is repeated inside a file. A decision is needed
 before the canonical interim dataset can be built (OPEN-07).
 Decision (proposed):
@@ -239,7 +239,7 @@ alignment and resampling remain for P2. Minute-resolution legacy sources are out
 
 ## D-015 — Candidate session boundary: gap > 30 min, with lost upload chunks bridged
 Date: 2026-09-12
-Status: **Proposed** (not accepted; decide at P0 exit together with D-014, after provider input on upload mechanics)
+Status: Superseded by D-024 (bridge restricted to 22482 file boundaries)
 Context: Sessions cannot be files or calendar days (A5, A7). A rule is needed to group each per-device timeline
 into recording sessions without altering data. The rule must not depend on any model result; none exists yet.
 Decision (proposed):
@@ -262,7 +262,7 @@ non-aligned interruptions > 30 min remain breaks. Isolated single-chunk recordin
 
 ## D-016 — Flag known target sentinel and glitch patterns as invalid targets (values kept)
 Date: 2026-09-13
-Status: **Proposed** (not accepted; decide at P0 exit with D-014/D-015)
+Status: Superseded by D-025 (glitch rule corrected: an out-of-band value is a glitch whatever the other channel reads)
 Context: Temperature and humidity are the regression targets. A8 found a small set of values that cannot be
 physical readings of an indoor sleeping microclimate, with clear, repeated patterns.
 Decision (proposed):
@@ -325,7 +325,7 @@ Consequence:
 
 ## D-018 — Pressure input-validity rule: raw layout and encoding only (values kept)
 Date: 2026-09-13
-Status: **Proposed** (not accepted; decide at P0 exit with D-014/D-015/D-016)
+Status: Accepted 2026-09-13 at P0 closure, unchanged; implemented in canonical_v1 (D-028)
 Context: P1–P6 are the model inputs. A9 checked channel presence, layout, encoding, zeros, the 4095 ceiling,
 constant runs and scale on the analysis-eligible sources.
 Decision (proposed):
@@ -353,7 +353,7 @@ fitted on training data only where applicable):
 
 ## D-019 — User01 `sensor_phase` provenance label (boundary 2026-01-25)
 Date: 2026-09-13
-Status: Accepted (provenance label only; handling open, OPEN-11)
+Status: Accepted (provenance label only; handling open, OPEN-11). canonical_v1 labels timelines without a documented sensor change `not_applicable` instead of `s1` (D-028)
 Context: The provider documents a pressure-sensor replacement for User01 on 2026-01-25. A10 tested this boundary
 against the data without assuming it (`docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md`).
 Decision:
@@ -482,3 +482,178 @@ Consequence:
   - using, masking or modelling P1 of 22482 in the shifted phase;
   - device selection (OPEN-03).
 - The later P6 decline of 22482 (2026-08-25) is not part of this flag (OPEN-03).
+
+## D-023 — Canonical cohort, dataset roles and auxiliary policy (P0 closure)
+Date: 2026-09-13
+Status: Accepted (closes OPEN-13; closes the P0 part of OPEN-02)
+Context: P0 closes with a canonical interim dataset. Cohort membership was fixed by D-020, User03 legacy was
+confirmed valid by D-021, and the User06 source is invalid (D-017). How each source enters canonical_v1 must now
+be fixed.
+Decision:
+- **Primary** (`data/interim/canonical_v1/primary.parquet`): User01 (phase_a/b/c), User02 mats 22480 and 22482,
+  User07. These are the only rows for primary LOSO, primary personalization and primary metric aggregation.
+- **Auxiliary** (`auxiliary.parquet`, kept apart): User02 legacy and User03 legacy. Both are valid data. They are
+  not used in primary LOSO, personalization or metric aggregation. Minute resolution and the legacy CSV schema
+  mean they are never mixed with primary rows. Secondary or sensitivity use needs its own protocol.
+- **Excluded** (`excluded_invalid`): the User06 source. It is not in canonical_v1. Raw files are kept.
+- **Quarantined**: the two prefix-mismatch files. They are not in canonical_v1. Attribution (22482 is strongly
+  indicated) stays a non-blocking provider question.
+- **Restricted metadata**: not data, not loaded.
+- For excluded and quarantined sensor files, the build counts parsed rows only, to reconcile against every
+  delivered row. No value is kept.
+Evidence: D-017, D-020, D-021; A1, A2, A5, A9 (auxiliary quality), A11 (coverage).
+Consequence:
+- canonical_v1 primary has 4,136,059 rows; auxiliary has 178,626 rows.
+- Excluded: 164,185 raw rows (11 files). Quarantined: 22,205 raw rows (2 files).
+- Any future admission of an excluded or quarantined source is a new dataset version.
+
+## D-024 — Session policy (supersedes D-015)
+Date: 2026-09-13
+Status: Accepted (closes OPEN-06)
+Context: D-015 proposed sessions split at gaps > 30 min, with lost upload chunks bridged. A7 found the chunk-loss
+pattern only on 22482, at file cuts (13/13).
+Decision:
+- Sessions are built per subject + device stream on the de-duplicated timeline (D-014). A new session starts after
+  a gap > 1,800 s.
+- Exception: a gap of n × 1,800 s ± 10 s (n = 1–3) is kept inside the session only if both hold:
+  - the stream is 22482;
+  - the gap lies at a raw file boundary (the A7 missing-upload-chunk pattern).
+- Every bridged gap is flagged on the first row after it (`session_bridged_gap`). Every row carries
+  `gap_before_s`.
+- Session membership is a label. It does not allow a window to span a gap. Window continuity is decided in P2.
+- Legacy minute-resolution streams use the same gap rule without the exception.
+- Parameters are in `configs/canonical_v1.yaml`.
+Evidence: A7 §3–§5.
+- The 5–90 min plateau and the ≈ 2-min pauses (A7).
+- 13 bridged gaps, all on 22482.
+- Session counts are unchanged from the A7/A9 candidate rule: User01 157, 22480 47, 22482 58, User07 102.
+Consequence: `session_id` = "<subject>|<device>|S<nnnn>" in canonical_v1. Splits that group by session use these
+labels.
+
+## D-025 — Target quality flags (supersedes D-016)
+Date: 2026-09-13
+Status: Accepted (closes OPEN-09)
+Context: D-016 proposed flagging joint zeros and glitches. Its glitch clause required a zero in the other channel.
+A8 shows out-of-band values without such a zero (e.g. T 256 / H 152), so the clause is corrected.
+Decision:
+- Per row, `target_temp_valid` and `target_humidity_valid` are false for a missing value, a value of 0, or a value
+  outside the plausibility band (T −10…60 °C, H 0…100 %RH).
+- `target_quality_flag` records the cause, in priority order:
+  - `missing`;
+  - `extreme_glitch`: any out-of-band value, whatever the other channel reads;
+  - `zero_sentinel`: T = 0 and H = 0;
+  - `zero_value`: exactly one channel is 0;
+  - `ok`.
+- Values are never replaced, interpolated, smoothed or clipped. Rows are not deleted. Same-second ±1 target
+  observations stay separate rows (`same_timestamp_group_id`).
+- Not stored as columns, because they are derivable in P2: the zero-run class and |Δ| to the previous valid value.
+  Chunk position (`chunk_key`), gaps (`gap_before_s`) and same-second groups are stored.
+- The band is descriptive and must not be tightened after model results are seen.
+Evidence: A8 §3–§7.
+- 4,132 invalid-target rows in the primary rows (0.10 %): 3,985 zero sentinels and 147 extreme glitches.
+- These equal A8's counts.
+Consequence: Models and metrics can exclude flagged targets traceably. Episode exclusion and outlier rules are P2
+decisions.
+
+## D-026 — Timestamp policy (closes OPEN-08)
+Date: 2026-09-13
+Status: Accepted
+Context: Raw timestamps come in three formats. Some lack the year, legacy exports lack seconds, and no timezone is
+recorded anywhere.
+Decision:
+- `timestamp_raw` keeps the original string. `timestamp` holds the parsed naive local time (Parquet
+  `timestamp[s]`, no timezone).
+- `timestamp_resolution` is `second` or `minute`. Minute-resolution legacy rows keep minute resolution; no second
+  is invented, and the parsed value's seconds field is 0 by construction.
+- `timezone_status` = `local_unspecified`. Nothing is converted to UTC or any other zone.
+- The year of `MM-DD` rows is inferred only from deterministic source context, recorded in
+  `timestamp_year_source`:
+  - the enclosing JSON log key (`json_key`);
+  - else the next key in the same file (`json_key_lookahead`);
+  - else the source's collection year from `configs/subject_mapping.yaml` (`config_hint`). This covers the User01
+    phase_b/c plain files, whose year is fixed by the provider's collection period.
+  - New-year boundaries are resolved against the anchor.
+  This adopts D-007 for canonical use.
+- Rows without a determinable timestamp are never guessed. The build fails if any exist; there are none.
+- Out-of-order raw steps are kept as they are. Rows are ordered by timestamp, with raw file/line order inside a
+  second. `source_file`/`source_row` preserve the raw order.
+Evidence: inventory §5; A5; A7; the canonical_v1 build.
+- 603,174 `config_hint` rows, 3,476,641 `json_key` rows and 56,244 explicit rows in primary.
+- 0 undated rows.
+- 1 out-of-order raw step (22482).
+Consequence: Relative-time conversion for release is a P7 question (OPEN-18). Any timezone assumption would be a
+new dataset version.
+
+## D-027 — User02 dual-device canonical representation (closes the P0 part of OPEN-03)
+Date: 2026-09-13
+Status: Accepted
+Context: 22480 and 22482 are two mats of one subject, recording concurrently but uncoupled. A2 found no pressure
+coupling, chance-level occupancy agreement and a persistent T/H offset.
+Decision:
+- In canonical_v1, User02's rows keep `subject_id = User02` and `device_id = 22480 | 22482`, as two separate
+  device streams with separate sessions, de-duplication and phases.
+- Forbidden in P0:
+  - a 12-channel merge;
+  - row-level fusion or alignment of the two mats;
+  - dropping or preferring one mat.
+- For every subject-level purpose (LOSO folds, leakage checks, counts), both mats are User02 (DATA_POLICY §3).
+- Which mat or mats feed a model, and how, is decided in P2.
+Evidence: A1, A2, A9b, A11.
+Consequence: No canonical row mixes the two mats (tested). The 22482 channel-quality flag (D-022) applies to 22482
+rows only.
+
+## D-028 — Canonical interim dataset v1: schema, build and reproducibility (P0 closure)
+Date: 2026-09-13
+Status: Accepted
+Context: P0's exit criterion is a canonical interim dataset built from accepted rules, with provenance and a
+manifest.
+Decision:
+- **Build.** `scripts/build_canonical_v1.py` with `src/data/canonical.py` and `configs/canonical_v1.yaml`.
+  - Parquet via pyarrow 24.0.0 (typed columns, dictionary-encoded labels).
+  - Output under `data/interim/canonical_v1/` (git-ignored): `primary.parquet`, `auxiliary.parquet`,
+    `duplicate_provenance.parquet`.
+- **Contents.** canonical_v1 is parsed, provenance-preserving, exact-copy-deduplicated (D-014), quality-flagged
+  (D-018, D-022, D-025) and session-labelled (D-024) rows, nothing more. No resampling, interpolation,
+  normalisation, scaling, windowing, splitting, smoothing, clipping, device fusion or feature extraction.
+- **Row schema (46 columns):**
+  - identity: `canonical_row_id` (= raw file_id:line), `dataset_role`, `subject_id`, `source_id`, `device_id`;
+  - time: `timestamp_raw`, `timestamp`, `timestamp_resolution`, `timestamp_format`, `timestamp_year_source`,
+    `timezone_status`;
+  - phases: `sensor_phase` (User01 `s1`/`s2`; `not_applicable` elsewhere), `channel_quality_phase` /
+    `channel_quality_flag` (22482 `normal` / `p1_transition` / `p1_response_shift`; flag `p1` or `none`);
+  - values: `P1`–`P6`, `temperature`, `humidity` (raw integers; null where absent, never filled);
+  - targets: `target_temp_valid`, `target_humidity_valid`, `target_quality_flag`;
+  - pressure: `pressure_schema`, `pressure_valid`, `pressure_upper_bound_channels`, `pressure_all_zero`,
+    `pressure_frame_constant_run_s`, `pressure_quality_flag`;
+  - events: `event_raw` (digit runs of ≥ 8 masked), `event_redacted`, `log_container`;
+  - sessions: `session_id`, `gap_before_s`, `session_bridged_gap`;
+  - provenance: `source_file`, `source_file_id`, `source_row`, `chunk_key`;
+  - same-second groups: `same_timestamp_group_id`, `same_timestamp_group_size`, `within_timestamp_order`;
+  - de-duplication: `duplicate_group_id`, `duplicate_count`.
+- **De-duplication provenance.** Every raw occurrence of a de-duplicated row (kept and removed) is listed with its
+  file, line and occurrence order in `duplicate_provenance.parquet`.
+- **Reconciliation.** The build fails, writing nothing, unless all of these hold:
+  - per stream, and per source × phase slice, raw − copies = canonical;
+  - every raw sensor file is accounted for once;
+  - no excluded or quarantined source appears in the output;
+  - roles match the file;
+  - row IDs are unique;
+  - every removed copy is in the provenance table;
+  - in total, raw − excluded − quarantined − auxiliary − primary copies = primary canonical.
+- **Manifests** (committed; no absolute paths or personal identifiers), in `data/interim/manifest/`:
+  - `canonical_v1_manifest.csv`, per source × phase slice;
+  - `canonical_v1_summary.csv`, per stream and in total;
+  - `canonical_v1_file_manifest.csv`, per raw file;
+  - `canonical_v1_content.json`: deterministic dataset/schema version, config hash, raw-manifest hash,
+    content hashes and reconciliation;
+  - `canonical_v1_build.json`: runtime metadata (build time, HEAD at build time, dirty flag, versions, file
+    hashes).
+- `sensor_phase` uses `not_applicable` for timelines without a documented sensor change (refines D-019's `s1`
+  default for the canonical schema). Historical audit outputs keep their labels.
+- Changing any rule or parameter creates canonical_v2. canonical_v1 is never edited in place.
+Evidence: the canonical_v1 build of 2026-09-13; `tests/test_canonical.py`.
+- 4,688,889 raw sensor rows − 164,185 excluded − 22,205 quarantined − 178,626 auxiliary − 187,814 primary copies
+  = 4,136,059 primary rows.
+- Two consecutive builds produced identical content hashes, Parquet bytes and manifests.
+Consequence: P1 (EDA) and P2 (protocol) read canonical_v1 only, never raw. Splits, windows and preprocessing are
+P2.

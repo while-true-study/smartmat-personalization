@@ -1,0 +1,26 @@
+{
+  "build_timestamp": "2026-09-13T05:17:20",
+  "git_commit": "445d359107be8ef3bb456c01405ad9d59655c786",
+  "git_dirty_tracked_files": true,
+  "python": "3.12.1",
+  "numpy": "2.4.4",
+  "pyarrow": "24.0.0",
+  "files": {
+    "primary": {
+      "path": "data/interim/canonical_v1/primary.parquet",
+      "bytes": 50773320,
+      "sha256": "1b34342b9906d2882b6831bc5c04cb7082a067a6574026227e1e4219804673c8"
+    },
+    "auxiliary": {
+      "path": "data/interim/canonical_v1/auxiliary.parquet",
+      "bytes": 1354058,
+      "sha256": "00bd00a8ba565affc9f8b3999c61354094c5e9dfc0fc869d3b59fd69beebd737"
+    },
+    "duplicate_provenance": {
+      "path": "data/interim/canonical_v1/duplicate_provenance.parquet",
+      "bytes": 2015560,
+      "sha256": "4a40b5cb207a9b405c1eed6ee119787498d2bcf7c42be5ec8531499689234204"
+    }
+  },
+  "runtime_s": 80.4
+}

@@ -17,6 +17,12 @@
 /data/interim/manifest/*
 !/data/interim/manifest/raw_file_manifest.csv
 !/data/interim/manifest/raw_file_manifest.meta.json
+# canonical_v1 manifests (small, no values, no absolute paths); the Parquet data under canonical_v1/ stay local
+!/data/interim/manifest/canonical_v1_manifest.csv
+!/data/interim/manifest/canonical_v1_summary.csv
+!/data/interim/manifest/canonical_v1_file_manifest.csv
+!/data/interim/manifest/canonical_v1_content.json
+!/data/interim/manifest/canonical_v1_build.json
 /data/processed/*
 !/data/processed/.gitkeep
 /data/splits/*

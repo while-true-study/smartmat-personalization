@@ -105,6 +105,23 @@ Code selects analysable sources only through `src/data/subject_mapping.analysis_
 (roles `primary_candidate` and `auxiliary`, not `invalid`). No analysis may read an excluded source,
 except audits that explicitly document the delivered data (inventory, provenance).
 
+### 4.1 Canonical interim dataset v1 (D-023, D-028)
+
+From P1 on, analyses read `data/interim/canonical_v1/` only, never raw.
+- It is built by `scripts/build_canonical_v1.py` from `configs/canonical_v1.yaml`.
+- It is git-ignored; its manifests in `data/interim/manifest/canonical_v1_*` are committed.
+
+| File | Contents | Use |
+|---|---|---|
+| `primary.parquet` | User01, User02 (22480, 22482 as separate device streams), User07 | the only rows for primary LOSO, personalization and metrics |
+| `auxiliary.parquet` | User02 legacy, User03 legacy (valid, minute resolution) | never mixed with primary; secondary/sensitivity use needs its own protocol |
+| `duplicate_provenance.parquet` | every raw occurrence of every de-duplicated row | traceability of removed upload copies |
+
+- The User06 source and the two quarantined files are not in canonical_v1. For reconciliation their rows are
+  counted, but no value is kept.
+- Quality problems are flags, never row deletions. Raw values are copied unchanged.
+- Any change of rule or parameter creates a new dataset version.
+
 ## 5. Privacy and release
 
 Provider confirmation (DECISIONS D-002): the raw data may be used and publicly released for

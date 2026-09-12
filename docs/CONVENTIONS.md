@@ -15,11 +15,13 @@ docs/                             canonical documentation (this folder)
   issues/                         drafts of research issues before they are filed on GitHub
 configs/                          YAML configuration; the only place paths and mappings are defined
   paths.yaml                      raw_root, protected roots, output locations
-  subject_mapping.yaml            subject / device / source / dataset-role mapping
+  subject_mapping.yaml            subject / device / source / dataset-role mapping, sensor and channel-quality phases
+  canonical_v1.yaml               canonical interim dataset v1 parameters (D-028)
 data/
   raw/                            reserved raw location (see DATA_POLICY §1); read-only
-  interim/                        derived, not yet model-ready (manifest, parsed/de-duplicated tables)
-    manifest/                     raw_file_manifest.csv (+ .meta.json) — committed to Git
+  interim/                        derived, not yet model-ready
+    canonical_v1/                 canonical interim dataset v1 (Parquet; git-ignored; DATA_POLICY §4.1)
+    manifest/                     raw_file_manifest.csv (+ .meta.json) and canonical_v1_* manifests — committed
   processed/                      model-ready tables produced by a frozen protocol version
   splits/                         split definitions (created before windowing; RESEARCH_PROTOCOL L1)
 src/
