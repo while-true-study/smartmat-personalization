@@ -17,8 +17,8 @@ whether short user-specific adaptation helps.
 
 ## Research Roadmap
 
-- [x] P0 Dataset Audit & Data Freeze (`research/p0-data-freeze`; merge and `p0-data-freeze` tag pending review)
-- [ ] P1 Domain-shift EDA
+- [x] P0 Dataset Audit & Data Freeze (merged; tag `p0-data-freeze`)
+- [ ] P1 Domain-shift EDA  ← **current phase** (`research/p1-domain-eda`)
 - [ ] P2 Evaluation Protocol & Split Freeze
 - [ ] P3 Strict LOSO Baseline
 - [ ] P4 Feature Ablation
@@ -27,13 +27,14 @@ whether short user-specific adaptation helps.
 - [ ] P7 Reproducibility & Public Data Release
 - [ ] P8 Manuscript & Final Release
 
-Current status: P0 is closed.
+Current status: P0 is closed and tagged `p0-data-freeze`.
 - The data audit is summarised in `docs/P0_DATASET_AUDIT_REPORT.md`, and the frozen policies are in
   `docs/DECISIONS.md`.
 - The canonical interim dataset v1 (parsed, provenance-preserving, de-duplicated, quality-flagged,
   session-labelled) is built with `scripts/build_canonical_v1.py`. Its manifests are committed under
   `data/interim/manifest/`.
-- P1 has not started. No splitting, windowing or model training has been done, so there are no results yet.
+- P1 (domain-shift EDA) is the current phase. No P1 analysis has been run yet. No splitting, windowing or model
+  training has been done, so there are no results yet.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
