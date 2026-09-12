@@ -1,7 +1,7 @@
 {
-  "build_timestamp": "2026-09-13T05:17:20",
-  "git_commit": "445d359107be8ef3bb456c01405ad9d59655c786",
-  "git_dirty_tracked_files": true,
+  "build_timestamp": "2026-09-13T05:38:01",
+  "git_commit": "814ab70093b8de917a7a8ab5ea656a0a92540cc1",
+  "git_dirty_tracked_files": false,
   "python": "3.12.1",
   "numpy": "2.4.4",
   "pyarrow": "24.0.0",
@@ -22,5 +22,5 @@
       "sha256": "4a40b5cb207a9b405c1eed6ee119787498d2bcf7c42be5ec8531499689234204"
     }
   },
-  "runtime_s": 80.4
+  "runtime_s": 81.5
 }
