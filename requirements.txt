@@ -1,0 +1,5 @@
+# Python 3.12. Pinned to the versions used for the P0 audit (2026-09-12).
+# Add packages only when code needs them, and record why in docs/DECISIONS.md if they affect results.
+numpy==2.4.4
+PyYAML==6.0.3
+pytest==9.0.2

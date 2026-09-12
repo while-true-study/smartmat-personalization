@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------------
+# RAW DATA — never commit (docs/DATA_POLICY.md)
+# ---------------------------------------------------------------------------
+/스마트 매트 데이터 정리/
+/data/raw/*
+!/data/raw/README.md
+
+# ---------------------------------------------------------------------------
+# Derived data — regenerable, not committed. Exception: the raw file manifest
+# (paths + SHA-256 only) is the provenance anchor and IS committed.
+# ---------------------------------------------------------------------------
+/data/interim/*
+!/data/interim/.gitkeep
+!/data/interim/manifest/
+/data/interim/manifest/*
+!/data/interim/manifest/raw_file_manifest.csv
+!/data/interim/manifest/raw_file_manifest.meta.json
+/data/processed/*
+!/data/processed/.gitkeep
+/data/splits/*
+!/data/splits/.gitkeep
+
+# ---------------------------------------------------------------------------
+# Generated outputs (QA reports, metrics, predictions, checkpoints, figures)
+# ---------------------------------------------------------------------------
+/outputs/*/*
+!/outputs/*/.gitkeep
+
+# Restricted participant metadata must never leave the raw package
+*.xlsx
+*.xls
+
+# Python / tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+*.egg-info/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# LaTeX build artefacts (paper/)
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls

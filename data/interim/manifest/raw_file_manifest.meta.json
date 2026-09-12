@@ -1,0 +1,13 @@
+{
+  "built_at": "2026-09-12T19:50:59",
+  "raw_root": "스마트 매트 데이터 정리/raw",
+  "n_files": 375,
+  "n_sensor_files": 373,
+  "total_bytes": 211332933,
+  "byte_duplicate_groups": {},
+  "package_level_files_sha256": {
+    "README.md": "0a7bc7ee2cf62a90e531dd7a5280bc0188e4ee10623c0d869a701070eb4538e1",
+    "metadata/dataset_manifest.csv": "102a06b87f4efc458397547d830c462107261fe130b8b14e217de0f5c6644aa7"
+  },
+  "python": "3.12.1"
+}

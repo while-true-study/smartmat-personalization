@@ -1,0 +1,19 @@
+# Repository path configuration. All paths are relative to the repository root.
+# Rules for these paths live in docs/DATA_POLICY.md and docs/CONVENTIONS.md.
+
+# Current location of the raw source-of-truth package.
+# The supplied package has NOT been moved or copied into data/raw/ (see docs/DECISIONS.md, 2026-09-12).
+# If the package is later relocated, change only this value and re-run scripts/build_manifest.py;
+# the manifest stores paths relative to raw_root, so provenance survives the move.
+raw_root: "스마트 매트 데이터 정리/raw"
+
+# Directory that holds the supplied package README and package-level metadata.
+raw_package_root: "스마트 매트 데이터 정리"
+
+# Every path below (and anything inside it) is write-protected by src/data/io_guard.py.
+protected_roots:
+  - "스마트 매트 데이터 정리"
+  - "data/raw"
+
+manifest_path: "data/interim/manifest/raw_file_manifest.csv"
+audit_output_dir: "outputs/qa/dataset_audit"

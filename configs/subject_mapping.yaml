@@ -1,0 +1,116 @@
+# Canonical subject / device / source mapping.
+# Policy and rationale: docs/DATA_POLICY.md. Change history: docs/DECISIONS.md.
+#
+# Invariants (enforced by tests/test_subject_mapping.py):
+#   - A device ID is never a subject ID. Devices 22480 and 22482 both belong to subject User02.
+#   - Every raw sensor file resolves to exactly one source entry (longest raw_subdir prefix wins).
+#   - Public outputs use only the anonymous subject IDs below.
+
+version: 1
+
+subjects:
+  User01: {cohort: primary_candidate}
+  User02: {cohort: primary_candidate}   # new mat logs are primary candidates; legacy CSVs are auxiliary
+  User03: {cohort: auxiliary}
+  User06: {cohort: auxiliary}
+  User07: {cohort: primary_candidate}
+
+# Physical mat / source device IDs -> subject. Device IDs are provenance metadata only.
+device_subject_map:
+  "22480": User02
+  "22482": User02
+
+# Filename patterns that encode a device ID (checked against the folder-declared device).
+filename_device_patterns:
+  - '^sm(?P<device_id>\d{5})_'
+
+# dataset_role values:
+#   primary_candidate   - candidate for the main experiment pool (not yet frozen)
+#   auxiliary           - kept separate from the main pool; use only under an explicit protocol
+#   quarantined         - provenance conflict; excluded from every analysis until resolved
+#   restricted_metadata - non-sensor participant metadata; never used as data, never released
+#
+# year_hint: year assumed for MM-DD timestamps ONLY when no JSON log key can anchor the year.
+#            Used for inventory date ranges; rows dated this way are counted as year_source=config_hint.
+sources:
+  - source_id: user01_phase_a
+    raw_subdir: user01/phase_a
+    subject_id: User01
+    device_id: unknown
+    dataset_role: primary_candidate
+    format_family: plain_ymd_hms
+
+  - source_id: user01_phase_b
+    raw_subdir: user01/phase_b
+    subject_id: User01
+    device_id: unknown
+    dataset_role: primary_candidate
+    format_family: md_hms_plain_or_json
+    year_hint: 2025
+
+  - source_id: user01_phase_c
+    raw_subdir: user01/phase_c
+    subject_id: User01
+    device_id: unknown
+    dataset_role: primary_candidate
+    format_family: md_hms_json
+    year_hint: 2026
+
+  - source_id: user01_metadata
+    raw_subdir: user01/metadata
+    subject_id: User01
+    device_id: not_applicable
+    dataset_role: restricted_metadata
+    format_family: xlsx_metadata
+
+  - source_id: user02_legacy_csv
+    raw_subdir: user02/legacy_csv
+    subject_id: User02
+    device_id: unknown
+    dataset_role: auxiliary
+    format_family: legacy_csv_ymd_hm
+
+  - source_id: user02_mat_22480
+    raw_subdir: user02/mat_22480
+    subject_id: User02
+    device_id: "22480"
+    dataset_role: primary_candidate
+    format_family: md_hms_json
+
+  - source_id: user02_mat_22480_prefix_mismatch
+    raw_subdir: user02/mat_22480/_prefix_mismatch
+    subject_id: User02
+    device_id: unresolved
+    device_id_candidates: ["22480", "22482"]
+    dataset_role: quarantined
+    format_family: md_hms_json
+    note: "Stored under mat_22480 but filename prefix is sm22482_. Device attribution unresolved."
+
+  - source_id: user02_mat_22482
+    raw_subdir: user02/mat_22482
+    subject_id: User02
+    device_id: "22482"
+    dataset_role: primary_candidate
+    format_family: md_hms_json
+
+  - source_id: user03_legacy
+    raw_subdir: user03_legacy
+    subject_id: User03
+    device_id: unknown
+    dataset_role: auxiliary
+    format_family: legacy_csv_ymd_hm
+
+  - source_id: user06_auxiliary
+    raw_subdir: user06_auxiliary
+    subject_id: User06
+    device_id: unknown
+    dataset_role: auxiliary
+    format_family: plain_ymd_hms
+
+  - source_id: user07
+    raw_subdir: user07
+    subject_id: User07
+    device_id: unknown
+    dataset_role: primary_candidate
+    format_family: md_hms_json
+    year_hint: 2026

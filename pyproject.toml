@@ -1,0 +1,9 @@
+[project]
+name = "smartmat-mdpi-personalization"
+version = "0.0.1"
+description = "Cross-subject generalization and user-adaptive fine-tuning for smart-mat pressure-based temperature/humidity regression"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
