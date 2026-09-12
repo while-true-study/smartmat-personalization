@@ -4,9 +4,9 @@
 |---|---|
 | Phase | P0 (`RESEARCH_PROTOCOL.md` §5) |
 | Branch | `research/p0-data-freeze` |
-| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9, A10 done; A6, A12 partly (2026-09-13); A11, A13 pending |
+| Status | In progress — A1, A2, A5 (incl. A3, A4), A7, A8, A9, A10, A11 done; A6, A12 partly (2026-09-13); A13 pending; A9b (22482 P1, short) recommended |
 | Starting point | `docs/initial_dataset_inventory.md` |
-| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; provisional cohort User01/User02/User07 and User06 source excluded: D-017 (supersedes D-013); User01 `sensor_phase`: D-019 |
+| Decisions | Open items in `docs/DECISIONS.md` (OPEN-xx); P0 start: D-012; User06 source excluded: D-017 (supersedes D-013); User01 `sensor_phase`: D-019; primary cohort User01/User02/User07: D-020 |
 
 ## Goal
 
@@ -262,7 +262,26 @@ Order of execution: A1, A2 (identity) → A5, A3, A4 (duplication) → A6, A7 (t
 - **Decision it may influence:** OPEN-11, OPEN-14; constraints for the chronological personalization
   design (adaptation vs test spans must not be confounded with a hardware change).
 
-### A11. User / device / date coverage
+### A11. User / device / date coverage — **done (2026-09-13)**
+- **As implemented:**
+  - Coverage table per source × sensor phase slice, plus subject, sensor-phase and mat domains. Excluded sources
+    are listed with their status and not loaded.
+  - Monthly coverage matrix; overlaps on actually recorded days, weeks, months and minutes.
+  - Subject × season/quarter/month/phase/device/schema/container/regime matrix.
+  - Device evidence found inside the files; hand-over gaps.
+  - Structural cohort eligibility and the event timeline, with separate statuses.
+  - Code: `src/data/coverage.py`, `scripts/audit_dataset_coverage.py`; tests: `tests/test_coverage.py`. D-019
+    phase boundaries now live in `configs/subject_mapping.yaml` (`sensor_phases`).
+- **Artifacts:** `outputs/qa/p0/coverage/`; report `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md`.
+- **Result:**
+  - No two primary subjects were recorded at the same time: 0 shared hours; hand-overs of 36 h and 14.5 h.
+  - Winter is observed only in User01. Each LOSO fold removes a subject together with a period, a season mix and a
+    device/firmware configuration.
+  - Hardware IDs exist only for the User02 mats, so mat reuse cannot be checked (OPEN-04: consequences documented).
+  - All three primary subjects are `eligible_with_caveat`. D-020 (Accepted) fixes the cohort User01, User02,
+    User07 and closes OPEN-16.
+  - The 22482 P1 anomaly is not blocking for the cohort; its flag is needed before closure (OPEN-19; short audit
+    A9b recommended if the provider cannot answer).
 - **Purpose:** Make the subject × device × period × season × firmware structure explicit.
 - **Input:** Manifest; de-duplicated timelines.
 - **Method:** Calendar coverage per subject-device (hours recorded per night); month/season per
@@ -316,13 +335,19 @@ Tracked as issue drafts in `docs/issues/` (to be filed on GitHub):
    - Which sensor model and range were used before and after 2026-01-25?
    - Did the 2025-12-17 log-format/firmware change also change pressure reporting (threshold, filtering)?
    - Why was the sampling at 2 s on 2026-01-03…07?
+7. Mat identity (A11; OPEN-04): which physical mat recorded User01 and User07? Was any mat reused across
+   participants (hand-overs of 36 h and 14.5 h)?
 
 ## Exit criteria (data freeze)
 
 P0 is complete when:
 - [ ] OPEN-01, -02, -03 resolved, or the affected data excluded by a decision entry
-- [ ] OPEN-04 answered, or its consequences for RQ1 documented
+  (status 2026-09-13: OPEN-01 closed by D-017; OPEN-02 quarantined by D-006 but not yet decided; OPEN-03 open.
+  A decision to keep both mats as separate device streams in the interim data would close OPEN-03's P0 part.)
+- [ ] OPEN-04 answered, or its consequences for RQ1 documented (consequences documented in A11 §3, §5; awaiting
+  PI sign-off)
 - [ ] OPEN-05, -06, -07, -08, -09, -12, -13, -14, -16 decided (Accepted entries in `DECISIONS.md`)
+  (OPEN-16 closed by D-020; OPEN-12 moot after D-017 and to be closed formally)
 - [ ] Pressure input-validity rule decided (D-018); OPEN-19 and OPEN-20 answered, or their consequences documented
 - [ ] Canonical interim dataset v1 built under `data/interim/` from the accepted rules: parsed,
       de-duplicated, provenance columns (incl. `sensor_phase`, D-019), quality flags; **no** resampling,
@@ -330,3 +355,30 @@ P0 is complete when:
 - [ ] Interim dataset manifest with SHA-256 committed; raw integrity verified
 - [ ] `docs/P0_DATASET_AUDIT_REPORT.md` written; README roadmap updated
 - [ ] Tests pass; PR merged into `main`; tag `p0-data-freeze` created on the merge commit
+
+### Remaining work before closure (as of A11, 2026-09-13)
+
+- **Decisions (PI):**
+  - accept or revise the proposed D-014 (de-duplication), D-015 (sessions), D-016 (target flags) and D-018
+    (pressure validity);
+  - OPEN-08 (timestamp policy);
+  - OPEN-13 (auxiliary use);
+  - OPEN-03, P0 part (device streams);
+  - OPEN-05 (raw location);
+  - close OPEN-12 formally.
+- **Provider:**
+  - OPEN-19 (22482 P1);
+  - OPEN-14 (metadata dates);
+  - OPEN-20 (channel layout);
+  - OPEN-21 (User01 acquisition changes);
+  - OPEN-04 (mat identity).
+- **Analyses:**
+  - A9b (short: 22482 P1 onset and flag), if the provider cannot answer;
+  - A13 (legacy timestamps), needed only if auxiliary data are used;
+  - A12 remainder (hour-of-day, heater episodes);
+  - A6 remainder (legacy rows per minute).
+- **Build:**
+  - canonical interim dataset v1 with provenance columns (`subject_id`, `source_id`, `device_id` where recorded,
+    `sensor_phase`, `pressure_schema`, `log_container`, `sampling_regime`) and quality flags;
+  - its manifest;
+  - `docs/P0_DATASET_AUDIT_REPORT.md`.

@@ -76,13 +76,17 @@ Identity questions (do not resolve by assumption; see `DECISIONS.md`):
   raw files are kept. User03 legacy stays auxiliary, with the caveat noted in D-017.
 - OPEN-02: device attribution of the two `_prefix_mismatch` files.
 - OPEN-03: the two User02 mats recorded simultaneously for about 505 h.
-- OPEN-04: device IDs of every other source are unknown.
+- OPEN-04: device IDs of every other source are unknown. A11 found no ID in any other file, so mat reuse cannot be
+  checked. Sources without an ID stay `unknown`; an ID is never invented.
+
+Sensor phases (D-019) are provenance labels per subject timeline, configured in `configs/subject_mapping.yaml`
+(`sensor_phases`). User01 has `s1` and `s2`; every other timeline is `s1`. A phase is never a subject.
 
 ## 4. Dataset roles
 
 | Role | Sources | Meaning |
 |---|---|---|
-| `primary_candidate` | User01 (all phases), User02 `mat_22480`, User02 `mat_22482`, User07 | Candidate pool for the main experiments. Not frozen until `EXPERIMENT_PROTOCOL.md` is. |
+| `primary_candidate` | User01 (all phases), User02 `mat_22480`, User02 `mat_22482`, User07 | Main-experiment pool. Cohort membership fixed by D-020 (User01, User02, User07); how these sources are used is fixed with `EXPERIMENT_PROTOCOL.md`. |
 | `auxiliary` | User02 `legacy_csv`, User03 `legacy` | Kept separate from the main pool. Usable only under an explicit protocol (e.g. extra training subjects, robustness checks), never as test data for the main claims unless decided. |
 | `quarantined` | `user02/mat_22480/_prefix_mismatch/*` | Provenance conflict. Excluded from every analysis until resolved. The subject (User02) is certain; only the device is not. |
 | `excluded_invalid` | `user06_auxiliary` (D-017) | Source confirmed invalid (`quality_status: invalid`, with `exclusion_reason`). Excluded from every analysis, model training/evaluation and public dataset. **Analytical exclusion only**: the raw files stay in the archive, unchanged, for provenance. |

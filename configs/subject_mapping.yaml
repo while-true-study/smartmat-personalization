@@ -20,6 +20,13 @@ device_subject_map:
   "22480": User02
   "22482": User02
 
+# Sensor phases (D-019): provenance labels only, never a correction. A boundary is a recording gap given by the
+# last row of the earlier phase and the first row of the later one. Timelines not listed here are "s1".
+sensor_phases:
+  User01:
+    - {phase: s1, last_row: "2026-01-25 08:07:26"}
+    - {phase: s2, first_row: "2026-01-25 17:31:21"}
+
 # Filename patterns that encode a device ID (checked against the folder-declared device).
 filename_device_patterns:
   - '^sm(?P<device_id>\d{5})_'

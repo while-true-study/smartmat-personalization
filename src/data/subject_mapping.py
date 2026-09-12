@@ -105,6 +105,21 @@ def excluded_sources() -> list[dict]:
             for s in sources() if not s.analysis_eligible]
 
 
+def sensor_phase_spec(subject_id: str) -> tuple[list[tuple[int, int]], tuple[str, ...]]:
+    """Sensor-phase boundaries (last_row_before, first_row_after as epoch seconds of the naive local time) and
+    phase names for a subject (D-019). Subjects without an entry have a single phase 's1'."""
+    from datetime import datetime
+
+    spec = (mapping_config().get("sensor_phases") or {}).get(subject_id)
+    if not spec:
+        return [], ("s1",)
+    names = tuple(p["phase"] for p in spec)
+    epoch = datetime(1970, 1, 1)
+    sec = lambda s: int((datetime.fromisoformat(s) - epoch).total_seconds())  # noqa: E731
+    bounds = [(sec(a["last_row"]), sec(b["first_row"])) for a, b in zip(spec[:-1], spec[1:])]
+    return bounds, names
+
+
 def to_relpath(path_like: str) -> str:
     return str(PurePosixPath(str(path_like).replace("\\", "/"))).strip("/")
 

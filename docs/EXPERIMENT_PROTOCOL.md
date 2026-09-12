@@ -20,6 +20,8 @@ Governing rules: `docs/RESEARCH_PROTOCOL.md` (L1–L12) and `docs/DATA_POLICY.md
 ## 1. Cohort and inclusion — TBD
 Primary cohort, auxiliary usage, exclusion criteria (defined without looking at model results).
 Blocked by: OPEN-01, OPEN-03, OPEN-13, OPEN-16.
+P0 input: primary cohort User01, User02, User07 (D-020). Each LOSO fold is also a held-out period and device/firmware
+domain; claims are limited as in `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §6.
 
 ## 2. Interim data construction — TBD
 Parsing rules per format family, timestamp/year policy, de-duplication, handling of non-data lines,

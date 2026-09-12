@@ -32,7 +32,7 @@ Evidence: `docs/initial_dataset_inventory.md`. Analyses planned for P0: `docs/P0
 | OPEN-01 | **Closed 2026-09-13 by D-017:** provider confirmed the User06 source is invalid (setting issue). User06 source `excluded_invalid` (raw kept); User03 legacy stays auxiliary; subjects not merged. History: **Identity answered:** User03 ≠ User06 (PI, 2026-09-12; D-013). **Still open: measurement provenance** — why the rows of `user03_legacy` are contained in User06's recordings of 2025-10-06…10-13, and to which subject those measurements belong. Until then the overlapping recording is provisionally quarantined from primary evaluation (D-013). Original question: `user03_legacy` is a seconds-truncated copy of `user06_auxiliary` for 2025-10-06…10-12 (99.99–100 % of User03 rows found in User06). **A1 evidence (2026-09-12):** 100 % of User03 rows (minute-level) and 100 % of its 5-row value sequences occur in User06; offsets 0–59 s; each User03 file is a contiguous excerpt of one User06 night file; ordered runs up to 13,180 sequences. Overlap is inconsistent with independent subject recordings; identity still unconfirmed. No other subject pair shares any data. | data provider | P0 | any use of User03/User06 | `docs/issues/P0-01_user03-user06-provenance.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §4; `outputs/qa/p0/provenance/` |
 | OPEN-02 | Device of `user02/mat_22480/_prefix_mismatch/sm22482_0824.txt` and `…_0825.txt`. Evidence favours 22482 (filename prefix, JSON root key `smartmat_22482`, the only dates with a 22480 file but no 22482 file). A1: the two files share no rows with either device's files (not duplicates). **A2 evidence (2026-09-12):** they fill 22482's timeline seamlessly (start 30 min after 22482's last row, end 3 s before its next row), record simultaneously with 22480's own stream for 7.0 h, and match 22482's humidity regime (22480 − quarantined: −2 °C / −16 %RH vs typical 22480 − 22482: −2 / −19). Strong, consistent evidence for 22482; attribution still `unresolved` pending provider confirmation. A5: the gap between the two quarantined files (1,804 s) and their start relative to 22482 (1,806 s) follow 22482's lost-upload-chunk pattern (n × 1,800 s + a few s). | data provider | P0 | use of those 2 files | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` §9; `docs/P0_A5_DUPLICATE_OVERLAP_REPORT.md` §6 |
 | OPEN-03 | Physical setup of User02's mats 22480/22482: they overlap for ~505 h and both register occupancy in 66.8 % of jointly recorded minutes, with different temperature/humidity. Same bed (body regions)? Different locations? How to use two concurrent streams (separate, one, fused)? A1: 46 co-recorded dates, 0 shared rows or sequences — concurrent but distinct streams. **A2 evidence (2026-09-12):** 253 h simultaneous recording (76 % of 22480's time); no pressure coupling (|r| ≤ 0.03 for all descriptors, no lag peak within ±30 s, movement-event coincidence at chance level, no clock offset found within ±12 h); occupancy agreement at chance under all 14 definitions (κ −0.07…0.00, "both active" 18–90 % depending on threshold); persistent T/H offset (22480 − 22482: −2 °C, −19 %RH; humidity lower on 46/46 dates); different channel-load patterns. Physical placement and the use policy for the two streams remain unresolved. | provider + PI | P0 | User02 in primary cohort | `docs/issues/P0-02_user02-dual-device-protocol.md`; `docs/P0_A1_PROVENANCE_REPORT.md` §5; `docs/P0_A2_USER02_DEVICE_REPORT.md` |
-| OPEN-04 | Device IDs of User01, User07, User02 legacy, User03, User06. Recording periods hand over day-to-day (User01 → User07 → User02), suggesting reused mats. Subject and device may be confounded. | data provider | P0 | RQ1 interpretation | — |
+| OPEN-04 | Device IDs of User01, User07, User02 legacy, User03, User06. Recording periods hand over day-to-day (User01 → User07 → User02), suggesting reused mats. Subject and device may be confounded. **A11 evidence (2026-09-13):**<br>• A hardware ID is recorded only for the User02 mats: folder, filename, JSON root key in every file, and a row column from 08-29/08-31. Each ID maps to User02 only.<br>• User01 (all phases), User07 and both legacy sources carry no ID in filename, JSON key or rows.<br>• Hand-overs: User01 → User07 in 36.3 h; User07 → User02 mats in 14.5 h. This is consistent with moved mats but is not evidence.<br>**Reuse cannot be checked from the data; unresolved.** Consequences for RQ1 are documented: subject, period and device configuration are confounded in every fold (A11 §5). | data provider | P0 (question); consequences documented | RQ1 interpretation | `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §3, §5 |
 | OPEN-05 | Move the raw package into `data/raw/` or keep it at `스마트 매트 데이터 정리/`? | PI | P0 | nothing (path is configurable) | — |
 | OPEN-06 | Session definition (files ≠ sessions: files overlap and some span 30–57 h). **A5 evidence (2026-09-12):** confirmed quantitatively. Files hold parts of two nights (internal gap > 2 h in User01 12, 22480 3, 22482 29, User07 3 files). 22482 nights are split across files at 06:1x–09:1x with recording continuing 2–5 s later (10 boundaries), and 13 cuts lost exactly 1–3 upload chunks (n × 1,800 s + 3–8 s). 18 primary-group boundaries overlap through repeated chunks. For User01/22480/User07 most boundaries (139/150, 41/44, 97/99) fall in > 2 h gaps. No gap threshold chosen; pending A7. **A7 evidence (2026-09-12):**
 - Sampling is 3 s nominal (p99 5 s) on all primary timelines.
@@ -52,10 +52,10 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-13 | Whether and how auxiliary subjects enter training pools. After D-017 the auxiliary pool is User02 legacy and User03 legacy, both minute-resolution. User03 legacy rows are the same measurements as part of the invalid User06 recording; whether the setting issue also affects them is unconfirmed. A9 (2026-09-13): User02 legacy P5 is at 4095 in 50.8 % of rows (runs up to ≈ 112 min); User03 legacy P3–P5 at 4095 in 7–10 % of rows. | PI | P0 | RQ1 | D-017; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §3 |
 | OPEN-14 | Metadata date inconsistencies (e.g. heating start written as 2026-11-18, log-format change as 2026-12-17; data suggest 2025). | data provider | P0 | covariate timeline | — |
 | OPEN-15 | Admissibility of firmware movement labels (UM/DM/LM/RM/NM) as model inputs / movement-derived features. | PI | P2 | RQ3 | — |
-| OPEN-16 | Final primary cohort. Three candidates give only three LOSO folds; statistical plan must reflect this. Provisional primary cohort: User01, User02, User07 (D-013, restated in D-017). | PI | P0 | RQ1 | — |
+| OPEN-16 | **Closed 2026-09-13 by D-020:** canonical P0 primary cohort User01, User02, User07. History: final primary cohort; three candidates give only three LOSO folds; the statistical plan must reflect this (carried into P2). Provisional cohort: D-013, restated in D-017. A11: all three pass every structural check, each `eligible_with_caveat`. | PI | P0 | RQ1 | D-020; `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §4 |
 | OPEN-17 | Pressure-scale differences between subjects/periods (User01 saturates at 4095; User02 max 3731; User07 max 4023): normalisation strategy that respects L3/L11. **A9 evidence (2026-09-13):**<br>• All sources have six populated channels. There are no missing channels, no non-standard layouts and no out-of-range or non-integer values.<br>• 4095 is a pile-up at the ceiling (275,601 cells vs 789 at 4094). 99.99 % of these cells are in User01 before the sensor change. 22480 has 17 cells; 22482 and User07 have none.<br>• Every non-zero constant run ≥ 1 min is a 4095 plateau. There is no interior-value stuck channel and no frozen frame on the current mats.<br>• Pressure-sum medians: User01 3,817 (old sensor ≈ 4,420, new ≈ 2,976) vs 1,764–2,037 on the current mats. Channel profiles differ (22482 more even).<br>Proposed input-validity rule D-018; 4095 handling and scaling stay open (P2, training data only). | PI | P2 | preprocessing | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md`; D-018 |
 | OPEN-18 | Public release: absolute dates or relative day indices. | PI + provider | P7 | release | — |
-| OPEN-19 | User02/22482 channel P1 from 2026-08-20 (A9): active share 0.49 → 0.13, median when active 759 → 26, p99 2,007 → 371. P6 active share 0.57 → 0.28 over the same dates. P2–P5 unchanged; the other mat (22480) shows no such drop. Was the mat moved, replaced or damaged? Use of 22482 data after that date as test/adaptation data depends on it. | data provider + PI | P0 (question), P2 (handling) | User02 splits | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5 |
+| OPEN-19 | User02/22482 channel P1 from 2026-08-20 (A9): active share 0.49 → 0.13, median when active 759 → 26, p99 2,007 → 371. P6 active share 0.57 → 0.28 over the same dates. P2–P5 unchanged; the other mat (22480) shows no such drop. Was the mat moved, replaced or damaged? Use of 22482 data after that date as test/adaptation data depends on it. **A11 (2026-09-13):**<br>• The affected slice is 202.0 h in 22 nights (41 % of 22482's hours); 64.9 h of it are also covered by 22480.<br>• Without it, User02 keeps 438.8 h in 45 nights.<br>• **Not blocking for the cohort** (D-020). It is a device-period quality issue whose flag (start, channels) must be defined before P0 closes: provider answer, or the short audit A9b. | data provider + PI | P0 (flag definition), P2 (handling) | User02 splits | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5; `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §3 |
 | OPEN-20 | Physical layout of P1–P6 on the mat and the legacy `FSR_k` ↔ P_k mapping (positional assumption). A9: the strongest positive correlations are P1–P4, P2–P5, P3–P6 on all current mats. This is compatible with, but not proof of, paired positions. Needed before any spatial or channel-selection feature. | data provider | P0 (question), P2 | spatial features | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6 |
 | OPEN-21 | Other User01 acquisition changes inside `sensor_phase` s1 (A10):<br>• **2025-12-17**, the documented log-format change (first compressed log): active channels 1.51 → 2.49 and dominant-channel switches 29 → 92 /h, both with complete separation over ±7 nights. The 4095 share is unchanged.<br>• **2026-01-03…07**: a temporary 2 s sampling regime, with the 4095 share dipping for about a week.<br>• From **2026-01-08**: 3 s sampling with wider jitter.<br>• **2025-12-25**: an undocumented +49 % pressure-sum level shift.<br>Did firmware/logging changes alter pressure reporting? Should acquisition-period labels (log format, sampling regime) be carried as further provenance fields? Not merged into `sensor_phase`. | data provider + PI | P0 (question), P2 (handling) | RQ2 spans within User01 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md` §6, §8 |
 
@@ -289,7 +289,7 @@ The candidate band is a descriptive parameter and must not be tightened after mo
 
 ## D-017 — User06 source excluded as invalid (provider-confirmed); User03 kept as auxiliary
 Date: 2026-09-13
-Status: Accepted (supersedes D-013)
+Status: Accepted (supersedes D-013); the cohort statement is finalised by D-020
 Context: A1 showed that `user03_legacy` is, row for row, a contiguous excerpt of the `user06_auxiliary`
 recordings (100 % of User03 rows at minute resolution and of its value sequences). D-013 kept User03 ≠ User06
 and provisionally quarantined the overlapping recording. The data provider has since confirmed that the User06
@@ -385,3 +385,39 @@ Consequence:
   - per-phase reporting in LOSO.
 - Other acquisition changes inside `s1` (2025-12-17 log-format/activity change, the early-January sampling
   episode) are not part of this label (OPEN-21).
+
+## D-020 — Canonical P0 primary cohort: User01, User02, User07
+Date: 2026-09-13
+Status: Accepted (cohort membership; closes OPEN-16)
+Context: D-013/D-017 set a provisional primary cohort. A11 checked, without any model, whether each candidate
+supports strict LOSO and chronological personalization, and how subject identity is confounded with time, season
+and device (`docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md`).
+Decision:
+- Primary cohort: **User01, User02, User07**. Subject-level evaluation keeps User02's two mats (22480, 22482)
+  together as one subject.
+- Auxiliary pool: User02 legacy and User03 legacy. Their use is still open (OPEN-13).
+- User06: `excluded_invalid` (D-017). The two prefix-mismatch files stay quarantined (D-006, OPEN-02).
+- No subject is added or removed on the basis of model results. The cohort is fixed for P1–P6 unless new
+  provenance evidence forces a new decision.
+- Not decided here:
+  - which mat or mats of User02 feed a model (OPEN-03, P2);
+  - how User01's sensor phases are handled (OPEN-11, P2);
+  - how the 22482 anomaly is flagged (OPEN-19);
+  - use of auxiliary data (OPEN-13).
+Evidence: A11 §1–§5.
+- All three pass every structural check:
+  - volume: 1,784 / 576 / 833 active hours; 151 / 51 / 100 nights;
+  - T/H coverage ≥ 99.8 %;
+  - 0 shared recording hours between any two, and no shared rows (A1);
+  - enough nights for chronological adaptation/test spans, also per User01 phase and for User02 without the
+    22482 anomaly slice.
+- All three are `eligible_with_caveat`; none is `not_eligible`.
+Consequence:
+- Three LOSO folds. Each fold also removes a calendar period, a season mix and a device/firmware configuration,
+  because no two primary subjects were recorded at the same time.
+- Claims are limited accordingly (A11 §6): unseen subject-period-device generalisation, not population
+  generalisation or an isolated user effect.
+- The statistical plan (P2) must reflect n = 3.
+- `configs/subject_mapping.yaml` keeps the role label `primary_candidate` for now. Relabelling (and the
+  role-cells-only manifest rebuild it implies, as for D-017) is done with the interim dataset build, so historical
+  audit outputs are not relabelled piecemeal.
