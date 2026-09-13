@@ -1,0 +1,4 @@
+fold,held_out_subject,selected_index,channels,kernel_size,dropout,lr,weight_decay,batch_size,max_epochs,early_stopping_patience,inner_A_criterion,inner_A_best_epoch,inner_B_criterion,inner_B_best_epoch,selection_score,final_epochs
+1,User01,12,64,3,0.1,0.001,0.0001,256,50,5,1.4295359894820225,4,2.0807849236739466,5,1.7551604565779846,5
+2,User02,7,32,3,0.3,0.0003,0.0001,256,50,5,1.094552374895367,1,1.1834304247386596,8,1.1389913998170131,5
+3,User07,8,64,2,0.1,0.001,0.0001,256,50,5,2.960818316882621,2,2.020395884312391,3,2.490607100597506,3
