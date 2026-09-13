@@ -37,7 +37,8 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
 - P2 (evaluation protocol and split freeze) is complete: protocol v1.0 (`docs/EXPERIMENT_PROTOCOL.md`), tag
   `p2-protocol-freeze`.
 - P3 (strict LOSO baseline) is complete: `docs/P3_STRICT_LOSO_BASELINE_REPORT.md`, tag `p3-loso-baseline`.
-- P4 (feature-family comparison, RQ3) is the current phase (`scripts/run_p4_feature_ablation.py`; D-044).
+- P4 (feature-family comparison, RQ3) is the current phase (`scripts/run_p4_feature_ablation.py`; D-044). Its results
+  are recorded in `docs/P4_FEATURE_ABLATION_REPORT.md`, pending the P4 merge.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
