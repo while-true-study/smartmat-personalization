@@ -31,7 +31,7 @@ from src.evaluation import splits as S
 from src.evaluation.canonical_input import verify_canonical
 from src.evaluation.leakage import GateReport, RunContext, require_pass, run_gate
 from src.evaluation.metrics import TARGETS, round_half_up, target_metrics, unweighted_subject_mean
-from src.evaluation.p2_protocol import canonical_structure, load_manifest, split_root
+from src.evaluation.p2_protocol import load_manifest, split_root
 from src.evaluation.protocol import PROTOCOL_VERSION, load_protocol, protocol_sha256
 from src.features.pressure_features import RAW_FEATURES, TargetScaler, family_features
 
@@ -206,11 +206,23 @@ class P3Session:
             self._folds[fold] = fold_data(self.rows(), fold)
         return self._folds[fold]
 
+    def structure(self, verified: dict) -> tuple[list[dict], list[dict]]:
+        """Canonical session and session x night records for the gate, from the rows already loaded.
+
+        Same records as P2 `canonical_structure()` (`splits.session_records` / `piece_records`) computed with integer
+        label codes to avoid P2's multi-GB string stacking. Equality is enforced twice: tests compare the two on
+        synthetic data, and the gate's coverage check fails if any record differs from the committed split files,
+        which P2 built from `canonical_structure()`.
+        """
+        if self._structure is None:
+            from src.training.loso_data import structure_records
+            self._structure = structure_records(self.rows())
+        return self._structure
+
     def gate(self, d: Path, ctx: RunContext) -> tuple[GateReport, dict]:
         """Run the frozen P2 gate for this run (canonical re-verified every time); write the report; fail closed."""
-        if self._structure is None:
-            self._structure = canonical_structure()
         verified = verify_canonical()
+        self.structure(verified)
         rep = run_gate(split_root(), load_manifest(), load_protocol(), *self._structure, ctx, verified)
         write_json(d / "leakage_check.json", {"checked_at": now(), "context": {
             "scheme": ctx.scheme, "fold": ctx.fold, "input_features": ctx.input_features,

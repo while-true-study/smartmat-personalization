@@ -295,3 +295,26 @@ def test_outer_test_cannot_run_before_selection_is_frozen(synth, tmp_path, monke
     assert sess.gated == 0 and not (tmp_path / "runs").exists()               # nothing touched, no test access
     with pytest.raises(P.P3Error):
         P.select_fold(sess, 1)                                                # inner runs incomplete -> refused
+
+
+def test_lean_structure_equals_p2_structure_and_keys_are_equivalent():
+    from src.evaluation.windowing import build_windows, group_key
+    from src.evaluation.protocol import window_spec
+    from src.training.loso_data import coded_key, structure_records
+    arr = synthetic(cross_noon_night=3)
+    order = np.lexsort((arr["ts"], np.char.add(arr["subject"].astype(str), arr["device"].astype(str))))
+    arr = {k: v[order] for k, v in arr.items()}
+    n = arr["ts"].size
+    rows = Rows(arr["subject"].astype(str), arr["device"].astype(str), arr["session"].astype(str),
+                arr["sp"].astype(str), arr["cq"].astype(str), arr["ts"].astype(np.int64),
+                np.zeros((n, 6), np.int16), np.zeros((n, 2)), np.ones(n, bool), np.ones(n, bool))
+    sessions, pieces = structure_records(rows)
+    p2_sessions = S.session_records(rows.ts, rows.subject, rows.device, rows.session, rows.sensor_phase,
+                                    rows.cq_phase)
+    p2_pieces = S.piece_records(rows.ts, rows.subject, rows.device, rows.session, rows.sensor_phase, rows.cq_phase,
+                                rows.night)
+    assert sessions == p2_sessions and pieces == p2_pieces
+    labels = (rows.subject, rows.device, rows.session, rows.sensor_phase)
+    w_new = build_windows(rows.ts, coded_key(*labels), window_spec())
+    w_old = build_windows(rows.ts, group_key(*labels), window_spec())
+    assert np.array_equal(w_new.step_rows, w_old.step_rows) and np.array_equal(w_new.t0, w_old.t0)
