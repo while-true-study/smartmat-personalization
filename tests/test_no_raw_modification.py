@@ -132,7 +132,9 @@ git_ok = shutil.which("git") is not None and (paths.PROJECT_ROOT / ".git").exist
 @pytest.mark.skipif(not git_ok, reason="not a git repository")
 def test_raw_data_is_git_ignored():
     root = paths.raw_root()
-    sample = next(p for p in root.rglob("*") if p.is_file())
+    sample = next((p for p in root.rglob("*") if p.is_file()), None) if root.exists() else None
+    if sample is None:
+        pytest.skip("raw data not present (e.g. a clean checkout)")
     res = _git("check-ignore", "-q", str(sample.relative_to(paths.PROJECT_ROOT)))
     assert res.returncode == 0, f"raw file is not ignored by .gitignore: {sample}"
 
