@@ -1,6 +1,8 @@
 """Deterministic TCN training for protocol v1.0 (D-040).
 
-- Inputs: RAW family only in P3 (p / 4095; `src/features/pressure_features.raw`), layout (N, 6, 8).
+- Inputs: one declared feature family (`src/features/pressure_features.build_inputs`), layout (N, F, 8) with F the
+  family's feature count. The default family is RAW (p / 4095, F = 6), which is what P3 trained; P4 passes the other
+  five families (D-039). Only the input width changes with the family.
 - Targets: standardised with a training-partition TargetScaler; loss = mean of the two per-target MSEs.
 - AdamW, constant learning rate, batch 256, per-epoch shuffling from a seeded CPU generator, no gradient clipping,
   no scheduler (none declared).
@@ -28,7 +30,7 @@ import numpy as np  # noqa: E402
 import torch  # noqa: E402
 
 from src.evaluation.metrics import selection_criterion  # noqa: E402
-from src.features.pressure_features import TargetScaler, raw  # noqa: E402
+from src.features.pressure_features import TargetScaler, build_inputs, family_features  # noqa: E402
 from src.models.tcn import TCN, to_channels_first  # noqa: E402
 
 GRID_KEYS = ("channels", "kernel_size", "dropout", "lr")
@@ -91,9 +93,31 @@ def environment() -> dict:
             "platform": platform.platform(), "num_workers": 0}
 
 
-def to_tensor(pressure: np.ndarray, dev: torch.device) -> torch.Tensor:
-    """(N, 8, 6) raw pressure -> (N, 6, 8) float32 RAW inputs on the device."""
-    return to_channels_first(torch.as_tensor(raw(pressure), dtype=torch.float32)).to(dev)
+INPUT_CHUNK = 65536
+
+
+def input_array(pressure: np.ndarray, family: str = "RAW", chunk: int = INPUT_CHUNK) -> np.ndarray:
+    """(N, 8, 6) raw pressure -> (N, 8, F) float32 inputs of `family`.
+
+    Every feature is a per-window formula (MOVEMENT differences stay inside the window), so computing it in chunks of
+    windows gives exactly the values of one whole-array call; chunking only bounds the float64 temporaries.
+    """
+    p = np.asarray(pressure)
+    if p.ndim != 3 or p.shape[-1] != 6:
+        raise ValueError("pressure windows must have shape (n, steps, 6)")
+    n_features = len(family_features(family))
+    out = np.empty((p.shape[0], p.shape[1], n_features), np.float32)
+    for i in range(0, p.shape[0], chunk):
+        x, names = build_inputs(p[i:i + chunk], family)
+        if x.shape[-1] != n_features or len(names) != n_features:
+            raise ValueError(f"{family}: built {x.shape[-1]} inputs, declared {n_features}")
+        out[i:i + chunk] = x
+    return out
+
+
+def to_tensor(pressure: np.ndarray, dev: torch.device, family: str = "RAW") -> torch.Tensor:
+    """(N, 8, 6) raw pressure -> (N, F, 8) float32 inputs of `family` on the device (RAW: F = 6, p / 4095)."""
+    return to_channels_first(torch.from_numpy(input_array(pressure, family))).to(dev)
 
 
 @torch.no_grad()
@@ -136,16 +160,16 @@ class TrainResult:
 
 def train_tcn(cfg: TCNConfig, pressure_tr: np.ndarray, y_tr: np.ndarray, scaler: TargetScaler, seed: int, *,
               epochs: int | None = None, pressure_va: np.ndarray | None = None, y_va: np.ndarray | None = None,
-              log: Callable[[str], None] = print) -> TrainResult:
+              log: Callable[[str], None] = print, family: str = "RAW") -> TrainResult:
     """Either early stopping on (pressure_va, y_va) (inner runs) or exactly `epochs` epochs (final runs)."""
     if (epochs is None) == (pressure_va is None):
         raise ValueError("give either a fixed epoch count or validation data, not both / neither")
     set_determinism(seed)
     dev = device()
-    x = to_tensor(pressure_tr, dev)
+    x = to_tensor(pressure_tr, dev, family)
     y = torch.as_tensor(scaler.transform(y_tr), dtype=torch.float32, device=dev)
-    xv = to_tensor(pressure_va, dev) if pressure_va is not None else None
-    model = TCN(6, cfg.channels, cfg.kernel_size, cfg.dropout).to(dev)
+    xv = to_tensor(pressure_va, dev, family) if pressure_va is not None else None
+    model = TCN(len(family_features(family)), cfg.channels, cfg.kernel_size, cfg.dropout).to(dev)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
     gen = torch.Generator().manual_seed(seed)
     n = x.shape[0]
