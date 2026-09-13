@@ -1084,3 +1084,37 @@ Evidence:
 - A rebuild from canonical_v1 gives byte-identical split files and a semantically identical manifest.
 - Synthetic tests: `tests/test_leakage.py`, `test_splits.py`, `test_windowing.py`, `test_pressure_features.py`.
 Consequence: Changing a split file breaks the manifest hash and the gate. A new split needs a new protocol version.
+
+## D-043 — P3 execution environment and implementation clarifications (no protocol change)
+Date: 2026-09-13
+Status: Accepted
+Context: P3 runs protocol v1.0 (D-040, D-041) for the first time. `requirements.txt` asks for a record of any
+package that affects results. D-040 does not spell out every implementation detail of the declared TCN and its
+training. These details are fixed here, before any model is trained on study data. No v1.0 item changes; the
+protocol version stays v1.0.
+Decision:
+- **Environment.**
+  - PyTorch 2.12.0 (CUDA 12.6 build) on one NVIDIA GPU.
+  - Deterministic mode: `torch.use_deterministic_algorithms(True)`, cuDNN deterministic, no benchmark,
+    `CUBLAS_WORKSPACE_CONFIG=:4096:8`, `num_workers` 0.
+  - Every run records its environment in `run_meta.json`.
+- **TCN and training details** (the standard TCN residual block; nothing added to D-040):
+  - causal convolution by left zero-padding; block output = ReLU(main + residual);
+  - PyTorch default initialisation;
+  - no weight normalisation, no normalisation layer, no gradient clipping, no learning-rate schedule;
+  - per-epoch shuffling with a seeded generator; the last partial batch is kept;
+  - Python, NumPy and PyTorch (CPU and CUDA) are seeded with the run seed.
+- **Early stopping** (inner runs):
+  - strict improvement of the frozen criterion only;
+  - best epoch = the first epoch with the lowest criterion;
+  - stop after 5 epochs without improvement;
+  - the inner model uses the best-epoch weights.
+- **Final epoch count.** "round" in D-040 means half-up rounding (7.5 → 8), not banker's rounding.
+- **Aggregation over seeds** averages the seeds' metrics, never their predictions (no ensemble is declared).
+- **Bias** = mean(prediction − truth).
+- **Gate schema for the training-mean predictor.** The training-mean predictor declares the RAW window schema to the
+  leakage gate. It uses no input.
+Evidence: D-040, D-041; `src/models/tcn.py`, `src/training/trainer.py`, `tests/test_p3_loso.py`. When this entry was
+written, no model had been trained on study data; only a synthetic smoke test had run.
+Consequence: P3 runs are reproducible from the committed code, the frozen protocol and the committed P3 selection
+file. A change to any of these details would be a new decision and a protocol version bump.
