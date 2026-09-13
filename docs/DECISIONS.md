@@ -1118,3 +1118,69 @@ Evidence: D-040, D-041; `src/models/tcn.py`, `src/training/trainer.py`, `tests/t
 written, no model had been trained on study data; only a synthetic smoke test had run.
 Consequence: P3 runs are reproducible from the committed code, the frozen protocol and the committed P3 selection
 file. A change to any of these details would be a new decision and a protocol version bump.
+
+## D-044 — P4 execution and pre-declared feature-family comparisons (no protocol change)
+Date: 2026-09-13
+Status: Accepted
+Context:
+- P4 answers RQ3 with the families of D-039 under protocol v1.0, with the selection of D-040.
+- The P3 outer-test results (RAW TCN and training-mean, `docs/P3_STRICT_LOSO_BASELINE_REPORT.md` §7–§11) were seen
+  before this entry was written. No P4 model had been trained.
+- Nothing below changes a v1.0 item. Families, formulas, grid, selection rule, seeds and metrics stay those fixed in P2.
+  This entry fixes only how P4 executes them and which descriptive comparisons are reported.
+Decision:
+- **Scope.**
+  - Trained in P4: MOVEMENT, CONTACT, RAW+MOVEMENT, RAW+CONTACT and RAW+MOVEMENT+CONTACT.
+  - Each family gets its own inner search (3 folds × 16 configurations × 2 inner splits = 96 runs, 480 in total), its
+    own selection per fold, and final models for seeds 0/1/2 (45 runs).
+  - RAW is not re-run. The RAW TCN and the training-mean predictor frozen at `p3-loso-baseline` are imported from the
+    committed P3 tables as the reference. With P3's 96 RAW inner runs this spends exactly the 576-run budget of D-040.
+- **Implementation** (P3 code and D-043 otherwise, unchanged):
+  - The trainer takes the family. Inputs come from `build_inputs` (D-039 formulas, unchanged). They are computed in
+    chunks of windows, which is exact because every formula is per window, and stored as float32. The TCN input width
+    is the family's feature count; nothing else in the model or training changes. RAW keeps its P3 values bitwise.
+  - Before a run, the family's composition, order, width and names are checked against `protocol.yaml` and D-039,
+    and the leakage gate receives the family's feature list. Any mismatch stops the run (fail closed).
+  - `run_meta.json` records the deterministic flags after they are switched on (the P3 report §14 note).
+  - The 15 family × fold selections go to `configs/experiments/v1.0/p4_selected_configs.yaml`. Final runs refuse to
+    start unless this file is committed and unmodified, and each final run records its commit.
+  - The outer target scaler does not depend on the family. It must equal the P3 frozen scaler of the same fold.
+- **Pre-declared comparisons.** They are descriptive; D-041 statistics are unchanged and no significance test is used.
+  Δ = metric(first) − metric(second), from seed means, per target and held-out subject. Negative means the first is
+  better.
+  - Primary endpoints: MAE and RMSE per subject and the unweighted 3-subject mean, for all six families and the
+    training-mean predictor.
+  - Feature added to a model:
+    - A = RAW+MOVEMENT − RAW;
+    - B = RAW+CONTACT − RAW;
+    - C = RAW+MOVEMENT+CONTACT − RAW;
+    - D = RAW+MOVEMENT+CONTACT − RAW+MOVEMENT;
+    - E = RAW+MOVEMENT+CONTACT − RAW+CONTACT.
+  - Representation sufficiency, kept separate from A–E: MOVEMENT − RAW and CONTACT − RAW.
+  - Every family against the training-mean predictor, with the number of seeds on each side per subject.
+  - Subject consistency: improved subjects x/3. "Improved in all three held-out subjects" is used only for 3/3.
+  - Seed consistency: differences between runs with the same seed index (3 subjects × 3 seeds = 9 per comparison).
+    Reported: the number improved, the mean, the minimum and the maximum. Equal seed indices are a bookkeeping pairing,
+    not a matched design; all seeds are reported.
+  - Offset diagnostics:
+    - bias per family and subject, and |bias| / MAE;
+    - error SD = √(RMSE² − bias²), a descriptive split of the declared RMSE and bias into offset and variation.
+  - Secondary strata as in P3: User01 s1/s2; User02 22480/22482; 22482 normal / p1_transition / p1_response_shift;
+    the per-night distribution; the window-weighted pooled metric.
+  - The family with the lowest unweighted mean is reported as "lowest unweighted mean in this cohort", not as the best
+    model.
+- **P5.** The primary personalization family stays RAW (EXPERIMENT_PROTOCOL §8), whatever P4 shows. Personalizing
+  another family is secondary or needs a protocol-versioned extension.
+- **Reproduction criterion,** fixed before any P4 run:
+  - the 45 final runs are re-run from a clean checkout of the selection commit, using only committed code, protocol
+    and selection file;
+  - every final-run MAE and RMSE must agree within 1e-6; predictions are compared bitwise;
+  - the inner search is not re-run in full. The inner runs of every selected configuration (15 × 2 = 30) are re-run
+    and must give the same best epoch and criterion (within 1e-9);
+  - selection provenance is otherwise checked through the committed selection file, its per-fold SHA-256 and the
+    run-status checksums.
+Evidence: D-039, D-040, D-041, D-043; `src/evaluation/p4_ablation.py`, `src/training/trainer.py`,
+`tests/test_p4_features.py`, `tests/test_p4_ablation.py` (synthetic data only). When this entry was written, the P3
+results were known and no P4 model had been trained.
+Consequence: P4 outer results are interpreted only through these comparisons. A change to any feature formula, grid,
+selection rule or epoch rule after P4 results are seen would be a protocol version bump reported next to v1.0.
