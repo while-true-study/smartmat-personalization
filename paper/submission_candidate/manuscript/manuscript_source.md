@@ -26,9 +26,11 @@ the final review finds an overclaim. -->
 
 **ORCID:** [ORCID iDs — CONFIRM]
 
-[FIRST-PAGE NOTE — conservative MDPI practice for extended conference papers; Applied Sciences confirmation pending
-(docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md item 15): "This article is an extended version of a paper presented at the
-18th International Conference on Future Information & Communication Engineering (ICFICE 2026) [@maeng2026icfice]."]
+<!-- First-page note: Applied Sciences requires expanded conference papers to cite the conference paper and note it on
+the first page (docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md item 15). The wording is the authors'. -->
+**Note:** This article is a revised and expanded version of a paper entitled "Robust Temperature and Humidity
+Estimation from Smart Bedding Pressure Sequences Using Movement and Contact-Structure Features", which was presented at
+the 18th International Conference on Future Information & Communication Engineering (ICFICE 2026), Sapporo, Japan, 7–10 July 2026 [@maeng2026icfice].
 
 <!-- Featured Application: optional in the template. Standalone paragraph, so that it can be removed at formatting
 if Applied Sciences does not use it (requirements item 2). No clinical or population claim. -->
@@ -309,7 +311,7 @@ are counted, never dated.
 ### 3.4. Model and Training
 
 - **Architecture:** a causal residual TCN following the generic TCN design [@bai2018tcn]: three blocks (dilations 1,
-  2 and 4), two causal convolutions per block with ReLU and dropout, a 1×1 convolution on the residual path when the
+  2 and 4), two causal convolutions per block with rectified linear unit (ReLU) activation and dropout, a 1×1 convolution on the residual path when the
   channel count changes, and a linear head on the last time step. It predicts temperature and humidity jointly, with
   a mean-squared-error loss on the standardised targets.
 - **Search space:** 16 configurations: channels {32, 64} × kernel size {2, 3} × dropout {0.1, 0.3} × learning rate
@@ -333,7 +335,8 @@ holding out one subject (labelled generically A–C) with all its mats; model se
 the two training subjects only; the held-out subject is evaluated once. (c) Chronological personalization for one
 held-out subject: nights 1…b are adaptation data, night b + 1 is an unused buffer (for b > 0), and the primary test
 span (nights ≥ 16) is the same for every budget b ∈ {0, 1, 3, 7, 14}. (d) Night-level analysis and reproduction from
-the de-identified release candidate. Schematic only; it contains no data.
+the de-identified release candidate. Schematic only; it contains no data. TCN, temporal convolutional network;
+MAE, mean absolute error; RMSE, root-mean-square error.
 
 #### 3.5.1. Strict Leave-One-Subject-Out Evaluation (RQ1)
 
@@ -341,7 +344,8 @@ the de-identified release candidate. Schematic only; it contains no data.
 - **Nested selection:** model selection uses only the two training subjects.
   - Two inner splits train on one training subject and validate on the other, then swap.
   - Every configuration is scored with a unit-free criterion: the mean over the two inner splits of
-    (MAE_T/sd_T + MAE_H/sd_H)/2, with the standard deviations taken from the inner training partition.
+    (MAE_T/sd_T + MAE_H/sd_H)/2, where MAE is the mean absolute error of temperature (T) or humidity (H) and sd
+    the standard deviation of the target in the inner training partition.
   - The best configuration is retrained on the whole outer training pool, for the rounded mean of its two inner
     best-epoch counts.
 - **Single look:** the held-out subject is evaluated once per model. The selections were committed before any outer
@@ -403,7 +407,8 @@ the de-identified release candidate. Schematic only; it contains no data.
 
 ### 3.6. Metrics and Statistical Analysis
 
-- **Primary endpoints:** MAE and RMSE for temperature (°C) and humidity (%RH), computed separately over the labelled
+- **Primary endpoints:** MAE and root-mean-square error (RMSE) for temperature (°C) and humidity (%RH), computed
+  separately over the labelled
   test windows of each held-out subject (both User02 mats pooled).
   - Results are reported per subject first.
   - The unweighted mean over the three subjects is shown as a description, not as a population estimate.
@@ -451,6 +456,9 @@ the de-identified release candidate. Schematic only; it contains no data.
 - **Not rerun:** the hyperparameter searches, i.e. the strict leave-one-subject-out inner search for RAW and the
   480-run inner search for the feature families. Their selections were reused as committed. The reproduction is
   therefore not an end-to-end rerun of every experiment.
+- **Software:** Python 3.12.1, PyTorch 2.12.0 with CUDA 12.6, NumPy 2.4.4, PyArrow 24.0.0 and Matplotlib 3.10.9, with
+  deterministic settings; bitwise equality of reruns was verified on the recorded GPU stack. The availability of the
+  code is stated in the Data Availability Statement.
 
 ### 3.8. Use of Generative AI
 
@@ -868,33 +876,33 @@ None of these safeguards was evaluated here; they are future work.
   representativeness of the adaptation data rather than with its amount alone. Future work should test
   adaptation-data selection, drift monitoring and calibration safeguards on larger cohorts.
 
-## Reproducibility Statement
+## Supplementary Materials
 
-[PLACEMENT TO CONFIRM WITH THE TEMPLATE.] From the derived release package and the frozen model selections, a clean
-checkout reproduced the selected leave-one-subject-out models (with their weight digests), the predictions of the
-feature-family and personalization runs, the night-level analyses and every reproduced result table, bitwise. The
-hyperparameter searches were not rerun (Section 3.7).
+<!-- Template wording; the editorial office completes the link. -->
+The following supporting information can be downloaded at: https://www.mdpi.com/article/doi/s1, Figure S1: Absolute bias versus the adaptation budget b: (a) temperature, (b) humidity; Figure S2: Start-span
+sensitivity of the adaptation gain, post hoc: (a) temperature, (b) humidity, for b = 1, 3, 7 and 14 (for b = 14 only
+start nights ≥ 16 are defined); Figure S3: Target-level trajectories over night ordinals for User07 temperature,
+User01 humidity and User02 temperature, post hoc and descriptive; Figure S4: User02 MAE by mat (22480, 22482) versus
+the adaptation budget b: (a) temperature, (b) humidity; Table S1: Strict leave-one-subject-out results per seed and
+training-mean predictor per fold; Table S2: Strict leave-one-subject-out device and phase strata; Table S3: Selected
+configurations and inner-selection score ranges; Table S4: Feature families per seed; Table S5: Feature families
+versus the training-mean predictor; Table S6: Feature families: per-subject summary, versus RAW and the pre-declared
+comparisons A–E; Table S7: Bias and offset by feature family; Table S8: Feature-family device and phase strata;
+Table S9: Adaptation gain and error decomposition; Table S10: Personalization RMSE and bias by budget; Table S11:
+Personalization on the per-budget later span; Table S12: Personalization per seed; Table S13: Budgets, nights and
+windows (night ordinals); Table S14: User02 mat strata and User01 sensor-phase strata; Table S15: Temporal level
+mismatch, post hoc and descriptive; Table S16: Night-level bootstrap of RMSE and bias, and seed sensitivity; Table
+S17: Start-span sensitivity, post hoc; Table S18: User02 device, quality-phase and heater-context strata; Table S19:
+Reproduction record.
 
-## Data Availability Statement
+## Author Contributions
 
-<!-- Current-state text from DATA_AVAILABILITY_DRAFT.md. Must not say "publicly available" until OPEN-22/23/24 are
-resolved. -->
-The raw sensor recordings analysed in this study are not publicly released, and restricted participant metadata is
-never released. A de-identified, model-ready derived dataset (`public_release_v1`) has been prepared as a release
-candidate. It contains the model-ready windows of the three anonymous participants (four mat streams), the
-evaluation splits and the reference digests needed to reproduce the reported results. Time is given only relative to
-each participant's first recorded night. External availability of this dataset is pending the choice of a data
-license, a repository with a persistent identifier and final approval. [PI DECISION: interim availability on
-reasonable request, and from whom.] Data repository: [DATA REPOSITORY]. DOI: [DOI]. License: [LICENSE].
+[CRediT ROLES — CONFIRM] (skeleton in AUTHOR_CONTRIBUTIONS_DRAFT.md; no role is assigned before PI confirmation.)
+All authors have read and agreed to the published version of the manuscript. [CONFIRM]
 
-## Code Availability
+## Funding
 
-<!-- Current-state text; repository publication scope is OPEN-25, license OPEN-22. -->
-The code for data preparation, model training, evaluation and the reproduction of the reported results is maintained
-in a version-controlled research repository. The repository is not released publicly at this stage: its committed
-history contains recording-date information outside the de-identified release package, and the scope of a public
-code release (for example, a de-identified copy) and its license have not yet been decided. [PI DECISION: public code
-release scope and license.] Code repository: [CODE REPOSITORY]. Archive DOI: [DOI]. License: [LICENSE].
+[FUNDING TO BE CONFIRMED BY PI] (the conference paper's funding statement is not carried over automatically)
 
 ## Institutional Review Board Statement
 
@@ -907,6 +915,29 @@ release scope and license.] Code repository: [CODE REPOSITORY]. Archive DOI: [DO
 <!-- Note for the PI: the data provider's confirmation that participant consent was obtained and that the data may be
 used and released for research (D-002) is documented. It is not an institutional ethics approval and does not by
 itself supply the consent statement. -->
+
+## Data Availability Statement
+
+<!-- Current-state text. Must not say "publicly available" until OPEN-22/23/24 are resolved. Code availability and
+the reproduction statement are part of this section because the template has no separate sections for them. -->
+The raw sensor recordings analysed in this study are not publicly released, and restricted participant metadata is
+never released. A de-identified, model-ready derived dataset (`public_release_v1`) has been prepared as a release
+candidate. It contains the model-ready windows of the three anonymous participants (four mat streams), the
+evaluation splits and the reference digests needed to reproduce the reported results. Time is given only relative to
+each participant's first recorded night. External availability of this dataset is pending the choice of a data
+license, a repository with a persistent identifier and final approval. [PI DECISION: interim availability on
+reasonable request, and from whom.] Data repository: [DATA REPOSITORY]. DOI: [DOI]. License: [LICENSE].
+
+The code for data preparation, model training, evaluation and the reproduction of the reported results is maintained
+in a version-controlled research repository. The repository is not released publicly at this stage: its committed
+history contains recording-date information outside the de-identified release package, and the scope of a public
+code release (for example, a de-identified copy) and its license have not yet been decided. [PI DECISION: public code
+release scope and license.] Code repository: [CODE REPOSITORY]. Archive DOI: [DOI]. License: [LICENSE].
+
+From the derived release package and the frozen model selections, a clean
+checkout reproduced the selected leave-one-subject-out models (with their weight digests), the predictions of the
+feature-family and personalization runs, the night-level analyses and every reproduced result table, bitwise. The
+hyperparameter searches were not rerun (Section 3.7).
 
 ## Acknowledgments
 
@@ -925,33 +956,28 @@ the authors. Experimental protocols, dataset policies, model-selection rules, st
 numerical results, and scientific interpretations remained under author control. The authors take full
 responsibility for the content of this publication.
 
-## Author Contributions
-
-[CRediT ROLES — CONFIRM] (skeleton in AUTHOR_CONTRIBUTIONS_DRAFT.md; no role is assigned before PI confirmation.)
-All authors have read and agreed to the published version of the manuscript. [CONFIRM]
-
-## Funding
-
-[FUNDING TO BE CONFIRMED BY PI] (the conference paper's funding statement is not carried over automatically)
-
 ## Conflicts of Interest
 
 [CONFLICTS OF INTEREST — CONFIRM] (including any funder role, once the funding statement is confirmed)
 
+## Abbreviations
+
+The following abbreviations are used in this manuscript:
+
+| Abbreviation | Definition |
+|---|---|
+| CRediT | Contributor Roles Taxonomy |
+| GenAI | generative artificial intelligence |
+| IRB | Institutional Review Board |
+| MAE | mean absolute error |
+| RAW | the six raw pressure channels (feature family) |
+| ReLU | rectified linear unit |
+| RH | relative humidity |
+| RMSE | root-mean-square error |
+| RQ | research question |
+| SD | standard deviation |
+| TCN | temporal convolutional network |
+
 ## References
 
 [Rendered from references.bib by scripts/build_submission_candidate.py: numbered in order of first citation.]
-
-## Supplementary Materials
-
-The following supporting information accompanies this article (file names of the submission candidate):
-- **Tables S1–S19:** machine-readable copies of the frozen result tables (supplementary/tables/, indexed in its
-  README), with night ordinals instead of calendar dates, and the reproduction record (Table S19).
-- **Figure S1.** Absolute bias versus the adaptation budget b: (a) temperature, (b) humidity
-  (figureS1_abs_bias.png).
-- **Figure S2.** Start-span sensitivity of the adaptation gain, post hoc: (a) temperature, (b) humidity, for b = 1, 3,
-  7 and 14 (figureS2_start_span_sensitivity.png). For b = 14 only start nights ≥ 16 are defined.
-- **Figure S3.** Target-level trajectories over night ordinals for User07 temperature, User01 humidity and User02
-  temperature, post hoc and descriptive (figureS3_level_trajectory.png).
-- **Figure S4.** User02 MAE by mat (22480, 22482) versus the adaptation budget b: (a) temperature, (b) humidity
-  (figureS4_user02_mats.png).

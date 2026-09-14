@@ -36,11 +36,20 @@ def test_every_bibliography_entry_is_cited_and_renders():
         assert R.render(e)
 
 
-def test_conference_reference_shows_pending_fields_and_no_invented_identifiers():
-    e = R.load()["maeng2026icfice"]
+def test_conference_reference_has_no_invented_identifiers_and_pending_is_a_blocker():
+    entries = R.load()
+    e = entries["maeng2026icfice"]
     for f in ("doi", "pages", "volume", "url"):
         assert not e.get(f)
-    assert "[PENDING:" in R.render(e) and "doi.org" not in R.render(e)
+    assert "[PENDING" not in R.render(e) and "doi.org" not in R.render(e)
+    assert "maeng2026icfice" in R.pending_items(entries)
+
+
+def test_references_use_verified_abbreviations_and_conference_details():
+    e = R.load()
+    assert "*Clin. Biomech.* **2018**" in R.render(e["kottner2018microclimate"])
+    assert "San Diego, CA, USA, 18–22 March 2013; pp. 207–215." in R.render(e["liu2013dense"])
+    assert "Seoul, South Korea, 2015; pp. 127–140." in R.render(e["stisen2015smart"])
 
 
 def test_end_labels_keep_a_minimum_gap_and_stay_centred():

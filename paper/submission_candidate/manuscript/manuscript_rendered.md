@@ -12,9 +12,9 @@
 
 **ORCID:** [ORCID iDs — CONFIRM]
 
-[FIRST-PAGE NOTE — conservative MDPI practice for extended conference papers; Applied Sciences confirmation pending
-(docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md item 15): "This article is an extended version of a paper presented at the
-18th International Conference on Future Information & Communication Engineering (ICFICE 2026) [1]."]
+**Note:** This article is a revised and expanded version of a paper entitled "Robust Temperature and Humidity
+Estimation from Smart Bedding Pressure Sequences Using Movement and Contact-Structure Features", which was presented at
+the 18th International Conference on Future Information & Communication Engineering (ICFICE 2026), Sapporo, Japan, 7–10 July 2026 [1].
 
 **Featured Application:** This study provides a deployment-oriented evaluation framework for smart-mat temperature
 and humidity estimation. In three held-out cases, it shows when limited chronological user adaptation corrected
@@ -299,7 +299,7 @@ Notes:
 ### 3.4. Model and Training
 
 - **Architecture:** a causal residual TCN following the generic TCN design [9]: three blocks (dilations 1,
-  2 and 4), two causal convolutions per block with ReLU and dropout, a 1×1 convolution on the residual path when the
+  2 and 4), two causal convolutions per block with rectified linear unit (ReLU) activation and dropout, a 1×1 convolution on the residual path when the
   channel count changes, and a linear head on the last time step. It predicts temperature and humidity jointly, with
   a mean-squared-error loss on the standardised targets.
 - **Search space:** 16 configurations: channels {32, 64} × kernel size {2, 3} × dropout {0.1, 0.3} × learning rate
@@ -323,7 +323,8 @@ holding out one subject (labelled generically A–C) with all its mats; model se
 the two training subjects only; the held-out subject is evaluated once. (c) Chronological personalization for one
 held-out subject: nights 1…b are adaptation data, night b + 1 is an unused buffer (for b > 0), and the primary test
 span (nights ≥ 16) is the same for every budget b ∈ {0, 1, 3, 7, 14}. (d) Night-level analysis and reproduction from
-the de-identified release candidate. Schematic only; it contains no data.
+the de-identified release candidate. Schematic only; it contains no data. TCN, temporal convolutional network;
+MAE, mean absolute error; RMSE, root-mean-square error.
 
 #### 3.5.1. Strict Leave-One-Subject-Out Evaluation (RQ1)
 
@@ -331,7 +332,8 @@ the de-identified release candidate. Schematic only; it contains no data.
 - **Nested selection:** model selection uses only the two training subjects.
   - Two inner splits train on one training subject and validate on the other, then swap.
   - Every configuration is scored with a unit-free criterion: the mean over the two inner splits of
-    (MAE_T/sd_T + MAE_H/sd_H)/2, with the standard deviations taken from the inner training partition.
+    (MAE_T/sd_T + MAE_H/sd_H)/2, where MAE is the mean absolute error of temperature (T) or humidity (H) and sd
+    the standard deviation of the target in the inner training partition.
   - The best configuration is retrained on the whole outer training pool, for the rounded mean of its two inner
     best-epoch counts.
 - **Single look:** the held-out subject is evaluated once per model. The selections were committed before any outer
@@ -393,7 +395,8 @@ the de-identified release candidate. Schematic only; it contains no data.
 
 ### 3.6. Metrics and Statistical Analysis
 
-- **Primary endpoints:** MAE and RMSE for temperature (°C) and humidity (%RH), computed separately over the labelled
+- **Primary endpoints:** MAE and root-mean-square error (RMSE) for temperature (°C) and humidity (%RH), computed
+  separately over the labelled
   test windows of each held-out subject (both User02 mats pooled).
   - Results are reported per subject first.
   - The unweighted mean over the three subjects is shown as a description, not as a population estimate.
@@ -441,6 +444,9 @@ the de-identified release candidate. Schematic only; it contains no data.
 - **Not rerun:** the hyperparameter searches, i.e. the strict leave-one-subject-out inner search for RAW and the
   480-run inner search for the feature families. Their selections were reused as committed. The reproduction is
   therefore not an end-to-end rerun of every experiment.
+- **Software:** Python 3.12.1, PyTorch 2.12.0 with CUDA 12.6, NumPy 2.4.4, PyArrow 24.0.0 and Matplotlib 3.10.9, with
+  deterministic settings; bitwise equality of reruns was verified on the recorded GPU stack. The availability of the
+  code is stated in the Data Availability Statement.
 
 ### 3.8. Use of Generative AI
 
@@ -947,12 +953,40 @@ None of these safeguards was evaluated here; they are future work.
   representativeness of the adaptation data rather than with its amount alone. Future work should test
   adaptation-data selection, drift monitoring and calibration safeguards on larger cohorts.
 
-## Reproducibility Statement
+## Supplementary Materials
 
-[PLACEMENT TO CONFIRM WITH THE TEMPLATE.] From the derived release package and the frozen model selections, a clean
-checkout reproduced the selected leave-one-subject-out models (with their weight digests), the predictions of the
-feature-family and personalization runs, the night-level analyses and every reproduced result table, bitwise. The
-hyperparameter searches were not rerun (Section 3.7).
+The following supporting information can be downloaded at: https://www.mdpi.com/article/doi/s1, Figure S1: Absolute bias versus the adaptation budget b: (a) temperature, (b) humidity; Figure S2: Start-span
+sensitivity of the adaptation gain, post hoc: (a) temperature, (b) humidity, for b = 1, 3, 7 and 14 (for b = 14 only
+start nights ≥ 16 are defined); Figure S3: Target-level trajectories over night ordinals for User07 temperature,
+User01 humidity and User02 temperature, post hoc and descriptive; Figure S4: User02 MAE by mat (22480, 22482) versus
+the adaptation budget b: (a) temperature, (b) humidity; Table S1: Strict leave-one-subject-out results per seed and
+training-mean predictor per fold; Table S2: Strict leave-one-subject-out device and phase strata; Table S3: Selected
+configurations and inner-selection score ranges; Table S4: Feature families per seed; Table S5: Feature families
+versus the training-mean predictor; Table S6: Feature families: per-subject summary, versus RAW and the pre-declared
+comparisons A–E; Table S7: Bias and offset by feature family; Table S8: Feature-family device and phase strata;
+Table S9: Adaptation gain and error decomposition; Table S10: Personalization RMSE and bias by budget; Table S11:
+Personalization on the per-budget later span; Table S12: Personalization per seed; Table S13: Budgets, nights and
+windows (night ordinals); Table S14: User02 mat strata and User01 sensor-phase strata; Table S15: Temporal level
+mismatch, post hoc and descriptive; Table S16: Night-level bootstrap of RMSE and bias, and seed sensitivity; Table
+S17: Start-span sensitivity, post hoc; Table S18: User02 device, quality-phase and heater-context strata; Table S19:
+Reproduction record.
+
+## Author Contributions
+
+[CRediT ROLES — CONFIRM] (skeleton in AUTHOR_CONTRIBUTIONS_DRAFT.md; no role is assigned before PI confirmation.)
+All authors have read and agreed to the published version of the manuscript. [CONFIRM]
+
+## Funding
+
+[FUNDING TO BE CONFIRMED BY PI] (the conference paper's funding statement is not carried over automatically)
+
+## Institutional Review Board Statement
+
+[ETHICS / IRB INFORMATION REQUIRED FROM PI]
+
+## Informed Consent Statement
+
+[INFORMED CONSENT WORDING REQUIRED FROM PI]
 
 ## Data Availability Statement
 
@@ -964,21 +998,16 @@ each participant's first recorded night. External availability of this dataset i
 license, a repository with a persistent identifier and final approval. [PI DECISION: interim availability on
 reasonable request, and from whom.] Data repository: [DATA REPOSITORY]. DOI: [DOI]. License: [LICENSE].
 
-## Code Availability
-
 The code for data preparation, model training, evaluation and the reproduction of the reported results is maintained
 in a version-controlled research repository. The repository is not released publicly at this stage: its committed
 history contains recording-date information outside the de-identified release package, and the scope of a public
 code release (for example, a de-identified copy) and its license have not yet been decided. [PI DECISION: public code
 release scope and license.] Code repository: [CODE REPOSITORY]. Archive DOI: [DOI]. License: [LICENSE].
 
-## Institutional Review Board Statement
-
-[ETHICS / IRB INFORMATION REQUIRED FROM PI]
-
-## Informed Consent Statement
-
-[INFORMED CONSENT WORDING REQUIRED FROM PI]
+From the derived release package and the frozen model selections, a clean
+checkout reproduced the selected leave-one-subject-out models (with their weight digests), the predictions of the
+feature-family and personalization runs, the night-level analyses and every reproduced result table, bitwise. The
+hyperparameter searches were not rerun (Section 3.7).
 
 ## Acknowledgments
 
@@ -994,63 +1023,58 @@ the authors. Experimental protocols, dataset policies, model-selection rules, st
 numerical results, and scientific interpretations remained under author control. The authors take full
 responsibility for the content of this publication.
 
-## Author Contributions
-
-[CRediT ROLES — CONFIRM] (skeleton in AUTHOR_CONTRIBUTIONS_DRAFT.md; no role is assigned before PI confirmation.)
-All authors have read and agreed to the published version of the manuscript. [CONFIRM]
-
-## Funding
-
-[FUNDING TO BE CONFIRMED BY PI] (the conference paper's funding statement is not carried over automatically)
-
 ## Conflicts of Interest
 
 [CONFLICTS OF INTEREST — CONFIRM] (including any funder role, once the funding statement is confirmed)
 
+## Abbreviations
+
+The following abbreviations are used in this manuscript:
+
+| Abbreviation | Definition |
+|---|---|
+| CRediT | Contributor Roles Taxonomy |
+| GenAI | generative artificial intelligence |
+| IRB | Institutional Review Board |
+| MAE | mean absolute error |
+| RAW | the six raw pressure channels (feature family) |
+| ReLU | rectified linear unit |
+| RH | relative humidity |
+| RMSE | root-mean-square error |
+| RQ | research question |
+| SD | standard deviation |
+| TCN | temporal convolutional network |
+
 ## References
 
-1. Maeng, D.-H.; Bang, J.-S. Robust Temperature and Humidity Estimation from Smart Bedding Pressure Sequences Using Movement and Contact-Structure Features. In Proceedings of the 18th International Conference on Future Information & Communication Engineering (ICFICE 2026), Sapporo, Japan, 7–10 July 2026. [PENDING: proceedings volume, pages, DOI and URL to be confirmed]
-2. Liu, J.J.; Xu, W.; Huang, M.-C.; Alshurafa, N.; Sarrafzadeh, M.; Raut, N.; Yadegar, B. A dense pressure sensitive bedsheet design for unobtrusive sleep posture monitoring. In Proceedings of the 2013 IEEE International Conference on Pervasive Computing and Communications (PerCom); pp. 207–215. https://doi.org/10.1109/percom.2013.6526734
-3. Yousefi, R.; Ostadabbas, S.; Faezipour, M.; Farshbaf, M.; Nourani, M.; Tamil, L.; Pompeo, M. Bed posture classification for pressure ulcer prevention. In Proceedings of the 2011 Annual International Conference of the IEEE Engineering in Medicine and Biology Society; pp. 7175–7178. https://doi.org/10.1109/iembs.2011.6091813
-4. Carbonaro, N.; Laurino, M.; Arcarisi, L.; Menicucci, D.; Gemignani, A.; Tognetti, A. Textile-Based Pressure Sensing Matrix for In-Bed Monitoring of Subject Sleeping Posture and Breathing Activity. *Applied Sciences* **2021**, *11*, 2552. https://doi.org/10.3390/app11062552
+1. Maeng, D.-H.; Bang, J.-S. Robust Temperature and Humidity Estimation from Smart Bedding Pressure Sequences Using Movement and Contact-Structure Features. In Proceedings of the 18th International Conference on Future Information & Communication Engineering (ICFICE 2026), Sapporo, Japan, 7–10 July 2026.
+2. Liu, J.J.; Xu, W.; Huang, M.-C.; Alshurafa, N.; Sarrafzadeh, M.; Raut, N.; Yadegar, B. A dense pressure sensitive bedsheet design for unobtrusive sleep posture monitoring. In Proceedings of the 2013 IEEE International Conference on Pervasive Computing and Communications (PerCom), San Diego, CA, USA, 18–22 March 2013; pp. 207–215. https://doi.org/10.1109/percom.2013.6526734
+3. Yousefi, R.; Ostadabbas, S.; Faezipour, M.; Farshbaf, M.; Nourani, M.; Tamil, L.; Pompeo, M. Bed posture classification for pressure ulcer prevention. In Proceedings of the 2011 Annual International Conference of the IEEE Engineering in Medicine and Biology Society, Boston, MA, USA, 30 August–3 September 2011; pp. 7175–7178. https://doi.org/10.1109/iembs.2011.6091813
+4. Carbonaro, N.; Laurino, M.; Arcarisi, L.; Menicucci, D.; Gemignani, A.; Tognetti, A. Textile-Based Pressure Sensing Matrix for In-Bed Monitoring of Subject Sleeping Posture and Breathing Activity. *Appl. Sci.* **2021**, *11*, 2552. https://doi.org/10.3390/app11062552
 5. Matar, G.; Lina, J.-M.; Carrier, J.; Kaddoum, G. Unobtrusive Sleep Monitoring Using Cardiac, Breathing and Movements Activities: An Exhaustive Review. *IEEE Access* **2018**, *6*, 45129–45152. https://doi.org/10.1109/ACCESS.2018.2865487
-6. Kottner, J.; Black, J.; Call, E.; Gefen, A.; Santamaria, N. Microclimate: A critical review in the context of pressure ulcer prevention. *Clinical Biomechanics* **2018**, *59*, 62–70. https://doi.org/10.1016/j.clinbiomech.2018.09.010
+6. Kottner, J.; Black, J.; Call, E.; Gefen, A.; Santamaria, N. Microclimate: A critical review in the context of pressure ulcer prevention. *Clin. Biomech.* **2018**, *59*, 62–70. https://doi.org/10.1016/j.clinbiomech.2018.09.010
 7. Mamom, J.; Ratanadecho, P.; Mingmalairak, C.; Rungroungdouyboon, B. Humidity-Sensing Mattress for Long-Term Bedridden Patients with Incontinence-Associated Dermatitis. *Micromachines* **2023**, *14*, 1178. https://doi.org/10.3390/mi14061178
-8. Lea, C.; Flynn, M.D.; Vidal, R.; Reiter, A.; Hager, G.D. Temporal Convolutional Networks for Action Segmentation and Detection. In Proceedings of the 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR); pp. 1003–1012. https://doi.org/10.1109/CVPR.2017.113
+8. Lea, C.; Flynn, M.D.; Vidal, R.; Reiter, A.; Hager, G.D. Temporal Convolutional Networks for Action Segmentation and Detection. In Proceedings of the 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 21–26 July 2017; pp. 1003–1012. https://doi.org/10.1109/CVPR.2017.113
 9. Bai, S.; Kolter, J.Z.; Koltun, V. An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling. *arXiv* **2018**, arXiv:1803.01271.
-10. Hong, J.-H.; Ramos, J.; Dey, A.K. Toward Personalized Activity Recognition Systems With a Semipopulation Approach. *IEEE Transactions on Human-Machine Systems* **2016**, *46*, 101–112. https://doi.org/10.1109/THMS.2015.2489688
-11. Rokni, S.A.; Nourollahi, M.; Ghasemzadeh, H. Personalized Human Activity Recognition Using Convolutional Neural Networks. *Proceedings of the AAAI Conference on Artificial Intelligence* **2018**, *32*. https://doi.org/10.1609/aaai.v32i1.12185
-12. Stisen, A.; Blunck, H.; Bhattacharya, S.; Prentow, T.S.; Kjærgaard, M.B.; Dey, A.; Sonne, T.; Jensen, M.M. Smart Devices are Different: Assessing and Mitigating Mobile Sensing Heterogeneities for Activity Recognition. In Proceedings of the 13th ACM Conference on Embedded Networked Sensor Systems, 2015; pp. 127–140. https://doi.org/10.1145/2809695.2809718
+10. Hong, J.-H.; Ramos, J.; Dey, A.K. Toward Personalized Activity Recognition Systems With a Semipopulation Approach. *IEEE Trans. Hum. Mach. Syst.* **2016**, *46*, 101–112. https://doi.org/10.1109/THMS.2015.2489688
+11. Rokni, S.A.; Nourollahi, M.; Ghasemzadeh, H. Personalized Human Activity Recognition Using Convolutional Neural Networks. *Proc. AAAI Conf. Artif. Intell.* **2018**, *32*. https://doi.org/10.1609/aaai.v32i1.12185
+12. Stisen, A.; Blunck, H.; Bhattacharya, S.; Prentow, T.S.; Kjærgaard, M.B.; Dey, A.; Sonne, T.; Jensen, M.M. Smart Devices are Different: Assessing and Mitigating Mobile Sensing Heterogeneities for Activity Recognition. In Proceedings of the 13th ACM Conference on Embedded Networked Sensor Systems, Seoul, South Korea, 2015; pp. 127–140. https://doi.org/10.1145/2809695.2809718
 13. Ferrari, A.; Micucci, D.; Mobilio, M.; Napoletano, P. On the Personalization of Classification Models for Human Activity Recognition. *IEEE Access* **2020**, *8*, 32066–32079. https://doi.org/10.1109/ACCESS.2020.2973425
-14. Gama, J.; Žliobaitė, I.; Bifet, A.; Pechenizkiy, M.; Bouchachia, A. A survey on concept drift adaptation. *ACM Computing Surveys* **2014**, *46*, 1–37. https://doi.org/10.1145/2523813
-15. Wang, Z.; Dai, Z.; Póczos, B.; Carbonell, J. Characterizing and Avoiding Negative Transfer. In Proceedings of the 2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR); pp. 11285–11294. https://doi.org/10.1109/CVPR.2019.01155
-16. Zhang, W.; Deng, L.; Zhang, L.; Wu, D. A Survey on Negative Transfer. *IEEE/CAA Journal of Automatica Sinica* **2023**, *10*, 305–329. https://doi.org/10.1109/JAS.2022.106004
-17. Pouyan, M.B.; Birjandtalab, J.; Zadeh, M.H.; Nourani, M.; Ostadabbas, S. A pressure map dataset for posture and subject analytics. In Proceedings of the 2017 IEEE EMBS International Conference on Biomedical & Health Informatics (BHI); pp. 65–68. https://doi.org/10.1109/BHI.2017.7897206
-18. Gefen, A. How do microclimate factors affect the risk for superficial pressure ulcers: A mathematical modeling study. *Journal of Tissue Viability* **2011**, *20*, 81–88. https://doi.org/10.1016/j.jtv.2010.10.002
-19. Yusuf, S.; Okuwa, M.; Shigeta, Y.; Dai, M.; Iuchi, T.; Rahman, S.; Usman, A.; Kasim, S.; Sugama, J.; Nakatani, T.; Sanada, H. Microclimate and development of pressure ulcers and superficial skin changes. *International Wound Journal* **2015**, *12*, 40–46. https://doi.org/10.1111/iwj.12048
+14. Gama, J.; Žliobaitė, I.; Bifet, A.; Pechenizkiy, M.; Bouchachia, A. A survey on concept drift adaptation. *ACM Comput. Surv.* **2014**, *46*, 1–37. https://doi.org/10.1145/2523813
+15. Wang, Z.; Dai, Z.; Póczos, B.; Carbonell, J. Characterizing and Avoiding Negative Transfer. In Proceedings of the 2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Long Beach, CA, USA, 15–20 June 2019; pp. 11285–11294. https://doi.org/10.1109/CVPR.2019.01155
+16. Zhang, W.; Deng, L.; Zhang, L.; Wu, D. A Survey on Negative Transfer. *IEEE/CAA J. Autom. Sinica* **2023**, *10*, 305–329. https://doi.org/10.1109/JAS.2022.106004
+17. Pouyan, M.B.; Birjandtalab, J.; Zadeh, M.H.; Nourani, M.; Ostadabbas, S. A pressure map dataset for posture and subject analytics. In Proceedings of the 2017 IEEE EMBS International Conference on Biomedical & Health Informatics (BHI), Orlando, FL, USA, 16–19 February 2017; pp. 65–68. https://doi.org/10.1109/BHI.2017.7897206
+18. Gefen, A. How do microclimate factors affect the risk for superficial pressure ulcers: A mathematical modeling study. *J. Tissue Viability* **2011**, *20*, 81–88. https://doi.org/10.1016/j.jtv.2010.10.002
+19. Yusuf, S.; Okuwa, M.; Shigeta, Y.; Dai, M.; Iuchi, T.; Rahman, S.; Usman, A.; Kasim, S.; Sugama, J.; Nakatani, T.; Sanada, H. Microclimate and development of pressure ulcers and superficial skin changes. *Int. Wound J.* **2015**, *12*, 40–46. https://doi.org/10.1111/iwj.12048
 20. Ordóñez, F.; Roggen, D. Deep Convolutional and LSTM Recurrent Neural Networks for Multimodal Wearable Activity Recognition. *Sensors* **2016**, *16*, 115. https://doi.org/10.3390/s16010115
-21. Tan, C.W.; Bergmeir, C.; Petitjean, F.; Webb, G.I. Time series extrinsic regression: Predicting numeric values from time series data. *Data Mining and Knowledge Discovery* **2021**, *35*, 1032–1060. https://doi.org/10.1007/s10618-021-00745-9
-22. Hammerla, N.Y.; Plötz, T. Let's (not) stick together: pairwise similarity biases cross-validation in activity recognition. In Proceedings of the 2015 ACM International Joint Conference on Pervasive and Ubiquitous Computing; pp. 1041–1051. https://doi.org/10.1145/2750858.2807551
+21. Tan, C.W.; Bergmeir, C.; Petitjean, F.; Webb, G.I. Time series extrinsic regression: Predicting numeric values from time series data. *Data Min. Knowl. Discov.* **2021**, *35*, 1032–1060. https://doi.org/10.1007/s10618-021-00745-9
+22. Hammerla, N.Y.; Plötz, T. Let's (not) stick together: pairwise similarity biases cross-validation in activity recognition. In Proceedings of the 2015 ACM International Joint Conference on Pervasive and Ubiquitous Computing, Osaka, Japan; pp. 1041–1051. https://doi.org/10.1145/2750858.2807551
 23. Saeb, S.; Lonini, L.; Jayaraman, A.; Mohr, D.C.; Kording, K.P. The need to approximate the use-case in clinical machine learning. *GigaScience* **2017**, *6*, gix019. https://doi.org/10.1093/gigascience/gix019
-24. Taylor, S.; Jaques, N.; Nosakhare, E.; Sano, A.; Picard, R. Personalized Multitask Learning for Predicting Tomorrow's Mood, Stress, and Health. *IEEE Transactions on Affective Computing* **2020**, *11*, 200–213. https://doi.org/10.1109/TAFFC.2017.2784832
-25. Chang, Y.; Mathur, A.; Isopoussu, A.; Song, J.; Kawsar, F. A Systematic Study of Unsupervised Domain Adaptation for Robust Human-Activity Recognition. *Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies* **2020**, *4*, 1–30. https://doi.org/10.1145/3380985
-26. Wilson, G.; Doppa, J.R.; Cook, D.J. Multi-Source Deep Domain Adaptation with Weak Supervision for Time-Series Sensor Data. In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining, 2020; pp. 1768–1778. https://doi.org/10.1145/3394486.3403228
-27. Pan, S.J.; Yang, Q. A Survey on Transfer Learning. *IEEE Transactions on Knowledge and Data Engineering* **2010**, *22*, 1345–1359. https://doi.org/10.1109/TKDE.2009.191
-28. Kadlec, P.; Grbić, R.; Gabrys, B. Review of adaptation mechanisms for data-driven soft sensors. *Computers & Chemical Engineering* **2011**, *35*, 1–24. https://doi.org/10.1016/j.compchemeng.2010.07.034
-29. Maag, B.; Zhou, Z.; Thiele, L. A Survey on Sensor Calibration in Air Pollution Monitoring Deployments. *IEEE Internet of Things Journal* **2018**, *5*, 4857–4870. https://doi.org/10.1109/JIOT.2018.2853660
-30. Delaine, F.; Lebental, B.; Rivano, H. In Situ Calibration Algorithms for Environmental Sensor Networks: A Review. *IEEE Sensors Journal* **2019**, *19*, 5968–5978. https://doi.org/10.1109/JSEN.2019.2910317
-31. Kaufman, S.; Rosset, S.; Perlich, C.; Stitelman, O. Leakage in data mining: Formulation, detection, and avoidance. *ACM Transactions on Knowledge Discovery from Data* **2012**, *6*, 1–21. https://doi.org/10.1145/2382577.2382579
-
-## Supplementary Materials
-
-The following supporting information accompanies this article (file names of the submission candidate):
-- **Tables S1–S19:** machine-readable copies of the frozen result tables (supplementary/tables/, indexed in its
-  README), with night ordinals instead of calendar dates, and the reproduction record (Table S19).
-- **Figure S1.** Absolute bias versus the adaptation budget b: (a) temperature, (b) humidity
-  (figureS1_abs_bias.png).
-- **Figure S2.** Start-span sensitivity of the adaptation gain, post hoc: (a) temperature, (b) humidity, for b = 1, 3,
-  7 and 14 (figureS2_start_span_sensitivity.png). For b = 14 only start nights ≥ 16 are defined.
-- **Figure S3.** Target-level trajectories over night ordinals for User07 temperature, User01 humidity and User02
-  temperature, post hoc and descriptive (figureS3_level_trajectory.png).
-- **Figure S4.** User02 MAE by mat (22480, 22482) versus the adaptation budget b: (a) temperature, (b) humidity
-  (figureS4_user02_mats.png).
+24. Taylor, S.; Jaques, N.; Nosakhare, E.; Sano, A.; Picard, R. Personalized Multitask Learning for Predicting Tomorrow's Mood, Stress, and Health. *IEEE Trans. Affect. Comput.* **2020**, *11*, 200–213. https://doi.org/10.1109/TAFFC.2017.2784832
+25. Chang, Y.; Mathur, A.; Isopoussu, A.; Song, J.; Kawsar, F. A Systematic Study of Unsupervised Domain Adaptation for Robust Human-Activity Recognition. *Proc. ACM Interact. Mob. Wearable Ubiquitous Technol.* **2020**, *4*, 1–30. https://doi.org/10.1145/3380985
+26. Wilson, G.; Doppa, J.R.; Cook, D.J. Multi-Source Deep Domain Adaptation with Weak Supervision for Time-Series Sensor Data. In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining, Virtual Event, CA, USA, 2020; pp. 1768–1778. https://doi.org/10.1145/3394486.3403228
+27. Pan, S.J.; Yang, Q. A Survey on Transfer Learning. *IEEE Trans. Knowl. Data Eng.* **2010**, *22*, 1345–1359. https://doi.org/10.1109/TKDE.2009.191
+28. Kadlec, P.; Grbić, R.; Gabrys, B. Review of adaptation mechanisms for data-driven soft sensors. *Comput. Chem. Eng.* **2011**, *35*, 1–24. https://doi.org/10.1016/j.compchemeng.2010.07.034
+29. Maag, B.; Zhou, Z.; Thiele, L. A Survey on Sensor Calibration in Air Pollution Monitoring Deployments. *IEEE Internet Things J.* **2018**, *5*, 4857–4870. https://doi.org/10.1109/JIOT.2018.2853660
+30. Delaine, F.; Lebental, B.; Rivano, H. In Situ Calibration Algorithms for Environmental Sensor Networks: A Review. *IEEE Sens. J.* **2019**, *19*, 5968–5978. https://doi.org/10.1109/JSEN.2019.2910317
+31. Kaufman, S.; Rosset, S.; Perlich, C.; Stitelman, O. Leakage in data mining: Formulation, detection, and avoidance. *ACM Trans. Knowl. Discov. Data* **2012**, *6*, 1–21. https://doi.org/10.1145/2382577.2382579

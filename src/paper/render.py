@@ -30,6 +30,7 @@ DRAFTS = {"COVER_LETTER_DRAFT.md": "cover_letter_draft.md",
           "AUTHOR_CONTRIBUTIONS_DRAFT.md": "author_contributions_draft.md",
           "DATA_AVAILABILITY_DRAFT.md": "data_availability_draft.md",
           "CODE_AVAILABILITY_DRAFT.md": "code_availability_draft.md"}
+HAND_WRITTEN = ("README_CHECKLIST.md", "FINAL_SUBMISSION_CHECKLIST.md")
 MARKED_TOKEN = re.compile(r"`?\{\{(.*?)\}\}`?", re.S)
 
 
@@ -101,7 +102,7 @@ def build_candidate(out: Path = CANDIDATE) -> dict[str, str]:
         _copy(p, out / "supplementary" / "tables" / p.name)
     for src, dst in DRAFTS.items():
         _copy(MANUSCRIPT_DIR / src, out / "drafts" / dst)
-    keep = {out / "README_CHECKLIST.md", out / "MANIFEST.json"}
+    keep = {out / name for name in HAND_WRITTEN} | {out / "MANIFEST.json"}
     produced = {out / "manuscript" / "manuscript_rendered.md", out / "manuscript" / "manuscript_source.md",
                 out / "manuscript" / "references.bib"}
     produced |= {out / "tables" / p.name for p in (GENERATED / "tables").glob("table*")}
@@ -114,9 +115,9 @@ def build_candidate(out: Path = CANDIDATE) -> dict[str, str]:
     files = {}
     for p in sorted(out.rglob("*")):
         rel = p.relative_to(out).as_posix()
-        if p.is_file() and rel not in ("README_CHECKLIST.md", "MANIFEST.json"):
+        if p.is_file() and rel not in (*HAND_WRITTEN, "MANIFEST.json"):
             files[rel] = hashlib.sha256(read_bytes(p)).hexdigest()
     write_json(out / "MANIFEST.json", {"description": "SHA-256 of every file in the submission candidate except this "
-                                                      "manifest and README_CHECKLIST.md",
+                                                      "manifest and the hand-written checklists",
                                        "files": files})
     return files

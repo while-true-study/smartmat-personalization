@@ -2,10 +2,12 @@
 
 - Citations in the Markdown source are `[@key]` or `[@key1; @key2]`. They are numbered in order of first appearance
   and printed in square brackets, e.g. [1], [2,3] or [4–6] (MDPI template).
-- References follow the MDPI template patterns (journal article, proceedings, preprint). Only fields present in the
-  verified entry are printed; nothing is looked up or completed. A `pending` field is printed as a visible
-  placeholder, so an unresolved item (e.g. the conference proceedings pages or DOI) can never look complete.
-- Journal names are printed in full as recorded; ISO 4 abbreviation is a formatting item for the final template.
+- References follow the Applied Sciences reference formats (journal article, conference proceedings, preprint).
+  Only fields present in the verified entry are printed; nothing is looked up or completed here.
+- Journal names use the verified `shortjournal` field (ISO abbreviation; see the header of references.bib), or the
+  full name when no abbreviation is recorded. Proceedings print the conference location and dates when recorded.
+- A `pending` field (e.g. the conference proceedings pages or DOI) is not printed: an unresolved bibliographic item
+  is a submission blocker (`pending_items`, docs/P8_FINAL_BLOCKERS.md), not text in the submission file.
 """
 from __future__ import annotations
 
@@ -95,8 +97,9 @@ def _doi(entry: Entry) -> str:
     return f" https://doi.org/{entry.get('doi')}" if entry.get("doi") else ""
 
 
-def _pending(entry: Entry) -> str:
-    return f" [PENDING: {clean(entry.get('pending'))}]" if entry.get("pending") else ""
+def pending_items(entries: dict[str, Entry]) -> dict[str, str]:
+    """Unresolved bibliographic fields, by key (reported as blockers, never printed)."""
+    return {k: clean(e.get("pending")) for k, e in entries.items() if e.get("pending")}
 
 
 def render(entry: Entry) -> str:
@@ -104,12 +107,12 @@ def render(entry: Entry) -> str:
     head = f"{authors(entry.get('author'))} {_title(entry)}"
     year = clean(entry.get("year"))
     if entry.kind == "article":
-        s = f"{head} *{clean(entry.get('journal'))}* **{year}**"
+        s = f"{head} *{clean(entry.get('shortjournal') or entry.get('journal'))}* **{year}**"
         if entry.get("volume"):
             s += f", *{clean(entry.get('volume'))}*"
         if entry.get("pages") or entry.get("eid"):
             s += f", {clean(entry.get('pages') or entry.get('eid'))}"
-        return s + "." + _doi(entry) + _pending(entry)
+        return s + "." + _doi(entry)
     if entry.kind == "inproceedings":
         book = clean(entry.get("booktitle"))
         s = f"{head} In {book if book.startswith('Proceedings') else 'Proceedings of the ' + book}"
@@ -120,9 +123,9 @@ def render(entry: Entry) -> str:
             s += f", {year}"
         if entry.get("pages"):
             s += f"; pp. {clean(entry.get('pages'))}"
-        return s + "." + _doi(entry) + _pending(entry)
+        return s + "." + _doi(entry)
     if entry.kind == "misc" and entry.get("archiveprefix").lower() == "arxiv":
-        return f"{head} *arXiv* **{year}**, arXiv:{clean(entry.get('eprint'))}." + _pending(entry)
+        return f"{head} *arXiv* **{year}**, arXiv:{clean(entry.get('eprint'))}."
     raise ValueError(f"no rendering rule for @{entry.kind}{{{entry.key}}}")
 
 

@@ -63,7 +63,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-24 | **Open (P8 publication blocker).** PI approval of the release subset (the P7 exit criterion) and of the final manuscript/release state. | PI | before `v1.0-paper` | `v1.0-paper`; external publication | P7 checklist D3; D-051 |
 | OPEN-25 | **Open (P8 publication blocker).** Public scope of the session-level calendar dates in committed repository files outside the release package (split files, P5 plan, subject mapping, three paper tables, reports): keep the repository private, publish a de-identified copy, or accept. No history rewrite without a decision. | PI | before any public repository or code archive | Code Availability; public repository | P7 checklist D4; D-049 |
 | OPEN-26 | **Open (P8).** Ethics / IRB information for the manuscript. The provider confirmation of consent and release permission (D-002) is not an IRB approval; no institutional identifier may be invented. | PI | before submission | IRB / informed-consent statements | `paper/manuscript/manuscript.md` |
-| OPEN-27 | **Open (P8).** Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
+| OPEN-27 | **Open (P8); a P8-PR blocker since D-055.** Scope verified in pass 2. Bibliographic details still open: the proceedings series is ISSN 2765-3811 (online), and ICFICE 2025 was Vol. 16, No. 1; the paper's own pages, DOI or URL and the copyright holder were not found in an official record. Original question: Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
 | OPEN-28 | **Open (P8); disclosure drafted by D-053 (Proposed; supersedes D-052).** Still needed: the PI's approval of the text. The ChatGPT use stated by the authors is included; its historical model versions were not logged and are not inferred. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
 
 ---
@@ -1603,3 +1603,37 @@ Evidence: `docs/P8_TABLE_FIGURE_SELECTION.md` §4–§5; `docs/P8_TITLE_CANDIDAT
 `docs/P8_FINAL_BLOCKERS.md`.
 Consequence: the candidate is formatting-complete for PI review. No frozen artifact changed. Submission still depends
 on the metadata and release blockers.
+
+## D-055 — Applied Sciences submission-format alignment (formatting only)
+Date: 2026-09-15
+Status: Accepted (research lead, P8 submission-closure pass; no scientific change)
+Context:
+- The live Applied Sciences Instructions for Authors page returns HTTP 403 to automated access.
+- Its latest Internet Archive copy (2025-11-17) was read directly. So was the local 2025 Applied Sciences Word
+  template (`docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`).
+Decision:
+- **Structure:** the required sections are present. The separate Related Work and Limitations sections are kept,
+  since the instructions list the sections an article "should include" and prohibit none.
+- **Back matter** follows the template order: Supplementary Materials, Author Contributions, Funding, IRB, Informed
+  Consent, Data Availability, Acknowledgments, Conflicts of Interest, Abbreviations, References. Code availability
+  and the reproduction statement move into the Data Availability Statement, as the template has no sections for them.
+- **Other front- and body-matter changes:**
+  - a first-page note cites the conference paper, a verified journal requirement;
+  - abbreviations are defined at first use, with an Abbreviations section;
+  - Methods state the software versions;
+  - the supplementary items are listed as "Figure S1: title".
+- **References:**
+  - journal names use NLM Catalog ISO abbreviations (IEEE/CAA J. Autom. Sinica from Crossref);
+  - proceedings give the conference location and dates from the Crossref event metadata;
+  - a pending bibliographic field is not printed but reported as a blocker (`--final`).
+- **Word output:** `scripts/build_submission_docx.py` builds the DOCX from a user-supplied template into
+  `outputs/p8/submission/`.
+  - Neither the template nor template-formatted files are committed: the journal restricts its templates to
+    submission for peer review.
+  - The builder drops the template's author and company fields and its local template path.
+- **Validator:** `--final` (and `--docx`) fails while any placeholder, pending field or blocker remains.
+- **PR gate:** the conference bibliography (OPEN-27) must be resolved before the P8 PR.
+Evidence: `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` (sources I and T); `docs/P8_PI_APPROVAL_CHECKLIST.md`;
+`docs/P8_FINAL_BLOCKERS.md`.
+Consequence: the manuscript is formatting-complete in the journal's format. Submission and the P8 PR depend only on
+the PI and metadata items; no frozen artifact changed.

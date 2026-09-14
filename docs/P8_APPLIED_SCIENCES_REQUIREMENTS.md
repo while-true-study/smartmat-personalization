@@ -1,62 +1,60 @@
 # P8 — Applied Sciences submission requirements
 
-> **Status categories:**
-> - **MDPI-WIDE VERIFIED:** a publisher-level statement read directly in an official MDPI document.
-> - **APPLIED SCIENCES VERIFIED:** read directly on an Applied Sciences-specific official page. Since the formatting
->   pass, items 15 (in part), 16 and 18 (in part) have this status from source A.
-> - **NEEDS APPLIED SCIENCES FINAL CHECK:** anything journal-specific not yet read on the journal's own page.
+> **Status (submission-closure pass, 2026-09-15):** each item is VERIFIED, NOT APPLICABLE or NEEDS FINAL CHECK.
+> - VERIFIED means read directly in an official source listed below. A search summary never counts.
 >
 > **Sources:**
-> - **T (2026-09-14): the MDPI *Applied Sciences* Word template** (`applsci-template.docx`, a copy in the project's
->   journal materials, not in this repository). Its placeholder copyright line reads "© 2025". This file was read
->   directly. It is an official MDPI document, but a template, not the Instructions for Authors page.
-> - **S (2026-09-14): web-search summaries of official mdpi.com pages.** They are secondary: every mdpi.com page
->   returned HTTP 403 to automated access via WebFetch and direct requests, and still did in the formatting pass.
-> - **A (2026-09-15): the authors' direct reading of current official Applied Sciences pages** (Special Issue
->   submission pages and the Instructions for Authors link to the templates), reported in the P8 formatting pass. The
->   pages were not re-read here because automated access is blocked.
+> - **I: Applied Sciences Instructions for Authors,** `https://www.mdpi.com/journal/applsci/instructions`.
+>   - The live page returns HTTP 403 to automated access; so it did again on 2026-09-15.
+>   - Read directly in the **Internet Archive snapshot of 2025-11-17** (the latest archived copy; checked 2026-09-15).
+>     It is an official Applied Sciences page, but ten months old.
+>   - **Residual step:** before submission, open the live page in a browser and confirm that nothing below has
+>     changed (item 21).
+> - **T: the local Applied Sciences Word template** (`applsci-template.dot` and `applsci-template.docx` in the
+>   project's journal materials, not in this repository), inspected on 2026-09-15.
+>   - Its header reads "Appl. Sci. 2025, 15, x FOR PEER REVIEW" and its copyright line "© 2025", so it is the 2025
+>     template.
+>   - Local template inspected; current-version confirmation pending (item 18).
+> - **A: the authors' reading of current Applied Sciences Special Issue pages** (formatting pass). Superseded where I
+>   covers the same item.
+> - **S (2026-09-14): search summaries.** Kept for history only; no status rests on them.
 >
-> **No general "percentage of new content" rule is adopted.** The explicit 50 % requirement that was found belongs to
-> an older conference-specific Applied Sciences Special Issue. It is not evidence of a current journal-wide rule.
->
-> **History:** the final integration pass (2026-09-14) changed no status. The formatting pass (2026-09-15) added
-> source A and updated items 4, 5, 12–18.
+> **No general "percentage of new content" rule applies.** I states four conditions for expanded conference papers
+> and no percentage (item 15). The 50 % rule of an older conference-specific Special Issue is not adopted.
 
-| # | Requirement | Evidence | Status | Manuscript consequence |
+| # | Requirement (source text in brief) | Evidence | Status | Manuscript consequence |
 |---|---|---|---|---|
-| 1 | Article sections: Introduction, Materials and Methods, Results, Discussion; Conclusions (not mandatory); Patents (optional); abbreviations and appendices optional | T (section list and notes); S (required-section list) | NEEDS APPLIED SCIENCES FINAL CHECK | Current: 1 Introduction, 2 Related Work, 3 Materials and Methods (protocol §3.5), 4 Results, 5 Discussion, 6 Limitations, 7 Conclusions. The template does not list separate Related Work or Limitations sections. If the journal requires its structure, Related Work moves into §1 and Limitations into §5, with the content unchanged |
-| 2 | **Featured Application** (Applied Sciences): a short description of the application, encouraged but not mandatory | T | NEEDS APPLIED SCIENCES FINAL CHECK | standalone optional block with the conservative wording (evaluation framework; "in three held-out cases"; no clinical, pressure-injury or population claim). Only this block is removed if the final template does not support it |
-| 3 | Abstract: one paragraph of about 200 words at most; structured background–methods–results–conclusions without headings; must not contain results absent from the main text or exaggerate the conclusions | T; S | NEEDS APPLIED SCIENCES FINAL CHECK | 200 words rendered; all 3 numbers are source tokens |
-| 4 | Keywords: three to ten | T; S | NEEDS APPLIED SCIENCES FINAL CHECK | 7 proposed keywords that complement the title: smart bedding; pressure sensing; microclimate estimation; temporal convolutional network; cross-subject generalization; leave-one-subject-out evaluation; user adaptation |
-| 5 | References: numbered in order of appearance, in square brackets before punctuation ([1], [1–3], [1,3]); a DOI for every reference where available; example formats for journal articles, proceedings, unpublished work ("submitted; accepted; in press") and websites | T; S | the MDPI referencing rules are **MDPI-WIDE VERIFIED** (T). The Applied Sciences-specific style is NEEDS APPLIED SCIENCES FINAL CHECK | rendered from `references.bib` in the template patterns, numbered by first appearance, with every verified DOI (`src/paper/references.py`). Open formatting items: ISO 4 journal abbreviations; conference locations and dates for 8 proceedings references; the ICFICE entry shows `[PENDING: …]` |
-| 6 | Supplementary materials: citations there must also appear in the main reference list | T | MDPI-WIDE VERIFIED | S-tables and S-figures cite nothing |
-| 7 | Author Contributions with CRediT roles; authorship limited to substantial contributors | T | MDPI-WIDE VERIFIED | skeleton with every role `[CONFIRM]` (`paper/manuscript/AUTHOR_CONTRIBUTIONS_DRAFT.md`); no role assigned before PI confirmation |
-| 8 | Funding: "This research received no external funding" or funder and grant number; APC funding; standard funder names | T | MDPI-WIDE VERIFIED | `[FUNDING TO BE CONFIRMED BY PI]`; the conference paper's funding is not carried over |
-| 9 | Institutional Review Board Statement: for studies involving humans, the approving body and protocol code/date, or a justified waiver, or "Not applicable". Studies requiring ethical approval must name the authority and approval code in Methods | T | MDPI-WIDE VERIFIED | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]` (OPEN-26). The provider consent confirmation (D-002) is not an IRB approval |
-| 10 | Informed Consent Statement for research involving humans ("obtained from all subjects", or a justified waiver) | T | MDPI-WIDE VERIFIED | `[INFORMED CONSENT WORDING REQUIRED FROM PI]`; the provider statement (D-002) is recorded as a note for the PI only, not as the statement |
-| 11 | Data Availability Statement is always required: where the data are, or why they are not available (privacy/ethics); MDPI suggested statements; data sharing encouraged. Methods: disclose any restrictions on the availability of materials, data, code or protocols at submission | T | MDPI-WIDE VERIFIED | release candidate stated as not externally published; `[DATA REPOSITORY]`, `[DOI]`, `[LICENSE]`. Code availability stays conservative because of the recording dates in the repository history (OPEN-25) |
-| 12 | **Generative-AI disclosure:** Materials and Methods must describe any use of generative AI for text, data, graphics, study design, analysis or interpretation (superficial editing excepted). The Acknowledgments carry the tool, version and purpose statement | T | MDPI-WIDE VERIFIED | **Drafted (D-053; OPEN-28 open for PI approval).** §3.8 lists the uses and the author-side controls. The Acknowledgments name Claude Code (Anthropic; CLI 2.1.263 and 2.1.270; Claude Opus 5) and ChatGPT (OpenAI; model versions not consistently logged; GPT-5.6 Sol in the final manuscript review) with their purposes |
-| 13 | Conflicts of Interest statement, including any funder role | T | MDPI-WIDE VERIFIED | `[CONFLICTS OF INTEREST — CONFIRM]` |
-| 14 | Figures and tables cited in order, placed near their first citation | T | MDPI-WIDE VERIFIED | the rendered manuscript places Tables 1–5 and Figures 1–4 at their first citation, with captions (`paper/submission_candidate/`) |
-| 15 | Extended conference papers | A (current Applied Sciences Special Issue pages); S (other MDPI journals' instructions) | **APPLIED SCIENCES VERIFIED (in part):** Applied Sciences currently publishes extended versions of conference papers in several Special Issues. **No current journal-wide rule was found for the required amount of new content.** The 50 % requirement belongs to an older conference-specific Special Issue and is not adopted | conservative practice kept regardless: cite the ICFICE paper; describe the extension in the Introduction ("Relation to the conference study"); disclose it in the cover letter; document reused vs new content; verify copyright before any reuse. Nothing is reused now |
-| 16 | Prior publication: manuscripts must not have been published or be under consideration elsewhere, with conference proceedings papers explicitly exempted | A (current Applied Sciences Special Issue submission pages); S | **APPLIED SCIENCES VERIFIED** (on the Special Issue submission pages) | the ICFICE paper is disclosed in the first-page note, the Introduction and the cover letter |
-| 17 | Cover letter: required; significance, context, scope fit | S | NEEDS APPLIED SCIENCES FINAL CHECK | `paper/manuscript/COVER_LETTER_DRAFT.md` (no percentage of new content claimed) |
-| 18 | Templates; file format and size limits; Special Issue rules | A: Microsoft Word and LaTeX templates are available through the Instructions for Authors page | **APPLIED SCIENCES VERIFIED (template availability only).** The current template version, file limits and Special Issue rules: NEEDS APPLIED SCIENCES FINAL CHECK | Markdown and CSV sources ready for conversion into the Word or LaTeX template |
-| 19 | Word or page limit | not found | NEEDS APPLIED SCIENCES FINAL CHECK | none assumed |
-| 20 | Peer-review model; APC (information) | S | NEEDS APPLIED SCIENCES FINAL CHECK | information only |
+| 1 | Article structure: Abstract, Keywords, Introduction, Materials and Methods, Results, Discussion, Conclusions (optional). Research manuscript sections: Introduction, Materials and Methods, Results, Discussion, Conclusions (optional); back matter Supplementary Materials, Acknowledgments, Author Contributions, Conflicts of Interest, References | I; T | VERIFIED | All required sections are present. Separate Related Work (§2) and Limitations (§6) sections are kept: I says the structure "should include" these sections and prohibits no additional one. If the editor asks, Related Work can become §1.1 and Limitations a Discussion subsection, with the content unchanged |
+| 2 | Featured Application: "Authors are encouraged to provide a concise description of the specific application or a potential application of the work. This section is not mandatory." | I; T | VERIFIED | KEEP (conservative wording). Removable as a standalone block |
+| 3 | Abstract: about 200 words maximum; single paragraph; structured without headings | I; T | VERIFIED | 200 words rendered; one paragraph |
+| 4 | Keywords: three to ten, specific yet common in the discipline | I; T | VERIFIED | 7 proposed (PI to confirm) |
+| 5 | References: numbered by appearance (tables and figure legends included); journal pattern "Author 1, A.B.; Author 2, C.D. Title. Abbreviated Journal Name Year, Volume, page range"; proceedings pattern with conference location, country and date; DOIs encouraged | I; T | VERIFIED | rendered in these patterns: ISO abbreviations from the NLM Catalog, conference locations and dates from Crossref, DOIs for 29 entries. The ICFICE entry lacks proceedings pages or DOI (blocker, item 22) |
+| 6 | Supplementary Materials: name and title of each element, "Figure S1: title, Table S1: title" | I; T | VERIFIED | back-matter paragraph lists Figures S1–S4 and Tables S1–S19 in this form, with the template's link wording |
+| 7 | Author Contributions with the CRediT statement pattern; every author meets the criteria and approved the version | I; T | VERIFIED | skeleton, all `[CONFIRM]` (PI) |
+| 8 | Funding: all sources, grant numbers, APC funding | I; T | VERIFIED | `[FUNDING TO BE CONFIRMED BY PI]` |
+| 9 | Institutional Review Board Statement: for human data, the Declaration of Helsinki plus IRB/ethics-committee approval (code, date, committee), or the committee's exemption with the reason, or the legislation under which approval is not required | I; T | VERIFIED | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]`. Provider permission (D-002) does not meet any of these routes (`docs/P8_PI_APPROVAL_CHECKLIST.md`) |
+| 10 | Informed Consent Statement for human data; example wordings | I; T | VERIFIED | `[INFORMED CONSENT WORDING REQUIRED FROM PI]` |
+| 11 | Data Availability Statement: where the data are, or the restriction; suggested statements; restrictions disclosed at submission; deposit in a trusted repository recommended, or the reason given | I; T | VERIFIED | current-state text (release candidate, not published). Code availability and the reproduction statement sit in this section: the template has no separate sections for them |
+| 12 | GenAI: disclose in Materials and Methods how GenAI was used (superficial editing excepted); Acknowledgments sentence with tool, version and purpose; GenAI cannot be an author | I; T | VERIFIED | §3.8 and Acknowledgments (D-053); PI approval pending (OPEN-28) |
+| 13 | Conflicts of Interest section before the reference list, including any funder role | I; T | VERIFIED | `[CONFLICTS OF INTEREST — CONFIRM]` |
+| 14 | Figures after the paragraph of first citation (Word); tables near first citation; table fonts not smaller than 8 pt; images at least 1000 px | I; T | VERIFIED | rendered manuscript and DOCX place every table and figure after its first citation; table text 8–9 pt; figures ≥ 1,380 px wide |
+| 15 | Expanded conference papers: (1) expanded to research-article size; (2) the conference paper cited and noted on the first page; (3) permission from the copyright holder if the authors do not hold it; (4) the cover letter discloses the conference paper and states what changed | I (Applied Sciences page) | VERIFIED | (1) full article; (2) first-page note and reference [1]; (3) copyright holder to confirm, and no conference material reused; (4) cover letter. No percentage claimed |
+| 16 | Not published previously and not under consideration in another journal; preprints accepted if not peer-reviewed | I | VERIFIED | the ICFICE paper is disclosed under item 15 |
+| 17 | Cover letter required: significance and scope fit; any prior MDPI submission acknowledged. Mandatory statements: "We confirm that neither the manuscript nor any parts of its content are currently under consideration for publication with or published in another journal." and "All authors have approved the manuscript and agree with its submission to Applied Sciences." Reviewer suggestions go in the system, not the letter | I | VERIFIED | `COVER_LETTER_DRAFT.md` carries both statements. The approval statement needs every author's approval before it is sent |
+| 18 | Word or LaTeX template encouraged; Word as one file with figures inserted; total files ≤ 120 MB; the templates are for submission for peer review only, not for posting online | I; T | template use and limits VERIFIED; **current template version NEEDS FINAL CHECK** (the local one is 2025) | DOCX built from the local template by `scripts/build_submission_docx.py` into `outputs/` (git-ignored; the template and template-formatted files are not committed) |
+| 19 | Article length limit | I (none stated for articles) | NOT APPLICABLE | none assumed |
+| 20 | Peer-review model and APC | I | NOT APPLICABLE (information, no manuscript text) | — |
+| 21 | Live Instructions page equals the archived snapshot | I (snapshot only) | NEEDS FINAL CHECK | read the live page before submission; update any changed item |
+| 22 | Conference reference complete (proceedings volume, pages, DOI or URL, if they exist) | ISSN Portal: the proceedings series is ISSN 2765-3811 (online); KIICE lists ICFICE 2025 as Vol. 16, No. 1 | NEEDS FINAL CHECK | the paper's own pages or DOI were not found in an official record. Kept out of the text; blocker OPEN-27 |
+| 23 | Special Issue requirements | none selected | NOT APPLICABLE (until the PI selects one) | if selected, read that Special Issue page directly |
+| 24 | Author information: full names; PubMed-format affiliations; corresponding author; e-mails of all authors displayed; ORCID encouraged | I | VERIFIED | placeholders only (PI) |
+| 25 | Abbreviations defined at first use in the abstract, the main text and the first figure or table | I | VERIFIED | MAE, RMSE, ReLU and TCN defined at first use; Figure 1 caption defines them; an Abbreviations section follows the template |
+| 26 | Software name and version, and whether the code is available, stated in Materials and Methods | I | VERIFIED | §3.7 "Software" bullet; code availability in the Data Availability Statement |
 
-## Search-summary sources (S), 2026-09-14
+## Archived-page evidence
 
-These pages returned HTTP 403 when opened directly (again on 2026-09-15 for the Instructions for Authors):
-- https://www.mdpi.com/journal/applsci/instructions
-- https://www.mdpi.com/authors/references, https://www.mdpi.com/files/authors/mdpi_references_guide.pdf
-- https://www.mdpi.com/ethics
-- https://www.mdpi.com/journal/information/instructions, https://www.mdpi.com/journal/materials/instructions
-- https://www.mdpi.com/journal/applsci/special_issues
-
-## Final check procedure
-
-1. Open the Applied Sciences Instructions for Authors and the current template in a browser. Record the date and
-   exact wording, and move items to APPLIED SCIENCES VERIFIED only when read there.
-2. Confirm the section structure (item 1), the Featured Application (item 2) and the reference style (item 5).
-3. Re-map sections to the template if required. Science content must not change.
+- Snapshot list: `https://web.archive.org/cdx/search/cdx?url=www.mdpi.com/journal/applsci/instructions`. The latest
+  capture is 2025-11-17 (HTTP 200).
+- Page read: `https://web.archive.org/web/20251117021001/https://www.mdpi.com/journal/applsci/instructions`.
+- The quoted rules are in the sections "Manuscript Submission Overview", "Manuscript Preparation", "Research and
+  Publication Ethics" and "Preprints and Conference Papers" of that page.

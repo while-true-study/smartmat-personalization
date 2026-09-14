@@ -79,8 +79,16 @@ RESOLVED_LOOKING = {
     "license stated": r"\bCC[- ]BY\b|Creative Commons|MIT License|Apache License|GPL",
     "conflicts stated": r"declare no conflicts? of interest",
 }
-AVAILABILITY_SECTIONS = ("Data Availability Statement", "Code Availability", "Funding", "Conflicts of Interest",
+AVAILABILITY_SECTIONS = ("Data Availability Statement", "Funding", "Conflicts of Interest",
                          "Institutional Review Board Statement", "Informed Consent Statement")
+# Placeholder patterns that may not appear in a final submission file (--final).
+FINAL_FORBIDDEN = {
+    "confirmation placeholder": r"\[[^\]]*CONFIRM[^\]]*\]",
+    "PI placeholder": r"\[[^\]]*(PI DECISION|FROM PI|BY PI|— PI)[^\]]*\]",
+    "open repository/DOI/license placeholder": r"\[(DATA REPOSITORY|CODE REPOSITORY|DOI|LICENSE)\]",
+    "pending marker": r"\[PENDING[^\]]*\]|\bBLOCKED\b",
+    "unrendered source token or citation": r"\{\{|\[@",
+}
 
 
 def _sections(text: str) -> dict[str, str]:
@@ -128,6 +136,7 @@ def check_numbers(source: str) -> list[str]:
     body = re.sub(r"Sections? \d+(\.\d+)*(–\d+(\.\d+)*)?|§\d+(\.\d+)*|^#+ \d+(\.\d+)*\.?", " ", body, flags=re.M)
     body = re.sub(r"\(Section \d+(\.\d+)*\)", " ", body)
     body = re.sub(r"GPT-\d+(\.\d+)*", " ", body)                      # product version names, not results
+    body = re.sub(r"\b(Python|PyTorch|CUDA|NumPy|PyArrow|Matplotlib|cuDNN|pytest)\s+\d+(\.\d+)*", " ", body)  # software
     hits = [m.group(0).strip() for m in re.finditer(r"(?<![\w.])\d+\.\d+(?![\w.])|\d+(\.\d+)?\s?%", body)]
     return [f"hand-typed number outside a source token: {h!r}" for h in hits if h not in DESIGN_LITERALS]
 
@@ -183,10 +192,9 @@ def check_rendered(source: str, candidate: Path = RD.CANDIDATE) -> list[str]:
             out.append(f"candidate file missing: {rel}")
         elif hashlib.sha256(p.read_bytes()).hexdigest() != digest:
             out.append(f"candidate file changed after the build: {rel}")
-    extra = present - set(files) - {"MANIFEST.json", "README_CHECKLIST.md"}
+    extra = present - set(files) - {"MANIFEST.json", *RD.HAND_WRITTEN}
     out += [f"candidate file not in the manifest: {x}" for x in sorted(extra)]
-    if "README_CHECKLIST.md" not in present:
-        out.append("candidate README_CHECKLIST.md missing")
+    out += [f"candidate {name} missing" for name in RD.HAND_WRITTEN if name not in present]
     for rel in files:
         src = {"manuscript/manuscript_source.md": RD.SOURCE, "manuscript/references.bib": R.BIB_PATH}.get(rel)
         if src and src.read_bytes().replace(b"\r\n", b"\n") != (candidate / rel).read_bytes().replace(b"\r\n", b"\n"):
@@ -276,10 +284,22 @@ def check_conference() -> list[str]:
         return ["conference reference maeng2026icfice missing"]
     out = [f"conference reference has an unverified field: {f}" for f in ("doi", "pages", "volume", "url", "number")
            if e.get(f)]
-    if not e.get("pending"):
-        out.append("conference reference lost its pending marker before the bibliography was confirmed")
-    if "[PENDING:" not in R.render(e):
-        out.append("rendered conference reference does not show its pending fields")
+    if "[PENDING" in R.render(e):
+        out.append("rendered conference reference prints a pending marker (it must be a blocker, not text)")
+    return out
+
+
+def readiness_blockers(source: str, rendered: str | None) -> list[str]:
+    """Items that keep the candidate from being a final submission file (--final). Not failures of the draft."""
+    out = [f"bibliography pending for {k}: {v}" for k, v in R.pending_items(R.load()).items()]
+    text = rendered if rendered is not None else S.strip_comments(source)
+    seen: set[int] = set()
+    for label, rx in FINAL_FORBIDDEN.items():
+        for m in re.finditer(rx, text):
+            if m.start() not in seen:
+                seen.add(m.start())
+                flat = " ".join(m.group(0).split())
+                out.append(f"{label}: {flat[:90]}")
     return out
 
 
