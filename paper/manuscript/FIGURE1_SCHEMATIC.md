@@ -1,8 +1,10 @@
 # Figure 1 — study and evaluation design (schematic specification)
 
 > **Schematic only.** It shows the design and contains no data, no result and no calendar date.
-> - The diagram below is the content source. The submission graphic is drawn from it at formatting time, in the
->   palette and marks of the other manuscript figures.
+> - **Drawn in the formatting pass** by `src/paper/manuscript_figures.py` (`figure1`) into
+>   `paper/manuscript/generated/figures/figure1_study_design.png`. It follows the panels below; subjects are labelled
+>   generically (A–C), and every label is fitted to its box (at least 6 pt at print size).
+> - The Mermaid diagram below is the content specification.
 > - It is a new drawing. The conference paper's fusion diagram is not reused (`docs/P8_CONFERENCE_OVERLAP_AUDIT.md`).
 
 ## Panels
