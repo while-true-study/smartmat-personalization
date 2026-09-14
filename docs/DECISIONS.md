@@ -1372,3 +1372,18 @@ Evidence: D-032, D-033, D-038, D-041; `docs/P5_PERSONALIZATION_REPORT.md`. This 
 results were seen and before any P6 computation.
 Consequence: every P6 quantity is either the pre-declared uncertainty analysis (A) or labelled post-hoc (B). None
 changes a P5 number or conclusion. Deferred items (C) need their own decision before they are run.
+
+## D-048 — P6 phase-boundary tag `p6-robustness` (repository metadata only)
+Date: 2026-09-14
+Status: Accepted
+Context: RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 defined no freeze tag for P6. As for P4 (D-046), the research
+lead decided to mark the completed P6 boundary explicitly before P7.
+Decision:
+- The annotated tag `p6-robustness` (tag object `cfc0264`) was created on the P6 merge commit `16980ae` (PR #7) and
+  pushed.
+- It is a repository-level reproducibility checkpoint only. Protocol v1.0, the splits, canonical_v1 and the P3–P6
+  results are unchanged.
+- RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 now list it. Tags are still never moved, deleted or re-pointed.
+Evidence: tag `p6-robustness` → `16980ae0095e79535b81999aed01d3240c8b560d` locally and on origin. P7 starts from it
+(branch `release/p7-public-data`).
+Consequence: the P0 and P2–P6 boundaries are tagged.
