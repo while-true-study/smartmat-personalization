@@ -102,18 +102,19 @@ def main() -> int:
           f"events: {', '.join(f'{d} {len(v[0])}' for d, v in events.items())}")
 
     resamples, rng_seed, level = P6.bootstrap_settings()
+    inputs = [tables / n for n in ("p5_per_night.csv", "p5_by_seed.csv", "p5_primary_mae.csv", "p5_primary_bias.csv",
+                                   "p5_adaptation_gain.csv")] + [P5.plan_yaml()]
+    rel = lambda p: p.relative_to(P6.paths.PROJECT_ROOT).as_posix() if p.is_relative_to(P6.paths.PROJECT_ROOT) \
+        else p.name  # noqa: E731
     write_json(P6.metrics_dir() / "p6_provenance.json", {
         "decision": "D-047", "bootstrap": {"unit": "night", "resamples": resamples, "seed": rng_seed,
                                            "level": level, "primary_seed": P6.PRIMARY_SEED},
         "drift_starts": list(P6.DRIFT_STARTS), "rolling_nights": P6.ROLLING_NIGHTS,
         "heater_window_s": P6.HEATER_WINDOW_S, "min_nights": P6.MIN_NIGHTS,
-        "inputs_sha256_lf": {rel: S.file_sha256_lf(P6.paths.PROJECT_ROOT / rel) for rel in (
-            "paper/tables/p5_per_night.csv", "paper/tables/p5_by_seed.csv", "paper/tables/p5_primary_mae.csv",
-            "paper/tables/p5_primary_bias.csv", "paper/tables/p5_adaptation_gain.csv",
-            "configs/experiments/v1.0/p5_personalization_plan.yaml")},
+        "inputs_sha256_lf": {rel(p): S.file_sha256_lf(p) for p in inputs},
         "p5_predictions_sha256": pred_shas, "per_night_vs_p5_max_abs_diff": worst, "drift_s16_vs_p5": d16,
         "heater_events_per_device": {d: int(len(v[0])) for d, v in events.items()}})
-    print("wrote outputs/metrics/p6/")
+    print(f"wrote {rel(P6.metrics_dir())}/")
     return 0
 
 

@@ -54,7 +54,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-15 | **Closed 2026-09-13 by D-038 (P2):** firmware movement labels are not model inputs in v1.0; MOVEMENT features are computed from P1–P6 (D-039). Admissibility of firmware movement labels (UM/DM/LM/RM/NM) as model inputs / movement-derived features. | PI | P2 | RQ3 | — |
 | OPEN-16 | **Closed 2026-09-13 by D-020:** canonical P0 primary cohort User01, User02, User07. History: final primary cohort; three candidates give only three LOSO folds; the statistical plan must reflect this (carried into P2). Provisional cohort: D-013, restated in D-017. A11: all three pass every structural check, each `eligible_with_caveat`. | PI | P0 | RQ1 | D-020; `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §4 |
 | OPEN-17 | **Closed 2026-09-13 by D-033 (P2):** fixed physical-range scaling P / 4095, with no fitted input scaler; 4095 is kept as observed; sensitivity analyses belong to P6. Pressure-scale differences between subjects/periods (User01 saturates at 4095; User02 max 3731; User07 max 4023): normalisation strategy that respects L3/L11. **A9 evidence (2026-09-13):**<br>• All sources have six populated channels. There are no missing channels, no non-standard layouts and no out-of-range or non-integer values.<br>• 4095 is a pile-up at the ceiling (275,601 cells vs 789 at 4094). 99.99 % of these cells are in User01 before the sensor change. 22480 has 17 cells; 22482 and User07 have none.<br>• Every non-zero constant run ≥ 1 min is a 4095 plateau. There is no interior-value stuck channel and no frozen frame on the current mats.<br>• Pressure-sum medians: User01 3,817 (old sensor ≈ 4,420, new ≈ 2,976) vs 1,764–2,037 on the current mats. Channel profiles differ (22482 more even).<br>Proposed input-validity rule D-018; 4095 handling and scaling stay open (P2, training data only). | PI | P2 | preprocessing | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md`; D-018 |
-| OPEN-18 | Public release: absolute dates or relative day indices. | PI + provider | P7 | release | — |
+| OPEN-18 | **Closed 2026-09-14 by D-049:** releases carry no calendar date; per-subject relative time (whole-day anchor shift, `D####` day indices). Public release: absolute dates or relative day indices. | PI + provider | closed | release | D-049, D-050 |
 | OPEN-19 | **Closed 2026-09-13 by D-022 — class B, non-blocking but flagged. Handling fixed by D-035 (P2):** the phase is a window boundary and a reporting stratum; 22482 P1 is used as recorded, and no phase is excluded. A9b re-derived the change without assuming the date:<br>• The P1 response collapses in the recording of the night 2026-08-19 (hourly onset ≈ 08-20 02:00) and is fully shifted from 2026-08-20 21:37:33.<br>• The collapse is abrupt: complete separation over ±3/±7 nights; step R² 0.83 vs line 0.60.<br>• It is persistent to the last night (recovered fraction ≈ 0).<br>• It is P1-only: the other channels have \|δ\| ≤ 0.51, and the pressure sum without P1 is stable.<br>• 22480 and T/H show no concurrent shift, and no schema/firmware boundary is nearby.<br>The P6 decline is a separate later change (2026-08-25), recorded under OPEN-03. Cause still asked of the provider; handling in P2. Original text: User02/22482 channel P1 from 2026-08-20 (A9): active share 0.49 → 0.13, median when active 759 → 26, p99 2,007 → 371. P6 active share 0.57 → 0.28 over the same dates. P2–P5 unchanged; the other mat (22480) shows no such drop. Was the mat moved, replaced or damaged? Use of 22482 data after that date as test/adaptation data depends on it. **A11 (2026-09-13):**<br>• The affected slice is 202.0 h in 22 nights (41 % of 22482's hours); 64.9 h of it are also covered by 22480.<br>• Without it, User02 keeps 438.8 h in 45 nights.<br>• **Not blocking for the cohort** (D-020). It is a device-period quality issue whose flag (start, channels) must be defined before P0 closes: provider answer, or the short audit A9b. | data provider + PI | P2 (handling) | User02 splits | D-022; `docs/P0_A9B_USER02_CHANNEL_ANOMALY_REPORT.md`; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5; `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §3 |
 | OPEN-20 | **Non-blocking; protocol v1.0 does not depend on it (D-039):** geometry-free features only; a layout-based feature needs a protocol version bump. Physical layout of P1–P6 on the mat and the legacy `FSR_k` ↔ P_k mapping (positional assumption). A9: the strongest positive correlations are P1–P4, P2–P5, P3–P6 on all current mats. This is compatible with, but not proof of, paired positions. Needed before any spatial or channel-selection feature. | data provider | P2 (non-blocking) | spatial features | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6 |
 | OPEN-21 | **Non-blocking; not a boundary in v1.0 (D-035).** Reported as a known limitation (window rule D-032 is time-based, so the 2-s episode does not change the time scale). Other User01 acquisition changes inside `sensor_phase` s1 (A10):<br>• **2025-12-17**, the documented log-format change (first compressed log): active channels 1.51 → 2.49 and dominant-channel switches 29 → 92 /h, both with complete separation over ±7 nights. The 4095 share is unchanged.<br>• **2026-01-03…07**: a temporary 2 s sampling regime, with the 4095 share dipping for about a week.<br>• From **2026-01-08**: 3 s sampling with wider jitter.<br>• **2025-12-25**: an undocumented +49 % pressure-sum level shift.<br>Did firmware/logging changes alter pressure reporting? Should acquisition-period labels (log format, sampling regime) be carried as further provenance fields? Not merged into `sensor_phase`. | data provider + PI | P2 (non-blocking) | RQ2 spans within User01 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md` §6, §8 |
@@ -1372,3 +1372,116 @@ Evidence: D-032, D-033, D-038, D-041; `docs/P5_PERSONALIZATION_REPORT.md`. This 
 results were seen and before any P6 computation.
 Consequence: every P6 quantity is either the pre-declared uncertainty analysis (A) or labelled post-hoc (B). None
 changes a P5 number or conclusion. Deferred items (C) need their own decision before they are run.
+
+## D-048 — P6 phase-boundary tag `p6-robustness` (repository metadata only)
+Date: 2026-09-14
+Status: Accepted
+Context: RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 defined no freeze tag for P6. As for P4 (D-046), the research
+lead decided to mark the completed P6 boundary explicitly before P7.
+Decision:
+- The annotated tag `p6-robustness` (tag object `cfc0264`) was created on the P6 merge commit `16980ae` (PR #7) and
+  pushed.
+- It is a repository-level reproducibility checkpoint only. Protocol v1.0, the splits, canonical_v1 and the P3–P6
+  results are unchanged.
+- RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 now list it. Tags are still never moved, deleted or re-pointed.
+Evidence: tag `p6-robustness` → `16980ae0095e79535b81999aed01d3240c8b560d` locally and on origin. P7 starts from it
+(branch `release/p7-public-data`).
+Consequence: the P0 and P2–P6 boundaries are tagged.
+
+## D-049 — Public release temporal de-identification (closes OPEN-18)
+Date: 2026-09-14
+Status: Accepted
+Context:
+- DATA_POLICY §5.5: exact calendar dates combined with health events can re-identify a person. OPEN-18 left open
+  whether public releases use absolute dates or relative day indices.
+- The P3–P6 pipelines depend on the order of observations, the gaps inside a window (≤ 5 s), the 5-s bins, the
+  noon-to-noon night (D-030) and the chronological night ordinal (D-037). They do not depend on the calendar date.
+Decision (for `public_release_v1` and later releases unless superseded):
+- **No absolute year, month or day in any release artifact.**
+- **Per-subject anchor:** local midnight of the calendar date of the subject's first night (night = date(t − 12 h),
+  D-030). Both User02 mats share their subject's anchor, so their concurrency is preserved.
+- **Every release time is integer seconds since that anchor** (`*_time_s`). The anchor shift is a whole number of
+  days, so clock time of day, the noon boundary, gaps and within-night structure are exact.
+- **Night key:** `D####` = days from the anchor date to the night's date + 1 (a relative day index; gaps between
+  recorded nights stay visible). Human-readable times are written `D#### HH:MM:SS`. `night_ordinal` 1…N keeps the
+  D-037 numbering.
+- **Preserved:** order, gaps, sessions, nights, ordinals, P5 budgets and primary span, and every P3–P6 grouping and
+  metric.
+- **Not preserved:** calendar date, weekday and the calendar alignment between subjects. The subjects were never
+  recorded at the same time (A11).
+- **Scope:** the release package.
+  - The public repository already contains session-level absolute dates in committed protocol, split and result files
+    (e.g. `data/splits/*`, `configs/subject_mapping.yaml`, the P5 plan, `paper/tables/p5_per_night.csv`, reports).
+    These hold no sensor or target values and no health information; restricted metadata is never released.
+  - Removing them would mean rewriting published history. That is not done here and is flagged for the PI.
+Evidence: DATA_POLICY §5; D-030, D-032, D-037; code review of `src/training/loso_data.py`,
+`src/evaluation/p5_personalization.py` and `src/evaluation/p6_robustness.py` (P7 report §2). Written after the P3–P6
+results were known; no result depends on the representation of dates.
+Consequence: the release reproduces every P3–P6 quantity without any calendar date. Public night keys differ from the
+private date strings, so any table carrying a night key is compared through `night_ordinal`.
+Note (P7 build, 2026-09-14): the public reproduction compares such cells more strictly. A committed night date and its
+public key must differ by one whole-day shift per subject, the same in every table
+(`src/evaluation/public_reproduction.py`, report §5). The shift values are never written out.
+
+## D-050 — `public_release_v1`: model-ready window release, content and storage
+Date: 2026-09-14
+Status: Accepted
+Context:
+- P7 releases the minimum information needed to reproduce the P3–P6 results (DATA_POLICY §5).
+- Code review found:
+  - the P3/P4 models consume fold window arrays (`FoldData`: pressure windows, targets, labels, split partitions);
+  - P5/P6 consume per-subject window arrays (`SubjectWindows`) and the personalization split;
+  - none of them needs the rows between window steps.
+- Windows are ordered by their first row, the same way in every fold, so the release can keep the training order
+  that bitwise reproduction requires.
+Decision:
+- **Representation:** a model-ready window release (option A). Canonical rows are not released.
+  - `windows.parquet` holds the union of the D-032 LOSO windows and the D-037 RQ2 windows, which are also cut at
+    night boundaries. Flags `in_loso` and `in_rq2` mark membership.
+  - Rows are in canonical first-row order.
+  - Per window:
+    - subject, device, session, sensor and quality phase;
+    - night key and ordinal (D-049);
+    - window start and target time (D-049);
+    - the 8 × 6 raw pressure integers (0–4095, 4095 kept);
+    - temperature, humidity and their validity flags at the target row.
+- **Splits:** public copies of the three v1.0 split files, with the same rows, columns and semantics and D-049
+  relative times.
+- **P6 heater strata:** User02 AHON/AHOF control codes with relative times (codes only; no log text).
+- **Also included:** a public copy of the P5 plan (night keys mapped by D-049; everything else unchanged) and
+  reference digests of the frozen P3/P4/P5 prediction values, for bitwise checks.
+- **Metadata:** `manifest.json` (deterministic; SHA-256 of every artifact), `schema.json`, `excluded_sources.csv`,
+  `README.md`.
+- **Identity:**
+  - subject IDs stay `User01`, `User02`, `User07`;
+  - device IDs stay `22480` / `22482` (mat hardware IDs, already used in every public document, not personal
+    identifiers) and `unknown`;
+  - session IDs stay `<subject>|<device>|S####`;
+  - User02's two mats remain one subject.
+- **Not included:**
+  - the User06 source (`excluded_invalid`), the quarantined files and restricted metadata;
+  - auxiliary sources (User02 legacy, User03 legacy; unused by v1.0);
+  - raw provenance (source files, rows, chunk keys, file IDs);
+  - `event_raw` text and firmware movement labels.
+  `excluded_sources.csv` lists every excluded source with its reason and decision (DATA_POLICY §5.4).
+- **Gates before a release candidate is accepted:**
+  - a privacy validator: identifiers, paths, dates, restricted fields, excluded sources, hashes;
+  - a private/public equivalence gate: the fold and subject window arrays rebuilt from the release must equal the
+    private ones bitwise under the D-049 mapping, the split semantics must be identical, and the public P5 plan must
+    equal the private plan under the night mapping.
+- **Storage:**
+  - `windows.parquet` is not committed to Git; the builder reproduces it byte for byte from canonical_v1. The small
+    metadata is committed.
+  - External hosting (GitHub Release, Zenodo, OSF, …), DOI and the data license are PI decisions. The repository has
+    no LICENSE, so external publication is blocked until they are made.
+- **Reproduction tiers:**
+  - core: P3 training-mean and final RAW-TCN from the frozen selection, then P5, then P6;
+  - extended: the P4 final runs from the frozen P4 selection.
+  The inner searches are not part of any tier.
+Evidence: D-002, D-017, D-023, D-042, D-049; DATA_POLICY §3–§5; P7 report §2–§4.
+Consequence: public users reproduce the main results without canonical_v1. Private canonical_v1 stays the source of
+truth, and the release is a derived, versioned product.
+Note (P7 build, 2026-09-14):
+- The public P5 plan also drops the P3 run ids and local run paths (`p3_run_id`, `p3_run_dir`); their run ids carry
+  run dates. Every other value, and the key types, are unchanged; the build checks this.
+- The metadata files are stored byte-exact in Git (`.gitattributes`), because `manifest.json` hashes them.

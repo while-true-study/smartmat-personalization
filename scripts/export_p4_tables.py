@@ -52,9 +52,13 @@ def pick(rows: list[dict], **kw) -> dict:
 
 
 def export_csvs(t: dict[str, list[dict]]) -> None:
+    """paper/tables/p4_*.csv. Missing "selected_configs" / "inner_search" are skipped: the public-release
+    reproduction has no inner-search record (D-050)."""
     out = paths.PROJECT_ROOT / "paper" / "tables"
     for name in ("family_summary", "outer_by_seed", "selected_configs", "vs_raw", "vs_training_mean",
                  "incremental_effects", "seed_consistency", "bias_offset"):
+        if name not in t and name == "selected_configs":
+            continue
         rows = t[name]
         write_csv(out / f"p4_{'primary_summary' if name == 'family_summary' else name}.csv", rows, list(rows[0]))
     keep = [r for r in t["secondary_strata"] if r["stratum_type"] != "per_night_mae"
@@ -62,8 +66,9 @@ def export_csvs(t: dict[str, list[dict]]) -> None:
     cols = ["model", "fold", "subject_id", "stratum_type", "stratum", "target", "metric", "value", "seed_sd",
             "n_windows", "source"]
     write_csv(out / "p4_secondary_strata.csv", [{c: r.get(c, "") for c in cols} for r in keep], cols)
-    rng = inner_range(t["inner_search"])
-    write_csv(out / "p4_inner_score_range.csv", rng, list(rng[0]))
+    if "inner_search" in t:
+        rng = inner_range(t["inner_search"])
+        write_csv(out / "p4_inner_score_range.csv", rng, list(rng[0]))
 
 
 def inner_range(inner: list[dict]) -> list[dict]:

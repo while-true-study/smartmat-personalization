@@ -1,0 +1,6 @@
+source_id,subject_id,dataset_role,exclusion_reason,exclusion_confirmed_by,exclusion_decision
+user01_metadata,User01,restricted_metadata,restricted_metadata,,D-008
+user02_legacy_csv,User02,auxiliary,auxiliary_not_used_by_protocol_v1.0,,D-023
+user02_mat_22480_prefix_mismatch,User02,quarantined,quarantined,,D-023
+user03_legacy,User03,auxiliary,auxiliary_not_used_by_protocol_v1.0,,D-023
+user06_auxiliary,User06,excluded_invalid,provider_confirmed_setting_issue,data_provider,D-017

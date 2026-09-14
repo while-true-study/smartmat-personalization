@@ -32,6 +32,9 @@
 !/data/splits/v1.0_loso/
 !/data/splits/v1.0_personalization/
 !/data/splits/v1.0_manifest.json
+# public release packages (D-050): the window data are rebuilt byte-for-byte by scripts/build_public_release.py and
+# distributed outside Git; only the small metadata files are committed
+/data/release/*/windows.parquet
 
 # ---------------------------------------------------------------------------
 # Generated outputs (QA reports, metrics, predictions, checkpoints, figures)
