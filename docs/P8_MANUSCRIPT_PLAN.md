@@ -275,6 +275,9 @@ The skeleton in `paper/manuscript/manuscript.md` follows this plan; §-numbers b
 | Conference paper bibliographic details | open (PI; not in the repository) | Introduction, extension map |
 | Journal template requirements | unverified | formatting |
 
+The PI items are tracked as OPEN-22 (license), OPEN-23 (hosting/DOI), OPEN-24 (approval), OPEN-25 (repository
+dates), OPEN-26 (ethics/IRB) and OPEN-27 (conference paper) in `docs/DECISIONS.md`.
+
 **Gates to `v1.0-paper`:**
 - every manuscript number validated against the frozen tables;
 - the privacy review above passed;
