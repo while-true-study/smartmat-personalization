@@ -16,9 +16,9 @@
   },
   "base_tag": "p6-robustness",
   "base_tag_commit": "16980ae0095e79535b81999aed01d3240c8b560d",
-  "builder_code_commit": "5ff6a5240ca6e767c23e320c16cea6fee0aeca16",
+  "builder_code_commit": "402c1ff609ef6ad9a964cc6646bbe4fb657727ca",
   "builder_sha256": {
-    "src/data/public_release.py": "f84fa698182949a068cd190fdf73e680469c24a9cf7f2a900c202dca445adc66",
+    "src/data/public_release.py": "2e6b173d56d8bf5ec711597c25ab54fec6730691fbb5219c0b01737ffd88bfe3",
     "scripts/build_public_release.py": "c1173a7e42aa3a1ad3c4a1c6527a8744f829d6e3965494373000664e179395e1"
   },
   "p5_plan_sha256": "eef1a6db598fe188caa860304e6a897d2ac3b615b2f035bc42c314ce2a91d92d",
