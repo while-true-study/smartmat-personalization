@@ -389,10 +389,17 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
 
 ### 3.8. Use of Generative AI
 
-[GENERATIVE-AI DISCLOSURE REQUIRED — PI to approve (OPEN-28). The MDPI template requires Materials and Methods to
-describe any use of generative AI for text, data, graphics, study design, analysis or interpretation; superficial
-editing is exempt. Generative-AI assistance was used in this project for code development, analysis orchestration
-and manuscript drafting. The exact wording, tool and version are for the PI to state.]
+<!-- OPEN-28: wording drafted from the recorded tool inventory; the PI approves it before submission. -->
+Generative AI-assisted tools were used during the research workflow to support code drafting and debugging, the
+organization and orchestration of analysis procedures, research documentation, literature screening and
+reference-metadata checks, manuscript drafting and language refinement. The experimental protocol, the dataset
+policies, the model-selection rules, the statistical procedures and the interpretation boundaries were determined
+and reviewed by the authors, who are also responsible for the final scientific interpretation and for every reported
+numerical result. All executable code and reported numerical results were validated independently of the
+generative-AI output, through automated tests, frozen-result consistency checks, deterministic table generation and
+clean-checkout reproduction (Section 3.7). Every retained reference was checked against its DOI or publisher record.
+No numerical result was accepted solely from generative-AI output. The tools and their versions are listed in the
+Acknowledgments.
 
 ## 4. Results
 
@@ -744,7 +751,16 @@ released for research. This confirmation is not an institutional ethics approval
 
 ## Acknowledgments
 
-[PI] [GENERATIVE-AI STATEMENT REQUIRED — tool, version and purpose, per the MDPI template (OPEN-28)]
+[OTHER ACKNOWLEDGMENTS — PI]
+
+<!-- OPEN-28: tool inventory in docs/P8_FINAL_BLOCKERS.md §2; PI approval required. -->
+During the preparation of this manuscript and study, the authors used Claude Code (Anthropic; command-line versions
+2.1.263 and 2.1.270) with the Claude Opus 5 model (model identifier claude-opus-5) for assistance with code drafting
+and debugging, organization and orchestration of the analysis workflow, research documentation, literature
+screening and reference-metadata checks, manuscript drafting and language refinement. [OTHER GENERATIVE-AI TOOLS, IF
+ANY: TOOL NAME, VERSION TO BE CONFIRMED, PURPOSE — AUTHORS] All generated outputs were reviewed, edited and, where
+applicable, independently verified by the authors. The authors take full responsibility for the content of this
+publication.
 
 ## Author Contributions
 

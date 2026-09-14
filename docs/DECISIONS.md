@@ -64,7 +64,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-25 | **Open (P8 publication blocker).** Public scope of the session-level calendar dates in committed repository files outside the release package (split files, P5 plan, subject mapping, three paper tables, reports): keep the repository private, publish a de-identified copy, or accept. No history rewrite without a decision. | PI | before any public repository or code archive | Code Availability; public repository | P7 checklist D4; D-049 |
 | OPEN-26 | **Open (P8).** Ethics / IRB information for the manuscript. The provider confirmation of consent and release permission (D-002) is not an IRB approval; no institutional identifier may be invented. | PI | before submission | IRB / informed-consent statements | `paper/manuscript/manuscript.md` |
 | OPEN-27 | **Open (P8).** Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
-| OPEN-28 | **Open (P8).** Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
+| OPEN-28 | **Open (P8); disclosure drafted by D-052 (Proposed).** Still needed: the PI's approval of the text, and the name, version and purpose of any generative-AI tool used outside the inventoried repository sessions. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
 
 ---
 
@@ -1517,3 +1517,33 @@ parents `16980ae` (main after P6) and `43e2fec` (P7 branch head); merge tree equ
 Consequence: the P0 and P2–P7 boundaries are tagged. `v1.0-paper` stays reserved for the final validated manuscript
 and release state (P8). It may not state that the data are public, that a DOI or license exists, or that the PI has
 approved, until each is actually resolved.
+
+## D-052 — Generative-AI disclosure draft and tool inventory (manuscript text only)
+Date: 2026-09-14
+Status: Proposed (PI approval pending; OPEN-28 stays open)
+Context:
+- The MDPI template requires Materials and Methods to describe generative-AI use for text, data, graphics, study
+  design, data collection, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose
+  (`docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12).
+- The research lead set the principles in the P8 final integration pass:
+  - disclose the use;
+  - never state that a tool decided the protocol or a result;
+  - name only tools and versions found in the records, and write `[VERSION TO BE CONFIRMED]` otherwise.
+Decision:
+- **Inventory:** the local Claude Code session logs of this repository record one tool: Claude Code (Anthropic),
+  client versions 2.1.263 and 2.1.270, with the model Claude Opus 5 (`claude-opus-5`). No other AI tool appears in
+  the repository or its history. Tools used outside these sessions are left as an author placeholder.
+- **Manuscript §3.8:**
+  - The stated purposes are code drafting and debugging, analysis-workflow organization and orchestration, research
+    documentation, literature screening and reference-metadata checks, manuscript drafting, and language refinement.
+  - The protocol, dataset policies, model-selection rules, statistics and interpretation boundaries are stated as
+    determined and reviewed by the authors.
+  - Executable results are stated as validated independently: tests, frozen-result checks, deterministic tables and
+    clean-checkout reproduction.
+  - No numerical result was accepted solely from AI output.
+- **Acknowledgments:** the MDPI sentence with the inventoried tool, a placeholder for any other tool, and the
+  authors' responsibility statement.
+Evidence: local session logs (model and client version fields); `git grep` and `git log` over the repository; MDPI
+Applied Sciences Word template (read directly, pass 3); `docs/P8_FINAL_BLOCKERS.md` §2.
+Consequence: OPEN-28 needs only the PI's approval and the completion of the author placeholder. No result, protocol
+or frozen artifact changes.
