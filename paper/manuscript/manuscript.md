@@ -22,7 +22,26 @@ against drift within a user over time, before deployment.
 
 ## Abstract
 
-[NEXT PASS — about 200 words, one paragraph, background–methods–results–conclusions without headings (to confirm).]
+<!-- Draft (pass 3): one paragraph, background–methods–results–conclusions without headings; about 200 words once the
+tokens are rendered. Every number is a source token. -->
+Pressure-sensing mats could estimate the temperature and humidity of the bed microclimate without additional sensors,
+but how such models behave for a new user is unclear. We evaluated temporal convolutional networks on 40-s pressure
+windows from three subjects and four mat streams. The protocol used strict leave-one-subject-out evaluation with nested
+model selection, compared six pressure feature families, and fine-tuned each held-out subject's model on its earliest
+1–14 nights, testing on a fixed later span with night-level bootstrap intervals. Under strict evaluation, errors were
+dominated by subject-level offsets. For temperature, the network did not outperform a training-mean predictor, and
+movement or contact features did not remove the offsets. After 14 adaptation nights, the unweighted mean temperature
+error fell from
+{{p5_primary_mae | subject_id=unweighted_mean, target=temperature, budget_nights=0 | seed_mean | .2f}} to
+{{p5_primary_mae | subject_id=unweighted_mean, target=temperature, budget_nights=14 | seed_mean | .2f}} °C, and one
+subject's offset was largely corrected
+({{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_0 | +.2f}} to
+{{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_b | +.2f}} °C). The same
+procedure produced negative transfer for another subject's temperature at every budget, and for a third subject's
+humidity at up to seven nights. Post hoc, the direction of adaptation agreed with the representativeness of the early
+nights' target level in {{COUNT:p6_level_mismatch_consistency | consistent=True}} of 24 cases. With three subjects,
+these are case findings: personalization helped where the adaptation nights represented later conditions and hurt where
+they did not.
 
 **Keywords:** smart mat; pressure sensing; temperature and humidity estimation; temporal convolutional network;
 leave-one-subject-out evaluation; domain shift; chronological personalization; negative transfer [FINAL LIST: PI]
@@ -58,9 +77,9 @@ and are dominated by systematic level offsets, and that changing the pressure re
 (Sections 4.1–4.2).
 
 After deployment, a limited amount of labelled data from the new user can be collected if reference temperature and
-humidity measurements are available for the first nights. Personalizing a model with a small amount of the user's
-own data has improved sensor-based recognition in other domains [@rokni2018personalized;
-@ferrari2020personalization]. It carries a risk that is easy to overlook: the earliest nights may not represent the
+humidity measurements are available for the first nights. Personalizing sensor models, with a small amount of the
+new user's labelled data or with data from similar users, has improved recognition accuracy in other domains
+[@hong2016semipopulation; @ferrari2020personalization]. It carries a risk that is easy to overlook: the earliest nights may not represent the
 later period the model is used in. When the relation between inputs and target changes over time [@gama2014survey],
 adaptation can move the model towards a level that no longer holds. Transfer can then hurt instead of help
 [@wang2019negative; @zhang2023negative], and adaptation may correct an offset or introduce a new one.
@@ -102,11 +121,11 @@ The bed microclimate has a separate clinical motivation:
 - Microclimate differences have been observed between patients who did and did not develop skin damage
   [@yusuf2015microclimate].
 - Where the microclimate is monitored, this has been done with dedicated sensors, such as humidity sensors built into
-  a mattress [@mamom2023humidity], or with environmental sensors alongside the pressure layer of a smart bed
-  [@carbonaro2021textile].
+  a mattress [@mamom2023humidity], or as part of a smart bed that also collects environmental data next to its
+  pressure layer [@carbonaro2021textile].
 
 These studies use pressure to infer posture, movement or breathing, or they measure temperature and humidity
-directly. Estimating the microclimate from the pressure signal itself has received less attention. Our conference
+directly. In the studies reviewed here, the microclimate is measured, not estimated from the pressure signal. Our conference
 study examined it with fused pressure representations, but it did not evaluate unseen users or adaptation
 [@maeng2026icfice]. The present work treats pressure-based temperature and humidity estimation as an open deployment
 problem rather than as an established capability.
@@ -118,7 +137,7 @@ problem rather than as an established capability.
   later evaluated against recurrent networks and performed better on the benchmark tasks studied, with a longer
   effective memory [@bai2018tcn].
 - **Wearable sensors:** deep networks that learn features directly from raw sequences and model their temporal
-  dynamics have become common [@ordonez2016deep].
+  dynamics have been proposed for sensor-based recognition [@ordonez2016deep].
 - **Our task:** estimating the current temperature and humidity from a window of past and present pressure values is
   a regression from a time series to continuous values, known as time series extrinsic regression. It is distinct
   from forecasting and from classification [@tan2021tser].
@@ -606,7 +625,7 @@ level offset between the held-out domain and the training pool (Section 4.1). Fu
 earliest nights moves the model's predictions towards the level of those nights. When that level is close to the
 level of the later nights, the offset shrinks: this is the User02 case. When it is far from it, the model acquires a
 new offset: User07 temperature and User01 humidity at up to seven nights. The role of such offsets resembles that of
-calibration in deployed environmental sensing, where field recalibration corrects sensor offsets
+calibration in deployed environmental sensing, where field calibration corrects systematic sensor errors
 [@maag2018calibration; @delaine2019insitu].
 
 The post-hoc level comparison agrees with this in almost every cell (Section 4.5). These observations are consistent

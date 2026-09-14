@@ -23,6 +23,20 @@
   Estimation: Offset Correction and Negative Transfer" (13 words). It drops "unseen-user domain shift", which the
   abstract must then carry.
 
+## Pass 3 re-evaluation (after the literature review)
+
+- **The terms readers search for** in the reviewed literature are "personalization" / "personalized", "negative
+  transfer", "domain adaptation / domain shift", "concept drift", and "smart bed / pressure mat / mattress". Rank 1
+  contains three of them plus the task, so it stays first.
+- **Novelty signal:** the reviewed personalization and negative-transfer work concerns activity or state recognition.
+  Naming temperature/humidity estimation and "chronological" together marks the difference without claiming "first".
+- **Audience:** "chronological personalization" is precise but uncommon. The Abstract's first two sentences explain
+  it, so the title needs no gloss.
+- **Device term:** the literature uses "pressure mat", "pressure-sensing mattress" and "smart bed". "Smart-mat"
+  matches this study's device and the conference paper's domain ("smart bedding"). Replacing it with "pressure-mat"
+  is an equally precise alternative if the editor prefers.
+- **Result:** the ranking is unchanged — 1 > 2 > 3. No final title is fixed (PI).
+
 ## Earlier candidates (first pass), for the record
 
 | Candidate | Why not in the top 3 |
