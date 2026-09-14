@@ -19,7 +19,7 @@
 - **Space fallback:** Table 3 can be reduced to the unweighted-mean row per family plus the improved-subject counts,
   with the per-subject values moved to S6.
 - **Split of the primary claim's evidence:** Table 5 and Figure 4 carry the pre-declared uncertainty. The post-hoc
-  level-mismatch consistency table (`p6_level_mismatch_consistency`) is cited in §5.5 and placed in S15.
+  level-mismatch consistency table (`p6_level_mismatch_consistency`) is cited in §4.5 and §5.1 (as a count token) and placed in S15.
 
 ## 2. Supplementary tables
 
@@ -59,12 +59,12 @@ records.
 | `p6_bootstrap_rmse`, `p6_bootstrap_bias` | supplementary | S16 |
 | `p6_bootstrap_seed_sensitivity` | main (column); supplementary | Table 5 / S16 |
 | `p6_drift_sensitivity` | supplementary (post hoc robustness) | S17 |
-| `p6_level_mismatch_consistency` | supplementary (post hoc), cited in §5.5 | S15 |
+| `p6_level_mismatch_consistency` | supplementary (post hoc), cited in §4.5 and §5.1 | S15 |
 | `p6_level_mismatch_spans` | supplementary (post hoc) | S15 |
-| `p6_level_mismatch_trajectory` | figure source; supplementary | Figure 5 / S15, night ordinals only |
+| `p6_level_mismatch_trajectory` | figure source; supplementary | Figure S3 / S15, night ordinals only |
 | `p6_user02_device_context` | supplementary | S18 |
 | `p6_user02_device_context_bootstrap` | supplementary | S18 |
-| `p6_figure_data` | figure source | Figures 4–5, S-figures |
+| `p6_figure_data` | figure source | Figure 4, Figures S2–S3 |
 
 - **Reproduction details** (release manifest, reproduction checks): S19, from P7 report §6–§10.
 - **Three tables carry calendar night ids:** `p5_per_night`, `p5_budget_counts` and `p6_level_mismatch_trajectory`.
@@ -74,16 +74,16 @@ records.
 
 | # | Recommendation | Source | Status |
 |---|---|---|---|
-| 1 | Study and evaluation pipeline: raw → canonical → strict LOSO (nested inner validation) → chronological adaptation (adaptation / buffer / primary test nights) → night-level analysis; the public-release reproduction path | none (schematic; no data) | **to create** in the figures pass |
+| 1 | Study and evaluation pipeline: raw → canonical → strict LOSO (nested inner validation) → chronological adaptation (adaptation / buffer / primary test nights) → night-level analysis; the public-release reproduction path | none (schematic; no data) | specification and diagram source in `paper/manuscript/FIGURE1_SCHEMATIC.md` (final pass); the submission graphic is drawn at formatting |
 | 2 | Temperature MAE vs adaptation budget, per subject and cohort mean, seed min–max | `paper/figures/p5_fig1_temperature_mae.png` (data `p5_figure_data`) | exists; re-render without the report caption |
 | 3 | Humidity MAE vs adaptation budget | `paper/figures/p5_fig2_humidity_mae.png` | exists; re-render as for Figure 2 |
 | 4 | Night-level paired bootstrap ΔMAE with 95 % intervals, temperature and humidity panels | `paper/figures/p6_fig1_bootstrap_temperature.png`, `p6_fig2_bootstrap_humidity.png` (data `p6_figure_data`) | exists; combine the two panels |
-| 5 (if the limits allow) | Temporal level trajectory for the three negative/positive cases (User07 temperature, User01 humidity, User02 temperature) | `paper/figures/p6_fig4_level_trajectory.png` (x axis = night ordinal) | exists; otherwise S-figure. Labelled post hoc, descriptive |
+| S3 (was the optional Figure 5) | Temporal level trajectory for the three negative/positive cases (User07 temperature, User01 humidity, User02 temperature) | `paper/figures/p6_fig4_level_trajectory.png` (x axis = night ordinal) | exists; **supplementary** (final pass), cited in §4.5. Labelled post hoc, descriptive |
 
 - **Why Figure 4 is the bootstrap figure:**
   - It carries the pre-declared uncertainty (D-041) behind the primary claim.
-  - The trajectory (Figure 5) explains the mechanism but is post hoc. If only four figures fit, it moves to the
-    supplement and §5.5 cites it.
+  - The trajectory illustrates the level-mismatch pattern but is post hoc. It is Figure S3, cited in §4.5 (final
+    pass).
 - **Supplementary figures:**
   - `p5_fig3_abs_bias.png` (|bias| vs budget);
   - `p5_fig4_user02_devices.png` (User02 per mat);
@@ -94,3 +94,32 @@ records.
   - Manuscript versions are re-drawn from the same `*_figure_data.csv` by the export step, without report titles and
     with the same palette and marks.
   - The data and encodings do not change. The committed report figures stay as they are.
+
+## 4. Integration in the manuscript (final integration pass)
+
+The selection above is now wired into `paper/manuscript/manuscript.md`. Each main item has a caption at its first
+citation, stating the units, the subject count, the seed or statistical scope and, where needed, the sign convention.
+The `{{TABLE:…}}` markers stay until the export script exists (`docs/P8_FINAL_BLOCKERS.md` §3).
+
+| Item | First cited | Caption states | Evidence role |
+|---|---|---|---|
+| Table 1 cohort/protocol | §3.1 | three subjects, four mat streams; counts only; nights as counts | design |
+| Table 2 strict LOSO | §4.1 | MAE/RMSE/bias, °C and %RH; bias = predicted − observed; seed means of 3 seeds; one fold per subject; unweighted mean descriptive | primary (P3) |
+| Table 3 feature families | §4.2 | secondary analysis; Δ vs RAW (negative = lower error); improved subjects of 3; own nested selection per family | secondary (P4) |
+| Table 4 personalization | §4.3 | primary span nights ≥ 16, same for every budget; mean ± SD over 3 seeds; G_b (positive = improvement, negative = negative transfer); seeds improved of 3 | primary (P5) |
+| Table 5 night bootstrap | §4.4 | all 24 cells; ΔMAE = base − adapted (positive = improvement); seed 0 with 2,000 night resamples, 95 % percentile interval; seeds 1/2 side of zero; not population inference | primary (P6) |
+| Figure 1 design schematic | §3.5 | panels (a)–(d); no data | design |
+| Figure 2 temperature MAE vs budget | §4.3 | seed means, seed min–max bars; unweighted mean descriptive | primary (P5) |
+| Figure 3 humidity MAE vs budget | §4.3 | as Figure 2 | primary (P5) |
+| Figure 4 night bootstrap ΔMAE | §4.4 | seed 0; 95 % night-cluster intervals; panels (a) temperature, (b) humidity | primary (P6) |
+| Figure S1 absolute bias vs budget | §4.3 | — | supplementary |
+| Figure S2 start-span sensitivity | §4.4 | post hoc | supplementary |
+| Figure S3 level trajectory | §4.5 | post hoc, descriptive; night ordinals | supplementary |
+| Figure S4 User02 by mat | §4.6 | — | supplementary |
+
+- **Evidence hierarchy in the text:**
+  - primary: P3 (strict LOSO offset), P5 (offset correction and negative transfer), P6 (night-level uncertainty and
+    robustness);
+  - secondary: P4, labelled "(Secondary)" in §3.5.2 and §4.2, and P7 (reproducibility, §3.7).
+- **Main text size:** 5 tables and 4 figures. The other artifacts go to the supplement (§2); none of the 38 CSVs is
+  inserted whole into the main text.

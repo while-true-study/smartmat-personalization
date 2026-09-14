@@ -35,7 +35,34 @@
 - **Device term:** the literature uses "pressure mat", "pressure-sensing mattress" and "smart bed". "Smart-mat"
   matches this study's device and the conference paper's domain ("smart bedding"). Replacing it with "pressure-mat"
   is an equally precise alternative if the editor prefers.
-- **Result:** the ranking is unchanged — 1 > 2 > 3. No final title is fixed (PI).
+- **Result:** the ranking is unchanged: 1 > 2 > 3. No final title is fixed (PI).
+
+## Final integration pass: "unseen-user" vs "unseen-domain"
+
+Rank 1 is adopted as the primary candidate. Before the title freeze, two variants were compared:
+- **A:** "Chronological Personalization under **Unseen-User Domain Shift**: Offset Correction and Negative Transfer in
+  Smart-Mat Temperature and Humidity Estimation" (17 words, 150 characters).
+- **B:** "Chronological Personalization under **Unseen-Domain Shift**: Offset Correction and Negative Transfer in
+  Smart-Mat Temperature and Humidity Estimation" (16 words, 145 characters).
+
+| Criterion | A (unseen-user) | B (unseen-domain) |
+|---|---|---|
+| Distinct from the conference title | yes: shares only the task words | yes: the same |
+| Central novelty is personalization / negative transfer | yes | yes |
+| No population claim | yes | yes |
+| Length | 17 words | 16 words |
+| Risk of reading the shift as a pure subject (biological) effect | **medium**: "unseen-user" places the cause of the shift in the person, but subject, recording period, season and mat are confounded in every fold (§3.1 of the manuscript) | **low**: matches the manuscript's own wording ("combined unseen-domain shift, not a pure subject effect") |
+| Search terms | "unseen user" is common in the personalization literature | "domain shift" is kept; "personalization" already signals the user level |
+| Precision against the evidence | the folds are defined by subject, so literally correct for the design, not for the interpretation | correct for both the design and the interpretation, once the Abstract says that each held-out fold combines a new subject, recording period and mat (it does) |
+
+- **Recommendation: B, "…under Unseen-Domain Shift…".** It is technically more precise for a confounded
+  subject–period–season–device shift and one word shorter. It loses no framing term: "Personalization" carries the
+  user, and the Abstract defines the domain.
+- **A stays the alternative** if the PI prefers the user-level wording for searchability. In that case, the Abstract
+  and §3.1 already state that the shift is combined.
+- The shorter fallback is unaffected, because it drops the shift phrase altogether: "Chronological Personalization
+  of Smart-Mat Temperature and Humidity Estimation: Offset Correction and Negative Transfer".
+- **No final title is fixed.** This is a PI decision (`docs/P8_FINAL_BLOCKERS.md` item 16).
 
 ## Earlier candidates (first pass), for the record
 

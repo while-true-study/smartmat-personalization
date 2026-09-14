@@ -1,47 +1,51 @@
 <!--
-P8 third pass: prose draft of all sections; Related Work and Introduction cite verified references only.
-- Numbers from results are source tokens {{…}} resolved from paper/tables/ (MANUSCRIPT_NOTES.md). Design parameters
-  of the frozen protocol (window length, budgets, resample counts, cohort size) are written as text.
-- Claims follow docs/P8_MANUSCRIPT_PLAN.md §3; tables and figures follow docs/P8_TABLE_FIGURE_SELECTION.md.
+P8 final integration pass: integrated scientific draft for PI review.
+- Square-bracket items are open placeholders, never facts. Their owners and states are listed in
+  docs/P8_FINAL_BLOCKERS.md.
+- Result numbers are source tokens {{…}} resolved from paper/tables/ (MANUSCRIPT_NOTES.md). Design parameters of the
+  frozen protocol (window length, budgets, resample counts, cohort size) and release facts are written as text.
+- Claims follow docs/P8_MANUSCRIPT_PLAN.md §3. Main tables and figures follow docs/P8_TABLE_FIGURE_SELECTION.md;
+  {{TABLE:…}} marks where the deterministic export inserts a table.
 - Citations are [@key] from references.bib (docs/P8_LITERATURE_EVIDENCE_MATRIX.md; audit in docs/P8_CITATION_AUDIT.md).
-  External citations support background claims only; results of this study cite the frozen tables. No calendar date or month.
+  External citations support background claims only; results of this study cite the frozen tables.
+- No calendar date or month.
 -->
 
-# [TITLE — PI DECISION; recommended: "Chronological Personalization under Unseen-User Domain Shift: Offset Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation" (docs/P8_TITLE_CANDIDATES.md)]
+# [TITLE — PI DECISION. Recommended: "Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation". Alternative: "Chronological Personalization under Unseen-User Domain Shift: Offset Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation" (docs/P8_TITLE_CANDIDATES.md)]
 
 [AUTHORS AND AFFILIATIONS — PI]
 
-[FIRST-PAGE NOTE — required for extended conference papers (to confirm, docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md
-item 12): "This article is an extended version of a paper presented at the 18th International Conference on Future
-Information & Communication Engineering (ICFICE 2026) [@maeng2026icfice]."]
+[FIRST-PAGE NOTE — conservative MDPI practice for extended conference papers; Applied Sciences confirmation pending
+(docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md item 15): "This article is an extended version of a paper presented at the
+18th International Conference on Future Information & Communication Engineering (ICFICE 2026) [@maeng2026icfice]."]
 
-**Featured Application** [OPTIONAL in the template; PI decides]: A potential application is estimating the
-temperature and humidity of the bed microclimate from the pressure signals of a smart mat, as a complement to direct
-sensing in care settings. The results indicate that such use would need user-level calibration, with safeguards
-against drift within a user over time, before deployment.
+<!-- Featured Application: optional in the template. Standalone paragraph, so that it can be removed at formatting
+if Applied Sciences does not use it (requirements item 2). No clinical or population claim. -->
+**Featured Application:** This study provides a deployment-oriented evaluation framework for smart-mat temperature
+and humidity estimation. In three held-out cases, it shows when limited chronological user adaptation corrected
+unseen-domain prediction offsets and when temporally unrepresentative adaptation data instead produced negative
+transfer.
 
 ## Abstract
 
-<!-- Draft (pass 3): one paragraph, background–methods–results–conclusions without headings; about 200 words once the
-tokens are rendered. Every number is a source token. -->
-Pressure-sensing mats could estimate the temperature and humidity of the bed microclimate without additional sensors,
-but how such models behave for a new user is unclear. We evaluated temporal convolutional networks on 40-s pressure
-windows from three subjects and four mat streams. The protocol used strict leave-one-subject-out evaluation with nested
-model selection, compared six pressure feature families, and fine-tuned each held-out subject's model on its earliest
-1–14 nights, testing on a fixed later span with night-level bootstrap intervals. Under strict evaluation, errors were
-dominated by subject-level offsets. For temperature, the network did not outperform a training-mean predictor, and
-movement or contact features did not remove the offsets. After 14 adaptation nights, the unweighted mean temperature
-error fell from
-{{p5_primary_mae | subject_id=unweighted_mean, target=temperature, budget_nights=0 | seed_mean | .2f}} to
-{{p5_primary_mae | subject_id=unweighted_mean, target=temperature, budget_nights=14 | seed_mean | .2f}} °C, and one
-subject's offset was largely corrected
-({{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_0 | +.2f}} to
-{{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_b | +.2f}} °C). The same
-procedure produced negative transfer for another subject's temperature at every budget, and for a third subject's
-humidity at up to seven nights. Post hoc, the direction of adaptation agreed with the representativeness of the early
-nights' target level in {{COUNT:p6_level_mismatch_consistency | consistent=True}} of 24 cases. With three subjects,
-these are case findings: personalization helped where the adaptation nights represented later conditions and hurt where
-they did not.
+<!-- One paragraph, about 200 words at most once the tokens are rendered: problem, strict design, adaptation design,
+positive evidence, negative evidence, interpretation and limit. Every number is a source token. -->
+Smart-mat pressure sequences could provide bed-microclimate temperature and humidity estimates without extra
+sensors, but deployed models must serve unseen users, recording periods and mats. We evaluated temporal
+convolutional networks on 40-s pressure windows from three subjects (four mat streams) under strict
+leave-one-subject-out evaluation with nested model selection; each held-out fold was an unseen domain combining a
+new subject, recording period and mat. Each held-out model was fine-tuned on the subject's earliest 1–14 nights
+and tested on a fixed later span, with night-level bootstrap intervals. Under strict
+evaluation, errors were dominated by systematic level offsets: for temperature, the network did not outperform a
+training-mean predictor, and movement or contact representations did not remove the offsets. Chronological
+adaptation corrected most of the largest offset, moving one subject's temperature bias from
+{{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_0 | +.2f}} to
+{{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_b | +.2f}} °C after 14 nights. The
+same recipe produced negative transfer for another subject's temperature at every budget and for a third subject's
+humidity at up to seven nights, and one to three nights gave no reliable benefit. Post hoc, the direction of
+adaptation agreed with the temporal representativeness of the adaptation nights' target level in
+{{COUNT:p6_level_mismatch_consistency | consistent=True}} of 24 cases. With three subjects, these are case-level
+associations, not population estimates.
 
 **Keywords:** smart mat; pressure sensing; temperature and humidity estimation; temporal convolutional network;
 leave-one-subject-out evaluation; domain shift; chronological personalization; negative transfer [FINAL LIST: PI]
@@ -71,32 +75,55 @@ fine-tuning to future work.
 These two open questions are the deployment questions. A model trained on some people is used for a new person, in a
 new recording period, possibly on another mat and under a different microclimate. Sensor-based models are known to
 lose accuracy for new users and on different devices [@hong2016semipopulation; @rokni2018personalized;
-@stisen2015smart], and in our data the new subject, the recording period, the season and the device cannot be
-separated. Under a strict leave-one-subject-out protocol, we find that the errors differ strongly between subjects
-and are dominated by systematic level offsets, and that changing the pressure representation does not remove them
-(Sections 4.1–4.2).
+@stisen2015smart]. In our data, the new subject, the recording period, the season and the device cannot be
+separated, so each held-out subject defines an unseen domain: a combined shift, not a pure subject effect. Under a
+strict leave-one-subject-out protocol, we find that the errors differ strongly between subjects and are dominated by
+systematic level offsets, and that changing the pressure representation does not remove them (Sections 4.1–4.2).
 
 After deployment, a limited amount of labelled data from the new user can be collected if reference temperature and
 humidity measurements are available for the first nights. Personalizing sensor models, with a small amount of the
 new user's labelled data or with data from similar users, has improved recognition accuracy in other domains
-[@hong2016semipopulation; @ferrari2020personalization]. It carries a risk that is easy to overlook: the earliest nights may not represent the
-later period the model is used in. When the relation between inputs and target changes over time [@gama2014survey],
-adaptation can move the model towards a level that no longer holds. Transfer can then hurt instead of help
-[@wang2019negative; @zhang2023negative], and adaptation may correct an offset or introduce a new one.
+[@hong2016semipopulation; @ferrari2020personalization]. It carries a risk that is easy to overlook: the earliest
+nights may not represent the later period the model is used in. When the relation between inputs and target changes
+over time [@gama2014survey], adaptation can move the model towards a level that no longer holds. Transfer can then
+hurt instead of help [@wang2019negative; @zhang2023negative], and adaptation may correct an offset or introduce a new
+one.
 
-This study asks how far limited chronological personalization mitigates the unseen-subject failure of smart-mat
+This study asks how far limited chronological personalization mitigates the unseen-domain failure of smart-mat
 temperature and humidity estimation, and how its effect depends on the temporal representativeness of the adaptation
-data. Its contributions are:
+data. It addresses three research questions:
+- **RQ1:** How accurate and how systematic is the estimation for an unseen subject under strict
+  leave-one-subject-out evaluation?
+- **RQ2:** How far does fine-tuning on a limited number of the new subject's earliest nights reduce this error, and
+  when does it increase it?
+- **RQ3 (secondary):** Do movement-derived or contact-structure representations of the pressure signal reduce the
+  unseen-domain error?
+
+The contributions are:
 1. A leakage-controlled strict leave-one-subject-out evaluation of smart-mat temperature and humidity estimation
    across three held-out subjects under a combined subject–period–season–device shift, with a training-mean
-   reference.
-2. A comparison of six pressure feature families under the same protocol, showing target-dependent and non-additive
-   contributions of movement and contact features and a cross-domain level offset that persists.
-3. A chronological personalization evaluation with 0, 1, 3, 7 and 14 adaptation nights on a common future test span,
-   showing both large offset corrections and clear negative transfer.
-4. A night-level robustness analysis (paired cluster bootstrap, seed and start-span sensitivity, temporal
-   level-mismatch and device-residual diagnostics), and a de-identified, model-ready data release from which all main
-   results are reproduced.
+   reference (RQ1).
+2. A chronological personalization evaluation with 0, 1, 3, 7 and 14 adaptation nights on a common future test span,
+   reported per subject and target, which shows both large offset corrections and clear negative transfer (RQ2).
+3. A night-level robustness analysis: a paired cluster bootstrap, seed and start-span sensitivity, and post-hoc
+   temporal level-mismatch and device-residual diagnostics.
+4. A secondary comparison of six pressure feature families under the same protocol. It shows target-dependent,
+   non-additive contributions of movement and contact features and a level offset that no representation removes
+   (RQ3).
+5. A de-identified, model-ready release candidate from which the selected models, the predictions and the result
+   tables were reproduced in a clean checkout; the hyperparameter searches were not rerun (Section 3.7).
+
+**Relation to the conference study.** The conference study [@maeng2026icfice] evaluated a late-fusion framework for
+movement and contact features on pragmatic fixed-length sequences, including subjects whose logs lacked
+second-level timestamps. It did not perform strict elapsed-time leave-one-subject-out evaluation or target-user
+fine-tuning. The present article:
+- rebuilds the recordings into an audited canonical dataset;
+- restricts the primary cohort to subjects with complete second-level timestamps;
+- adds strict elapsed-time leave-one-subject-out evaluation with frozen nested model selection, chronological
+  personalization, a negative-transfer analysis, night-level robustness analyses and a de-identified reproduction
+  package.
+No text, table or figure of the conference paper is reused. Its results are not compared numerically with those
+reported here, because the data policies differ.
 
 Section 2 reviews related work. Section 3 describes the data, the protocol and the analysis. Section 4 reports the
 results, Section 5 discusses them, Section 6 states the limitations, and Section 7 concludes.
@@ -125,8 +152,8 @@ The bed microclimate has a separate clinical motivation:
   pressure layer [@carbonaro2021textile].
 
 These studies use pressure to infer posture, movement or breathing, or they measure temperature and humidity
-directly. In the studies reviewed here, the microclimate is measured, not estimated from the pressure signal. Our conference
-study examined it with fused pressure representations, but it did not evaluate unseen users or adaptation
+directly. In the studies reviewed here, the microclimate is measured, not estimated from the pressure signal. Our
+conference study examined it with fused pressure representations, but it did not evaluate unseen users or adaptation
 [@maeng2026icfice]. The present work treats pressure-based temperature and humidity estimation as an open deployment
 problem rather than as an established capability.
 
@@ -167,10 +194,11 @@ problem rather than as an established capability.
 - domain adaptation for time-series sensor data [@wilson2020multisource]. Its assumptions can fail in practice
   [@chang2020systematic].
 
-**Scope gap:** most of this work concerns activity or state recognition. Less examined is the regression of continuous environmental quantities for an unseen user under a
-combined shift of subject, recording period, season and device. The same holds for personalization data taken
-chronologically from the start of deployment and evaluated on a fixed later span. The present study addresses this
-setting with three subjects, so it describes cases rather than population effects.
+**Scope gap:** most of this work concerns activity or state recognition. Less examined is the regression of
+continuous environmental quantities for an unseen user under a combined shift of subject, recording period, season
+and device. The same holds for personalization data taken chronologically from the start of deployment and evaluated
+on a fixed later span. The present study addresses this setting with three subjects, so it describes cases rather
+than population effects.
 
 ### 2.4. Negative Transfer, Temporal Drift and Calibration
 
@@ -216,9 +244,18 @@ firmware control, which writes control codes into the logs; these codes are neve
 - files with unresolved device attribution;
 - restricted participant metadata;
 - two legacy sources with minute-resolution timestamps, which are kept as auxiliary data and not used by the
-  protocol.
+  protocol. The conference study's recordings without second-level timestamps are consistent with this retained
+  legacy minute-resolution lineage; exact file-level identity is not assumed.
 
-Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_dataset}}`.
+Table 1 summarises the cohort and the protocol.
+
+**Table 1.** Cohort, data and protocol summary. One row per held-out subject; User02 has one sub-row for each of its
+two mats, which always share a partition. Columns: canonical rows and recording sessions per mat stream; labelled
+40-s windows; leave-one-subject-out fold with training and test windows; adaptation budgets; number of primary
+test nights (nights ≥ 16) and primary test windows. Counts only; no performance values. Nights are counts, never
+dates. Three subjects, four mat streams.
+
+`{{TABLE:manuscript_table_1_dataset}}`
 
 ### 3.2. Canonical Dataset Construction
 
@@ -274,6 +311,16 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
 
 ### 3.5. Experimental Protocol
 
+Figure 1 summarises the evaluation design.
+
+**Figure 1.** Study and evaluation design. (a) Data flow: raw logs, checksum verification, the audited canonical
+dataset, and 40-s windows cut after splitting. (b) Strict leave-one-subject-out evaluation: three outer folds, each
+holding out one subject with all its mats; model selection uses two swapped inner splits of the two training
+subjects only; the held-out subject is evaluated once. (c) Chronological personalization for one held-out subject:
+nights 1…b are adaptation data, night b + 1 is an unused buffer, and the primary test span (nights ≥ 16) is the same
+for every budget b ∈ {0, 1, 3, 7, 14}. (d) Night-level analysis and reproduction from the de-identified release
+candidate. Schematic only; it contains no data (specification: `paper/manuscript/FIGURE1_SCHEMATIC.md`).
+
 #### 3.5.1. Strict Leave-One-Subject-Out Evaluation (RQ1)
 
 - **Folds:** each of the three outer folds holds out one subject entirely, including all its mats.
@@ -288,7 +335,7 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
 - **Reference:** a training-mean predictor, which predicts the training pool's mean temperature and humidity, is
   evaluated on the same folds.
 
-#### 3.5.2. Feature-Family Comparison (RQ3)
+#### 3.5.2. Feature-Family Comparison (RQ3, Secondary)
 
 - **Features** are computed per window step from the step's six scaled channels:
   - **RAW** (6): the channels themselves.
@@ -347,11 +394,12 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
   - Results are reported per subject first.
   - The unweighted mean over the three subjects is shown as a description, not as a population estimate.
 - **Secondary measures:**
-  - the mean signed error (bias);
+  - the mean signed error (bias, predicted minus observed; negative values mean under-estimation);
   - device and phase strata;
   - the per-budget later span.
   - For RQ2, the adaptation gain G_b = (E_0 − E_b)/E_0, with E the primary-span MAE; positive values mean improvement.
-    A descriptive split of the RMSE into bias and error standard deviation is also reported.
+    Negative transfer means that the adapted model is worse than its own base model on the same test nights
+    (G_b < 0). A descriptive split of the RMSE into bias and error standard deviation is also reported.
 - **Within-subject uncertainty:** a night-level paired cluster bootstrap.
   - Test nights are resampled with replacement together with all their windows, and base and adapted predictions are
     paired on the same resampled nights.
@@ -378,14 +426,17 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
 - **Time:** only relative to each subject's first night (seconds since a per-subject anchor, relative night keys).
   No calendar date is included.
 - **Excluded:** raw logs, participant metadata and the excluded sources are not part of it.
-- **What was reproduced, from the release package alone in a clean checkout:**
-  - the frozen selected models: the nine RAW-TCN base models, whose weights match their frozen digests, and the 45
-    feature-family models;
-  - the 45 personalization runs;
-  - all downstream analyses;
-  - every prediction file bitwise, and every reported result table.
-- **Not rerun:** the hyperparameter searches (the nested inner searches for RAW and for the feature families). Their
-  selections were reused as committed.
+- **Reproduced from the release package alone, in a clean checkout, with the frozen selections:**
+  - the selected strict leave-one-subject-out models: the nine RAW-TCN base models, whose weights match their frozen
+    digests, and their predictions;
+  - the predictions of the 45 selected feature-family models (retrained from the frozen selection);
+  - the predictions of the 45 personalization runs;
+  - the night-level robustness analyses;
+  - every prediction file bitwise, every reproduced result table, and the committed result figures byte for byte.
+  The manuscript tables are selections of these reproduced tables.
+- **Not rerun:** the hyperparameter searches, i.e. the strict leave-one-subject-out inner search for RAW and the
+  480-run inner search for the feature families. Their selections were reused as committed. The reproduction is
+  therefore not an end-to-end rerun of every experiment.
 
 ### 3.8. Use of Generative AI
 
@@ -405,7 +456,15 @@ Acknowledgments.
 
 ### 4.1. Strict Leave-One-Subject-Out Generalization
 
-Table 2 (`{{TABLE:manuscript_table_2_loso}}`) reports the held-out errors.
+Table 2 reports the held-out errors.
+
+**Table 2.** Strict leave-one-subject-out results. MAE, RMSE and bias (predicted minus observed) of the
+training-mean predictor and of the RAW-TCN for temperature (°C) and humidity (%RH), for each of the three held-out
+subjects (one outer fold each, evaluated once) and as the unweighted mean over the three subjects (descriptive).
+TCN values are means over three model seeds (0, 1, 2); per-seed values are in Table S1. All windows of the
+held-out subject are evaluated; both User02 mats are pooled.
+
+`{{TABLE:manuscript_table_2_loso}}`
 
 - **Heterogeneity:** the RAW-TCN errors differ strongly between subjects.
   - Temperature MAE: `{{p3_primary_summary | model=tcn_raw, target=temperature, metric=mae | User01 | .3f}}` °C
@@ -414,7 +473,8 @@ Table 2 (`{{TABLE:manuscript_table_2_loso}}`) reports the held-out errors.
   - Humidity MAE: `{{p3_primary_summary | model=tcn_raw, target=humidity, metric=mae | User01 | .3f}}`,
     `{{p3_primary_summary | model=tcn_raw, target=humidity, metric=mae | User02 | .3f}}` and
     `{{p3_primary_summary | model=tcn_raw, target=humidity, metric=mae | User07 | .3f}}` %RH.
-- **Temperature: the neural model did not outperform the training-mean predictor for any held-out subject.**
+- **Temperature: the neural model had a higher MAE than the training-mean predictor for all three held-out
+  subjects.**
   - Training-mean MAE: `{{p3_primary_summary | model=training_mean, target=temperature, metric=mae | User01 | .3f}}`,
     `{{p3_primary_summary | model=training_mean, target=temperature, metric=mae | User02 | .3f}}` and
     `{{p3_primary_summary | model=training_mean, target=temperature, metric=mae | User07 | .3f}}` °C.
@@ -426,16 +486,26 @@ Table 2 (`{{TABLE:manuscript_table_2_loso}}`) reports the held-out errors.
     `{{p3_primary_summary | model=training_mean, target=humidity, metric=mae | User01 | .3f}}`,
     `{{p3_primary_summary | model=training_mean, target=humidity, metric=mae | User02 | .3f}}` and
     `{{p3_primary_summary | model=training_mean, target=humidity, metric=mae | User07 | .3f}}` %RH.
-- **Level offsets:** the errors are largely systematic, and their signs differ between subjects.
+- **Systematic level offsets:** the errors are largely systematic, and their signs differ between subjects.
   - User02 temperature bias `{{p3_primary_summary | model=tcn_raw, target=temperature, metric=bias | User02 | +.3f}}` °C
     and humidity bias `{{p3_primary_summary | model=tcn_raw, target=humidity, metric=bias | User02 | +.3f}}` %RH.
     For this subject the bias accounts for essentially the whole MAE.
   - User01 humidity bias `{{p3_primary_summary | model=tcn_raw, target=humidity, metric=bias | User01 | +.3f}}` %RH.
 - **Seeds:** the spread across the three seeds was much smaller than the differences between subjects (Table S1).
 
-### 4.2. Feature-Family Comparison
+### 4.2. Feature-Family Comparison (Secondary)
 
-Table 3 (`{{TABLE:manuscript_table_3_families}}`) compares the six families.
+This secondary analysis asks whether another representation of the pressure signal removes the level offsets of
+Section 4.1. Table 3 compares the six families.
+
+**Table 3.** Feature-family comparison under strict leave-one-subject-out evaluation (secondary analysis). MAE of
+the training-mean predictor and of the six TCN feature families for temperature (°C) and humidity (%RH), per
+held-out subject and as the unweighted mean over the three subjects; change relative to RAW (negative = lower error)
+and the number of subjects improved, of three. Each family has its own pre-declared nested selection, so the
+comparison is between selected representations, not a fixed-model ablation. Seed means over three model seeds;
+biases by family are in Table S7.
+
+`{{TABLE:manuscript_table_3_families}}`
 
 - **Movement → temperature:** movement information helped temperature.
   - MOVEMENT changed the unweighted temperature MAE by
@@ -468,9 +538,24 @@ Table 3 (`{{TABLE:manuscript_table_3_families}}`) compares the six families.
 
 ### 4.3. Chronological Personalization
 
-Table 4 (`{{TABLE:manuscript_table_4_personalization}}`) and Figures 2 and 3 show the primary-span MAE by subject and
-budget. The b = 0 values are the base models on the primary span (nights ≥ 16) only, so they differ from Table 2,
-which covers all nights.
+Table 4 and Figures 2 and 3 show the primary-span MAE by subject and budget. The b = 0 values are the base models on
+the primary span (nights ≥ 16) only, so they differ from Table 2, which covers all nights.
+
+**Table 4.** Chronological personalization on the common primary test span (nights ≥ 16, identical for every
+budget). MAE for temperature (°C) and humidity (%RH) per held-out subject for adaptation budgets b = 0 (base model),
+1, 3, 7 and 14 nights, as the mean ± standard deviation over three model seeds, with the adaptation gain
+G_b = (E_0 − E_b)/E_0 (positive = improvement; negative = negative transfer) and the number of seeds improved, of
+three. The unweighted mean over the three subjects is descriptive. Bias and RMSE by budget are in Table S10.
+
+`{{TABLE:manuscript_table_4_personalization}}`
+
+**Figure 2.** Temperature MAE (°C) on the common primary test span versus the adaptation budget (b = 0 is the base
+model), for each held-out subject and the unweighted mean of the three subjects (descriptive). Markers: means over
+three model seeds; bars: seed minimum–maximum. Source: `paper/figures/p5_fig1_temperature_mae.png`, re-rendered
+without the report title (data `p5_figure_data`).
+
+**Figure 3.** Humidity MAE (%RH) on the common primary test span versus the adaptation budget, as in Figure 2.
+Source: `paper/figures/p5_fig2_humidity_mae.png`, re-rendered without the report title.
 
 **Cohort curves** (unweighted means, descriptive):
 - Temperature MAE:
@@ -507,7 +592,7 @@ which covers all nights.
     `{{p5_adaptation_gain | subject_id=User07, target=temperature, budget_nights=14 | bias_b | +.3f}}` °C.
   - User07 humidity, in contrast, improved (b = 14:
     `{{p5_adaptation_gain | subject_id=User07, target=humidity, budget_nights=14 | G_pct | +.1f}}` %).
-- **User01 humidity:** negative transfer up to seven nights, then recovery.
+- **User01 humidity (negative transfer, then recovery):** worse than the base model up to seven nights.
   - G was `{{p5_adaptation_gain | subject_id=User01, target=humidity, budget_nights=1 | G_pct | +.1f}}`,
     `{{p5_adaptation_gain | subject_id=User01, target=humidity, budget_nights=3 | G_pct | +.1f}}` and
     `{{p5_adaptation_gain | subject_id=User01, target=humidity, budget_nights=7 | G_pct | +.1f}}` % at b = 1, 3 and 7.
@@ -522,13 +607,27 @@ which covers all nights.
   - the User02 temperature gain is almost pure offset correction;
   - User01 temperature at b = 3 and 7 improves mainly through a lower error spread;
   - the User07 temperature loss is a newly introduced offset;
-  - humidity changes are dominated by the offset in both directions (Table S9).
+  - humidity changes are dominated by the offset in both directions (Table S9; Figure S1).
 - **Low budgets:** one to three adaptation nights did not provide reliable improvement across subjects and targets.
 
 ### 4.4. Night-Level Uncertainty and Robustness
 
-Table 5 (`{{TABLE:manuscript_table_5_bootstrap}}`) and Figure 4 give the night-level paired bootstrap intervals of the
-MAE change (base − adapted; positive = improvement) for model seed 0.
+Table 5 and Figure 4 give the night-level paired bootstrap intervals of the MAE change (base − adapted; positive =
+improvement) for model seed 0.
+
+**Table 5.** Night-level paired cluster bootstrap of the MAE change (base − adapted; positive = improvement) for all
+24 subject × target × budget cells (three held-out subjects, two targets, b = 1, 3, 7 and 14). For model seed 0: the
+point estimate, the 95 % percentile interval from 2,000 resamples of test nights, and whether the interval lies
+above zero, below zero or includes zero. For seeds 1 and 2: the side of zero only (sensitivity). Units: °C for
+temperature and %RH for humidity. The intervals describe within-subject night-level uncertainty on the primary span;
+they are not population inference.
+
+`{{TABLE:manuscript_table_5_bootstrap}}`
+
+**Figure 4.** Night-level paired bootstrap change in MAE (base − adapted; positive = adaptation better) for model
+seed 0, with 95 % night-cluster bootstrap percentile intervals, per held-out subject and budget: (a) temperature
+(°C); (b) humidity (%RH). Sources: `paper/figures/p6_fig1_bootstrap_temperature.png` and
+`p6_fig2_bootstrap_humidity.png`, combined as two panels without the report titles (data `p6_figure_data`).
 
 - **User02 temperature at b = 14:**
   `{{p6_bootstrap_mae | subject_id=User02, target=temperature, budget_nights=14 | point_estimate | +.3f}}` °C
@@ -565,9 +664,10 @@ MAE change (base − adapted; positive = improvement) for model seed 0.
     of four.
   - Seed 2: at `{{COUNT:p6_bootstrap_seed_sensitivity | subject_id=User07, target=temperature, metric=mae, seed=2, interval=below_zero}}`
     of four.
+  - The interval support for this negative transfer therefore depends on the model seed.
 - **Start of the test span (post hoc):** moving the start among nights 12, 14, 16, 18 and 21 changed the magnitude of
   the gains, but at the aggregated subject–target–budget level the principal directional findings were stable across
-  these start points (Table S17). Seed-level exceptions occurred in borderline cases.
+  these start points (Table S17; Figure S2). Seed-level exceptions occurred in borderline cases.
   - For User07 temperature at start night 12 and b = 1,
     `{{p6_drift_sensitivity | start_night=12, subject_id=User07, target=temperature, budget_nights=1 | seeds_improved | d}}`
     of `{{p6_drift_sensitivity | start_night=12, subject_id=User07, target=temperature, budget_nights=1 | n_seeds | d}}`
@@ -579,7 +679,7 @@ MAE change (base − adapted; positive = improvement) for model seed 0.
 ### 4.5. Temporal Level Mismatch (Post Hoc, Descriptive)
 
 Using the targets only (no model), we compared the mean target level of each adaptation span with that of the
-primary span (Table S15; Figure 5 or Figure S-level). Values below are span mean minus primary-span mean.
+primary span (Table S15; Figure S3). Values below are span mean minus primary-span mean.
 
 - **User07 temperature:**
   - the earliest night: `{{p6_level_mismatch_spans | subject_id=User07, target=temperature, span=adaptation_b1 | minus_primary_mean | +.3f}}` °C;
@@ -601,7 +701,8 @@ primary span (Table S15; Figure 5 or Figure S-level). Values below are span mean
   - It agreed with the observed direction in
     `{{COUNT:p6_level_mismatch_consistency | consistent=True}}` of 24 subject–target–budget cells.
   - The exception was User01 temperature at b = 3, where the gain came from a lower error spread.
-  - This is an association within three subjects, not a test of a mechanism.
+  - The rule was formulated after the personalization results were known. The agreement is an association within
+    three subjects, not a test of a mechanism.
 
 ### 4.6. Device-Level Residual (User02)
 
@@ -618,31 +719,41 @@ primary span (Table S15; Figure 5 or Figure S-level). Values below are span mean
   `{{p6_user02_device_context_bootstrap | stratum=22480, target=temperature, quantity=bias_b14 | ci_upper | +.3f}}`];
   the interval includes zero.
 - **Strata:** the 22482 under-estimation persisted in every quality-phase and heater-context stratum with at least ten
-  nights (Table S18).
+  nights (Table S18; Figure S4).
 - **Interpretation:** the mats differ in microclimate and control history, and their physical placement is unknown;
   these factors cannot be separated here. The residual is therefore reported as a device-level observation, not as
   evidence of a sensor defect or a heater effect.
 
 ## 5. Discussion
 
-### 5.1. Why Adaptation Sometimes Helps and Sometimes Hurts
+### 5.1. Why Can the Same Adaptation Recipe Help One Held-Out Domain and Hurt Another?
 
-The results point to one pattern. Under strict leave-one-subject-out evaluation, a large part of the error is a
-level offset between the held-out domain and the training pool (Section 4.1). Full fine-tuning on a subject's
-earliest nights moves the model's predictions towards the level of those nights. When that level is close to the
-level of the later nights, the offset shrinks: this is the User02 case. When it is far from it, the model acquires a
-new offset: User07 temperature and User01 humidity at up to seven nights. The role of such offsets resembles that of
-calibration in deployed environmental sensing, where field calibration corrects systematic sensor errors
-[@maag2018calibration; @delaine2019insitu].
+The results suggest one descriptive account, built from four observations:
+- **Offsets dominate the unseen-domain error.** Under strict leave-one-subject-out evaluation, a large part of the
+  error is a systematic level offset between the held-out domain and the training pool. For temperature, the
+  network did not outperform a training-mean predictor for any held-out subject (Section 4.1).
+- **Fine-tuning moves the level.** Full fine-tuning on a subject's earliest nights tended to move the predictions
+  towards the target level of those nights: the bias shifted in the direction of the early-night level for User07
+  temperature and User01 humidity (Section 4.3; Table S10).
+- **Representative early levels were associated with improvement.** When the early level was close to the level of
+  the later nights, the offset shrank: this is the User02 case, and User01 humidity once 14 nights were used.
+- **Mismatched early levels were associated with negative transfer.** When the early level was far from the later
+  one, the model acquired a new offset: User07 temperature at every budget and User01 humidity at up to seven nights.
 
-The post-hoc level comparison agrees with this in almost every cell (Section 4.5). These observations are consistent
-with temporal representativeness being an important condition for successful personalization. The pattern parallels
-two ideas from the literature:
+The post-hoc level comparison agrees with this account in
+{{COUNT:p6_level_mismatch_consistency | consistent=True}} of 24 cells (Section 4.5). It was formulated after the
+results were known, so it is descriptive evidence, not a confirmatory test. These observations are consistent with
+temporal representativeness being an important condition for successful personalization.
+
+The role of such offsets resembles that of calibration in deployed environmental sensing, where field calibration
+corrects systematic sensor errors [@maag2018calibration; @delaine2019insitu]. The pattern also parallels two ideas
+from the literature:
 - concept drift, a change over time in the relation between inputs and target [@gama2014survey];
 - negative transfer from a less related source [@wang2019negative]. Here, the less related data would be the user's
   own earliest nights.
-These parallels are interpretive and are not tested in this study. The observations do not show that temporal drift
-causes negative transfer: three subjects, confounded periods and one adaptation recipe allow association only.
+These parallels are interpretive and are not tested in this study. The association is not causation: the
+observations do not show that temporal drift causes negative transfer. Three subjects, confounded periods and one
+adaptation recipe allow association only.
 
 ### 5.2. Feature Engineering and Personalization Address Different Problems
 
@@ -661,7 +772,14 @@ causes negative transfer: three subjects, confounded periods and one adaptation 
   transfer.
 - **Cohort mean:** the unweighted cohort mean improved for temperature but hid a subject that became worse at every
   budget, and for humidity it improved only at 14 nights.
-- **Low budgets:** very low adaptation budgets were insufficient to guarantee benefit.
+- **Negative results reported in full:**
+  - for temperature, the strict leave-one-subject-out TCN was worse than the training-mean predictor for all three
+    subjects (Section 4.1);
+  - User07 temperature was worse than its base model at every budget (Sections 4.3–4.4);
+  - User01 humidity was worse than its base model at one to seven nights (Sections 4.3–4.4);
+  - one to three adaptation nights did not provide reliable improvement (Section 4.3);
+  - the interval support for the User07 temperature loss depended on the model seed (Section 4.4);
+  - a temperature residual remained on User02's mat 22482 after 14 nights (Section 4.6).
 - **Reporting:** a personalization study that reported only cohort means would miss these failures. Subject-level
   reporting with night-level uncertainty is needed to see them.
 
@@ -708,37 +826,53 @@ None of these safeguards was evaluated here; they are future work.
   be separated. The differences between the two User02 mats have no causal interpretation.
 - **Statistics:** the night-level bootstrap resamples nights independently. Consecutive nights are correlated
   through drift, so the intervals may be too narrow for trending series, and the serial dependence between nights is
-  not fully captured.
+  not fully captured. The level-mismatch rule was formulated post hoc.
 - **Analyses not run:** the declared 20-s and 30-s window sensitivity analyses and a sensitivity analysis for the
   4095 saturation value were not run; the procedures they would need were not fixed in advance. A simpler bias-only
   calibration was not compared with full fine-tuning.
-- **Release:** the public release is derived and model-ready. It contains 40-s windows, not the raw logs, so it
+- **Reproduction scope:** the hyperparameter searches were not rerun; the reproduction reuses their committed
+  selections (Section 3.7).
+- **Release:** the release candidate is derived and model-ready. It contains 40-s windows, not the raw logs, so it
   reproduces this study's analyses but does not support new row-level preprocessing.
 
 ## 7. Conclusions
 
 - **Strict evaluation:** in this cohort, smart-mat pressure sequences supported temperature and humidity estimation
-  for an unseen subject only up to a large, subject-dependent level offset, which alternative pressure
-  representations did not remove.
-- **Chronological personalization:** can remove most of this offset when the earliest nights of the new user
-  represent the later period. The same procedure produced negative transfer when they did not, and one to three
+  for an unseen domain (a new subject with its own recording period and mat) only up to a large, subject-dependent
+  level offset. For temperature, the network did not outperform a training-mean predictor, and alternative pressure
+  representations did not remove the offset.
+- **Chronological personalization:** removed most of this offset when the earliest nights of the new user
+  represented the later period. The same procedure produced negative transfer when they did not, and one to three
   nights were not enough to guarantee benefit.
-- **Consequence:** the decisive factor was not the amount of adaptation data alone but its temporal
-  representativeness. Future work should test adaptation-data selection, drift monitoring and calibration
-  safeguards on larger cohorts.
+- **Consequence:** in these three cases, the direction of adaptation was associated with the temporal
+  representativeness of the adaptation data rather than with its amount alone. Future work should test
+  adaptation-data selection, drift monitoring and calibration safeguards on larger cohorts.
 
 ## Reproducibility Statement
 
-[PLACEMENT TO CONFIRM WITH THE TEMPLATE.] The frozen selected models and all downstream analyses were reproduced from
-the derived release package in a clean checkout; the hyperparameter searches were not rerun (Section 3.7).
+[PLACEMENT TO CONFIRM WITH THE TEMPLATE.] From the derived release package and the frozen model selections, a clean
+checkout reproduced the selected leave-one-subject-out models (with their weight digests), the predictions of the
+feature-family and personalization runs, the night-level analyses and every reproduced result table, bitwise. The
+hyperparameter searches were not rerun (Section 3.7).
 
 ## Data Availability Statement
 
-[See DATA_AVAILABILITY_DRAFT.md — placeholders [DATA REPOSITORY], [DOI], [LICENSE] remain until resolved.]
+<!-- Current-state text from DATA_AVAILABILITY_DRAFT.md. Must not say "publicly available" until OPEN-22/23/24 are
+resolved. -->
+The raw sensor recordings analysed in this study are not publicly released, and restricted participant metadata is
+never released. A de-identified, model-ready derived dataset (`public_release_v1`) has been prepared as a release
+candidate. It contains the model-ready windows of the three anonymous participants (four mat streams), the
+evaluation splits and the reference digests needed to reproduce the reported results. Time is given only relative to
+each participant's first recorded night. External availability of this dataset is pending the choice of a data
+license, a repository with a persistent identifier and final approval. [PI DECISION: interim availability on
+reasonable request, and from whom.] Data repository: [DATA REPOSITORY]. DOI: [DOI]. License: [LICENSE].
 
 ## Code Availability
 
-[See CODE_AVAILABILITY_DRAFT.md — repository publication scope and license pending.]
+<!-- Current-state text from CODE_AVAILABILITY_DRAFT.md; repository publication scope is OPEN-25. -->
+The code for data preparation, model training, evaluation and the reproduction of the reported results is maintained
+in a version-controlled repository. Public availability of the code and its license are pending [PI DECISION].
+Code repository: [CODE REPOSITORY]. Archive DOI: [DOI]. License: [LICENSE].
 
 ## Institutional Review Board Statement
 
@@ -746,8 +880,11 @@ the derived release package in a clean checkout; the hyperparameter searches wer
 
 ## Informed Consent Statement
 
-[PI] Documented: the data provider confirmed that participant consent was obtained and that the data may be used and
-released for research. This confirmation is not an institutional ethics approval.
+[INFORMED CONSENT WORDING REQUIRED FROM PI]
+
+<!-- Note for the PI: the data provider's confirmation that participant consent was obtained and that the data may be
+used and released for research (D-002) is documented. It is not an institutional ethics approval and does not by
+itself supply the consent statement. -->
 
 ## Acknowledgments
 
@@ -764,7 +901,7 @@ publication.
 
 ## Author Contributions
 
-[PI — CRediT roles]
+[CRediT ROLES — PI; skeleton in AUTHOR_CONTRIBUTIONS_DRAFT.md. No role is assigned before PI confirmation.]
 
 ## Funding
 
@@ -780,4 +917,11 @@ publication.
 
 ## Supplementary Materials
 
-Tables S1–S19 and supplementary figures as listed in docs/P8_TABLE_FIGURE_SELECTION.md.
+Supplementary tables S1–S19 as listed in docs/P8_TABLE_FIGURE_SELECTION.md. Supplementary figures:
+- **Figure S1.** Absolute bias versus adaptation budget (`p5_fig3_abs_bias.png`).
+- **Figure S2.** Start-span sensitivity of the adaptation gain: (a) temperature, (b) humidity (post hoc;
+  `p6_fig3_drift_temperature.png`, `p6_fig3_drift_humidity.png`).
+- **Figure S3.** Target-level trajectories over night ordinals for User07 temperature, User01 humidity and User02
+  temperature (post hoc, descriptive; `p6_fig4_level_trajectory.png`).
+- **Figure S4.** User02 MAE by mat (22480, 22482) versus adaptation budget: (a) temperature, (b) humidity
+  (`p5_fig4_user02_devices.png`).

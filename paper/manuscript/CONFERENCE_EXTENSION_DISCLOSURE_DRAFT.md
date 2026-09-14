@@ -2,7 +2,18 @@
 
 > **Status: draft for the PI.** Bibliographic items not found in the available sources stay as placeholders. The
 > MDPI conditions for extended conference papers still need a final check against the official pages
-> (`docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`, items 12–13).
+> (`docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`, items 15–17).
+
+## At a glance
+
+| Conference study | Journal study |
+|---|---|
+| pragmatic fixed-length sequences | strict elapsed-time 40-s windows |
+| subjects with timestamp-limited (minute-resolution) logs included | timestamp-complete primary cohort from an audited canonical dataset |
+| movement/contact late-fusion framework | movement/contact representations re-evaluated as six feature families, each with frozen nested selection |
+| no strict elapsed-time leave-one-subject-out evaluation | strict leave-one-subject-out evaluation with a training-mean reference and a leakage gate |
+| no target-user fine-tuning | chronological personalization (0–14 nights, fixed future test span) with a negative-transfer analysis |
+| — | night-level robustness analyses; a de-identified reproduction package (release candidate) |
 
 ## Conference paper
 
@@ -44,7 +55,7 @@
   - device residual strata;
   - a de-identified reproduction package with clean-checkout reproduction.
 - **New conclusions:**
-  - under strict unseen-subject evaluation, the error is dominated by level offsets that representation changes do
+  - under strict unseen-domain evaluation, the error is dominated by level offsets that representation changes do
     not remove;
   - chronological personalization corrects them when the early nights represent later conditions, and produces
     negative transfer when they do not.
@@ -54,7 +65,7 @@
 | Item | Status |
 |---|---|
 | Concepts | the task, the TCN family and the movement/contact feature ideas are reused and cited |
-| Data | the journal uses the same data provider's recordings, rebuilt from the raw logs into an audited dataset. The conference data without second-level timestamps are consistent with the retained legacy minute-resolution lineage, which the journal keeps as auxiliary and does not use; exact file-level identity is not assumed. The conference's auxiliary five-channel source, excluded there from the main six-channel evaluation, is not used either |
+| Data | the journal uses the same data provider's recordings, rebuilt from the raw logs into an audited dataset. The conference data without second-level timestamps are consistent with the retained legacy minute-resolution lineage, which the journal keeps as auxiliary and does not use; exact file-level identity is not assumed. An auxiliary five-channel source excluded from the main six-channel evaluation is not used either |
 | Model components | re-implemented under the journal protocol; no trained conference model is reused |
 | Text | none reused. Abstract, Introduction and Conclusions are newly written |
 | Figures | none reused |
@@ -73,12 +84,14 @@
 >
 > The present manuscript addresses exactly these questions with new data processing, new experiments and new
 > analyses:
-> - a rebuilt, audited dataset with strict elapsed-time windows;
-> - strict leave-one-subject-out evaluation with nested model selection and a leakage gate;
+> - a rebuilt, audited canonical dataset with a timestamp-complete primary cohort and strict elapsed-time windows;
+> - strict leave-one-subject-out evaluation with frozen nested model selection, a training-mean reference and a
+>   leakage gate;
 > - a re-evaluation of the movement and contact representations under this protocol;
-> - chronological user personalization with 0–14 adaptation nights, which shows both large offset corrections and
->   negative transfer;
+> - chronological user personalization with 0–14 adaptation nights on a fixed future test span, with a
+>   negative-transfer analysis: it shows both large offset corrections and negative transfer;
 > - night-level uncertainty and sensitivity analyses;
-> - a de-identified reproduction package.
+> - a de-identified reproduction package, prepared as a release candidate (its public release is pending).
 >
-> No text, figure or table of the conference paper is reused. [PI: confirm the copyright status.]
+> No text, figure or table of the conference paper is reused, and its results are not compared numerically with the
+> journal results. [PI: confirm the copyright status.]
