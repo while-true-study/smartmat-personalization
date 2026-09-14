@@ -1485,3 +1485,28 @@ Note (P7 build, 2026-09-14):
 - The public P5 plan also drops the P3 run ids and local run paths (`p3_run_id`, `p3_run_dir`); their run ids carry
   run dates. Every other value, and the key types, are unchanged; the build checks this.
 - The metadata files are stored byte-exact in Git (`.gitattributes`), because `manifest.json` hashes them.
+
+## D-051 — P7 release-candidate checkpoint tag `p7-release-candidate` (repository metadata only)
+Date: 2026-09-14
+Status: Accepted
+Context:
+- RESEARCH_PROTOCOL §5 defined no freeze tag for P7. Its exit criterion "release subset approved" is still a PI
+  decision (P7 report §14).
+- The research lead decided to mark the completed P7 release-candidate state explicitly before P8, as for P4 (D-046)
+  and P6 (D-048).
+Decision:
+- The annotated tag `p7-release-candidate` (tag object `88c98b3`) was created on the P7 merge commit `c9c15bc` (PR #8)
+  and pushed. P8 starts from it (branch `paper/p8-manuscript`).
+- **It is a reproducibility checkpoint, not a public release.** It marks the repository state in which
+  `public_release_v1` was built, validated and shown to reproduce the P3–P6 results from a clean checkout.
+- **Still pending:** the code and data license, the external hosting and DOI, the PI's approval of the release subset
+  and of the final release, and the public scope of the absolute dates in committed repository files.
+- Protocol v1.0, the splits, canonical_v1, the release package and the P3–P7 results are unchanged. Tags are still
+  never moved, deleted or re-pointed.
+- RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 now list the tag.
+Evidence: tag `p7-release-candidate` → `c9c15bc3ae67cafe783360011c87e5b6ccdc5daf` locally and on origin; merge
+parents `16980ae` (main after P6) and `43e2fec` (P7 branch head); merge tree equal to the P7 branch tree;
+`docs/P7_REPRODUCIBILITY_PUBLIC_RELEASE_REPORT.md`, `docs/P7_PUBLIC_RELEASE_CHECKLIST.md`.
+Consequence: the P0 and P2–P7 boundaries are tagged. `v1.0-paper` stays reserved for the final validated manuscript
+and release state (P8). It may not state that the data are public, that a DOI or license exists, or that the PI has
+approved, until each is actually resolved.

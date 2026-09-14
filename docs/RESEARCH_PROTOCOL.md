@@ -86,7 +86,7 @@ criteria are met, its decisions are recorded in `DECISIONS.md`, and its Pull Req
 | P4 | Feature Ablation | Answer RQ3 (movement-derived vs contact-structure features). | Ablation results under the frozen protocol. | `p4-feature-ablation` (added after the merge, D-046) |
 | P5 | User Personalization | Answer RQ2 (chronological fine-tuning, adaptation budget). | Main personalization experiment complete and reproduced. | `p5-personalization` |
 | P6 | Robustness & Statistical Analysis | Uncertainty, sensitivity and robustness of P3–P5 results. | Pre-declared statistics reported for all subjects and folds. | `p6-robustness` (added after the merge, D-048) |
-| P7 | Reproducibility & Public Data Release | Release a derived, anonymised dataset and an end-to-end reproduction path. | Release subset approved (DATA_POLICY §5); reproduction verified from scratch. | — |
+| P7 | Reproducibility & Public Data Release | Release a derived, anonymised dataset and an end-to-end reproduction path. | Release subset approved (DATA_POLICY §5); reproduction verified from scratch. | `p7-release-candidate` (added after the merge, D-051; a release candidate, not a public release) |
 | P8 | Manuscript & Final Release | Paper, figures and tables generated from tagged code and data. | Every reported number traced to a run; final freeze. | `v1.0-paper` |
 
 Lifecycle rules:

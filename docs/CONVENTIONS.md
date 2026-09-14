@@ -133,7 +133,8 @@ A PR is merged only when tests and raw-integrity checks pass on its head commit.
 ### 6.5 Tags
 Annotated tags, created on `main` after the phase PR is merged, only for the freeze points listed in
 `RESEARCH_PROTOCOL.md` §5 (`p0-data-freeze`, `p2-protocol-freeze`, `p3-loso-baseline`,
-`p4-feature-ablation` (D-046), `p5-personalization`, `p6-robustness` (D-048), `v1.0-paper`). Tags are never moved, deleted or re-pointed; a correction gets a
+`p4-feature-ablation` (D-046), `p5-personalization`, `p6-robustness` (D-048), `p7-release-candidate` (D-051),
+`v1.0-paper`). Tags are never moved, deleted or re-pointed; a correction gets a
 new tag (e.g. `p0-data-freeze-r2`) and a decision entry.
 
 ### 6.6 Commits
