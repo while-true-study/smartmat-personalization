@@ -16,9 +16,9 @@
   },
   "base_tag": "p6-robustness",
   "base_tag_commit": "16980ae0095e79535b81999aed01d3240c8b560d",
-  "builder_code_commit": "2e9ec9c1177a1abeb8612685f6adc7302c2ddc4b",
+  "builder_code_commit": "5ff6a5240ca6e767c23e320c16cea6fee0aeca16",
   "builder_sha256": {
-    "src/data/public_release.py": "c3d45d26cfae22cce796c60ea8b231e788f9c12d7e37e2bb07e3f9de99bb8216",
+    "src/data/public_release.py": "f84fa698182949a068cd190fdf73e680469c24a9cf7f2a900c202dca445adc66",
     "scripts/build_public_release.py": "c1173a7e42aa3a1ad3c4a1c6527a8744f829d6e3965494373000664e179395e1"
   },
   "p5_plan_sha256": "eef1a6db598fe188caa860304e6a897d2ac3b615b2f035bc42c314ce2a91d92d",
@@ -86,30 +86,35 @@
       "source_id": "user01_metadata",
       "dataset_role": "restricted_metadata",
       "exclusion_reason": "restricted_metadata",
+      "exclusion_confirmed_by": "",
       "exclusion_decision": "D-008"
     },
     {
       "source_id": "user02_legacy_csv",
       "dataset_role": "auxiliary",
       "exclusion_reason": "auxiliary_not_used_by_protocol_v1.0",
+      "exclusion_confirmed_by": "",
       "exclusion_decision": "D-023"
     },
     {
       "source_id": "user02_mat_22480_prefix_mismatch",
       "dataset_role": "quarantined",
       "exclusion_reason": "quarantined",
+      "exclusion_confirmed_by": "",
       "exclusion_decision": "D-023"
     },
     {
       "source_id": "user03_legacy",
       "dataset_role": "auxiliary",
       "exclusion_reason": "auxiliary_not_used_by_protocol_v1.0",
+      "exclusion_confirmed_by": "",
       "exclusion_decision": "D-023"
     },
     {
       "source_id": "user06_auxiliary",
       "dataset_role": "excluded_invalid",
       "exclusion_reason": "provider_confirmed_setting_issue",
+      "exclusion_confirmed_by": "data_provider",
       "exclusion_decision": "D-017"
     }
   ],
