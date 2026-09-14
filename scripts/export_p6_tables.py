@@ -281,6 +281,7 @@ def blocks(t: dict[str, list[dict]]) -> dict[str, str]:
         for name in names:
             mean = [r for r in dc if r["stratum"] == name and r["seed"] == "mean" and r["target"] == tgt]
             if not mean:
+                rows.append([tgt, name, 0, 0, "", "", "", "", "empty stratum", "empty stratum"])
                 continue
             g = {(r["budget_nights"], r["metric"]): r for r in mean}
             bt_d = [r for r in db if r["stratum"] == name and r["target"] == tgt]
