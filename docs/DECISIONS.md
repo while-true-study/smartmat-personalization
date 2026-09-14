@@ -1282,3 +1282,93 @@ Decision:
 Evidence: tag `p4-feature-ablation` → `977b33d` locally and on origin; branch `experiment/p5-personalization` starts
 from it.
 Consequence: P0, P2, P3 and P4 boundaries are tagged. The P5 tag (`p5-personalization`) follows the P5 merge.
+
+## D-047 — P6 robustness and uncertainty analysis plan
+Date: 2026-09-14
+Status: Accepted
+Context:
+- P6 quantifies the uncertainty and robustness of the P3–P5 results. The P5 results, including the observed
+  negative transfer (User07 temperature at every budget; User01 humidity at b = 1–7), were known when this entry was
+  written (`docs/P5_PERSONALIZATION_REPORT.md`). No P6 quantity had been computed.
+- P6 is analysis-only. It reads frozen artifacts: committed P5 tables, the P5 run predictions (reproducible bitwise
+  from `bce5e06`) and canonical_v1.
+- No model is trained, re-selected or re-evaluated. No protocol item, split, plan, recipe, P3/P4/P5 result or P5
+  conclusion changes. P5 primary numbers stay those of the P5 report.
+Decision:
+**A. Pre-declared by protocol v1.0** (D-041, `protocol.yaml` `metrics.bootstrap`, D-038):
+1. **Night-level paired cluster bootstrap of the P5 adaptation effect.** Adapted model (b ∈ {1, 3, 7, 14}) vs base
+   model (b = 0), per subject × target × budget.
+   - Source: `paper/tables/p5_per_night.csv`, primary-test nights only (`primary_test` = 1).
+   - A pair is the same subject and night. Base and adapted must have the same nights and the same window count per
+     night, otherwise the analysis fails.
+   - Primary: seed 0, adapted against its own base model.
+   - Resampling: nights with replacement, keeping every window of a resampled night (cluster bootstrap); 2,000
+     resamples.
+   - RNG: `numpy.random.default_rng(0)`, drawn once per subject. The same resampled nights are used for base and
+     adapted, both targets and every budget.
+   - Statistic: the subject-level metric over the resampled windows, window-weighted over nights: MAE = Σ n·MAE / Σ n;
+     RMSE = √(Σ n·RMSE² / Σ n); bias = Σ n·bias / Σ n.
+     - ΔMAE = MAE_base − MAE_adapted;
+     - ΔRMSE likewise;
+     - Δ|bias| = |bias_base| − |bias_adapted| (= C_b).
+     - Positive means adaptation is better.
+   - Point estimate: the full sample (it equals the P5 seed-0 values).
+   - Interval: the 2.5 and 97.5 percentiles (numpy linear).
+   - Also reported, descriptively: the mean and median of the per-night ΔMAE (unweighted over nights), the share of
+     nights with ΔMAE > 0, and the number of nights.
+   - Seeds 1 and 2 get the same procedure in a separate seed-sensitivity table. They are never pooled with seed 0.
+   - Wording: "within-subject night-level bootstrap interval". There are no p-values, no window-level tests and no
+     inference across the three subjects.
+2. **Heater-context strata.** The category is pre-declared (D-038, D-041); its operational definition is fixed here,
+   after the P5 results were seen.
+   - Scope: User02 (both mats) windows of the primary span.
+   - Strata, by the most recent AHON or AHOF control code on the same device within 60 min before the window's target
+     timestamp:
+     - `after_AHON_60min`;
+     - `after_AHOF_60min`;
+     - `no_AHON_AHOF_60min` otherwise.
+   - The codes come from canonical `event_raw` (`domain_shift.parse_event`). They are used for test-time
+     stratification only, never as inputs, and no heater state is reconstructed.
+   - The strata are crossed with mat (22480 / 22482) and the 22482 quality phase.
+3. n = 3: there is no population-level inference.
+
+**B. Added after the P5 results were observed** (post-hoc secondary / robustness analyses; they never replace the
+P5 primary results):
+4. **Drift sensitivity** of the evaluation start night.
+   - Grid: s ∈ {12, 14, 16, 18, 21}. The span is the nights with ordinal ≥ s.
+   - Metrics are recomputed from `p5_per_night.csv` (window-weighted) for seeds 0–2. Reported: the seed mean, the
+     seeds on each side, and ΔE and G against b = 0 on the same span.
+   - A budget is evaluated at s only if its adaptation and buffer nights precede s (b + 1 < s). b = 14 is therefore
+     not evaluated at s = 12 and s = 14: its adaptation nights are 1–14 and its buffer night 15. This exclusion is
+     fixed before any result.
+   - Every other combination is feasible. The minimum is 10 nights per span; the shortest is User02 at s = 21, with
+     31 nights.
+   - s = 16 must reproduce the P5 primary values.
+5. **Temporal target-level trajectory** per subject × target.
+   - Per-night mean of the labelled window targets (RQ2 windows at b = 0).
+   - A centred rolling mean over 7 recorded nights, truncated at the ends of the series.
+   - Adaptation-span means (b = 1, 3, 7, 14), the primary-span mean, and the future-span mean for every s in the drift
+     grid, with their differences; the base model's training-pool mean (outer scaler mean).
+   - Descriptive consistency check per subject × target × budget: the expected direction is improvement if
+     |adaptation mean − primary mean| < |bias₀| (P5 seed-mean base bias on the primary span), otherwise worsening.
+     This is compared with the sign of the P5 G. It shows association only.
+6. **User02 residual device diagnostics** for each mat × {all, 22482 quality phase, heater context}:
+   - number of nights and windows; MAE, RMSE and bias at b = 0…14 (seed mean and seed 0);
+   - for strata with ≥ 10 nights: a seed-0 night-cluster paired bootstrap (the same procedure as item 1, over the
+     nights holding the stratum) of ΔMAE for b = 0 vs b = 14, and of the b = 14 bias;
+   - smaller strata (e.g. `p1_transition`, one night) are descriptive only.
+
+**C. Not executed in this P6 core:**
+- **20/30 s sensitivity windows.** The windows are pre-declared (D-032, `protocol.yaml` `sensitivity_candidates_s`),
+  but v1.0 does not specify which models, search, selection or phases they apply to. Running them needs new model
+  training, which is outside this analysis-only P6. They are deferred until a decision fixes the procedure.
+- **4095 sensitivity** (D-033). No procedure is declared and it needs training; deferred likewise.
+- **Bias-only calibration and other adaptation recipes** are not part of v1.0. They are only proposed as a possible
+  secondary experiment.
+
+**Reproduction criterion:** the P6 analysis is deterministic. A clean checkout of the P6 code commit regenerates the
+P3 base models and the P5 runs, then the P6 analysis. Every P6 table and the figure data must be byte-identical.
+Evidence: D-032, D-033, D-038, D-041; `docs/P5_PERSONALIZATION_REPORT.md`. This entry was written after the P3–P5
+results were seen and before any P6 computation.
+Consequence: every P6 quantity is either the pre-declared uncertainty analysis (A) or labelled post-hoc (B). None
+changes a P5 number or conclusion. Deferred items (C) need their own decision before they are run.
