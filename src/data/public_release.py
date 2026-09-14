@@ -234,7 +234,8 @@ def public_split_rows(split_dir: Path, anchors: dict[str, int]) -> dict[str, tup
 
 
 def public_plan(plan: dict, anchors: dict[str, int]) -> dict:
-    """The committed P5 plan with every night id mapped to its D-049 key; nothing else changes."""
+    """The committed P5 plan with every night id mapped to its D-049 key and the P3 run ids / local run paths removed;
+    every other value is unchanged."""
     doc = json.loads(json.dumps(plan))
     for s, rec in doc["subjects"].items():
         a = anchors[s]
@@ -248,7 +249,8 @@ def public_plan(plan: dict, anchors: dict[str, int]) -> dict:
             b["later_test_first"] = night_key_date(b["later_test_first"], a)
             b["later_test_last"] = night_key_date(b["later_test_last"], a)
     doc["description"] = ("Public copy of configs/experiments/v1.0/p5_personalization_plan.yaml (public_release_v1; "
-                          "night ids mapped to D-049 relative night days; every other value unchanged)")
+                          "night ids mapped to D-049 relative night days; P3 run ids and local run paths removed; "
+                          "every other value unchanged)")
     doc["night_id_representation"] = "D#### relative night day (D-049)"
     return doc
 
@@ -315,13 +317,17 @@ class PublicRelease:
             bad = [a for a, h in self.manifest["artifacts_sha256"].items() if sha256_file(self.root / a) != h]
             if bad:
                 raise ReleaseError(f"artifacts differ from the manifest: {bad}")
+        self.verify = verify
         self.w = read_windows(self.root / "windows.parquet")
         self._splits: dict[str, list[dict]] = {}
 
     def split(self, rel: str) -> list[dict]:
         from src.evaluation import splits as S
         if rel not in self._splits:
-            self._splits[rel] = S.read_split(self.root / "splits" / rel)
+            p = self.root / "splits" / rel
+            if self.verify and sha256_file(p) != self.manifest["artifacts_sha256"][f"splits/{rel}"]:
+                raise ReleaseError(f"splits/{rel} differs from the manifest")
+            self._splits[rel] = S.read_split(p)
         return self._splits[rel]
 
     def split_dir(self) -> Path:
