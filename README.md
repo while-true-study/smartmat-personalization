@@ -23,10 +23,11 @@ whether short user-specific adaptation helps.
 - [x] P3 Strict LOSO Baseline (merged; tag `p3-loso-baseline`; `docs/P3_STRICT_LOSO_BASELINE_REPORT.md`)
 - [x] P4 Feature Ablation (merged; tag `p4-feature-ablation`; `docs/P4_FEATURE_ABLATION_REPORT.md`)
 - [x] P5 User Personalization (merged; tag `p5-personalization`; `docs/P5_PERSONALIZATION_REPORT.md`)
-- [x] P6 Robustness & Statistical Analysis (analysis complete and reproduced;
-  `docs/P6_ROBUSTNESS_STATISTICAL_ANALYSIS_REPORT.md`; `experiment/p6-robustness`, pending merge)
-- [ ] P7 Reproducibility & Public Data Release  ← **current phase** (starts from `main` after the P6 merge)
-- [ ] P8 Manuscript & Final Release
+- [x] P6 Robustness & Statistical Analysis (merged; tag `p6-robustness`; `docs/P6_ROBUSTNESS_STATISTICAL_ANALYSIS_REPORT.md`)
+- [x] P7 Reproducibility & Public Data Release (release candidate `public_release_v1` reproduced from a clean checkout;
+  `docs/P7_REPRODUCIBILITY_PUBLIC_RELEASE_REPORT.md`; external publication pending the license, hosting and PI
+  approval, `docs/P7_PUBLIC_RELEASE_CHECKLIST.md`)
+- [ ] P8 Manuscript & Final Release  ← **current phase** (starts from `main` after the P7 merge)
 
 Current status: P0 is closed and tagged `p0-data-freeze`.
 - The data audit is summarised in `docs/P0_DATASET_AUDIT_REPORT.md`, and the frozen policies are in
@@ -43,8 +44,13 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
 - P5 (chronological user personalization, RQ2) is complete: `docs/P5_PERSONALIZATION_REPORT.md`
   (`scripts/run_p5_personalization.py`; D-045), tag `p5-personalization`.
 - P6 (robustness and statistical analysis) is complete: `docs/P6_ROBUSTNESS_STATISTICAL_ANALYSIS_REPORT.md`
-  (`scripts/run_p6_robustness.py`; D-047). It is analysis-only and changes no P3–P5 result.
-- P7 (reproducibility and public data release) is the next phase.
+  (`scripts/run_p6_robustness.py`; D-047), tag `p6-robustness`. It is analysis-only and changes no P3–P5 result.
+- P7 (reproducibility and public data release) is complete as a release candidate:
+  `docs/P7_REPRODUCIBILITY_PUBLIC_RELEASE_REPORT.md` (D-049, D-050).
+  - The de-identified window release `public_release_v1` reproduces every P3–P6 result from a clean checkout
+    (see "Reproducing the results from the public release" below).
+  - External publication waits for the license, hosting/DOI and PI approval (`docs/P7_PUBLIC_RELEASE_CHECKLIST.md`).
+- P8 (manuscript and final release) is the next phase.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
