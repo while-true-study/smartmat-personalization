@@ -51,3 +51,19 @@
   - the privacy-preserving reproduction package.
 - **Disclosure:** the manuscript cites the conference paper in the Introduction and notes it on the first page. The
   cover letter discloses the extension and lists the changes (`paper/manuscript/CONFERENCE_EXTENSION_DISCLOSURE_DRAFT.md`).
+
+## Text-overlap measurement (final integration pass)
+
+- **Method:** word n-gram shingles, lower-cased, with source tokens, citation keys and HTML comments removed. The
+  integrated manuscript was compared with the text extracted from the conference full paper (the verified PDF, kept
+  outside the repository) and with the authors' earlier late-fusion manuscript.
+- **Conference paper:** 7 shared 6-word shingles, 3 shared 8-word shingles and 1 shared 10-word shingle (of about
+  7,500 in the manuscript). All of them are two phrases:
+  - the method name "raw pressure sequences with movement-derived and contact-structure features", in the
+    Introduction sentence that describes the conference study and cites it;
+  - the keyword string "temperature and humidity estimation; temporal convolutional network".
+  No sentence is reused.
+- **Earlier late-fusion manuscript:** 0 shared shingles of 6 words or more.
+- **Tables and figures:** no conference table, figure or number appears. Figure 1 is a new schematic
+  (`paper/manuscript/FIGURE1_SCHEMATIC.md`). The Introduction states that the conference results are not compared
+  numerically, because the data policies differ.

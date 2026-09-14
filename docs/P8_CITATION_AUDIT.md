@@ -1,8 +1,9 @@
 # P8 — Claim-to-citation audit
 
-> **Every sentence in `paper/manuscript/manuscript.md` that cites an external source** (53 cited lines, extracted
-> mechanically), and every uncited external claim found on reading, was checked against the evidence in
-> `docs/P8_LITERATURE_EVIDENCE_MATRIX.md`, on 2026-09-14.
+> **Every sentence in `paper/manuscript/manuscript.md` that cites an external source** (53 cited lines in pass 3; 54
+> lines with 57 citation groups after the final integration pass, extracted mechanically), and every uncited external
+> claim found on reading, was checked against the evidence in `docs/P8_LITERATURE_EVIDENCE_MATRIX.md`, on 2026-09-14.
+> The final integration pass re-checked every cited sentence whose position or wording changed (§Final audit).
 > - **Status:** PASS = supported by the cited abstract (or full text where stated); WEAK = supported only in part;
 >   UNSUPPORTED = not supported.
 > - Every WEAK or UNSUPPORTED item was reworded, re-cited or removed before this audit was committed. The *Action*
@@ -13,7 +14,7 @@
 
 | # | Location | Claim (as written or condensed) | Keys | Support | Status | Action |
 |---|---|---|---|---|---|---|
-| 1 | first-page note; §1 ¶3; §2.1 ¶3 | The conference study fused raw, movement and contact features in a TCN, evaluated fixed-length sequences, disclaimed strict elapsed-time/LOSO interpretation, and left strict LOSO and user adaptation to future work | maeng2026icfice | full paper read | PASS | — |
+| 1 | first-page note; §1 ¶3; §1 "Relation to the conference study"; §2.1 ¶3 | The conference study fused raw, movement and contact features in a TCN, evaluated fixed-length sequences, disclaimed strict elapsed-time/LOSO interpretation, and left strict LOSO and user adaptation to future work | maeng2026icfice | full paper read | PASS | — |
 | 2 | §1 ¶1 | Pressure mats and bedsheets have been used to monitor sleep posture | liu2013dense, yousefi2011bed | both abstracts | PASS | — |
 | 3 | §1 ¶1 | … and breathing | carbonaro2021textile | abstract (breathing rate extraction) | PASS | — |
 | 4 | §1 ¶1 | Part of a broader effort to replace laboratory sleep studies by unobtrusive home monitoring | matar2018unobtrusive | abstract (alternatives to PSG usable at home) | PASS | — |
@@ -48,7 +49,7 @@
 | 33 | §2.3 scope gap | Regression of environmental quantities for unseen users under combined shift, with chronological adaptation and a fixed later test span, is less examined | — | author scope judgement, stated as a gap without "first" or "novel" | PASS | the "usually with cross-validation over comparable periods" clause was removed (unsupported generalisation) |
 | 34 | §2.4 | Training and later data can follow different distributions; transfer learning addresses this | pan2010survey | abstract | PASS | not cited for negative transfer (outside its abstract) |
 | 35 | §2.4 | Negative transfer has motivated many remedies | zhang2023negative | abstract ("various approaches have been proposed") | PASS | — |
-| 36 | §2.4; §5.6 | Soft-sensor adaptation mechanisms organised around concept drift | kadlec2011adaptation | abstract seen only via a search summary of the publisher page; metadata verified | PASS (moderate) | flagged in the matrix; replace with a directly read source if one becomes available |
+| 36 | §2.4; §5.6 | Soft-sensor adaptation mechanisms (moving windows, recursive updates, ensembles) organised around concept drift; adaptive estimators as a candidate safeguard | kadlec2011adaptation | publisher page confirmed directly by the authors (final integration pass); Crossref metadata match | PASS (strong) | upgraded from moderate. Both sentences stay inside the source's scope: adaptive soft sensing and adaptation frameworks. No sentence uses it for personalization effectiveness or negative transfer in this application |
 | 37 | §2.4 | Low-cost environmental sensors are error-prone and drift; calibration and in situ recalibration maintain data quality | maag2018calibration, delaine2019insitu | abstracts | PASS (after fix) | WEAK before: "recalibration is a standard way" was stronger than the abstracts. Reworded |
 | 38 | §3.4 | The TCN follows the generic design: causal dilated convolutions, residual blocks with a 1×1 convolution when channels change | bai2018tcn | full text §3 (figure: d = 1, 2, 4; 1×1 residual convolution) | PASS | — |
 | 39 | §3.5.4 | Leakage: information about the target not available in deployment | kaufman2012leakage | abstract | PASS | — |
@@ -63,7 +64,10 @@
 | §1 ¶2 | Estimating from existing signals avoids adding and maintaining further sensors | PASS (logical consequence; no citation needed) | — |
 | §3.1 | The mats contain a heater under firmware control that writes control codes | PASS (project data documentation, D-038) | — |
 | §3.3 | Overlapping windows are not independent | PASS (cited, #24) | — |
-| Featured Application | Potential application; use would need calibration and drift safeguards | PASS (conditional, no performance claim) | — |
+| Featured Application | Evaluation framework; "in three held-out cases" adaptation corrected offsets or produced negative transfer | PASS (case-level, past tense; no clinical, pressure-injury or population claim) | final wording of the integration pass |
+| §1 "Relation to the conference study" | What the conference study did and did not evaluate | PASS (verified against the full conference paper, `docs/P8_CONFERENCE_EXTENSION_MAP.md`) | cited to `maeng2026icfice` |
+| §3.1 | The conference recordings without second-level timestamps are consistent with the retained legacy minute-resolution lineage; exact file-level identity is not assumed | PASS (project data documentation; wording fixed in pass 3) | — |
+| §3.8; Acknowledgments | Generative-AI uses, tools and author-side controls | PASS (project records: D-052, `docs/P8_FINAL_BLOCKERS.md` §2); PI approval pending (OPEN-28) | — |
 
 ## Removed or not used
 
@@ -78,6 +82,21 @@
 - **42 cited claims, all PASS now.**
   - 7 were WEAK at audit and corrected before commit: #11, #16, #19, #21, #37, #40, and the §2.3 clause in #33.
   - Earlier corrections made while drafting are recorded in the Action column: #5, #7, #8, #15, #41.
-  - None remains WEAK or UNSUPPORTED. One reference (Kadlec 2011) stands on moderate evidence and is flagged.
+  - None remains WEAK or UNSUPPORTED. Kadlec 2011, flagged as moderate in pass 3, is strong since the final
+    integration pass (#36).
 - **Coverage:** all 31 bibliography entries are cited, and every citation key exists in `references.bib`. No
   `[CITE: …]` placeholder remains.
+
+## Final audit (final integration pass, 2026-09-14)
+
+The checks below ran as scratch scripts on the integrated `manuscript.md`. They are not yet the planned
+`scripts/validate_manuscript_results.py` (`docs/P8_FINAL_BLOCKERS.md` §3).
+
+| Check | Result |
+|---|---|
+| **A. Numerical** | 102 source tokens, each resolving to exactly one cell of a frozen table (the two cohort-mean tokens left the Abstract; one count token was added in §5.1). Decimals typed outside tokens are only section numbers and design constants (dropout 0.1/0.3, 0.1 × learning rate, 95 %, 100 %RH). The Abstract renders to 200 words with 3 tokens |
+| **B. Citations** | 31 keys cited = 31 `references.bib` entries; none missing, none uncited, no duplicate key; 54 lines with 57 citation groups; no `[CITE` placeholder. Re-checked where the wording or position changed: #1 (new "Relation to the conference study" paragraph), #36 (Kadlec, now strong, scope unchanged), #40–#41 (§5.1 restructured; the calibration and drift/negative-transfer parallels stay in separate, explicitly interpretive sentences after the account, never attached to a result sentence), #42 (§5.6). All PASS |
+| **C. Privacy** | Manuscript and drafts: no ISO date, month, season label, excluded-source subject id, local path or e-mail address. The only month is the conference venue date in the disclosure draft, a bibliographic date the notes allow. The five-channel source appears only in the approved public wording (disclosure draft; extension map), never in the manuscript. No restricted metadata |
+| **D. Claims** | Scan for significant/remarkable/dramatic, first/novel, universal, every seed/all seeds, causes, few-shot, robust personalization, domain invariance, end-to-end, publicly available, population, prove, superior. Every hit is a negation or a defined use: "no population-level significance", "not population estimates", "does not show that temporal drift causes", "not literally invariant for every seed–start combination", "not an end-to-end rerun", "we do not claim that it is superior". No population inference, no causal drift claim, no all-seed User07 claim, no universal personalization benefit |
+| **E. Conference overlap** | no reused sentence, table or figure (`docs/P8_CONFERENCE_OVERLAP_AUDIT.md`, text-overlap measurement) |
+| **Placeholders** | 20 bracketed placeholders remain, plus the reference-list rendering note: title, authors, first-page note, keywords, reproducibility placement, data/code repository, DOI ×2, license ×2, interim access and code availability PI decisions, IRB, informed consent, other acknowledgments, other GenAI tools, CRediT, funding, conflicts. Each is written as a placeholder, none as a fact, and each maps to `docs/P8_FINAL_BLOCKERS.md` |

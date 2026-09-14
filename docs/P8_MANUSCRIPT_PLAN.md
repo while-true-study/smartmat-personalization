@@ -284,8 +284,11 @@ The PI items are tracked in `docs/DECISIONS.md`:
 - OPEN-25 repository dates;
 - OPEN-26 ethics/IRB;
 - OPEN-27 conference paper;
-- OPEN-28 generative-AI disclosure (MDPI template requirement, added in pass 3).
+- OPEN-28 generative-AI disclosure (MDPI template requirement, added in pass 3; drafted in the final integration
+  pass, D-052, PI approval pending).
 Funding also stays a PI placeholder: the conference paper's funding statement is not carried over.
+**The compact, current list of all open items is `docs/P8_FINAL_BLOCKERS.md`** (final integration pass). It
+supersedes the table above where they differ.
 
 **Gates to `v1.0-paper`:**
 - every manuscript number validated against the frozen tables;
@@ -306,3 +309,11 @@ Until then the drafts keep the placeholders `[DATA REPOSITORY]`, `[DOI]`, `[LICE
 4. **Prose:** section by section from the skeleton, claims as in §3.
 5. **Validation:** manuscript validator, privacy review, internal consistency with the P3–P7 reports.
 6. **Final metadata:** blockers resolved or stated as open; `v1.0-paper` only after the gates in §9.
+
+**Passes as run:**
+1. architecture;
+2. conference verification and prose;
+3. literature and citations;
+4. final integration: GenAI disclosure, captions, title comparison, final audit.
+The table export, the figure re-rendering and the manuscript validator (items 3 and 5 of the list above) remain
+production items (`docs/P8_FINAL_BLOCKERS.md` §3).

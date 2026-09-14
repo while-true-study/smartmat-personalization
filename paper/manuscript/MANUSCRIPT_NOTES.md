@@ -6,10 +6,13 @@ Working rules for `paper/manuscript/`. The plan is `docs/P8_MANUSCRIPT_PLAN.md`.
 
 | File | Content |
 |---|---|
-| `manuscript.md` | the drafting source (Markdown). First pass: architecture skeleton with evidence notes and source tokens |
-| `DATA_AVAILABILITY_DRAFT.md`, `CODE_AVAILABILITY_DRAFT.md` | back-matter drafts with explicit placeholders |
-| `RELATED_WORK_GAPS.md` | literature topics still to be searched and verified |
-| `references.bib` | verified references only (empty until the literature pass) |
+| `manuscript.md` | the drafting source (Markdown). Final integration pass: integrated scientific draft with source tokens, captions and placeholders |
+| `DATA_AVAILABILITY_DRAFT.md`, `CODE_AVAILABILITY_DRAFT.md` | back-matter drafts with explicit placeholders; the manuscript carries their current-state text |
+| `CONFERENCE_EXTENSION_DISCLOSURE_DRAFT.md` | conference-extension disclosure and cover-letter paragraph |
+| `AUTHOR_CONTRIBUTIONS_DRAFT.md` | CRediT skeleton; every role `[CONFIRM]` |
+| `FIGURE1_SCHEMATIC.md` | Figure 1 specification and diagram source (no data) |
+| `RELATED_WORK_GAPS.md` | resolved topic → section → reference map |
+| `references.bib` | 31 verified references |
 | `tables/`, `figures/` | created by the export step (planned); never edited by hand |
 
 ## Source tokens
@@ -52,10 +55,16 @@ Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, sele
 | `[CITE: <topic>]` | retired in pass 3; none remain. Any new claim needing literature gets a verified reference or is reworded |
 | `[ICFICE CITATION]` | retired in pass 3; replaced by `[@maeng2026icfice]` (bibliographic details pending, OPEN-27) |
 | `[FUNDING TO BE CONFIRMED BY PI]` | the conference paper's funding is not carried over |
-| `[GENERATIVE-AI DISCLOSURE REQUIRED]` / `[GENERATIVE-AI STATEMENT REQUIRED]` | MDPI template requirement (OPEN-28) |
-| `[DATA REPOSITORY]`, `[DOI]`, `[LICENSE]` | open publication decisions (P7 checklist D1–D2) |
+| `[GENERATIVE-AI DISCLOSURE REQUIRED]` / `[GENERATIVE-AI STATEMENT REQUIRED]` | retired in the final integration pass: §3.8 and the Acknowledgments carry the drafted disclosure (D-052), pending PI approval (OPEN-28) |
+| `[OTHER GENERATIVE-AI TOOLS, IF ANY: …]` | tools used outside the inventoried repository sessions; version as `[VERSION TO BE CONFIRMED]` until known (`docs/P8_FINAL_BLOCKERS.md` §2) |
+| `[DATA REPOSITORY]`, `[CODE REPOSITORY]`, `[DOI]`, `[LICENSE]` | open publication decisions (OPEN-22, OPEN-23) |
 | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]` | institutional ethics information; the provider permission (D-002) is not an IRB approval |
-| `[PI DECISION: …]` | any other decision reserved for the PI |
+| `[INFORMED CONSENT WORDING REQUIRED FROM PI]` | the consent statement; the provider's consent confirmation is a note for the PI, not the statement |
+| `[AUTHORS AND AFFILIATIONS — PI]`, `[CRediT ROLES — PI]`, `[CONFIRM]` | author list and roles; nothing assigned before PI confirmation |
+| `[TITLE — PI DECISION …]`, `[FINAL LIST: PI]` | final title and keywords (`docs/P8_TITLE_CANDIDATES.md`) |
+| `[PI DECISION: …]`, `[PI]` | any other decision reserved for the PI |
+
+A placeholder is never replaced by an assumed value. `docs/P8_FINAL_BLOCKERS.md` lists every open item with its owner.
 
 ## Privacy rules for manuscript content
 
@@ -87,7 +96,7 @@ Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, sele
 - **Artifact counts:** `paper/tables/` holds 38 CSV artifacts, 35 reproduced result tables and 3 selection/provenance
   records.
 
-## Section numbering (pass 2)
+## Section numbering (pass 2; unchanged in the final integration pass)
 
 1. Introduction
 2. Related Work (structure only)
@@ -99,3 +108,46 @@ Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, sele
 
 This follows the required-section list found for Applied Sciences (to confirm: `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`
 item 1).
+
+## Framing rules (final integration pass)
+
+**Research questions** (defined in §1, numbered as in `docs/RESEARCH_PROTOCOL.md`):
+- RQ1: strict LOSO;
+- RQ2: chronological personalization;
+- RQ3: feature families. RQ3 is **secondary** and is labelled that way in §3.5.2 and §4.2.
+
+**Evidence hierarchy:**
+- primary: P3 (strict LOSO failure and level offset), P5 (offset correction and negative transfer), P6 (night-level
+  uncertainty and robustness);
+- secondary: P4 (target-dependent but insufficient representation gains) and P7 (reproducibility).
+- The Abstract names no P4 number.
+
+**Terminology:**
+
+| Use as primary framing | In the manuscript | Do not use as framing |
+|---|---|---|
+| chronological personalization; limited-data user adaptation | title, §1, §3.5.3, §4.3, §5 | few-shot success |
+| unseen-domain generalization | "unseen domain" in the Abstract, §1, §3.1 and §7 | user-independent universal model |
+| systematic level offset | §1, §4.1, §5.1 | domain invariance |
+| temporal level mismatch | §4.5 | robust personalization |
+| negative transfer: the adapted model is worse than its own base model on the same test nights (G_b < 0) | defined in §3.6 | "failure" without a reference |
+
+- "Unseen-subject" and "unseen-user" may describe the fold design (one subject held out). Wherever the shift is
+  interpreted, the text also states that it is a combined subject–period–season–device shift.
+
+**Other rules:**
+- **Discussion question:** §5.1 asks why the same recipe helps one held-out domain and hurts another. Its account is
+  descriptive, and the level-mismatch agreement is always called post hoc.
+- **Negative results:** they are listed together in §5.3 and are never dropped from the Abstract, Results or
+  Conclusions.
+- **Reproduction scope:** write "the selected models, predictions and result tables were reproduced; the
+  hyperparameter searches were not rerun". Never write "all experiments were reproduced end-to-end".
+- **Generative AI:** §3.8 and the Acknowledgments may name only inventoried tools (`docs/P8_FINAL_BLOCKERS.md` §2).
+  No text may say that a tool decided the protocol, the analysis or a result.
+- **Kadlec 2011:** cited only for adaptive soft sensing and adaptation frameworks under distribution change, never for
+  personalization effectiveness or negative transfer in this application.
+
+**Figures and tables:**
+- main: Tables 1–5 and Figures 1–4;
+- supplementary: Tables S1–S19 and Figures S1–S4 (`docs/P8_TABLE_FIGURE_SELECTION.md` §4).
+- Captions sit at the first citation, as the template requires (requirements item 14).
