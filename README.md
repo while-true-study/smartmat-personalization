@@ -22,10 +22,10 @@ whether short user-specific adaptation helps.
 - [x] P2 Evaluation Protocol & Split Freeze (merged; tag `p2-protocol-freeze`)
 - [x] P3 Strict LOSO Baseline (merged; tag `p3-loso-baseline`; `docs/P3_STRICT_LOSO_BASELINE_REPORT.md`)
 - [x] P4 Feature Ablation (merged; tag `p4-feature-ablation`; `docs/P4_FEATURE_ABLATION_REPORT.md`)
-- [x] P5 User Personalization (results recorded and reproduced; `docs/P5_PERSONALIZATION_REPORT.md`;
-  `experiment/p5-personalization`, tag `p5-personalization` after the merge)
-- [ ] P6 Robustness & Statistical Analysis  ← **current phase** (starts from `main` after the P5 merge)
-- [ ] P7 Reproducibility & Public Data Release
+- [x] P5 User Personalization (merged; tag `p5-personalization`; `docs/P5_PERSONALIZATION_REPORT.md`)
+- [x] P6 Robustness & Statistical Analysis (analysis complete and reproduced;
+  `docs/P6_ROBUSTNESS_STATISTICAL_ANALYSIS_REPORT.md`; `experiment/p6-robustness`, pending merge)
+- [ ] P7 Reproducibility & Public Data Release  ← **current phase** (starts from `main` after the P6 merge)
 - [ ] P8 Manuscript & Final Release
 
 Current status: P0 is closed and tagged `p0-data-freeze`.
@@ -41,8 +41,10 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
 - P4 (feature-family comparison, RQ3) is complete: `docs/P4_FEATURE_ABLATION_REPORT.md`, tag `p4-feature-ablation`
   (D-046).
 - P5 (chronological user personalization, RQ2) is complete: `docs/P5_PERSONALIZATION_REPORT.md`
-  (`scripts/run_p5_personalization.py`; D-045). The `p5-personalization` tag follows the P5 merge.
-- P6 (robustness and statistical analysis) is the next phase.
+  (`scripts/run_p5_personalization.py`; D-045), tag `p5-personalization`.
+- P6 (robustness and statistical analysis) is complete: `docs/P6_ROBUSTNESS_STATISTICAL_ANALYSIS_REPORT.md`
+  (`scripts/run_p6_robustness.py`; D-047). It is analysis-only and changes no P3–P5 result.
+- P7 (reproducibility and public data release) is the next phase.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
