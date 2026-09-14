@@ -314,6 +314,7 @@ Until then the drafts keep the placeholders `[DATA REPOSITORY]`, `[DOI]`, `[LICE
 1. architecture;
 2. conference verification and prose;
 3. literature and citations;
-4. final integration: GenAI disclosure, captions, title comparison, final audit.
-The table export, the figure re-rendering and the manuscript validator (items 3 and 5 of the list above) remain
-production items (`docs/P8_FINAL_BLOCKERS.md` §3).
+4. final integration: GenAI disclosure, captions, title comparison, final audit;
+5. formatting and submission preparation: table export, figure rendering, reference rendering, submission candidate
+   and manuscript validator (items 3 and 5 of the list above; D-054).
+Open items: `docs/P8_FINAL_BLOCKERS.md`.

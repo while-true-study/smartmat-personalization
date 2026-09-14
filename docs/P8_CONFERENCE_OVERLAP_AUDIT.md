@@ -67,3 +67,14 @@
 - **Tables and figures:** no conference table, figure or number appears. Figure 1 is a new schematic
   (`paper/manuscript/FIGURE1_SCHEMATIC.md`). The Introduction states that the conference results are not compared
   numerically, because the data policies differ.
+
+## Formatting-pass re-check (2026-09-15)
+
+- **Manuscript prose:** unchanged. The source still shares only the method phrase and the keyword string with the
+  conference paper, as above. The keywords now differ from the conference paper's wording.
+- **Rendered manuscript and cover letter:** further shared shingles come from bibliographic text only:
+  - the conference paper's own title, quoted in the reference list, the first-page note and the cover letter;
+  - the titles of references that both papers cite, e.g. the generic TCN preprint and the microclimate reviews.
+  The earlier late-fusion manuscript overlaps only in such cited-reference titles.
+- **Tables and figures:** the generated Tables 1–5 and Figures 1–4 are built from the journal's frozen tables. None
+  is taken from the conference paper.

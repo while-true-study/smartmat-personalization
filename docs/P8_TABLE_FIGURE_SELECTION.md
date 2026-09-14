@@ -3,7 +3,7 @@
 > **This is a recommendation for PI review.**
 > - Nothing is deleted, and no committed table or figure changes.
 > - Main and supplementary items are selections or re-formatting of frozen artifacts, produced by a deterministic
->   export (`scripts/export_manuscript_tables.py`, planned). No new metric is computed.
+>   export (`scripts/export_manuscript_tables.py`, built in the formatting pass; §5). No new metric is computed.
 > - Public-facing versions use relative night identifiers only (P8 plan §8).
 
 ## 1. Main manuscript tables
@@ -123,3 +123,26 @@ The `{{TABLE:…}}` markers stay until the export script exists (`docs/P8_FINAL_
   - secondary: P4, labelled "(Secondary)" in §3.5.2 and §4.2, and P7 (reproducibility, §3.7).
 - **Main text size:** 5 tables and 4 figures. The other artifacts go to the supplement (§2); none of the 38 CSVs is
   inserted whole into the main text.
+
+## 5. Formatting pass: generated assets
+
+Built by `src/paper/` (D-054) and checked by `scripts/validate_manuscript_results.py`. The final layouts differ from
+§1 only where the formatting pass made them more compact. Every change is a selection of frozen cells.
+
+| Item | Final layout | Generated file |
+|---|---|---|
+| Table 1 | one row per subject: mat streams, sessions (per mat for User02), fold held out, labelled windows, primary test nights and windows, notes. Budgets and the buffer rule in the notes | `generated/tables/table1_dataset_protocol.{md,csv}` |
+| Table 2 | target × metric (MAE, RMSE, bias) × predictor (training-mean, RAW-TCN); columns User01, User02, User07 and "Unweighted mean across three held-out subjects". A note counts the subjects where the RAW-TCN MAE exceeds the training-mean MAE (temperature 3/3) | `table2_strict_loso` |
+| Table 3 | compact, marked secondary: 7 representations × {temperature MAE, Δ vs RAW (improved subjects), humidity MAE, Δ vs RAW (improved), User02 bias T and H}. Per-subject values move to S4–S7 (`p4_primary_summary` in S6) | `table3_feature_family` |
+| Table 4 | target × subject rows with "MAE (mean ± SD over seeds)" and "G_b, % (seeds improved)" for b = 0/1/3/7/14, plus the unweighted-mean MAE. G_b is defined in the notes; negative values are negative transfer | `table4_personalization` |
+| Table 5 | all 24 cells: ΔMAE (seed 0), 95 % interval, side of zero, seeds 1/2 side | `table5_night_robustness` |
+| Figures 1–4 | Figure 1 drawn from `paper/manuscript/FIGURE1_SCHEMATIC.md`; Figures 2–4 re-drawn from `p5_figure_data` / `p6_figure_data` without report titles, 300 dpi at print size | `generated/figures/figure1…4_*.png` |
+| Figures S1–S4 | S1 absolute bias; S2 start-span sensitivity (2 × 4 panels); S3 level trajectories; S4 User02 by mat | `generated/figures/figureS1…S4_*.png` |
+| Tables S1–S19 | CSV copies of the tables in §2 (S13 and S15 with night ordinals instead of calendar ids); S19 is a verbatim copy of P7 report §6, §8–§10 | `generated/supplementary/` (index `README.md`) |
+
+- **Precision:** two decimals for °C and %RH, one for percentages. Negative values use U+2212.
+- **Formatting QA:** no overlapping text in any figure (automated check); smallest text 6 pt at print size;
+  consistent units, `b = n` notation and ΔMAE = base − adapted; User02 is never counted as two subjects.
+- **Not in the supplement:** `p5_per_night` (calendar night ids; it is distributed through the release candidate with
+  relative keys), and the full-precision sources of Tables 2, 4 and 5 (`p3_primary_summary`, `p5_primary_mae`,
+  `p6_bootstrap_mae`), which the main tables show completely. `p4_primary_summary` is in S6 (per-subject family values).

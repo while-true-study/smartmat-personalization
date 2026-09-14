@@ -29,12 +29,15 @@ data/
 src/
   data/                           raw access, provenance, parsing, audit helpers
   features/  models/  training/  evaluation/
+  paper/                          manuscript production (P8): tables, figures, rendering, validation from frozen tables
 scripts/                          thin command-line entry points that call src/
 tests/                            pytest suite; must pass before results are produced
 outputs/
   qa/  eda/  metrics/  predictions/  checkpoints/  figures/
 paper/
   manuscript/  tables/  figures/  publication material only (anonymous IDs only)
+  manuscript/generated/           manuscript tables, figures and supplementary files (generated; never edited by hand)
+  submission_candidate/           staging directory built from the manuscript source and the generated assets
 ```
 
 The supplied raw package `스마트 매트 데이터 정리/` sits at the repository root until OPEN-05 is decided.

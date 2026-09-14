@@ -128,6 +128,20 @@ Environment used for the P3–P7 results and for the P7 verification:
 | Run time | core about 8 min on this GPU (P3 finals about 4.3 min, P5 about 3.3 min, P6 about 10 s); extended adds about 30 min (45 P4 finals); a release build by the data owner takes about 2 min |
 | Disk | release package 30.6 MB; reproduction outputs about 370 MB (core) and 660 MB (extended); about 4 GB RAM and 2.2 GB GPU memory per process |
 
+## Manuscript production (P8)
+
+The manuscript tables, figures and submission candidate are generated from the frozen `paper/tables/` only;
+no result is recomputed (D-054). The code is in `src/paper/`.
+
+```bash
+python scripts/export_manuscript_tables.py      # Tables 1–5 and S1–S19 -> paper/manuscript/generated/
+python scripts/render_manuscript_figures.py     # Figures 1–4 and S1–S4 -> paper/manuscript/generated/figures/
+python scripts/build_submission_candidate.py    # rendered manuscript and staging directory -> paper/submission_candidate/
+python scripts/validate_manuscript_results.py   # read-only checks; exit code 0 only if all pass
+```
+
+Open submission and release items: `docs/P8_FINAL_BLOCKERS.md`.
+
 Bitwise equality is verified on this stack only. A CPU run or another GPU, driver or library build trains in the
 same deterministic way, but its floating-point results can differ in the last bits. The digest checks then fail,
 and the table checks show the size of the difference. The figures are compared as well, for information only:

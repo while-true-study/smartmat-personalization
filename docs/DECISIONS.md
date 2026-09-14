@@ -64,7 +64,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-25 | **Open (P8 publication blocker).** Public scope of the session-level calendar dates in committed repository files outside the release package (split files, P5 plan, subject mapping, three paper tables, reports): keep the repository private, publish a de-identified copy, or accept. No history rewrite without a decision. | PI | before any public repository or code archive | Code Availability; public repository | P7 checklist D4; D-049 |
 | OPEN-26 | **Open (P8).** Ethics / IRB information for the manuscript. The provider confirmation of consent and release permission (D-002) is not an IRB approval; no institutional identifier may be invented. | PI | before submission | IRB / informed-consent statements | `paper/manuscript/manuscript.md` |
 | OPEN-27 | **Open (P8).** Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
-| OPEN-28 | **Open (P8); disclosure drafted by D-052 (Proposed).** Still needed: the PI's approval of the text, and the name, version and purpose of any generative-AI tool used outside the inventoried repository sessions. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
+| OPEN-28 | **Open (P8); disclosure drafted by D-053 (Proposed; supersedes D-052).** Still needed: the PI's approval of the text. The ChatGPT use stated by the authors is included; its historical model versions were not logged and are not inferred. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
 
 ---
 
@@ -1520,7 +1520,7 @@ approved, until each is actually resolved.
 
 ## D-052 — Generative-AI disclosure draft and tool inventory (manuscript text only)
 Date: 2026-09-14
-Status: Proposed (PI approval pending; OPEN-28 stays open)
+Status: Superseded by D-053
 Context:
 - The MDPI template requires Materials and Methods to describe generative-AI use for text, data, graphics, study
   design, data collection, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose
@@ -1547,3 +1547,59 @@ Evidence: local session logs (model and client version fields); `git grep` and `
 Applied Sciences Word template (read directly, pass 3); `docs/P8_FINAL_BLOCKERS.md` §2.
 Consequence: OPEN-28 needs only the PI's approval and the completion of the author placeholder. No result, protocol
 or frozen artifact changes.
+
+## D-053 — Generative-AI disclosure with the authors' ChatGPT statement (manuscript text only)
+Date: 2026-09-15
+Status: Proposed (PI approval pending; OPEN-28 stays open)
+Context:
+- D-052 inventoried the one tool recorded in this repository's session logs and left other tools as a placeholder.
+- In the P8 formatting pass, the research lead stated a second tool:
+  - ChatGPT (OpenAI), used for research planning, analysis and protocol review, manuscript architecture, manuscript
+    drafting, language refinement and consistency review;
+  - its historical model versions were not consistently logged; GPT-5.6 Sol was used in the final
+    manuscript-review interaction.
+Decision:
+- **Acknowledgments:** the research lead's wording, naming both tools:
+  - Claude Code (Anthropic; CLI 2.1.263 and 2.1.270; Claude Opus 5), with the purposes recorded in the logs: code
+    drafting, debugging, analysis-workflow organization, repository documentation, reference-metadata checks and
+    manuscript drafting;
+  - ChatGPT (OpenAI), with the stated purposes and the statement that model versions were not consistently logged.
+- No historical ChatGPT model version is inferred or added.
+- **Manuscript §3.8** lists the combined purposes. It states that protocols, dataset policies, model-selection rules,
+  statistics, reported numbers and interpretations stayed under author control and were validated independently.
+- **Supersedes D-052:** the inventory and principles are unchanged; only the second tool is added.
+Evidence: local Claude Code session logs (D-052); the research lead's statement in the P8 formatting pass; MDPI
+Applied Sciences template (item 12 of `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`).
+Consequence: the disclosure no longer has an unknown-tool placeholder. OPEN-28 closes only with the PI's approval.
+
+## D-054 — P8 manuscript production conventions and working title
+Date: 2026-09-15
+Status: Accepted (research lead, P8 formatting pass)
+Context: The formatting pass turns the integrated draft into a submission candidate. It must not change any result,
+and every printed number must stay traceable.
+Decision:
+- **Working final title:** "Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative
+  Transfer in Smart-Mat Temperature and Humidity Estimation".
+  - "Unseen-domain" is used because subject, recording period, season and device configuration are confounded in
+    the strict LOSO folds.
+  - The title changes only on PI request, a journal length requirement, or an overclaim found in the final review.
+- **Production code:** `src/paper/` with thin scripts:
+  - `export_manuscript_tables.py`: Tables 1–5, S1–S19 and cell provenance;
+  - `render_manuscript_figures.py`: Figures 1–4 and S1–S4;
+  - `build_submission_candidate.py`: the rendered manuscript, numbered references and the staging directory
+    `paper/submission_candidate/`;
+  - `validate_manuscript_results.py`: read-only checks.
+  The frozen `paper/tables/` and `paper/figures/` are inputs only.
+- **Precision:** °C and %RH values are printed with two decimals, percentages with one, counts as integers.
+  Negative numbers use the typographic minus sign. This is formatting of frozen cells; no value is recomputed.
+- **Supplementary tables** are copies of the frozen tables. Calendar night ids are replaced by the night ordinals of
+  the frozen trajectory table, and the conversion is checked against the budget definition.
+- **References** are rendered from `references.bib` in the MDPI template patterns, numbered by first appearance.
+  Journal names are printed in full; ISO 4 abbreviation is a formatting item. The conference entry carries a visible
+  `pending` field until its bibliography is confirmed.
+- **Byte-exact storage:** `paper/manuscript/generated/**` and `paper/submission_candidate/**` are `-text` in
+  `.gitattributes`, as for the release package (D-050), because `MANIFEST.json` hashes them.
+Evidence: `docs/P8_TABLE_FIGURE_SELECTION.md` §4–§5; `docs/P8_TITLE_CANDIDATES.md`; the validator output in
+`docs/P8_FINAL_BLOCKERS.md`.
+Consequence: the candidate is formatting-complete for PI review. No frozen artifact changed. Submission still depends
+on the metadata and release blockers.

@@ -6,19 +6,21 @@ Working rules for `paper/manuscript/`. The plan is `docs/P8_MANUSCRIPT_PLAN.md`.
 
 | File | Content |
 |---|---|
-| `manuscript.md` | the drafting source (Markdown). Final integration pass: integrated scientific draft with source tokens, captions and placeholders |
+| `manuscript.md` | the manuscript source (Markdown) with source tokens, `{{TABLE:…}}` / `{{FIGURE:…}}` markers, `[@key]` citations, captions and placeholders. Never render numbers into it by hand |
 | `DATA_AVAILABILITY_DRAFT.md`, `CODE_AVAILABILITY_DRAFT.md` | back-matter drafts with explicit placeholders; the manuscript carries their current-state text |
 | `CONFERENCE_EXTENSION_DISCLOSURE_DRAFT.md` | conference-extension disclosure and cover-letter paragraph |
+| `COVER_LETTER_DRAFT.md` | full cover-letter draft (formatting pass); no percentage of new content claimed |
 | `AUTHOR_CONTRIBUTIONS_DRAFT.md` | CRediT skeleton; every role `[CONFIRM]` |
-| `FIGURE1_SCHEMATIC.md` | Figure 1 specification and diagram source (no data) |
+| `FIGURE1_SCHEMATIC.md` | Figure 1 specification (no data); the figure is drawn by `src/paper/manuscript_figures.py` |
 | `RELATED_WORK_GAPS.md` | resolved topic → section → reference map |
 | `references.bib` | 31 verified references |
-| `tables/`, `figures/` | created by the export step (planned); never edited by hand |
+| `generated/tables/`, `generated/supplementary/`, `generated/figures/` | Tables 1–5 (Markdown, CSV, cell provenance), Tables S1–S19 and figure data, Figures 1–4 and S1–S4. Written only by the scripts below; never edited by hand |
+| `../submission_candidate/` | the staging directory: rendered manuscript, copies of the generated assets and drafts, `MANIFEST.json`, hand-written `README_CHECKLIST.md` |
 
 ## Source tokens
 
-Performance numbers are never typed into the manuscript. They are written as tokens that a deterministic renderer
-(planned, with `scripts/export_manuscript_tables.py`) resolves from the frozen tables in `paper/tables/`:
+Performance numbers are never typed into the manuscript. They are written as tokens that the renderer
+(`src/paper/sources.py`, `scripts/build_submission_candidate.py`) resolves from the frozen tables in `paper/tables/`:
 
 ```
 {{<table> | <col>=<value>, … | <column> | <format>}}
@@ -26,14 +28,24 @@ Performance numbers are never typed into the manuscript. They are written as tok
 
 - `<table>`: a CSV name in `paper/tables/` without `.csv`, e.g. `p5_primary_mae`.
 - The filters must select exactly one row; otherwise the renderer fails.
-- `<format>`: a Python format spec, e.g. `.3f`, `+.3f` or `.1%`.
-- Example: `{{p5_primary_mae | subject_id=unweighted_mean, target=temperature, budget_nights=14 | seed_mean | .3f}}`.
+- `<format>`: since the formatting pass (D-054) only `.2f` / `+.2f` (°C, %RH), `.1f` / `+.1f` (percentages), `d`,
+  `,d` and `s` are allowed; the validator rejects others. Negative values print with the minus sign U+2212.
+- Example: `{{p5_primary_mae | subject_id=unweighted_mean, target=temperature, budget_nights=14 | seed_mean | .2f}}`.
 
 Counts of rows are written `{{COUNT:<table> | <col>=<value>, …}}`, e.g.
 `{{COUNT:p6_level_mismatch_consistency | consistent=True}}`.
 
-Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, selection and rounding are defined in
-`docs/P8_TABLE_FIGURE_SELECTION.md` and implemented by the export script.
+Whole manuscript tables and figures are inserted as `{{TABLE:<stem>}}` (from `generated/tables/<stem>.md`) and
+`{{FIGURE:<stem>}}` (from `generated/figures/<stem>.png`). Their content is defined in
+`docs/P8_TABLE_FIGURE_SELECTION.md` and implemented in `src/paper/`.
+
+**Production commands** (formatting pass):
+```
+python scripts/export_manuscript_tables.py      # Tables 1–5, S1–S19, provenance
+python scripts/render_manuscript_figures.py     # Figures 1–4, S1–S4
+python scripts/build_submission_candidate.py    # rendered manuscript and staging directory
+python scripts/validate_manuscript_results.py   # read-only checks (add --rerender-figures for figure bytes)
+```
 
 ## Citations (pass 3)
 
@@ -45,8 +57,10 @@ Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, sele
   tables (tokens). Parallels to the literature go in separate, explicitly interpretive sentences.
 - **Preprints:** the only one is the canonical TCN preprint (`bai2018tcn`, not peer-reviewed). It is cited for the
   architecture, never for universal superiority over recurrent networks.
-- **Conference paper:** `maeng2026icfice`, with verified title, authors, venue and paper number. Pages, DOI and URL
-  are pending (`note` field; OPEN-27).
+- **Conference paper:** `maeng2026icfice`, with verified title, authors, venue, dates and paper number. Pages, DOI and
+  URL are pending: the `pending` field prints `[PENDING: …]` in the rendered reference until OPEN-27 is resolved.
+- **Rendering (formatting pass):** `src/paper/references.py` numbers citations by first appearance and renders the
+  MDPI template patterns with full journal names and verified DOIs only.
 
 ## Placeholders
 
@@ -56,12 +70,12 @@ Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, sele
 | `[ICFICE CITATION]` | retired in pass 3; replaced by `[@maeng2026icfice]` (bibliographic details pending, OPEN-27) |
 | `[FUNDING TO BE CONFIRMED BY PI]` | the conference paper's funding is not carried over |
 | `[GENERATIVE-AI DISCLOSURE REQUIRED]` / `[GENERATIVE-AI STATEMENT REQUIRED]` | retired in the final integration pass: §3.8 and the Acknowledgments carry the drafted disclosure (D-052), pending PI approval (OPEN-28) |
-| `[OTHER GENERATIVE-AI TOOLS, IF ANY: …]` | tools used outside the inventoried repository sessions; version as `[VERSION TO BE CONFIRMED]` until known (`docs/P8_FINAL_BLOCKERS.md` §2) |
+| `[OTHER GENERATIVE-AI TOOLS, IF ANY: …]` | retired in the formatting pass: the authors stated ChatGPT, now named in the Acknowledgments (D-053) |
 | `[DATA REPOSITORY]`, `[CODE REPOSITORY]`, `[DOI]`, `[LICENSE]` | open publication decisions (OPEN-22, OPEN-23) |
 | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]` | institutional ethics information; the provider permission (D-002) is not an IRB approval |
 | `[INFORMED CONSENT WORDING REQUIRED FROM PI]` | the consent statement; the provider's consent confirmation is a note for the PI, not the statement |
-| `[AUTHORS AND AFFILIATIONS — PI]`, `[CRediT ROLES — PI]`, `[CONFIRM]` | author list and roles; nothing assigned before PI confirmation |
-| `[TITLE — PI DECISION …]`, `[FINAL LIST: PI]` | final title and keywords (`docs/P8_TITLE_CANDIDATES.md`) |
+| `[AUTHOR NAMES AND ORDER — CONFIRM]`, `[AFFILIATIONS — CONFIRM]`, `[NAME AND E-MAIL — CONFIRM]`, `[ORCID iDs — CONFIRM]`, `[CRediT ROLES — CONFIRM]`, `[CONFLICTS OF INTEREST — CONFIRM]`, `[OTHER ACKNOWLEDGMENTS — CONFIRM]` | author metadata; nothing is copied from the conference paper or assigned before PI confirmation |
+| `[TITLE — PI DECISION …]`, `[FINAL LIST: PI]` | retired in the formatting pass: working final title and seven proposed keywords (D-054) |
 | `[PI DECISION: …]`, `[PI]` | any other decision reserved for the PI |
 
 A placeholder is never replaced by an assumed value. `docs/P8_FINAL_BLOCKERS.md` lists every open item with its owner.

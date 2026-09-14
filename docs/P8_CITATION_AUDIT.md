@@ -100,3 +100,18 @@ The checks below ran as scratch scripts on the integrated `manuscript.md`. They 
 | **D. Claims** | Scan for significant/remarkable/dramatic, first/novel, universal, every seed/all seeds, causes, few-shot, robust personalization, domain invariance, end-to-end, publicly available, population, prove, superior. Every hit is a negation or a defined use: "no population-level significance", "not population estimates", "does not show that temporal drift causes", "not literally invariant for every seed–start combination", "not an end-to-end rerun", "we do not claim that it is superior". No population inference, no causal drift claim, no all-seed User07 claim, no universal personalization benefit |
 | **E. Conference overlap** | no reused sentence, table or figure (`docs/P8_CONFERENCE_OVERLAP_AUDIT.md`, text-overlap measurement) |
 | **Placeholders** | 20 bracketed placeholders remain, plus the reference-list rendering note: title, authors, first-page note, keywords, reproducibility placement, data/code repository, DOI ×2, license ×2, interim access and code availability PI decisions, IRB, informed consent, other acknowledgments, other GenAI tools, CRediT, funding, conflicts. Each is written as a placeholder, none as a fact, and each maps to `docs/P8_FINAL_BLOCKERS.md` |
+
+## Formatting pass (2026-09-15)
+
+- **Rendered references:** the 31 entries of `references.bib` are rendered in the MDPI template patterns
+  (`src/paper/references.py`) and numbered [1]–[31] in order of first appearance. The ICFICE paper is [1], because the
+  first-page note cites it first. Citation groups become [2,3], and three or more consecutive numbers become ranges
+  such as [4–6].
+- **Bibliography fields:** only `maeng2026icfice` changed. It gained `eventdate` (the conference dates already in its
+  note) and `pending` ("proceedings volume, pages, DOI and URL to be confirmed"). The rendered reference therefore
+  shows `[PENDING: …]` instead of looking complete. No DOI, pages, volume or URL was added.
+- **No claim or citation changed.** The formatting pass changed precision (two decimals), markers, captions and
+  back-matter placeholders only, so rows #1–#42 stand as audited.
+- **Validator:** `scripts/validate_manuscript_results.py` now checks on every run that each key exists, each entry is
+  cited, the numbers follow first appearance, the rendered list matches, and the conference entry carries no invented
+  identifier.

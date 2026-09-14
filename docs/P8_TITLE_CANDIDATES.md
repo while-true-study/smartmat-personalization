@@ -1,6 +1,10 @@
 # P8 — Title candidates
 
-> **No final title is fixed** (PI decision). The candidates are ranked against five criteria:
+> **Working final title (formatting pass, D-054):** "Chronological Personalization under Unseen-Domain Shift: Offset
+> Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation". It changes only if the PI requests
+> it, the journal requires a shorter title, or the final manuscript review finds an overclaim. The history below is kept.
+
+> **History.** Before the working title was set, the candidates were ranked against five criteria:
 > 1. framing priority: chronological personalization under unseen-user/domain shift, then benefit **and** negative
 >    transfer, then smart-mat temperature/humidity estimation;
 > 2. no population-level or robustness overstatement;
@@ -62,7 +66,7 @@ Rank 1 is adopted as the primary candidate. Before the title freeze, two variant
   and §3.1 already state that the shift is combined.
 - The shorter fallback is unaffected, because it drops the shift phrase altogether: "Chronological Personalization
   of Smart-Mat Temperature and Humidity Estimation: Offset Correction and Negative Transfer".
-- **No final title is fixed.** This is a PI decision (`docs/P8_FINAL_BLOCKERS.md` item 16).
+- Adopted as the working final title in the formatting pass (D-054). The PI may still change it (`docs/P8_FINAL_BLOCKERS.md` B10).
 
 ## Earlier candidates (first pass), for the record
 

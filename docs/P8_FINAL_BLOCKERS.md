@@ -1,71 +1,81 @@
 # P8 — Final blockers before submission and `v1.0-paper`
 
-> **State at the end of the P8 final integration pass** (branch `paper/p8-manuscript`).
-> - The scientific text is integrated. The items below are still open, and none is presented as resolved in the
->   manuscript: each appears there as a bracketed placeholder.
-> - Nothing here changes a frozen result. `v1.0-paper` is not created, and P8 is not merged, until every gate in §4
->   holds.
+> **State at the end of the P8 formatting pass** (branch `paper/p8-manuscript`).
+> - The submission candidate (`paper/submission_candidate/`) is formatting-complete for PI review.
+> - The items below are still open. Each appears in the manuscript or drafts as a bracketed placeholder, never as a
+>   fact, and `scripts/validate_manuscript_results.py` fails if one is removed or written as resolved.
+> - `v1.0-paper` is not created, and P8 is not merged, until every gate in §6 holds. No frozen result changes.
 
-## 1. Submission and publication metadata
+## A. Scientific blockers
 
-| # | Item | State | Owner | Manuscript placeholder | Blocks | Tracking |
-|---|---|---|---|---|---|---|
-| 1 | Exact Applied Sciences instructions (section structure, Featured Application, abstract/keywords, reference style, prior publication, extended conference papers, cover letter, template version, limits) | open: mdpi.com returns 403 to automated access; only the Word template was read directly | authors (browser check) | section structure as drafted; Featured Application standalone | formatting; submission | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` items 1–5, 15–20 |
-| 2 | Conference final bibliography: proceedings volume, pages, DOI, URL | open | PI | `note` field of `maeng2026icfice` in `references.bib` | reference list; cover letter | OPEN-27 |
-| 3 | Conference copyright holder, and whether any permission is needed (none expected: no text, table or figure is reused) | open | PI | `[PENDING]` / `[VERIFY]` in the disclosure draft | cover letter | OPEN-27; `CONFERENCE_EXTENSION_DISCLOSURE_DRAFT.md` |
-| 4 | Funding statement (the conference statement is not copied) | open | PI | `[FUNDING TO BE CONFIRMED BY PI]` | Funding; Conflicts of Interest | manuscript back matter |
-| 5 | Ethics / IRB information | open | PI | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]` | IRB statement | OPEN-26 |
-| 6 | Informed consent wording. The provider's consent confirmation (D-002) is not an ethics approval and is not the statement itself | open | PI | `[INFORMED CONSENT WORDING REQUIRED FROM PI]` | Informed Consent Statement | OPEN-26 |
-| 7 | GenAI tool/version inventory and approval of the disclosure | partly done: repository sessions inventoried (§2); tools used outside them and PI approval pending | PI + authors | `[OTHER GENERATIVE-AI TOOLS, IF ANY: …]` in the Acknowledgments; §3.8 text for approval | Materials and Methods §3.8; Acknowledgments | OPEN-28; D-052 |
-| 8 | Code license | open; the repository has no LICENSE file | PI | `[LICENSE]` | Code Availability; external release | OPEN-22 |
-| 9 | Data license of `public_release_v1` | open | PI | `[LICENSE]` | Data Availability; external release | OPEN-22 |
-| 10 | Hosting of `public_release_v1` | open | PI | `[DATA REPOSITORY]`, `[CODE REPOSITORY]` | Data/Code Availability | OPEN-23 |
-| 11 | DOI (data; code archive) | open | PI | `[DOI]` | Data/Code Availability | OPEN-23 |
-| 12 | PI approval of the release subset and of the final manuscript/release state | open | PI | — | `v1.0-paper`; external release | OPEN-24 |
-| 13 | Public scope of the calendar dates in committed repository files outside the release package | open | PI | — | any public repository or code archive | OPEN-25 |
-| 14 | Author list, affiliations, corresponding author, CRediT roles | open | PI | `[AUTHORS AND AFFILIATIONS — PI]`; `[CONFIRM]` in `AUTHOR_CONTRIBUTIONS_DRAFT.md` | first page; Author Contributions | — |
-| 15 | Conflicts of interest; other acknowledgments | open | PI | `[PI]`, `[OTHER ACKNOWLEDGMENTS — PI]` | back matter | — |
-| 16 | Final title and keyword list | recommendation made; PI decides | PI | `[TITLE — PI DECISION …]`, `[FINAL LIST: PI]` | first page | `docs/P8_TITLE_CANDIDATES.md` |
-| 17 | Interim data access ("on reasonable request", and from whom) | open | PI | `[PI DECISION: …]` in the Data Availability Statement | Data Availability | `DATA_AVAILABILITY_DRAFT.md` |
+**None.** Every result and claim is fixed and validated:
+- 102 source tokens resolve;
+- Tables 1–5 trace 261 cells to frozen cells;
+- the citation audit, the claim scan and the privacy scan pass;
+- no conference text, table or figure is reused.
 
-## 2. Generative-AI tool inventory (OPEN-28)
+A scientific change would need a new evidence check and is out of scope for P8.
 
-**Evidence:**
-- The local Claude Code session logs of this project: two sessions, every assistant message recorded with its model
-  identifier and client version.
-- The repository and its Git history: no other AI tool is named. `AGENTS.md` and `CLAUDE.md` are tool-neutral entry
-  points (D-001). By convention, commits carry no AI attribution (CONVENTIONS §6.6).
-- Nothing is inferred beyond these sources.
+## B. Metadata blockers (PI / authors)
+
+| # | Item | State | Placeholder | Tracking |
+|---|---|---|---|---|
+| B1 | Authors, order, affiliations, corresponding author, ORCID | open | `[AUTHOR NAMES AND ORDER — CONFIRM]`, `[AFFILIATIONS — CONFIRM]`, `[NAME AND E-MAIL — CONFIRM]`, `[ORCID iDs — CONFIRM]` | — |
+| B2 | CRediT roles | open | `[CRediT ROLES — CONFIRM]`; `AUTHOR_CONTRIBUTIONS_DRAFT.md` | — |
+| B3 | Funding (the conference statement is not copied) | open | `[FUNDING TO BE CONFIRMED BY PI]` | — |
+| B4 | Conflicts of interest; other acknowledgments | open | `[CONFLICTS OF INTEREST — CONFIRM]`, `[OTHER ACKNOWLEDGMENTS — CONFIRM]` | — |
+| B5 | Ethics / IRB information | open | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]` | OPEN-26 |
+| B6 | Informed consent wording. The provider's consent confirmation (D-002) is not an ethics approval and not the statement itself | open | `[INFORMED CONSENT WORDING REQUIRED FROM PI]` | OPEN-26 |
+| B7 | GenAI disclosure approval. The text names both tools (§G below) | drafted; PI approval pending | §3.8 and Acknowledgments text | OPEN-28; D-053 |
+| B8 | Conference final bibliography (proceedings volume, pages, DOI, URL) | open | `[PENDING: …]` in the rendered reference; `pending` field in `references.bib` | OPEN-27 |
+| B9 | Conference copyright holder (no permission expected: nothing is reused) | open | `[COPYRIGHT HOLDER … — CONFIRM]` in the cover letter; `[PENDING]` in the disclosure draft | OPEN-27 |
+| B10 | Keywords and working title (proposed; PI may adjust) | proposed | — | D-054 |
+
+## C. External-release blockers
+
+| # | Item | State | Placeholder | Tracking |
+|---|---|---|---|---|
+| C1 | Code license | open; the repository has no LICENSE file | `[LICENSE]` | OPEN-22 |
+| C2 | Data license of `public_release_v1` | open | `[LICENSE]` | OPEN-22 |
+| C3 | Hosting of the data (and of a code archive) | open | `[DATA REPOSITORY]`, `[CODE REPOSITORY]` | OPEN-23 |
+| C4 | DOI (data; code archive) | open | `[DOI]` | OPEN-23 |
+| C5 | PI approval of the release subset and of the final manuscript/release state | open | — | OPEN-24 |
+| C6 | Public scope of the recording dates in committed repository files outside the release package (code availability stays conservative) | open | `[PI DECISION: public code release scope and license.]` | OPEN-25 |
+| C7 | Interim data access ("on reasonable request", and from whom) | open | `[PI DECISION: …]` in the Data Availability Statement | — |
+
+## D. Submission-format blockers
+
+| # | Item | State |
+|---|---|---|
+| D1 | Applied Sciences Instructions for Authors read directly: section structure (separate Related Work and Limitations), Featured Application, abstract and keywords, reference style, cover-letter content, template version, file limits | open. mdpi.com returns HTTP 403 to automated access. The authors verified the Special-Issue items listed in `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` |
+| D2 | Transfer into the current MDPI Word or LaTeX template: tables and figures at first citation, footnotes, back-matter order | open. The Markdown and CSV sources are ready for conversion |
+| D3 | Reference style details: ISO 4 journal abbreviations; conference locations and dates for the 8 proceedings references without them | open. Rendered now in full names with DOIs (D-054) |
+| D4 | First-page note wording for the extended conference paper | drafted as a placeholder note; confirm with D1 |
+| D5 | Cover letter completion (`COVER_LETTER_DRAFT.md`) | drafted; placeholders B1, B3, B5, B6, B8, B9 |
+
+## G. Generative-AI tools (OPEN-28, D-053)
 
 | Product | Provider | Model / version | Evidence | Purpose |
 |---|---|---|---|---|
-| Claude Code (command-line client) | Anthropic | client versions 2.1.263 and 2.1.270; model Claude Opus 5, identifier `claude-opus-5` (no other model appears in the logs) | local session logs of this repository | code drafting and debugging; organization and orchestration of the analysis workflow (running pipelines, tests and checks); research documentation (reports, decisions); literature screening and reference-metadata checks against Crossref and DOI records; manuscript drafting; language refinement |
-| Any other generative-AI tool used by the authors outside these sessions (e.g. for planning, translation or language editing) | [TO BE CONFIRMED BY AUTHORS] | [VERSION TO BE CONFIRMED] | none in the repository | [TO BE CONFIRMED BY AUTHORS] |
+| Claude Code (command-line client) | Anthropic | CLI 2.1.263 and 2.1.270; Claude Opus 5 (`claude-opus-5`) | local session logs of this repository | code drafting and debugging; analysis-workflow organization; repository documentation; reference-metadata checks; manuscript drafting |
+| ChatGPT | OpenAI | historical model versions not consistently logged (stated as such, not inferred); GPT-5.6 Sol for the final manuscript-review interaction | authors' statement (P8 formatting pass) | research planning; analysis and protocol review; manuscript architecture; manuscript drafting; language refinement; consistency review |
 
-**Controls that apply to every AI-assisted output** (stated in §3.8):
-- The authors set the protocol, the dataset policies, the model-selection rules, the statistics and the
-  interpretation boundaries. These are frozen in `docs/`, and the decision log records who decided.
-- Executable results passed automated tests, the frozen-result checks, deterministic table generation and a
-  clean-checkout reproduction (P7).
-- Manuscript numbers are source tokens resolved from the frozen tables.
-- Every retained reference was checked against its DOI or publisher record.
+No historical ChatGPT model version is inferred.
 
-## 3. Production items (formatting stage; no new result)
+## 5. Production state (formatting pass)
 
 | Item | State |
 |---|---|
-| Manuscript table export (`scripts/export_manuscript_tables.py`, planned): Tables 1–5 and S-tables from the frozen CSVs, night ids as ordinals | not built. The captions and column content are fixed in the manuscript and `docs/P8_TABLE_FIGURE_SELECTION.md` |
-| Figures 2–4 and S1–S4 re-rendered from the committed figure data without the report titles | not done. The committed report figures stay unchanged |
-| Figure 1 drawn from `paper/manuscript/FIGURE1_SCHEMATIC.md` | specification done; drawing pending |
-| Manuscript validator (`scripts/validate_manuscript_results.py`, planned) | not built. The scratch checks of this pass (tokens, citations, privacy, claims) are recorded in `docs/P8_CITATION_AUDIT.md` §Final audit |
-| Reference list rendered in MDPI numbered style from `references.bib` | pending (style: requirements item 5) |
-| Supplementary file assembly (S1–S19, Figures S1–S4) | pending |
+| Tables 1–5 (`scripts/export_manuscript_tables.py`) | done: Markdown and CSV with cell provenance |
+| Tables S1–S19 and figure data | done: 31 CSV copies without calendar dates, plus Table S19 |
+| Figures 1–4 and S1–S4 (`scripts/render_manuscript_figures.py`) | done: PNG, 300 dpi at print size (≥ 1,380 px wide), text ≥ 6 pt, no overlapping labels |
+| Rendered manuscript and references (`scripts/build_submission_candidate.py`) | done: 31 references numbered by first appearance |
+| Manuscript validator (`scripts/validate_manuscript_results.py`) | done: 11/11 checks pass; `--rerender-figures` also passes |
+| Word/LaTeX template conversion | open (D2) |
 
-## 4. Gates to `v1.0-paper`
+## 6. Gates to `v1.0-paper`
 
-- Every item in §1 is resolved, or deliberately stated as open in the submitted text with PI approval.
-- The production items in §3 are done, and the rendered manuscript passes the manuscript validator. No rendered number
-  may differ from its frozen cell.
-- The privacy review holds: no calendar date, no private source label, no restricted metadata, no local path.
+- Every item in B, C and D is resolved, or deliberately stated as open in the submitted text with PI approval.
+- The rendered manuscript and the validator pass on the final state. No rendered number may differ from its frozen cell.
 - The frozen P3–P7 artifacts are unchanged against `p7-release-candidate`.
 - PI approval (OPEN-24).
