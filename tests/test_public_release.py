@@ -12,7 +12,7 @@ import pytest
 from src.data import public_release as R
 from src.evaluation import p5_personalization as P5
 from src.evaluation import splits as S
-from src.evaluation.protocol import night_id
+from src.evaluation.protocol import PROTOCOL_VERSION, night_id, protocol_sha256
 from tests.test_p3_loso import synthetic_rows
 from tests.test_splits import build
 
@@ -48,13 +48,15 @@ def synthetic_workspace(tmp_path: Path):
 def build_into(tmp_path: Path, name: str = "release"):
     rows, split_dir, plan, events = synthetic_workspace(tmp_path)
     out = tmp_path / name
-    out.mkdir()
+    out.mkdir(exist_ok=True)
     (out / "README.md").write_text("# test release\n\nRelative time only.\n", encoding="utf-8")
     excluded = [{"source_id": "user06_auxiliary", "subject_id": "User06", "dataset_role": "excluded_invalid",
                  "exclusion_reason": "provider_confirmed_setting_issue", "exclusion_confirmed_by": "data_provider",
                  "exclusion_decision": "D-017"}]
+    identity = {"protocol_version": PROTOCOL_VERSION, "protocol_sha256": protocol_sha256(),
+                "split_sha256": {rel: S.file_sha256_lf(split_dir / rel) for rel in S.SPLIT_FILES}, "base_tag": "t"}
     manifest, checks = R.build_release(out, rows, split_dir, plan=plan, events=events, reference={"x": 1},
-                                       excluded=excluded, budgets=[0, 1, 3, 7, 14], identity={"base_tag": "t"},
+                                       excluded=excluded, budgets=[0, 1, 3, 7, 14], identity=identity,
                                        raw_names=["user01/phase_a/raw_0101.txt", "raw_0101.txt"])
     return out, manifest, checks, rows, split_dir
 
@@ -87,6 +89,10 @@ def test_build_passes_every_gate_and_is_byte_deterministic(tmp_path):
     out2, man2, _, _, _ = build_into(tmp_path / "b")
     for a in (*R.ARTIFACTS, "manifest.json"):
         assert (out1 / a).read_bytes() == (out2 / a).read_bytes(), a
+    first = (out1 / "manifest.json").read_bytes()
+    (out1 / "p5_plan_public.yaml").write_text("stale: true\n", encoding="utf-8")
+    build_into(tmp_path / "a")                                  # rebuild over a stale file and a stale manifest
+    assert (out1 / "manifest.json").read_bytes() == first
     t = pq.read_table(out1 / "windows.parquet")
     assert t.column_names == R.WINDOW_COLUMNS
     assert not any(str(f.type).startswith(("timestamp", "date")) for f in t.schema)

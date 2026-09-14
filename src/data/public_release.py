@@ -718,6 +718,7 @@ def build_release(out: Path, rows, split_dir: Path, *, plan: dict, events: list[
     out = Path(out)
     if not (out / "README.md").exists():
         raise ReleaseError("release README.md is missing")
+    (out / "manifest.json").unlink(missing_ok=True)       # a previous build's manifest must not enter the checks
     anchors = subject_anchors(rows.subject, rows.ts)
     pers_private = S.read_split(split_dir / S.PERSONALIZATION)
     table = window_table(rows, pers_private, split_dir, anchors)
