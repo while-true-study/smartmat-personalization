@@ -16,9 +16,9 @@
   },
   "base_tag": "p6-robustness",
   "base_tag_commit": "16980ae0095e79535b81999aed01d3240c8b560d",
-  "builder_code_commit": "b8b6696347d4edd21970dc01ebe45ba46101dbc8",
+  "builder_code_commit": "2e9ec9c1177a1abeb8612685f6adc7302c2ddc4b",
   "builder_sha256": {
-    "src/data/public_release.py": "412b1082f16e0a43b2d1eb6921ef0bfaca3b6a4cf511a9579afc8b0cc7cf3eb2",
+    "src/data/public_release.py": "c3d45d26cfae22cce796c60ea8b231e788f9c12d7e37e2bb07e3f9de99bb8216",
     "scripts/build_public_release.py": "c1173a7e42aa3a1ad3c4a1c6527a8744f829d6e3965494373000664e179395e1"
   },
   "p5_plan_sha256": "eef1a6db598fe188caa860304e6a897d2ac3b615b2f035bc42c314ce2a91d92d",
@@ -176,14 +176,14 @@
       "User07_b14_rq2_windows_identical"
     ]
   },
-  "privacy_checks_passed": 41,
+  "privacy_checks_passed": 42,
   "artifacts_sha256": {
     "windows.parquet": "79fdf6cd80eb2cac4ae3fe8409de005e75667badcf640023e6fec4adba1203af",
     "splits/v1.0_loso/outer_folds.csv": "6f2fc7d22925d9a399c8f4d475ddf3ac7be70c420b36b8574b8b021debf428d6",
     "splits/v1.0_loso/inner_folds.csv": "a25e6efa9b1aa740674fdd059b5e5dd539e25881414357e03ab016b0ad8a4241",
     "splits/v1.0_personalization/chronological.csv": "129c37e6c0e637529e0dad00cd71b24d978f1c462539c934f32f697f3a3cbf56",
     "control_events.csv": "63a1ec18e2f6a4c060ba8e6483f9c1266deb035f1f3df6e7c4828615d571e7a4",
-    "p5_plan_public.yaml": "7b7844e29f050843b98edc84f8f20b73d87811c41c86af2975c8cdf3389547d2",
+    "p5_plan_public.yaml": "ff769d7673ad2a78fff94f56608ff2812b1788e5f49cb4d231d43585f7980eaa",
     "reference_digests.json": "8ebb401ec26760ec9ac51c57f661771368ec2bf9765b76d805a544f67900ed3d",
     "schema.json": "7bf0919fdb3fc1f62c6ee635e78487f8462a0a5dea80c31571649569e914a8ed",
     "excluded_sources.csv": "954c468953687d1137a99dc38d676a5ead1ffabc75c52e31e3c86a2411b95640",

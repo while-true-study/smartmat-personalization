@@ -49,17 +49,17 @@ subjects:
       - User07
       partition: train
     base_checkpoints:
-      '0':
+      0:
         file_sha256: 0dbd05186dd840626e63f35bf25d05938b0f36af2652e84f33ca3fc547e23890
         weights_sha256: 6911f733e52a62a919c0956d8ded630c26eb9f93855d857cff314a2427f15f2e
         p3_selection_sha256: 7382cc69688956876671554143072238a2a828531f08d6fccb56095f1310b389
         p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
-      '1':
+      1:
         file_sha256: 34b61bb6346c6fd354d34a27fbe68246bc013356afbd1445a9b95ad4d6b8693a
         weights_sha256: 27ad40f2a49dc44ca3b8a910a89cd944760e8e2c9d9243d10006618c2751371a
         p3_selection_sha256: 7382cc69688956876671554143072238a2a828531f08d6fccb56095f1310b389
         p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
-      '2':
+      2:
         file_sha256: 5a491e8d771c12462bfc442e68b72875b33b2237acb77aeb81740184e70e64e9
         weights_sha256: 8f67ec253cd4b2372bd9e66cc5361c0f84ca229e258589fa842cc6ecd92e857c
         p3_selection_sha256: 7382cc69688956876671554143072238a2a828531f08d6fccb56095f1310b389
@@ -224,7 +224,7 @@ subjects:
       windows_sha256: 49f917f8c64bda87cfc5ba5f429a21d5703749e5ac3fc50de928fa4072e999b6
       windows: 265852
     budgets:
-      '0':
+      0:
         adaptation_nights: []
         buffer_nights: []
         later_test_nights: 151
@@ -234,7 +234,7 @@ subjects:
         buffer_windows: 0
         later_test_windows: 289437
         primary_test_windows: 265852
-      '1':
+      1:
         adaptation_nights:
         - D0001
         buffer_nights:
@@ -246,7 +246,7 @@ subjects:
         buffer_windows: 859
         later_test_windows: 287491
         primary_test_windows: 265852
-      '3':
+      3:
         adaptation_nights:
         - D0001
         - D0002
@@ -260,7 +260,7 @@ subjects:
         buffer_windows: 809
         later_test_windows: 285578
         primary_test_windows: 265852
-      '7':
+      7:
         adaptation_nights:
         - D0001
         - D0002
@@ -278,7 +278,7 @@ subjects:
         buffer_windows: 2038
         later_test_windows: 279724
         primary_test_windows: 265852
-      '14':
+      14:
         adaptation_nights:
         - D0001
         - D0002
@@ -334,17 +334,17 @@ subjects:
       - User07
       partition: train
     base_checkpoints:
-      '0':
+      0:
         file_sha256: db985c51341881ef31c6d492942a8dc28ef90ec1bafb5901025b028b757da0c8
         weights_sha256: ebfc0086528a6fd98f197daeb8b47f4d4d51d5673fd9b8f466fc4d836c331e9f
         p3_selection_sha256: 381306f52aba043594cee5d46c38aa75f8de20bac882a71b11a42190b90c60bb
         p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
-      '1':
+      1:
         file_sha256: 87f76ce85b8a2eb560c3e5d1393181840ab8bd400e0f74433f35bb44b4fbe23f
         weights_sha256: 59214a3cbf4907266631261c8c5d2e277ba1ed0a28c9bd1f70a667b90f8a2f51
         p3_selection_sha256: 381306f52aba043594cee5d46c38aa75f8de20bac882a71b11a42190b90c60bb
         p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
-      '2':
+      2:
         file_sha256: f87b7ade667d3d636ee2caa7faf4cd3d0b4681a9bc0c3ccfd9a5bd80e2f430d1
         weights_sha256: 76f73c1e9dfad4183d24b8760501a63f11bf8ebb6f582b5807250710381ae16f
         p3_selection_sha256: 381306f52aba043594cee5d46c38aa75f8de20bac882a71b11a42190b90c60bb
@@ -409,7 +409,7 @@ subjects:
       windows_sha256: 6a1d9dd69cff2503f09e3ba7f1adf7c78a5cfe021e4219e67ae6568d5e221759
       windows: 95839
     budgets:
-      '0':
+      0:
         adaptation_nights: []
         buffer_nights: []
         later_test_nights: 51
@@ -419,7 +419,7 @@ subjects:
         buffer_windows: 0
         later_test_windows: 143999
         primary_test_windows: 95839
-      '1':
+      1:
         adaptation_nights:
         - D0001
         buffer_nights:
@@ -431,7 +431,7 @@ subjects:
         buffer_windows: 3516
         later_test_windows: 136978
         primary_test_windows: 95839
-      '3':
+      3:
         adaptation_nights:
         - D0001
         - D0002
@@ -445,7 +445,7 @@ subjects:
         buffer_windows: 3376
         later_test_windows: 130270
         primary_test_windows: 95839
-      '7':
+      7:
         adaptation_nights:
         - D0001
         - D0002
@@ -463,7 +463,7 @@ subjects:
         buffer_windows: 3068
         later_test_windows: 117873
         primary_test_windows: 95839
-      '14':
+      14:
         adaptation_nights:
         - D0001
         - D0002
@@ -519,17 +519,17 @@ subjects:
       - User02
       partition: train
     base_checkpoints:
-      '0':
+      0:
         file_sha256: 930d291bf8589f6678f2548650001ab24292fdcfdb81b4d5558076c44044624b
         weights_sha256: a850dd51ed0703785141805df44b23ec8735e144f02e4833b8281a08e237039c
         p3_selection_sha256: 2748f47828c02d9c8362894a6dab7fb8b90407c7b5c1d26c0985307451d1ec3a
         p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
-      '1':
+      1:
         file_sha256: 6074bb146d11be8e043006cf62615690605557abee24132a97746a959e59c4a6
         weights_sha256: 37e6c4ff922018ccd04123665f1bf6c6e766148fbc4cbd7321c8c79359ec01c4
         p3_selection_sha256: 2748f47828c02d9c8362894a6dab7fb8b90407c7b5c1d26c0985307451d1ec3a
         p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
-      '2':
+      2:
         file_sha256: 1668f25ff64cfa311ef86bcb21ff0084395edbacf917d06d7710c2f642ac6869
         weights_sha256: 11d99013c04c1a2a6d796d9d587bcb8986d0ec93a056fa298fa0c6889b2766db
         p3_selection_sha256: 2748f47828c02d9c8362894a6dab7fb8b90407c7b5c1d26c0985307451d1ec3a
@@ -643,7 +643,7 @@ subjects:
       windows_sha256: 49558e0cbf0ce6cf23a896cc8572dae256a35a8ec553595aafe5e2d3624910c8
       windows: 114838
     budgets:
-      '0':
+      0:
         adaptation_nights: []
         buffer_nights: []
         later_test_nights: 100
@@ -653,7 +653,7 @@ subjects:
         buffer_windows: 0
         later_test_windows: 140971
         primary_test_windows: 114838
-      '1':
+      1:
         adaptation_nights:
         - D0001
         buffer_nights:
@@ -665,7 +665,7 @@ subjects:
         buffer_windows: 1777
         later_test_windows: 137119
         primary_test_windows: 114838
-      '3':
+      3:
         adaptation_nights:
         - D0001
         - D0002
@@ -679,7 +679,7 @@ subjects:
         buffer_windows: 1821
         later_test_windows: 133375
         primary_test_windows: 114838
-      '7':
+      7:
         adaptation_nights:
         - D0001
         - D0002
@@ -697,7 +697,7 @@ subjects:
         buffer_windows: 2118
         later_test_windows: 126448
         primary_test_windows: 114838
-      '14':
+      14:
         adaptation_nights:
         - D0001
         - D0002
