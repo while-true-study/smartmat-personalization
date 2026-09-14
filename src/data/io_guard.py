@@ -82,6 +82,13 @@ def write_parquet(path: str | Path, tables: Iterable[Any], schema: Any) -> Path:
     return Path(path)
 
 
+def remove_file(path: str | Path) -> None:
+    """Delete one regular file outside the protected roots; a missing file is not an error."""
+    p = assert_writable(path)
+    if p.is_file():
+        p.unlink()
+
+
 def read_bytes(path: str | Path) -> bytes:
     """Read-only access; the only way raw files are opened."""
     with open(path, "rb") as fh:

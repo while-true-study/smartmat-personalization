@@ -21,7 +21,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from src.data.io_guard import write_csv, write_json, write_parquet, write_text
+from src.data.io_guard import remove_file, write_csv, write_json, write_parquet, write_text
 from src.evaluation.p5_personalization import SubjectWindows
 
 RELEASE_VERSION = "public_release_v1"
@@ -718,7 +718,7 @@ def build_release(out: Path, rows, split_dir: Path, *, plan: dict, events: list[
     out = Path(out)
     if not (out / "README.md").exists():
         raise ReleaseError("release README.md is missing")
-    (out / "manifest.json").unlink(missing_ok=True)       # a previous build's manifest must not enter the checks
+    remove_file(out / "manifest.json")                   # a previous build's manifest must not enter the checks
     anchors = subject_anchors(rows.subject, rows.ts)
     pers_private = S.read_split(split_dir / S.PERSONALIZATION)
     table = window_table(rows, pers_private, split_dir, anchors)

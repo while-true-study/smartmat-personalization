@@ -8,7 +8,7 @@ import subprocess
 import pytest
 
 from src.data import paths
-from src.data.io_guard import RawWriteError, assert_writable, is_protected, open_for_write, write_text
+from src.data.io_guard import RawWriteError, assert_writable, is_protected, open_for_write, remove_file, write_text
 from src.data.manifest import read_manifest, sha256_file
 from src.data.raw_parser import parse_file
 
@@ -92,6 +92,18 @@ def test_write_helpers_refuse_raw():
     with pytest.raises(RawWriteError):
         write_text(paths.raw_root() / "should_not_exist.txt", "x")
     assert not (paths.raw_root() / "should_not_exist.txt").exists()
+    for root in paths.protected_roots():
+        with pytest.raises(RawWriteError):
+            remove_file(root / "README.md")
+
+
+def test_remove_file_deletes_only_regular_files_outside_raw(tmp_path):
+    p = write_text(tmp_path / "stale.json", "{}")
+    remove_file(p)
+    assert not p.exists()
+    remove_file(p)                                              # missing: no error
+    remove_file(tmp_path)                                       # a directory is left alone
+    assert tmp_path.is_dir()
 
 
 # --- integrity against the manifest -----------------------------------------------------------
