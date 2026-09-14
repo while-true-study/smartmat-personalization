@@ -806,7 +806,7 @@ def build_release(out: Path, rows, split_dir: Path, *, plan: dict, events: list[
         "window_sets": {"in_loso": "D-032 LOSO windows (P3, P4)", "in_rq2": "D-037 windows cut at night and "
                                                                           "partition boundaries (P5, P6)"},
         "excluded_sources": [{k: r[k] for k in ("source_id", "dataset_role", "exclusion_reason",
-                                                "exclusion_decision")} for r in excluded],
+                                                "exclusion_confirmed_by", "exclusion_decision")} for r in excluded],
         "p5_primary_windows": digests["subjects"],
         "equivalence": {"passed": True, "folds": digests["folds"],
                         "checks": [c["check"] for c in checks if c["check"].endswith("identical")]},

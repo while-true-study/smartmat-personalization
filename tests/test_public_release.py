@@ -87,6 +87,8 @@ def test_build_passes_every_gate_and_is_byte_deterministic(tmp_path):
     out1, man1, checks, rows, split_dir = build_into(tmp_path / "a")
     assert all(c["passed"] for c in checks), [c for c in checks if not c["passed"]]
     assert set(man1["artifacts_sha256"]) == set(R.ARTIFACTS)
+    assert all({"source_id", "exclusion_reason", "exclusion_confirmed_by", "exclusion_decision"} <= set(e)
+               for e in man1["excluded_sources"])                               # DATA_POLICY §5.4
     out2, man2, _, _, _ = build_into(tmp_path / "b")
     for a in (*R.ARTIFACTS, "manifest.json"):
         assert (out1 / a).read_bytes() == (out2 / a).read_bytes(), a
