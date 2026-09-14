@@ -150,5 +150,6 @@ Regardless, the following apply to everything that leaves the private workspace
      `exclusion_confirmed_by` and `exclusion_decision`. The fields come from `configs/subject_mapping.yaml`
      via `src/data/subject_mapping.excluded_sources()`. This documents what was left out and why, without
      publishing it.
-5. Exact calendar dates combined with health events can re-identify a person. Whether public
-   releases use absolute dates or relative day indices is an open decision (OPEN-18).
+5. Exact calendar dates combined with health events can re-identify a person. Public releases use
+   per-subject relative time (whole-day anchor shift, relative day indices `D####`) and carry no calendar
+   date (D-049, closes OPEN-18). The release content is fixed by D-050.
