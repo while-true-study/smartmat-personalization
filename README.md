@@ -21,9 +21,10 @@ whether short user-specific adaptation helps.
 - [x] P1 Domain-shift EDA (merged; `docs/P1_DOMAIN_SHIFT_EDA_REPORT.md`)
 - [x] P2 Evaluation Protocol & Split Freeze (merged; tag `p2-protocol-freeze`)
 - [x] P3 Strict LOSO Baseline (merged; tag `p3-loso-baseline`; `docs/P3_STRICT_LOSO_BASELINE_REPORT.md`)
-- [ ] P4 Feature Ablation  ← **current phase** (`experiment/p4-feature-ablation`)
-- [ ] P5 User Personalization
-- [ ] P6 Robustness & Statistical Analysis
+- [x] P4 Feature Ablation (merged; tag `p4-feature-ablation`; `docs/P4_FEATURE_ABLATION_REPORT.md`)
+- [x] P5 User Personalization (results recorded and reproduced; `docs/P5_PERSONALIZATION_REPORT.md`;
+  `experiment/p5-personalization`, tag `p5-personalization` after the merge)
+- [ ] P6 Robustness & Statistical Analysis  ← **current phase** (starts from `main` after the P5 merge)
 - [ ] P7 Reproducibility & Public Data Release
 - [ ] P8 Manuscript & Final Release
 
@@ -37,8 +38,11 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
 - P2 (evaluation protocol and split freeze) is complete: protocol v1.0 (`docs/EXPERIMENT_PROTOCOL.md`), tag
   `p2-protocol-freeze`.
 - P3 (strict LOSO baseline) is complete: `docs/P3_STRICT_LOSO_BASELINE_REPORT.md`, tag `p3-loso-baseline`.
-- P4 (feature-family comparison, RQ3) is the current phase (`scripts/run_p4_feature_ablation.py`; D-044). Its results
-  are recorded in `docs/P4_FEATURE_ABLATION_REPORT.md`, pending the P4 merge.
+- P4 (feature-family comparison, RQ3) is complete: `docs/P4_FEATURE_ABLATION_REPORT.md`, tag `p4-feature-ablation`
+  (D-046).
+- P5 (chronological user personalization, RQ2) is complete: `docs/P5_PERSONALIZATION_REPORT.md`
+  (`scripts/run_p5_personalization.py`; D-045). The `p5-personalization` tag follows the P5 merge.
+- P6 (robustness and statistical analysis) is the next phase.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure

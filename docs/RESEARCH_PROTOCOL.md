@@ -83,7 +83,7 @@ criteria are met, its decisions are recorded in `DECISIONS.md`, and its Pull Req
 | P1 | Domain-shift EDA | Characterise shift between subjects, devices, periods and seasons before any modelling. | Documented shift analysis that informs, but is not tuned against, the protocol. | — |
 | P2 | Evaluation Protocol & Split Freeze | Fix preprocessing, windowing, splits, metrics and leakage checks **before any model result is seen**. | `EXPERIMENT_PROTOCOL.md` v1.0 frozen; split files saved with SHA-256; leakage checks implemented and passing. | `p2-protocol-freeze` |
 | P3 | Strict LOSO Baseline | Answer RQ1 under the frozen protocol. | Baselines and LOSO results reproduced from a clean checkout. | `p3-loso-baseline` |
-| P4 | Feature Ablation | Answer RQ3 (movement-derived vs contact-structure features). | Ablation results under the frozen protocol. | — |
+| P4 | Feature Ablation | Answer RQ3 (movement-derived vs contact-structure features). | Ablation results under the frozen protocol. | `p4-feature-ablation` (added after the merge, D-046) |
 | P5 | User Personalization | Answer RQ2 (chronological fine-tuning, adaptation budget). | Main personalization experiment complete and reproduced. | `p5-personalization` |
 | P6 | Robustness & Statistical Analysis | Uncertainty, sensitivity and robustness of P3–P5 results. | Pre-declared statistics reported for all subjects and folds. | — |
 | P7 | Reproducibility & Public Data Release | Release a derived, anonymised dataset and an end-to-end reproduction path. | Release subset approved (DATA_POLICY §5); reproduction verified from scratch. | — |

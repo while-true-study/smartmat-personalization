@@ -1262,3 +1262,23 @@ Evidence: D-032, D-037, D-040, D-041, D-043; `src/evaluation/p5_personalization.
 known, and no P5 adaptation or evaluation had run.
 Consequence: P5 results are interpreted only through these measures. A change to the recipe, the split or the base
 models after P5 results are seen would be a protocol version bump reported next to v1.0.
+
+## D-046 — P4 phase-boundary tag `p4-feature-ablation` (repository metadata only)
+Date: 2026-09-14
+Status: Accepted
+Context:
+- RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 defined no freeze tag for P4, and the P4 report and PR said none would be
+  created.
+- After the P4 merge (PR #5, merge commit `977b33d`), the research lead decided to mark every completed phase
+  boundary explicitly, as for P2 and P3. This gives P5 a fixed reproducibility checkpoint.
+Decision:
+- The annotated tag `p4-feature-ablation` (tag object `ee4857c`) was created on the P4 merge commit `977b33d` and
+  pushed.
+- RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 list it among the freeze tags.
+- It freezes nothing new: protocol v1.0, the splits and the P3/P4 results are unchanged. P5 starts from this tag.
+- The P4 report's statement that no P4 tag would be created is kept as written; this entry supersedes it for the
+  tag only.
+- Tags are still never moved, deleted or re-pointed.
+Evidence: tag `p4-feature-ablation` → `977b33d` locally and on origin; branch `experiment/p5-personalization` starts
+from it.
+Consequence: P0, P2, P3 and P4 boundaries are tagged. The P5 tag (`p5-personalization`) follows the P5 merge.
