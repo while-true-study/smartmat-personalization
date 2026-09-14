@@ -1,2 +1,4 @@
 # Frozen split files are hashed; keep LF in every checkout (D-042).
 data/splits/** text eol=lf
+# Public release files are hashed in their manifest.json; store and check them out byte for byte (D-050).
+data/release/** -text

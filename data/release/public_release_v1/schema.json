@@ -1,0 +1,573 @@
+{
+  "release_version": "public_release_v1",
+  "file": "windows.parquet",
+  "columns": [
+    {
+      "column": "window_index",
+      "dtype": "int64",
+      "unit": "",
+      "range": "0 ... n-1",
+      "role": "order",
+      "meaning": "canonical first-row order; P3/P4/P5 keep this order"
+    },
+    {
+      "column": "subject_id",
+      "dtype": "string",
+      "unit": "",
+      "range": "User01, User02, User07",
+      "role": "grouping",
+      "meaning": "anonymous subject (DATA_POLICY §3)"
+    },
+    {
+      "column": "device_id",
+      "dtype": "string",
+      "unit": "",
+      "range": "unknown, 22480, 22482",
+      "role": "grouping",
+      "meaning": "mat hardware id; 22480 and 22482 are two mats of User02 (one subject)"
+    },
+    {
+      "column": "session_id",
+      "dtype": "string",
+      "unit": "",
+      "range": "<subject>|<device>|S####",
+      "role": "grouping",
+      "meaning": "canonical session (D-024)"
+    },
+    {
+      "column": "sensor_phase",
+      "dtype": "string",
+      "unit": "",
+      "range": "s1, s2, not_applicable",
+      "role": "stratum",
+      "meaning": "User01 sensor phase (D-019)"
+    },
+    {
+      "column": "channel_quality_phase",
+      "dtype": "string",
+      "unit": "",
+      "range": "normal, p1_transition, p1_response_shift",
+      "role": "stratum",
+      "meaning": "22482 channel-quality phase (D-022)"
+    },
+    {
+      "column": "night_id",
+      "dtype": "string",
+      "unit": "",
+      "range": "D####",
+      "role": "grouping",
+      "meaning": "relative night day of the target row (D-049)"
+    },
+    {
+      "column": "night_ordinal",
+      "dtype": "int16",
+      "unit": "",
+      "range": "1 ... N",
+      "role": "grouping",
+      "meaning": "chronological subject-night number (D-037)"
+    },
+    {
+      "column": "window_start_time_s",
+      "dtype": "int64",
+      "unit": "s",
+      "range": ">= 0",
+      "role": "time",
+      "meaning": "window start t0, seconds since the subject anchor"
+    },
+    {
+      "column": "target_time_s",
+      "dtype": "int64",
+      "unit": "s",
+      "range": ">= 0",
+      "role": "time",
+      "meaning": "time of the target row (last step), same anchor"
+    },
+    {
+      "column": "in_loso",
+      "dtype": "bool",
+      "unit": "",
+      "range": "",
+      "role": "membership",
+      "meaning": "window of the D-032 LOSO window set (P3/P4)"
+    },
+    {
+      "column": "in_rq2",
+      "dtype": "bool",
+      "unit": "",
+      "range": "",
+      "role": "membership",
+      "meaning": "window of the D-037 RQ2 window set (P5/P6)"
+    },
+    {
+      "column": "s0_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 0 (last row of 5-s bin 0); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s0_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 0 (last row of 5-s bin 0); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s0_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 0 (last row of 5-s bin 0); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s0_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 0 (last row of 5-s bin 0); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s0_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 0 (last row of 5-s bin 0); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s0_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 0 (last row of 5-s bin 0); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s1_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 1 (last row of 5-s bin 1); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s1_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 1 (last row of 5-s bin 1); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s1_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 1 (last row of 5-s bin 1); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s1_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 1 (last row of 5-s bin 1); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s1_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 1 (last row of 5-s bin 1); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s1_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 1 (last row of 5-s bin 1); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s2_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 2 (last row of 5-s bin 2); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s2_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 2 (last row of 5-s bin 2); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s2_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 2 (last row of 5-s bin 2); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s2_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 2 (last row of 5-s bin 2); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s2_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 2 (last row of 5-s bin 2); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s2_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 2 (last row of 5-s bin 2); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s3_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 3 (last row of 5-s bin 3); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s3_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 3 (last row of 5-s bin 3); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s3_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 3 (last row of 5-s bin 3); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s3_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 3 (last row of 5-s bin 3); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s3_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 3 (last row of 5-s bin 3); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s3_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 3 (last row of 5-s bin 3); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s4_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 4 (last row of 5-s bin 4); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s4_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 4 (last row of 5-s bin 4); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s4_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 4 (last row of 5-s bin 4); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s4_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 4 (last row of 5-s bin 4); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s4_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 4 (last row of 5-s bin 4); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s4_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 4 (last row of 5-s bin 4); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s5_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 5 (last row of 5-s bin 5); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s5_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 5 (last row of 5-s bin 5); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s5_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 5 (last row of 5-s bin 5); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s5_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 5 (last row of 5-s bin 5); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s5_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 5 (last row of 5-s bin 5); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s5_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 5 (last row of 5-s bin 5); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s6_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 6 (last row of 5-s bin 6); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s6_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 6 (last row of 5-s bin 6); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s6_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 6 (last row of 5-s bin 6); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s6_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 6 (last row of 5-s bin 6); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s6_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 6 (last row of 5-s bin 6); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s6_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 6 (last row of 5-s bin 6); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s7_p1",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P1 at step 7 (last row of 5-s bin 7); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s7_p2",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P2 at step 7 (last row of 5-s bin 7); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s7_p3",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P3 at step 7 (last row of 5-s bin 7); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s7_p4",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P4 at step 7 (last row of 5-s bin 7); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s7_p5",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P5 at step 7 (last row of 5-s bin 7); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "s7_p6",
+      "dtype": "int16",
+      "unit": "ADC count",
+      "range": "0 ... 4095",
+      "role": "model_input",
+      "meaning": "channel P6 at step 7 (last row of 5-s bin 7); model input = value / 4095 (D-033)"
+    },
+    {
+      "column": "temperature",
+      "dtype": "float64",
+      "unit": "°C",
+      "range": "as recorded (NaN if absent)",
+      "role": "target",
+      "meaning": "temperature at the target row"
+    },
+    {
+      "column": "humidity",
+      "dtype": "float64",
+      "unit": "%RH",
+      "range": "as recorded (NaN if absent)",
+      "role": "target",
+      "meaning": "relative humidity at the target row"
+    },
+    {
+      "column": "target_temp_valid",
+      "dtype": "bool",
+      "unit": "",
+      "range": "",
+      "role": "label_flag",
+      "meaning": "D-025 validity; a window is labelled only if both flags are true"
+    },
+    {
+      "column": "target_humidity_valid",
+      "dtype": "bool",
+      "unit": "",
+      "range": "",
+      "role": "label_flag",
+      "meaning": "D-025 validity"
+    }
+  ],
+  "model_inputs": [
+    "s0_p1",
+    "s0_p2",
+    "s0_p3",
+    "s0_p4",
+    "s0_p5",
+    "s0_p6",
+    "s1_p1",
+    "s1_p2",
+    "s1_p3",
+    "s1_p4",
+    "s1_p5",
+    "s1_p6",
+    "s2_p1",
+    "s2_p2",
+    "s2_p3",
+    "s2_p4",
+    "s2_p5",
+    "s2_p6",
+    "s3_p1",
+    "s3_p2",
+    "s3_p3",
+    "s3_p4",
+    "s3_p5",
+    "s3_p6",
+    "s4_p1",
+    "s4_p2",
+    "s4_p3",
+    "s4_p4",
+    "s4_p5",
+    "s4_p6",
+    "s5_p1",
+    "s5_p2",
+    "s5_p3",
+    "s5_p4",
+    "s5_p5",
+    "s5_p6",
+    "s6_p1",
+    "s6_p2",
+    "s6_p3",
+    "s6_p4",
+    "s6_p5",
+    "s6_p6",
+    "s7_p1",
+    "s7_p2",
+    "s7_p3",
+    "s7_p4",
+    "s7_p5",
+    "s7_p6"
+  ],
+  "targets": [
+    "temperature",
+    "humidity"
+  ],
+  "time_representation": "integer seconds since local midnight of the subject's first night date (D-049)"
+}

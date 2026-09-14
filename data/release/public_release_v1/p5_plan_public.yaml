@@ -1,0 +1,725 @@
+description: Public copy of configs/experiments/v1.0/p5_personalization_plan.yaml
+  (public_release_v1; night ids mapped to D-049 relative night days; P3 run ids and
+  local run paths removed; every other value unchanged)
+protocol_version: v1.0
+protocol_sha256: 96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84
+split_sha256:
+  v1.0_loso/outer_folds.csv: 59e53c903f8c5a70f8e8bcb8cd2917d314c8e2114b408b7806fada89eb76da86
+  v1.0_loso/inner_folds.csv: 567fadee4b731639593e4d1cc8610024a0d07ef3cb2f2dc3457ef753a96230df
+  v1.0_personalization/chronological.csv: 8007cfcd4e057cbb7771ea8327ceabc615c5c3ca5a4a08f47ecc73a8393eff59
+family: RAW
+budgets_nights:
+- 0
+- 1
+- 3
+- 7
+- 14
+p3_selected_configs_sha256: 33354bd5d3d44104575b801860820f6c269183f96a76e37e5f77c3581cb70f30
+p3_tag: p3-loso-baseline
+p4_tag: p4-feature-ablation
+subjects:
+  User01:
+    fold: 1
+    base_train_subjects:
+    - User02
+    - User07
+    base_family: RAW
+    base_selected_index: 12
+    base_config:
+      channels: 64
+      kernel_size: 3
+      dropout: 0.1
+      lr: 0.001
+      weight_decay: 0.0001
+      batch_size: 256
+      max_epochs: 50
+      early_stopping_patience: 5
+    base_final_epochs: 5
+    base_selection_sha256: 7382cc69688956876671554143072238a2a828531f08d6fccb56095f1310b389
+    outer_target_scaler:
+      mean:
+      - 28.442871179422394
+      - 48.806235744113415
+      std:
+      - 2.8622419231989253
+      - 15.488463244068306
+      n: 284970
+      subjects:
+      - User02
+      - User07
+      partition: train
+    base_checkpoints:
+      '0':
+        file_sha256: 0dbd05186dd840626e63f35bf25d05938b0f36af2652e84f33ca3fc547e23890
+        weights_sha256: 6911f733e52a62a919c0956d8ded630c26eb9f93855d857cff314a2427f15f2e
+        p3_selection_sha256: 7382cc69688956876671554143072238a2a828531f08d6fccb56095f1310b389
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+      '1':
+        file_sha256: 34b61bb6346c6fd354d34a27fbe68246bc013356afbd1445a9b95ad4d6b8693a
+        weights_sha256: 27ad40f2a49dc44ca3b8a910a89cd944760e8e2c9d9243d10006618c2751371a
+        p3_selection_sha256: 7382cc69688956876671554143072238a2a828531f08d6fccb56095f1310b389
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+      '2':
+        file_sha256: 5a491e8d771c12462bfc442e68b72875b33b2237acb77aeb81740184e70e64e9
+        weights_sha256: 8f67ec253cd4b2372bd9e66cc5361c0f84ca229e258589fa842cc6ecd92e857c
+        p3_selection_sha256: 7382cc69688956876671554143072238a2a828531f08d6fccb56095f1310b389
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+    adaptation:
+      scope: all_parameters
+      optimizer: adamw
+      lr: 0.0001
+      base_lr: 0.001
+      lr_factor: 0.1
+      weight_decay: 0.0001
+      epochs: 10
+      batch_size: 256
+      early_stopping: none
+      validation: none
+      refit_scaler: false
+    seeds:
+    - 0
+    - 1
+    - 2
+    seed_pairing: adaptation seed s starts from the base model of seed s
+    primary_test:
+      from_ordinal: 16
+      n_nights: 136
+      nights:
+      - D0082
+      - D0083
+      - D0084
+      - D0085
+      - D0086
+      - D0087
+      - D0088
+      - D0089
+      - D0090
+      - D0091
+      - D0092
+      - D0093
+      - D0094
+      - D0095
+      - D0096
+      - D0097
+      - D0098
+      - D0099
+      - D0100
+      - D0101
+      - D0102
+      - D0103
+      - D0104
+      - D0105
+      - D0106
+      - D0107
+      - D0108
+      - D0109
+      - D0110
+      - D0111
+      - D0112
+      - D0113
+      - D0114
+      - D0115
+      - D0116
+      - D0117
+      - D0118
+      - D0119
+      - D0120
+      - D0121
+      - D0122
+      - D0123
+      - D0124
+      - D0125
+      - D0126
+      - D0127
+      - D0128
+      - D0129
+      - D0130
+      - D0131
+      - D0132
+      - D0133
+      - D0134
+      - D0135
+      - D0136
+      - D0137
+      - D0138
+      - D0139
+      - D0140
+      - D0141
+      - D0142
+      - D0143
+      - D0144
+      - D0145
+      - D0146
+      - D0147
+      - D0149
+      - D0150
+      - D0151
+      - D0152
+      - D0153
+      - D0154
+      - D0155
+      - D0156
+      - D0157
+      - D0158
+      - D0159
+      - D0160
+      - D0162
+      - D0163
+      - D0164
+      - D0165
+      - D0166
+      - D0167
+      - D0168
+      - D0170
+      - D0171
+      - D0172
+      - D0173
+      - D0174
+      - D0175
+      - D0176
+      - D0177
+      - D0178
+      - D0179
+      - D0180
+      - D0181
+      - D0182
+      - D0183
+      - D0184
+      - D0185
+      - D0186
+      - D0187
+      - D0188
+      - D0189
+      - D0190
+      - D0191
+      - D0192
+      - D0193
+      - D0194
+      - D0195
+      - D0196
+      - D0197
+      - D0198
+      - D0199
+      - D0200
+      - D0201
+      - D0202
+      - D0203
+      - D0204
+      - D0205
+      - D0206
+      - D0207
+      - D0208
+      - D0209
+      - D0210
+      - D0211
+      - D0212
+      - D0213
+      - D0214
+      - D0215
+      - D0216
+      - D0217
+      - D0218
+      - D0219
+      - D0220
+      windows_sha256: 49f917f8c64bda87cfc5ba5f429a21d5703749e5ac3fc50de928fa4072e999b6
+      windows: 265852
+    budgets:
+      '0':
+        adaptation_nights: []
+        buffer_nights: []
+        later_test_nights: 151
+        later_test_first: D0001
+        later_test_last: D0220
+        adaptation_windows: 0
+        buffer_windows: 0
+        later_test_windows: 289437
+        primary_test_windows: 265852
+      '1':
+        adaptation_nights:
+        - D0001
+        buffer_nights:
+        - D0002
+        later_test_nights: 149
+        later_test_first: D0004
+        later_test_last: D0220
+        adaptation_windows: 1087
+        buffer_windows: 859
+        later_test_windows: 287491
+        primary_test_windows: 265852
+      '3':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0004
+        buffer_nights:
+        - D0005
+        later_test_nights: 147
+        later_test_first: D0006
+        later_test_last: D0220
+        adaptation_windows: 3050
+        buffer_windows: 809
+        later_test_windows: 285578
+        primary_test_windows: 265852
+      '7':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0004
+        - D0005
+        - D0006
+        - D0007
+        - D0073
+        buffer_nights:
+        - D0074
+        later_test_nights: 143
+        later_test_first: D0075
+        later_test_last: D0220
+        adaptation_windows: 7675
+        buffer_windows: 2038
+        later_test_windows: 279724
+        primary_test_windows: 265852
+      '14':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0004
+        - D0005
+        - D0006
+        - D0007
+        - D0073
+        - D0074
+        - D0075
+        - D0076
+        - D0077
+        - D0078
+        - D0079
+        - D0080
+        buffer_nights:
+        - D0081
+        later_test_nights: 136
+        later_test_first: D0082
+        later_test_last: D0220
+        adaptation_windows: 21418
+        buffer_windows: 2167
+        later_test_windows: 265852
+        primary_test_windows: 265852
+  User02:
+    fold: 2
+    base_train_subjects:
+    - User01
+    - User07
+    base_family: RAW
+    base_selected_index: 7
+    base_config:
+      channels: 32
+      kernel_size: 3
+      dropout: 0.3
+      lr: 0.0003
+      weight_decay: 0.0001
+      batch_size: 256
+      max_epochs: 50
+      early_stopping_patience: 5
+    base_final_epochs: 5
+    base_selection_sha256: 381306f52aba043594cee5d46c38aa75f8de20bac882a71b11a42190b90c60bb
+    outer_target_scaler:
+      mean:
+      - 25.962930521737515
+      - 30.710851099421944
+      std:
+      - 1.8228458886281114
+      - 11.860822137797657
+      n: 430408
+      subjects:
+      - User01
+      - User07
+      partition: train
+    base_checkpoints:
+      '0':
+        file_sha256: db985c51341881ef31c6d492942a8dc28ef90ec1bafb5901025b028b757da0c8
+        weights_sha256: ebfc0086528a6fd98f197daeb8b47f4d4d51d5673fd9b8f466fc4d836c331e9f
+        p3_selection_sha256: 381306f52aba043594cee5d46c38aa75f8de20bac882a71b11a42190b90c60bb
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+      '1':
+        file_sha256: 87f76ce85b8a2eb560c3e5d1393181840ab8bd400e0f74433f35bb44b4fbe23f
+        weights_sha256: 59214a3cbf4907266631261c8c5d2e277ba1ed0a28c9bd1f70a667b90f8a2f51
+        p3_selection_sha256: 381306f52aba043594cee5d46c38aa75f8de20bac882a71b11a42190b90c60bb
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+      '2':
+        file_sha256: f87b7ade667d3d636ee2caa7faf4cd3d0b4681a9bc0c3ccfd9a5bd80e2f430d1
+        weights_sha256: 76f73c1e9dfad4183d24b8760501a63f11bf8ebb6f582b5807250710381ae16f
+        p3_selection_sha256: 381306f52aba043594cee5d46c38aa75f8de20bac882a71b11a42190b90c60bb
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+    adaptation:
+      scope: all_parameters
+      optimizer: adamw
+      lr: 2.9999999999999997e-05
+      base_lr: 0.0003
+      lr_factor: 0.1
+      weight_decay: 0.0001
+      epochs: 10
+      batch_size: 256
+      early_stopping: none
+      validation: none
+      refit_scaler: false
+    seeds:
+    - 0
+    - 1
+    - 2
+    seed_pairing: adaptation seed s starts from the base model of seed s
+    primary_test:
+      from_ordinal: 16
+      n_nights: 36
+      nights:
+      - D0019
+      - D0020
+      - D0021
+      - D0022
+      - D0023
+      - D0024
+      - D0025
+      - D0026
+      - D0027
+      - D0028
+      - D0029
+      - D0030
+      - D0031
+      - D0032
+      - D0033
+      - D0034
+      - D0035
+      - D0036
+      - D0037
+      - D0038
+      - D0039
+      - D0040
+      - D0041
+      - D0042
+      - D0043
+      - D0044
+      - D0045
+      - D0046
+      - D0047
+      - D0048
+      - D0049
+      - D0050
+      - D0051
+      - D0052
+      - D0053
+      - D0054
+      windows_sha256: 6a1d9dd69cff2503f09e3ba7f1adf7c78a5cfe021e4219e67ae6568d5e221759
+      windows: 95839
+    budgets:
+      '0':
+        adaptation_nights: []
+        buffer_nights: []
+        later_test_nights: 51
+        later_test_first: D0001
+        later_test_last: D0054
+        adaptation_windows: 0
+        buffer_windows: 0
+        later_test_windows: 143999
+        primary_test_windows: 95839
+      '1':
+        adaptation_nights:
+        - D0001
+        buffer_nights:
+        - D0002
+        later_test_nights: 49
+        later_test_first: D0003
+        later_test_last: D0054
+        adaptation_windows: 3505
+        buffer_windows: 3516
+        later_test_windows: 136978
+        primary_test_windows: 95839
+      '3':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0003
+        buffer_nights:
+        - D0004
+        later_test_nights: 47
+        later_test_first: D0005
+        later_test_last: D0054
+        adaptation_windows: 10353
+        buffer_windows: 3376
+        later_test_windows: 130270
+        primary_test_windows: 95839
+      '7':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0003
+        - D0004
+        - D0005
+        - D0006
+        - D0008
+        buffer_nights:
+        - D0009
+        later_test_nights: 43
+        later_test_first: D0010
+        later_test_last: D0054
+        adaptation_windows: 23058
+        buffer_windows: 3068
+        later_test_windows: 117873
+        primary_test_windows: 95839
+      '14':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0003
+        - D0004
+        - D0005
+        - D0006
+        - D0008
+        - D0009
+        - D0010
+        - D0013
+        - D0014
+        - D0015
+        - D0016
+        - D0017
+        buffer_nights:
+        - D0018
+        later_test_nights: 36
+        later_test_first: D0019
+        later_test_last: D0054
+        adaptation_windows: 44800
+        buffer_windows: 3360
+        later_test_windows: 95839
+        primary_test_windows: 95839
+  User07:
+    fold: 3
+    base_train_subjects:
+    - User01
+    - User02
+    base_family: RAW
+    base_selected_index: 8
+    base_config:
+      channels: 64
+      kernel_size: 2
+      dropout: 0.1
+      lr: 0.001
+      weight_decay: 0.0001
+      batch_size: 256
+      max_epochs: 50
+      early_stopping_patience: 5
+    base_final_epochs: 3
+    base_selection_sha256: 2748f47828c02d9c8362894a6dab7fb8b90407c7b5c1d26c0985307451d1ec3a
+    outer_target_scaler:
+      mean:
+      - 27.38345222824131
+      - 37.08287036609788
+      std:
+      - 2.892841683847567
+      - 19.18335413855049
+      n: 433436
+      subjects:
+      - User01
+      - User02
+      partition: train
+    base_checkpoints:
+      '0':
+        file_sha256: 930d291bf8589f6678f2548650001ab24292fdcfdb81b4d5558076c44044624b
+        weights_sha256: a850dd51ed0703785141805df44b23ec8735e144f02e4833b8281a08e237039c
+        p3_selection_sha256: 2748f47828c02d9c8362894a6dab7fb8b90407c7b5c1d26c0985307451d1ec3a
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+      '1':
+        file_sha256: 6074bb146d11be8e043006cf62615690605557abee24132a97746a959e59c4a6
+        weights_sha256: 37e6c4ff922018ccd04123665f1bf6c6e766148fbc4cbd7321c8c79359ec01c4
+        p3_selection_sha256: 2748f47828c02d9c8362894a6dab7fb8b90407c7b5c1d26c0985307451d1ec3a
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+      '2':
+        file_sha256: 1668f25ff64cfa311ef86bcb21ff0084395edbacf917d06d7710c2f642ac6869
+        weights_sha256: 11d99013c04c1a2a6d796d9d587bcb8986d0ec93a056fa298fa0c6889b2766db
+        p3_selection_sha256: 2748f47828c02d9c8362894a6dab7fb8b90407c7b5c1d26c0985307451d1ec3a
+        p3_git_commit: 04dd915d444767f310dfd77880048251a5378f9f
+    adaptation:
+      scope: all_parameters
+      optimizer: adamw
+      lr: 0.0001
+      base_lr: 0.001
+      lr_factor: 0.1
+      weight_decay: 0.0001
+      epochs: 10
+      batch_size: 256
+      early_stopping: none
+      validation: none
+      refit_scaler: false
+    seeds:
+    - 0
+    - 1
+    - 2
+    seed_pairing: adaptation seed s starts from the base model of seed s
+    primary_test:
+      from_ordinal: 16
+      n_nights: 85
+      nights:
+      - D0017
+      - D0018
+      - D0019
+      - D0020
+      - D0021
+      - D0022
+      - D0023
+      - D0024
+      - D0025
+      - D0026
+      - D0027
+      - D0028
+      - D0029
+      - D0030
+      - D0031
+      - D0032
+      - D0033
+      - D0034
+      - D0035
+      - D0036
+      - D0037
+      - D0038
+      - D0039
+      - D0040
+      - D0041
+      - D0042
+      - D0043
+      - D0044
+      - D0045
+      - D0046
+      - D0047
+      - D0048
+      - D0049
+      - D0050
+      - D0051
+      - D0052
+      - D0053
+      - D0054
+      - D0055
+      - D0056
+      - D0057
+      - D0058
+      - D0059
+      - D0060
+      - D0061
+      - D0062
+      - D0065
+      - D0067
+      - D0068
+      - D0069
+      - D0070
+      - D0071
+      - D0073
+      - D0074
+      - D0075
+      - D0076
+      - D0077
+      - D0078
+      - D0079
+      - D0080
+      - D0081
+      - D0082
+      - D0083
+      - D0084
+      - D0086
+      - D0087
+      - D0088
+      - D0089
+      - D0090
+      - D0091
+      - D0092
+      - D0093
+      - D0094
+      - D0095
+      - D0096
+      - D0097
+      - D0098
+      - D0099
+      - D0100
+      - D0102
+      - D0103
+      - D0104
+      - D0105
+      - D0106
+      - D0107
+      windows_sha256: 49558e0cbf0ce6cf23a896cc8572dae256a35a8ec553595aafe5e2d3624910c8
+      windows: 114838
+    budgets:
+      '0':
+        adaptation_nights: []
+        buffer_nights: []
+        later_test_nights: 100
+        later_test_first: D0001
+        later_test_last: D0107
+        adaptation_windows: 0
+        buffer_windows: 0
+        later_test_windows: 140971
+        primary_test_windows: 114838
+      '1':
+        adaptation_nights:
+        - D0001
+        buffer_nights:
+        - D0002
+        later_test_nights: 98
+        later_test_first: D0003
+        later_test_last: D0107
+        adaptation_windows: 2075
+        buffer_windows: 1777
+        later_test_windows: 137119
+        primary_test_windows: 114838
+      '3':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0003
+        buffer_nights:
+        - D0004
+        later_test_nights: 96
+        later_test_first: D0005
+        later_test_last: D0107
+        adaptation_windows: 5775
+        buffer_windows: 1821
+        later_test_windows: 133375
+        primary_test_windows: 114838
+      '7':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0003
+        - D0004
+        - D0005
+        - D0006
+        - D0007
+        buffer_nights:
+        - D0008
+        later_test_nights: 92
+        later_test_first: D0009
+        later_test_last: D0107
+        adaptation_windows: 12405
+        buffer_windows: 2118
+        later_test_windows: 126448
+        primary_test_windows: 114838
+      '14':
+        adaptation_nights:
+        - D0001
+        - D0002
+        - D0003
+        - D0004
+        - D0005
+        - D0006
+        - D0007
+        - D0008
+        - D0009
+        - D0011
+        - D0012
+        - D0013
+        - D0014
+        - D0015
+        buffer_nights:
+        - D0016
+        later_test_nights: 85
+        later_test_first: D0017
+        later_test_last: D0107
+        adaptation_windows: 23932
+        buffer_windows: 2201
+        later_test_windows: 114838
+        primary_test_windows: 114838
+night_id_representation: D#### relative night day (D-049)

@@ -1,0 +1,192 @@
+{
+  "release_version": "public_release_v1",
+  "protocol_version": "v1.0",
+  "protocol_sha256": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84",
+  "split_manifest_sha256": "1b2283ec9322e1c480ee2fd892a964666aeac6eea0e2a4a7920fdf22d3f56103",
+  "split_sha256": {
+    "v1.0_loso/outer_folds.csv": "59e53c903f8c5a70f8e8bcb8cd2917d314c8e2114b408b7806fada89eb76da86",
+    "v1.0_loso/inner_folds.csv": "567fadee4b731639593e4d1cc8610024a0d07ef3cb2f2dc3457ef753a96230df",
+    "v1.0_personalization/chronological.csv": "8007cfcd4e057cbb7771ea8327ceabc615c5c3ca5a4a08f47ecc73a8393eff59"
+  },
+  "source_dataset": {
+    "dataset_version": "canonical_v1",
+    "primary_content_sha256": "26b970a4edce2bd57767c62666d08cf46d274e675c78ed604b1116892a97dd0a",
+    "primary_file_sha256": "1b34342b9906d2882b6831bc5c04cb7082a067a6574026227e1e4219804673c8",
+    "canonical_content_manifest_sha256": "c2dd08a836f96fe155982135a32f60c5e594f0de757e7d819ff51d414dd9e786"
+  },
+  "base_tag": "p6-robustness",
+  "base_tag_commit": "16980ae0095e79535b81999aed01d3240c8b560d",
+  "builder_code_commit": "33c68f81ec4b7014a7e7e029ec534e522bcd1054",
+  "builder_sha256": {
+    "src/data/public_release.py": "adc4516c2d3d567b840c1ac8f6edfbfb3c24be739bf80c98edcb2321651acee8",
+    "scripts/build_public_release.py": "c1173a7e42aa3a1ad3c4a1c6527a8744f829d6e3965494373000664e179395e1"
+  },
+  "p5_plan_sha256": "eef1a6db598fe188caa860304e6a897d2ac3b615b2f035bc42c314ce2a91d92d",
+  "window_rule": {
+    "duration_s": 40,
+    "bin_s": 5,
+    "n_steps": 8,
+    "stride_s": 20,
+    "max_gap_s": 5,
+    "step_value": "last_observation_in_bin",
+    "target_row": "last_step",
+    "boundaries": [
+      "subject_id",
+      "device_id",
+      "session_id",
+      "sensor_phase",
+      "channel_quality_phase",
+      "partition",
+      "night_id_for_rq2"
+    ],
+    "sensitivity_candidates_s": [
+      20,
+      30
+    ],
+    "note": "D-032; RQ2 windows also cut at night boundaries (D-037)"
+  },
+  "subjects": [
+    "User01",
+    "User02",
+    "User07"
+  ],
+  "streams": [
+    "User01|unknown",
+    "User02|22480",
+    "User02|22482",
+    "User07|unknown"
+  ],
+  "counts": {
+    "windows": 575265,
+    "in_loso": 574849,
+    "in_rq2": 574848,
+    "labelled_in_loso": 574407,
+    "labelled_in_rq2": 574407,
+    "per_subject": {
+      "User01": 289672,
+      "User02": 144205,
+      "User07": 141388
+    },
+    "control_events": 317
+  },
+  "targets": {
+    "temperature": "°C at the target row (last window step)",
+    "humidity": "%RH at the target row",
+    "label_rule": "both D-025 validity flags true"
+  },
+  "pressure_representation": "8 steps x 6 channels raw ADC counts 0-4095 (last row per 5-s bin, D-032); model input = value / 4095, 4095 kept (D-033)",
+  "temporal_deidentification": "D-049: per-subject whole-day anchor shift; seconds since local midnight of the subject's first night date; night keys D####; no calendar date",
+  "split_representation": "v1.0 split files with relative times (D-049); identical rows and semantics",
+  "window_sets": {
+    "in_loso": "D-032 LOSO windows (P3, P4)",
+    "in_rq2": "D-037 windows cut at night and partition boundaries (P5, P6)"
+  },
+  "excluded_sources": [
+    {
+      "source_id": "user01_metadata",
+      "dataset_role": "restricted_metadata",
+      "exclusion_reason": "restricted_metadata",
+      "exclusion_decision": "D-008"
+    },
+    {
+      "source_id": "user02_legacy_csv",
+      "dataset_role": "auxiliary",
+      "exclusion_reason": "auxiliary_not_used_by_protocol_v1.0",
+      "exclusion_decision": "D-023"
+    },
+    {
+      "source_id": "user02_mat_22480_prefix_mismatch",
+      "dataset_role": "quarantined",
+      "exclusion_reason": "quarantined",
+      "exclusion_decision": "D-023"
+    },
+    {
+      "source_id": "user03_legacy",
+      "dataset_role": "auxiliary",
+      "exclusion_reason": "auxiliary_not_used_by_protocol_v1.0",
+      "exclusion_decision": "D-023"
+    },
+    {
+      "source_id": "user06_auxiliary",
+      "dataset_role": "excluded_invalid",
+      "exclusion_reason": "provider_confirmed_setting_issue",
+      "exclusion_decision": "D-017"
+    }
+  ],
+  "p5_primary_windows": {
+    "User01": {
+      "private_sha256": "49f917f8c64bda87cfc5ba5f429a21d5703749e5ac3fc50de928fa4072e999b6",
+      "public_sha256": "0c83cc899c0bf6ae3f9c58aee01080372182e877dbf7b057ac2699674cafd8c9",
+      "n_windows": 289671,
+      "pressure_sha256": "3092926bb2142f9727593c443988be28d9062f01068b74a061d990c27a671d9b",
+      "targets_sha256": "0b92be98f6e7f1a43c47d5a04cf21dd76b108f039fd18757cb29561ca00313e1"
+    },
+    "User02": {
+      "private_sha256": "6a1d9dd69cff2503f09e3ba7f1adf7c78a5cfe021e4219e67ae6568d5e221759",
+      "public_sha256": "8b7f2e462c0289cb938e566459370d08d6680e6698f18b6063009195f231889d",
+      "n_windows": 144205,
+      "pressure_sha256": "41ae80a45584cf71437c81331eb86664587c37c4f5d0743397952d02caf9502f",
+      "targets_sha256": "b7fb0885832dca8e77400d314ee4f739b985fd510d98ed5cfbe925be33d48441"
+    },
+    "User07": {
+      "private_sha256": "49558e0cbf0ce6cf23a896cc8572dae256a35a8ec553595aafe5e2d3624910c8",
+      "public_sha256": "8a177bb3df6c7346a9765b1c2d83050ac47026c7f9ec72171687af86cd1d2268",
+      "n_windows": 140972,
+      "pressure_sha256": "0170c7ed83a0826827fb84cec0818884009a8920c1dfa6f5fd5d6c1a6681e140",
+      "targets_sha256": "f12bcf9cec04e2f0baef28dc9c33e799a089471c1d6e41144d449b6977e83bdf"
+    }
+  },
+  "equivalence": {
+    "passed": true,
+    "folds": {
+      "1": {
+        "n_windows": 574849,
+        "pressure_sha256": "20beb4799a5c5da601de6246f85864388b704450cac63ad8e5e509c0615fdb2f",
+        "targets_sha256": "06701424085cb99633eed077faf662ef034aee596c8e851604319695193f0e51"
+      },
+      "2": {
+        "n_windows": 574849,
+        "pressure_sha256": "20beb4799a5c5da601de6246f85864388b704450cac63ad8e5e509c0615fdb2f",
+        "targets_sha256": "06701424085cb99633eed077faf662ef034aee596c8e851604319695193f0e51"
+      },
+      "3": {
+        "n_windows": 574849,
+        "pressure_sha256": "20beb4799a5c5da601de6246f85864388b704450cac63ad8e5e509c0615fdb2f",
+        "targets_sha256": "06701424085cb99633eed077faf662ef034aee596c8e851604319695193f0e51"
+      }
+    },
+    "checks": [
+      "fold1_model_ready_windows_identical",
+      "fold2_model_ready_windows_identical",
+      "fold3_model_ready_windows_identical",
+      "User01_b0_rq2_windows_identical",
+      "User01_b1_rq2_windows_identical",
+      "User01_b3_rq2_windows_identical",
+      "User01_b7_rq2_windows_identical",
+      "User01_b14_rq2_windows_identical",
+      "User02_b0_rq2_windows_identical",
+      "User02_b1_rq2_windows_identical",
+      "User02_b3_rq2_windows_identical",
+      "User02_b7_rq2_windows_identical",
+      "User02_b14_rq2_windows_identical",
+      "User07_b0_rq2_windows_identical",
+      "User07_b1_rq2_windows_identical",
+      "User07_b3_rq2_windows_identical",
+      "User07_b7_rq2_windows_identical",
+      "User07_b14_rq2_windows_identical"
+    ]
+  },
+  "privacy_checks_passed": 41,
+  "artifacts_sha256": {
+    "windows.parquet": "79fdf6cd80eb2cac4ae3fe8409de005e75667badcf640023e6fec4adba1203af",
+    "splits/v1.0_loso/outer_folds.csv": "6f2fc7d22925d9a399c8f4d475ddf3ac7be70c420b36b8574b8b021debf428d6",
+    "splits/v1.0_loso/inner_folds.csv": "a25e6efa9b1aa740674fdd059b5e5dd539e25881414357e03ab016b0ad8a4241",
+    "splits/v1.0_personalization/chronological.csv": "129c37e6c0e637529e0dad00cd71b24d978f1c462539c934f32f697f3a3cbf56",
+    "control_events.csv": "63a1ec18e2f6a4c060ba8e6483f9c1266deb035f1f3df6e7c4828615d571e7a4",
+    "p5_plan_public.yaml": "7b7844e29f050843b98edc84f8f20b73d87811c41c86af2975c8cdf3389547d2",
+    "reference_digests.json": "8ebb401ec26760ec9ac51c57f661771368ec2bf9765b76d805a544f67900ed3d",
+    "schema.json": "7bf0919fdb3fc1f62c6ee635e78487f8462a0a5dea80c31571649569e914a8ed",
+    "excluded_sources.csv": "954c468953687d1137a99dc38d676a5ead1ffabc75c52e31e3c86a2411b95640",
+    "README.md": "4c6685c8b7c7b2c26bb698dbf2b9c74cce0767575d9f41d9994de5c1a60534ab"
+  }
+}
