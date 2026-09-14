@@ -8,6 +8,7 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 import pytest
+import yaml
 
 from src.data import public_release as R
 from src.evaluation import p5_personalization as P5
@@ -98,6 +99,23 @@ def test_build_passes_every_gate_and_is_byte_deterministic(tmp_path):
     assert not any(str(f.type).startswith(("timestamp", "date")) for f in t.schema)
     plan = (out1 / "p5_plan_public.yaml").read_text()
     assert "2026-" not in plan and "p3_run_id" not in plan and "D0001" in plan
+
+
+def test_public_plan_keeps_key_types_and_maps_only_night_ids(tmp_path):
+    out, man, checks, rows, split_dir = build_into(tmp_path)
+    doc = yaml.safe_load((out / "p5_plan_public.yaml").read_text(encoding="utf-8"))
+    for rec in doc["subjects"].values():
+        assert sorted(rec["budgets"]) == [0, 1, 3, 7, 14] and list(rec["base_checkpoints"]) == [0]
+        assert "p3_run_id" not in rec["base_checkpoints"][0]
+    assert any(c["check"] == "p5_plan_public_equals_private_except_night_ids" and c["passed"] for c in checks)
+    _, _, plan, _ = synthetic_workspace(tmp_path / "x")
+    anchors = R.subject_anchors(rows.subject, rows.ts)
+    assert R.plan_differences(plan, R.public_plan(plan, anchors), anchors) == []
+    assert R.plan_differences(plan, json.loads(json.dumps(R.public_plan(plan, anchors))), anchors)   # str keys
+    bad = R.public_plan(plan, anchors)
+    bad["protocol_sha256"] = "y"
+    bad["subjects"]["User01"]["primary_test"]["nights"] = plan["subjects"]["User01"]["primary_test"]["nights"]
+    assert len(R.plan_differences(plan, bad, anchors)) == 2
 
 
 def test_public_loader_rebuilds_the_private_model_ready_arrays(tmp_path):

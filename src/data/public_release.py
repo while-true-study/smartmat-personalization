@@ -12,6 +12,7 @@ Night keys are `D####` relative day indices; readable times are `D#### HH:MM:SS`
 """
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import re
@@ -235,8 +236,8 @@ def public_split_rows(split_dir: Path, anchors: dict[str, int]) -> dict[str, tup
 
 def public_plan(plan: dict, anchors: dict[str, int]) -> dict:
     """The committed P5 plan with every night id mapped to its D-049 key and the P3 run ids / local run paths removed;
-    every other value is unchanged."""
-    doc = json.loads(json.dumps(plan))
+    every other value is unchanged (keys keep their types: budgets and seeds stay integers)."""
+    doc = copy.deepcopy(plan)
     for s, rec in doc["subjects"].items():
         a = anchors[s]
         for ck in rec["base_checkpoints"].values():            # run ids and local run paths are not needed publicly
@@ -253,6 +254,38 @@ def public_plan(plan: dict, anchors: dict[str, int]) -> dict:
                           "every other value unchanged)")
     doc["night_id_representation"] = "D#### relative night day (D-049)"
     return doc
+
+
+PLAN_REMOVED = ("p3_run_id", "p3_run_dir")
+PLAN_NIGHT_FIELDS = ("nights", "adaptation_nights", "buffer_nights", "later_test_first", "later_test_last")
+
+
+def plan_differences(private, public, anchors: dict[str, int], path: tuple = ()) -> list[str]:
+    """Where `public` differs from the private plan other than by the D-049 night mapping, the removed run ids, the
+    description and the added night-id note. Keys are compared with their order and types."""
+    where = "/".join(map(str, path)) or "<root>"
+    if isinstance(private, dict):
+        if not isinstance(public, dict):
+            return [f"{where}: not a mapping"]
+        want = [k for k in private if k not in PLAN_REMOVED]
+        added = ("night_id_representation", *(() if "description" in private else ("description",)))
+        got = [k for k in public if not (path == () and k in added)]
+        if got != want:
+            return [f"{where}: keys {got!r} != {want!r}"]
+        out = []
+        for k in want:
+            if not (path == () and k == "description"):
+                out += plan_differences(private[k], public[k], anchors, path + (k,))
+        return out
+    if path and path[-1] in PLAN_NIGHT_FIELDS and len(path) > 1 and path[0] == "subjects":
+        a = anchors[path[1]]
+        want = [night_key_date(n, a) for n in private] if isinstance(private, list) else night_key_date(private, a)
+        return [] if public == want else [f"{where}: night ids not mapped by D-049"]
+    if isinstance(private, list):
+        if not isinstance(public, list) or len(public) != len(private):
+            return [f"{where}: list differs"]
+        return [d for i, (x, y) in enumerate(zip(private, public)) for d in plan_differences(x, y, anchors, path + (i,))]
+    return [] if type(private) is type(public) and private == public else [f"{where}: value differs"]
 
 
 def control_event_rows(events: list[tuple[str, str, int, str]], anchors: dict[str, int]) -> list[dict]:
@@ -744,6 +777,12 @@ def build_release(out: Path, rows, split_dir: Path, *, plan: dict, events: list[
                if plan["subjects"][s]["primary_test"]["windows_sha256"] != d["private_sha256"]]
         return f"primary windows differ from the frozen P5 plan: {bad}" if bad else None
     _check(checks, "p5_plan_primary_windows_match_private", plan_digests)
+
+    def plan_same():
+        bad = plan_differences(plan, yaml.safe_load((out / "p5_plan_public.yaml").read_text(encoding="utf-8")),
+                               anchors)
+        return "; ".join(bad[:5]) if bad else None
+    _check(checks, "p5_plan_public_equals_private_except_night_ids", plan_same)
     failed = [c for c in checks if not c["passed"]]
     if failed:
         raise ReleaseError("release gates failed: " + "; ".join(f"{c['check']}: {c['detail']}" for c in failed))
