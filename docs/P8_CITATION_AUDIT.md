@@ -115,3 +115,15 @@ The checks below ran as scratch scripts on the integrated `manuscript.md`. They 
 - **Validator:** `scripts/validate_manuscript_results.py` now checks on every run that each key exists, each entry is
   cited, the numbers follow first appearance, the rendered list matches, and the conference entry carries no invented
   identifier.
+
+## Submission-closure pass (2026-09-15)
+
+- **Journal abbreviations:** the `shortjournal` fields hold the NLM Catalog ISO abbreviation of each journal, looked
+  up by its Crossref ISSN. Periods mark abbreviated words, and place qualifiers such as "(Basel)" are dropped.
+  IEEE/CAA J. Autom. Sinica, which the NLM Catalog does not list, takes the abbreviation from its Crossref record.
+- **Proceedings details:**
+  - Location and dates come from the Crossref event metadata of each DOI; "USA" is completed for US state codes.
+  - The three ACM records carry no event dates, so the year is printed instead.
+- **ICFICE entry:** only verified fields are printed. Its missing proceedings volume, pages and DOI or URL are a
+  blocker (OPEN-27), no longer printed text.
+- **No citation, claim or reference changed.** Rows #1–#42 stand.

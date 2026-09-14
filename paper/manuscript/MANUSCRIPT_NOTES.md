@@ -165,3 +165,23 @@ item 1).
 - main: Tables 1–5 and Figures 1–4;
 - supplementary: Tables S1–S19 and Figures S1–S4 (`docs/P8_TABLE_FIGURE_SELECTION.md` §4).
 - Captions sit at the first citation, as the template requires (requirements item 14).
+
+## Submission closure (D-055)
+
+- **Back matter, in the template order:** Supplementary Materials, Author Contributions, Funding, Institutional Review
+  Board Statement, Informed Consent Statement, Data Availability Statement, Acknowledgments, Conflicts of Interest,
+  Abbreviations, References.
+  - Code availability and the reproduction statement belong in the Data Availability Statement.
+  - Do not reintroduce separate "Code Availability" or "Reproducibility Statement" sections.
+- **First-page note:** "This article is a revised and expanded version of a paper entitled …" with the conference
+  citation. Keep the whole phrase with "ICFICE" and its dates on one source line: the privacy scan exempts
+  conference dates only on such lines.
+- **Abbreviations:** define each at its first use in the main text and in the first figure or table that uses it, and
+  keep the Abbreviations table in step.
+- **Word file:** `python scripts/build_submission_docx.py --template <applsci-template.docx>` →
+  `outputs/p8/submission/manuscript_applsci.docx`. It is not committed; a review-draft notice appears while blockers
+  are open.
+- **Final check:** `python scripts/validate_manuscript_results.py --final --docx <file>`. It fails on any
+  `[... CONFIRM]`, PI placeholder, `[DATA REPOSITORY]` / `[DOI]` / `[LICENSE]`, `BLOCKED` or pending bibliographic field.
+- **PI decisions:** `docs/P8_PI_APPROVAL_CHECKLIST.md`. Enter each decision in the source, record it in
+  `docs/DECISIONS.md`, rebuild and re-validate.

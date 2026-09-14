@@ -17,6 +17,12 @@
 | `supplementary/figures/` | Figures S1–S4 | `scripts/render_manuscript_figures.py` |
 | `drafts/` | cover letter, conference-extension disclosure, author contributions, data and code availability drafts | copies of `paper/manuscript/*_DRAFT.md` |
 | `MANIFEST.json` | SHA-256 of every file above | `scripts/build_submission_candidate.py` |
+| `FINAL_SUBMISSION_CHECKLIST.md` | the tick list that must be complete before submission | hand-written |
+
+**Word file:** `python scripts/build_submission_docx.py --template <Applied Sciences Word template (.docx)>`
+writes `outputs/p8/submission/manuscript_applsci.docx` (git-ignored). The journal restricts its templates to
+submission for peer review, so neither the template nor template-formatted files are committed. While blockers are
+open, the file starts with a review-draft notice.
 
 **Excluded:** raw logs, the canonical dataset, the release windows (`windows.parquet`), participant metadata and
 local paths. Every number comes from the frozen P3–P6 tables, and every table cell records its source cells
@@ -28,7 +34,8 @@ local paths. Every number comes from the frozen P3–P6 tables, and every table 
 python scripts/export_manuscript_tables.py
 python scripts/render_manuscript_figures.py
 python scripts/build_submission_candidate.py
-python scripts/validate_manuscript_results.py
+python scripts/validate_manuscript_results.py            # draft checks
+python scripts/validate_manuscript_results.py --final    # also fails while any placeholder or blocker remains
 ```
 
 ## Checklist before submission
@@ -58,11 +65,9 @@ python scripts/validate_manuscript_results.py
 
 ### D. Journal format
 
-- [ ] Applied Sciences Instructions for Authors, read directly: section structure (separate Related Work and
-  Limitations), Featured Application, abstract (200 words) and keywords, reference style (ISO 4 journal
-  abbreviations; conference locations and dates)
-- [ ] Transfer into the current MDPI Word or LaTeX template, with tables, figures and captions placed at first
-  citation
-- [ ] Conference bibliography (proceedings volume, pages, DOI, URL) and copyright holder; the reference currently
-  shows `[PENDING: …]`
+- [ ] Live Applied Sciences Instructions page re-read (requirements were verified from the latest archived copy) and
+  the current template version confirmed
+- [ ] Word file built from the current template (`scripts/build_submission_docx.py`) and checked
+- [ ] Conference bibliography (proceedings volume, pages, DOI or URL) and copyright holder. The reference prints only
+  verified fields; the gap is a blocker, not text
 - [ ] Cover letter completed (`drafts/cover_letter_draft.md`)

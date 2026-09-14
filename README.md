@@ -137,7 +137,8 @@ no result is recomputed (D-054). The code is in `src/paper/`.
 python scripts/export_manuscript_tables.py      # Tables 1–5 and S1–S19 -> paper/manuscript/generated/
 python scripts/render_manuscript_figures.py     # Figures 1–4 and S1–S4 -> paper/manuscript/generated/figures/
 python scripts/build_submission_candidate.py    # rendered manuscript and staging directory -> paper/submission_candidate/
-python scripts/validate_manuscript_results.py   # read-only checks; exit code 0 only if all pass
+python scripts/validate_manuscript_results.py   # read-only checks; exit code 0 only if all pass (--final: submission-ready)
+python scripts/build_submission_docx.py --template <Applied Sciences Word template .docx>   # -> outputs/p8/submission/
 ```
 
 Open submission and release items: `docs/P8_FINAL_BLOCKERS.md`.

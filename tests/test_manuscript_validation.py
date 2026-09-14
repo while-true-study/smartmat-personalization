@@ -29,3 +29,15 @@ def test_validator_flags_injected_problems():
 def test_repository_manuscript_passes_the_validator():
     results = V.validate()
     assert all(not v for v in results.values()), {k: v for k, v in results.items() if v}
+
+def test_final_readiness_reports_open_placeholders_and_pending_bibliography():
+    source = RD.read_source()
+    blockers = V.readiness_blockers(source, RD.RENDERED.read_text(encoding="utf-8"))
+    assert any(b.startswith("bibliography pending for maeng2026icfice") for b in blockers)
+    assert any("[FUNDING TO BE CONFIRMED BY PI]" in b for b in blockers)
+    def text_blockers(text):                  # the bibliography blocker comes from references.bib, not the text
+        return [b for b in V.readiness_blockers("", text) if not b.startswith("bibliography")]
+
+    assert text_blockers("A complete statement without placeholders.") == []
+    assert text_blockers("Funding: [FUNDING TO BE CONFIRMED BY PI].")
+    assert text_blockers("Status: BLOCKED")

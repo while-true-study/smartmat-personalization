@@ -316,5 +316,7 @@ Until then the drafts keep the placeholders `[DATA REPOSITORY]`, `[DOI]`, `[LICE
 3. literature and citations;
 4. final integration: GenAI disclosure, captions, title comparison, final audit;
 5. formatting and submission preparation: table export, figure rendering, reference rendering, submission candidate
-   and manuscript validator (items 3 and 5 of the list above; D-054).
+   and manuscript validator (items 3 and 5 of the list above; D-054);
+6. submission closure: journal requirements checked against the archived official instructions and the template,
+   reference style, DOCX builder, final-readiness validation, PI approval checklist (D-055).
 Open items: `docs/P8_FINAL_BLOCKERS.md`.
