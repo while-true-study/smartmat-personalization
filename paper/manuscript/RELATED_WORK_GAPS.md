@@ -1,36 +1,26 @@
-# Related work — literature gaps
+# Related work — literature gaps (resolved in P8 pass 3)
 
-> **No reference has been searched or verified yet.**
-> - The manuscript uses `[CITE: <topic>]` placeholders until a reference is found, read and checked (authors, title,
->   venue, year, DOI).
-> - Nothing is cited from memory, and no DOI, title or year is invented.
-> - Verified entries go into `references.bib` with the claim they support.
+> **Status: resolved.** The literature pass (2026-09-14) replaced every `[CITE: …]` placeholder in the manuscript with
+> verified references.
+> - Evidence per reference: `docs/P8_LITERATURE_EVIDENCE_MATRIX.md`.
+> - Claim-by-claim audit: `docs/P8_CITATION_AUDIT.md`.
+> - Entries: `references.bib`.
 
-| # | Topic | What the manuscript needs it for | Manuscript section | Search terms (starting point) | Status |
-|---|---|---|---|---|---|
-| 1 | Smart bedding and pressure-mat sensing | context: unobtrusive in-bed sensing with pressure arrays (sleep, posture, occupancy) | §1, §2.1 | smart mattress, pressure sensor mat, bed sensor, sleep monitoring pressure | not searched |
-| 2 | Indirect estimation of temperature / humidity (bed microclimate, soft sensing) | prior approaches to estimating environmental quantities from other sensors; the bed microclimate | §1, §2.2 | bed microclimate, virtual sensor, soft sensor temperature humidity, indirect estimation | not searched |
-| 3 | TCN for sensor time-series regression | the model family; causal dilated convolutions | §2.3, §3.4 | temporal convolutional network, sequence modelling, sensor regression | not searched |
-| 4 | Cross-subject generalization and domain shift in wearable / ambient sensing; leave-one-subject-out | why strict LOSO; heterogeneity between subjects and domains | §1, §2.4, §6 A | leave-one-subject-out, cross-subject generalization, domain shift sensor, subject variability | not searched |
-| 5 | Personalization and subject adaptation | fine-tuning with a user's own data after deployment; limited-data adaptation | §1, §2.5 | personalization, user adaptation, subject-specific fine-tuning, few-shot adaptation sensor | not searched |
-| 6 | Negative transfer | adaptation that hurts; definitions | §2.5, §6 C | negative transfer, transfer learning failure | not searched |
-| 7 | Temporal concept drift | non-stationarity within a user; drift detection | §1, §2.6, §6 D, G | concept drift, temporal drift, non-stationary sensor data | not searched |
-| 8 | Calibration / domain-level bias correction | offset correction as a simpler alternative (untested here) | §2.6, §6 A, G | domain-level bias, calibration transfer, offset correction, recalibration | not searched |
-| 9 | Leakage in evaluation (splits before windowing, subject leakage) | justification of the leakage gate and of splitting before windowing | §4.1 | data leakage cross-validation time series, subject leakage | not searched |
-| 10 | Cluster / block bootstrap for dependent data | the night-level paired cluster bootstrap; its limits under serial dependence | §4.4, §7 | cluster bootstrap, block bootstrap, dependent data | not searched |
-| 11 | The authors' conference paper | prior work and extension | §1 | — | details from the PI: [ICFICE CITATION] |
+| # | Topic (pass 1) | Resolution | Keys |
+|---|---|---|---|
+| 1 | Smart bedding and pressure-mat sensing | §2.1, §1 ¶1–2 | matar2018unobtrusive, liu2013dense, pouyan2017pressure, yousefi2011bed, carbonaro2021textile |
+| 2 | Indirect estimation of temperature / humidity; bed microclimate | §2.1, §1 ¶1–2. No verified study estimates bed temperature/humidity from pressure (apart from the authors' conference paper), so this is framed as the open question | kottner2018microclimate, gefen2011microclimate, yusuf2015microclimate, mamom2023humidity, maeng2026icfice |
+| 3 | TCN for sensor time-series regression | §2.2, §3.4 | lea2017tcn, bai2018tcn, ordonez2016deep, tan2021tser |
+| 4 | Cross-subject generalization / domain shift | §2.3, §1 ¶4 | hong2016semipopulation, rokni2018personalized, stisen2015smart, chang2020systematic, wilson2020multisource |
+| 5 | Personalization / subject adaptation | §2.3, §1 ¶5 | rokni2018personalized, ferrari2020personalization, taylor2020personalized, hong2016semipopulation |
+| 6 | Negative transfer | §2.4, §1 ¶5, §5.1 | wang2019negative, zhang2023negative, pan2010survey (transfer frame only) |
+| 7 | Temporal concept drift | §2.4, §1 ¶5, §5.1, §5.6 | gama2014survey, kadlec2011adaptation |
+| 8 | Calibration / domain-level bias | §2.4, §5.1, §5.6 | maag2018calibration, delaine2019insitu |
+| 9 | Leakage in evaluation | §3.3, §3.5.4, §2.3 | hammerla2015pairwise, saeb2017usecase, kaufman2012leakage |
+| 10 | Cluster / block bootstrap | not cited. The night-level bootstrap is part of the frozen protocol (D-041) and its limitation is stated in §6. A methodological reference can be added in a later pass if a reviewer asks | — |
+| 11 | The authors' conference paper | §1 ¶3, §2.1, first-page note | maeng2026icfice (bibliographic details pending) |
 
-**Candidate sources found in the conference paper's reference list.** These are not yet verified and are not in
-`references.bib`:
-- the generic convolutional-vs-recurrent sequence-modelling evaluation by Bai, Kolter and Koltun (arXiv, 2018), for
-  topic 3 (TCN);
-- the international pressure ulcer/injury prevention and treatment clinical practice guideline (NPIAP, EPUAP, PPPIA;
-  3rd ed., 2019), for the Introduction's motivation;
-- a movement-score late-fusion temperature/humidity regression manuscript by Lee, Kim and Bang (listed as unpublished,
-  2025). It can be cited only if the PI confirms its status.
-Each must be checked against the original source before use.
-
-**Rules for the literature pass:**
-- Prefer peer-reviewed sources and read at least the abstract and method of each.
-- Record the claim each reference supports.
-- Do not use "first" or "novel" in the manuscript unless the verified literature supports it.
+**Not retained:** see the matrix, "Reviewed and not retained". In particular:
+- the international pressure-injury guideline (the 2019 edition has been superseded by a staged 4th edition; the
+  recommendation text was not verified);
+- the unpublished late-fusion manuscript (its status is unconfirmed).

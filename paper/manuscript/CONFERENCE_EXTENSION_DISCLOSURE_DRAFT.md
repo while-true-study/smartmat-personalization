@@ -54,7 +54,7 @@
 | Item | Status |
 |---|---|
 | Concepts | the task, the TCN family and the movement/contact feature ideas are reused and cited |
-| Data | the journal uses the same data provider's recordings, re-processed from the raw logs. The overlap of subjects and recordings with the conference data set is [VERIFY WITH PI] |
+| Data | the journal uses the same data provider's recordings, rebuilt from the raw logs into an audited dataset. The conference data without second-level timestamps are consistent with the retained legacy minute-resolution lineage, which the journal keeps as auxiliary and does not use; exact file-level identity is not assumed. The conference's auxiliary five-channel source, excluded there from the main six-channel evaluation, is not used either |
 | Model components | re-implemented under the journal protocol; no trained conference model is reused |
 | Text | none reused. Abstract, Introduction and Conclusions are newly written |
 | Figures | none reused |

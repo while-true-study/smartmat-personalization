@@ -14,8 +14,8 @@
 ## 1. What the conference paper did (verified against the PDF)
 
 - **Data and evaluation policy:**
-  - six-channel pressure logs of User01–User03 in the main evaluation, and a five-channel auxiliary source that was
-    excluded;
+  - six-channel pressure logs of User01–User03 in the main evaluation, and an auxiliary five-channel source excluded
+    from the main six-channel evaluation;
   - only User01 had second-level timestamps. User02/User03 were treated as row-order, fixed-length sequences (the
     paper's Table 1).
   - The evaluation was therefore a pragmatic fixed-length-sequence evaluation. The paper states that its results must
@@ -83,9 +83,12 @@ temperature/humidity regression study, listed there as an unpublished manuscript
 
 ## 4. Points to verify with the PI
 
-- Whether the conference's User02/User03 data correspond to the journal's auxiliary legacy sources.
-  - This is consistent with the minute-resolution legacy sources in canonical_v1 (D-021, D-026), but not proven.
-- Which five-channel auxiliary source the conference excluded.
+- **Conference data without second-level timestamps (User02/User03):** consistent with the retained legacy
+  minute-resolution lineage in canonical_v1 (D-021, D-026). Exact file-level identity is not assumed, and no document
+  states it.
+- **The conference's auxiliary five-channel source:** described only as "an auxiliary five-channel source excluded
+  from the main six-channel evaluation". Its internal identity is not needed for the manuscript and is not recorded in
+  public-facing documents.
 - The copyright holder of the conference paper, and whether the journal reuses any conference text, figure or table.
   - Planned: none. The journal figures and tables are generated from the frozen P3–P6 artifacts.
 - The conference acknowledgment names a funding source (a national SW-centred university programme with a project

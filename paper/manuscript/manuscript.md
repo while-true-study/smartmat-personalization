@@ -1,9 +1,10 @@
 <!--
-P8 second pass: first prose draft (sections 1, 3–7), Related Work as structure + topic sentences + placeholders.
+P8 third pass: prose draft of all sections; Related Work and Introduction cite verified references only.
 - Numbers from results are source tokens {{…}} resolved from paper/tables/ (MANUSCRIPT_NOTES.md). Design parameters
   of the frozen protocol (window length, budgets, resample counts, cohort size) are written as text.
 - Claims follow docs/P8_MANUSCRIPT_PLAN.md §3; tables and figures follow docs/P8_TABLE_FIGURE_SELECTION.md.
-- Abstract: next pass. Citations: placeholders only (RELATED_WORK_GAPS.md). No calendar date or month (MANUSCRIPT_NOTES).
+- Citations are [@key] from references.bib (docs/P8_LITERATURE_EVIDENCE_MATRIX.md; audit in docs/P8_CITATION_AUDIT.md).
+  External citations support background claims only; results of this study cite the frozen tables. No calendar date or month.
 -->
 
 # [TITLE — PI DECISION; recommended: "Chronological Personalization under Unseen-User Domain Shift: Offset Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation" (docs/P8_TITLE_CANDIDATES.md)]
@@ -12,7 +13,12 @@ P8 second pass: first prose draft (sections 1, 3–7), Related Work as structure
 
 [FIRST-PAGE NOTE — required for extended conference papers (to confirm, docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md
 item 12): "This article is an extended version of a paper presented at the 18th International Conference on Future
-Information & Communication Engineering (ICFICE 2026) [ICFICE CITATION]."]
+Information & Communication Engineering (ICFICE 2026) [@maeng2026icfice]."]
+
+**Featured Application** [OPTIONAL in the template; PI decides]: A potential application is estimating the
+temperature and humidity of the bed microclimate from the pressure signals of a smart mat, as a complement to direct
+sensing in care settings. The results indicate that such use would need user-level calibration, with safeguards
+against drift within a user over time, before deployment.
 
 ## Abstract
 
@@ -23,37 +29,41 @@ leave-one-subject-out evaluation; domain shift; chronological personalization; n
 
 ## 1. Introduction
 
-Smart bedding and pressure-sensing mats monitor a person at rest without wearable devices or cameras, and they are
-studied for sleep, posture and care applications [CITE: smart bedding / pressure-mat sensing]. In long-term care,
-the thermal and moisture conditions at the body–mattress interface matter for the prevention of pressure injuries
-[CITE: pressure injury prevention guideline], so the temperature and humidity of the bed microclimate are relevant
-quantities to monitor.
+Pressure-sensing mats and bedsheets record a person at rest without wearable devices or cameras. They have been used
+to monitor sleep posture [@liu2013dense; @yousefi2011bed] and breathing [@carbonaro2021textile], within a broader
+effort to replace laboratory sleep studies by unobtrusive home monitoring [@matar2018unobtrusive]. In care settings,
+the microclimate next to the skin (temperature and humidity) is an indirect risk factor for pressure injuries
+[@kottner2018microclimate], so the temperature and humidity of the bed microclimate are relevant quantities to
+monitor.
 
-Estimating these quantities indirectly, from signals that a mat already records, would avoid adding and maintaining
-further sensors [CITE: indirect estimation / soft sensing]. Pressure sequences carry information about occupancy,
-body contact and movement, which interact with the local microclimate. This makes them a plausible, if indirect,
-input for temperature and humidity regression.
+These quantities can be measured with sensors built into the mattress [@mamom2023humidity]. Estimating them instead
+from signals that a pressure mat already records would avoid adding and maintaining further sensors. Pressure
+sequences reflect posture, body contact and movement [@liu2013dense; @carbonaro2021textile]. Whether they also
+carry enough information to estimate the local temperature and humidity is not established; it is the question
+examined here.
 
-In a previous conference study [ICFICE CITATION], we examined this idea with a temporal convolutional network (TCN)
-[CITE: TCN] that fused raw pressure sequences with movement-derived and contact-structure features. That study
-reported gains from both feature types. Because part of the logs lacked second-level timestamps, it evaluated
-pragmatic fixed-length sequences, and it stated that its results should not be read as strict elapsed-time or
-strict leave-one-subject-out evaluation. It left strict time-based unseen-subject evaluation and user-adaptive
+In a previous conference study [@maeng2026icfice], we examined this idea with a temporal convolutional network (TCN)
+[@lea2017tcn; @bai2018tcn] that fused raw pressure sequences with movement-derived and contact-structure features.
+That study reported gains from both feature types. Because part of the logs lacked second-level timestamps, it
+evaluated pragmatic fixed-length sequences, and it stated that its results should not be read as strict elapsed-time
+or strict leave-one-subject-out evaluation. It left strict time-based unseen-subject evaluation and user-adaptive
 fine-tuning to future work.
 
 These two open questions are the deployment questions. A model trained on some people is used for a new person, in a
-new recording period, possibly on another mat and under a different microclimate. Cross-subject generalization of
-this kind is known to be difficult for sensor-based models [CITE: cross-subject generalization / domain shift], and
-in our data the new subject, the recording period, the season and the device cannot be separated. Under a strict
-leave-one-subject-out protocol, we find that the errors differ strongly between subjects and are dominated by
-systematic level offsets, and that changing the pressure representation does not remove them (Sections 4.1–4.2).
+new recording period, possibly on another mat and under a different microclimate. Sensor-based models are known to
+lose accuracy for new users and on different devices [@hong2016semipopulation; @rokni2018personalized;
+@stisen2015smart], and in our data the new subject, the recording period, the season and the device cannot be
+separated. Under a strict leave-one-subject-out protocol, we find that the errors differ strongly between subjects
+and are dominated by systematic level offsets, and that changing the pressure representation does not remove them
+(Sections 4.1–4.2).
 
 After deployment, a limited amount of labelled data from the new user can be collected if reference temperature and
-humidity measurements are available for the first nights. Fine-tuning on these nights is an obvious way to correct a
-domain-level offset [CITE: personalization / subject adaptation]. It carries a risk that is easy to overlook: the
-earliest nights may not represent the later period the model is used in. When the conditions drift within a user
-[CITE: temporal concept drift], adaptation can move the model towards a level that no longer holds, so it may
-correct an offset or introduce a new one [CITE: negative transfer].
+humidity measurements are available for the first nights. Personalizing a model with a small amount of the user's
+own data has improved sensor-based recognition in other domains [@rokni2018personalized;
+@ferrari2020personalization]. It carries a risk that is easy to overlook: the earliest nights may not represent the
+later period the model is used in. When the relation between inputs and target changes over time [@gama2014survey],
+adaptation can move the model towards a level that no longer holds. Transfer can then hurt instead of help
+[@wang2019negative; @zhang2023negative], and adaptation may correct an offset or introduce a new one.
 
 This study asks how far limited chronological personalization mitigates the unseen-subject failure of smart-mat
 temperature and humidity estimation, and how its effect depends on the temporal representativeness of the adaptation
@@ -74,42 +84,95 @@ results, Section 5 discusses them, Section 6 states the limitations, and Section
 
 ## 2. Related Work
 
-[STRUCTURE ONLY — topic sentences and citation placeholders until the literature pass (RELATED_WORK_GAPS.md).]
+### 2.1. Smart Bedding and Pressure-Based Monitoring
 
-### 2.1. Pressure-Mat and Smart-Bedding Monitoring
+In-bed pressure sensing is an established route to unobtrusive monitoring:
+- Dense textile bedsheets and commercial pressure mats have been used to classify sleep posture
+  [@liu2013dense; @yousefi2011bed], in the latter case explicitly for pressure-injury prevention.
+- Public pressure-map data sets support posture and subject analytics [@pouyan2017pressure].
+- A textile pressure matrix integrated into a mattress has characterised posture and movement and extracted breathing
+  activity [@carbonaro2021textile].
+- These systems belong to a wider move towards unobtrusive sleep monitoring outside the laboratory
+  [@matar2018unobtrusive].
 
-Topic sentence: pressure-sensing mats and mattresses have been used for in-bed monitoring tasks such as posture,
-occupancy and sleep assessment [CITE: pressure-mat monitoring].
+The bed microclimate has a separate clinical motivation:
+- The skin microclimate is regarded as an indirect pressure-injury risk factor
+  [@kottner2018microclimate].
+- Modelling indicates that higher temperature and humidity lower skin tolerance [@gefen2011microclimate].
+- Microclimate differences have been observed between patients who did and did not develop skin damage
+  [@yusuf2015microclimate].
+- Where the microclimate is monitored, this has been done with dedicated sensors, such as humidity sensors built into
+  a mattress [@mamom2023humidity], or with environmental sensors alongside the pressure layer of a smart bed
+  [@carbonaro2021textile].
 
-### 2.2. Indirect Estimation of Temperature and Humidity
+These studies use pressure to infer posture, movement or breathing, or they measure temperature and humidity
+directly. Estimating the microclimate from the pressure signal itself has received less attention. Our conference
+study examined it with fused pressure representations, but it did not evaluate unseen users or adaptation
+[@maeng2026icfice]. The present work treats pressure-based temperature and humidity estimation as an open deployment
+problem rather than as an established capability.
 
-Topic sentence: environmental quantities are often estimated indirectly from other sensors when direct sensing is
-costly or intrusive [CITE: indirect estimation / soft sensing], including in bedding microclimates
-[CITE: bed microclimate].
+### 2.2. Temporal Models for Sensor Regression
 
-### 2.3. Temporal Convolutional Networks for Sensor Time-Series Regression
+- **TCNs:** temporal convolutional networks were introduced as hierarchies of temporal convolutions for fine-grained
+  action segmentation [@lea2017tcn]. A generic TCN built from causal and dilated convolutions with residual blocks was
+  later evaluated against recurrent networks and performed better on the benchmark tasks studied, with a longer
+  effective memory [@bai2018tcn].
+- **Wearable sensors:** deep networks that learn features directly from raw sequences and model their temporal
+  dynamics have become common [@ordonez2016deep].
+- **Our task:** estimating the current temperature and humidity from a window of past and present pressure values is
+  a regression from a time series to continuous values, known as time series extrinsic regression. It is distinct
+  from forecasting and from classification [@tan2021tser].
+- **Use in this study:** we use the TCN as a well-studied model family for this setting. We do not claim that it is
+  superior to recurrent alternatives, which were not compared.
 
-Topic sentence: causal dilated convolutions provide a compact sequence model for sensor regression
-[CITE: TCN time-series].
+### 2.3. Cross-Subject Generalization and Personalization
 
-### 2.4. Cross-Subject Generalization and Leakage-Controlled Evaluation
+**Evaluation.** How generalization to new people is measured matters:
+- Random cross-validation over segmented sensor time series is optimistic, because adjacent segments are not
+  independent [@hammerla2015pairwise].
+- Record-wise validation can grossly overestimate accuracy for new subjects, whereas subject-wise validation mirrors
+  that use case [@saeb2017usecase].
 
-Topic sentence: sensor models trained on some subjects often degrade on unseen subjects, and leave-one-subject-out
-protocols without subject or temporal leakage are needed to measure this [CITE: cross-subject generalization]
-[CITE: evaluation leakage].
+**Generalization failures:**
+- Individual diversity limits population models of human activity [@hong2016semipopulation].
+- Recognition accuracy drops for new users or when a user's condition changes [@rokni2018personalized].
+- One-size-fits-all models perform poorly when outcomes vary between individuals [@taylor2020personalized].
+- Heterogeneity between devices [@stisen2015smart] and sensor placements [@chang2020systematic] degrades recognition
+  further.
 
-### 2.5. Personalization, Subject Adaptation and Negative Transfer
+**Responses:**
+- personalization with small amounts of the new user's data, or with similar users [@hong2016semipopulation;
+  @ferrari2020personalization];
+- transfer learning with minimal user supervision [@rokni2018personalized];
+- personalized multitask models [@taylor2020personalized];
+- domain adaptation for time-series sensor data [@wilson2020multisource]. Its assumptions can fail in practice
+  [@chang2020systematic].
 
-Topic sentence: fine-tuning on a user's own data is a common personalization strategy
-[CITE: personalized sensor models], but transfer can also degrade performance [CITE: negative transfer].
+**Scope gap:** most of this work concerns activity or state recognition. Less examined is the regression of continuous environmental quantities for an unseen user under a
+combined shift of subject, recording period, season and device. The same holds for personalization data taken
+chronologically from the start of deployment and evaluated on a fixed later span. The present study addresses this
+setting with three subjects, so it describes cases rather than population effects.
 
-### 2.6. Temporal Drift and Level Calibration
+### 2.4. Negative Transfer, Temporal Drift and Calibration
 
-Topic sentence: non-stationarity within a user and domain-level bias motivate drift monitoring and recalibration
-[CITE: concept drift] [CITE: calibration / domain-level bias].
+- **Transfer learning** addresses the case in which training data and the data of later use follow different
+  distributions [@pan2010survey]. Its benefit is not guaranteed: transfer from a less related source can reduce
+  target performance, which is known as negative transfer [@wang2019negative]. This long-standing problem has
+  motivated many remedies [@zhang2023negative].
+- **Concept drift:** the relation between inputs and target may also change over time [@gama2014survey]. For
+  data-driven soft sensors, which estimate quantities indirectly, adaptation mechanisms such as moving windows,
+  recursive updates and ensembles have been organised around this concept-drift view [@kadlec2011adaptation].
+- **Calibration:** low-cost environmental sensors are error-prone in the field and drift over time. Calibration and
+  in situ recalibration have been used to maintain data quality in long-term deployments
+  [@maag2018calibration; @delaine2019insitu].
 
-Positioning (to be written against verified literature only): this study combines strict unseen-subject evaluation
-with chronological personalization and documents when adaptation helps and when it hurts.
+**Relation to this study:** in chronological personalization, the adaptation data are the target user's own earliest
+nights. If the user's conditions drift, adapting to those nights can make later predictions worse. This is a temporal
+form of the relatedness question behind negative transfer.
+- The literature above describes the ingredients: distribution shift, negative transfer, drift and recalibration. It
+  does not establish how they combine in this application.
+- Our evidence on this point is empirical and descriptive (Sections 4.3–4.5). The calibration literature motivates a
+  simpler offset-correction comparator, which this study did not evaluate (Section 6).
 
 ## 3. Materials and Methods
 
@@ -165,8 +228,9 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
   - 40-s windows start every 20 s within a segment;
   - each window is divided into eight 5-s bins, and the last observed row of each bin is one step;
   - a window exists only if all bins contain a row, so no value is invented;
-  - splits are made before windowing, so no window crosses a partition boundary. Windows for personalization are also
-    cut at night boundaries.
+  - splits are made before windowing, so no window crosses a partition boundary. Overlapping windows are not
+    independent, and random splits over them would overstate accuracy for new users [@hammerla2015pairwise].
+    Windows for personalization are also cut at night boundaries.
 - **Target:** the temperature and humidity of the row at the last step (current, not future, conditions). A window
   is labelled only if both validity flags are true there.
 - **Input:** the 8 × 6 raw pressure values divided by 4095. This fixed physical range is the same in every fold;
@@ -176,8 +240,9 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
 
 ### 3.4. Model and Training
 
-- **Architecture:** a causal residual TCN with three blocks (dilations 1, 2 and 4), two causal convolutions per block
-  with ReLU and dropout, and a linear head on the last time step. It predicts temperature and humidity jointly, with
+- **Architecture:** a causal residual TCN following the generic TCN design [@bai2018tcn]: three blocks (dilations 1,
+  2 and 4), two causal convolutions per block with ReLU and dropout, a 1×1 convolution on the residual path when the
+  channel count changes, and a linear head on the last time step. It predicts temperature and humidity jointly, with
   a mean-squared-error loss on the standardised targets.
 - **Search space:** 16 configurations: channels {32, 64} × kernel size {2, 3} × dropout {0.1, 0.3} × learning rate
   {10⁻³, 3 × 10⁻⁴}.
@@ -246,7 +311,8 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
 #### 3.5.4. Leakage Control
 
 - **Automated gate:** an automated check runs before every training or evaluation run. It stops the run if any rule
-  fails.
+  fails. It targets leakage, i.e. information about the target that would not be available in deployment
+  [@kaufman2012leakage], and it enforces subject-wise evaluation as in the intended use [@saeb2017usecase].
 - **Rules checked:**
   - held-out subjects and adaptation/test nights are disjoint from the data used for fitting and selection;
   - concurrent mats stay in one partition;
@@ -301,6 +367,13 @@ Table 1 summarises the cohort and the protocol: `{{TABLE:manuscript_table_1_data
   - every prediction file bitwise, and every reported result table.
 - **Not rerun:** the hyperparameter searches (the nested inner searches for RAW and for the feature families). Their
   selections were reused as committed.
+
+### 3.8. Use of Generative AI
+
+[GENERATIVE-AI DISCLOSURE REQUIRED — PI to approve (OPEN-28). The MDPI template requires Materials and Methods to
+describe any use of generative AI for text, data, graphics, study design, analysis or interpretation; superficial
+editing is exempt. Generative-AI assistance was used in this project for code development, analysis orchestration
+and manuscript drafting. The exact wording, tool and version are for the PI to state.]
 
 ## 4. Results
 
@@ -529,16 +602,21 @@ primary span (Table S15; Figure 5 or Figure S-level). Values below are span mean
 ### 5.1. Why Adaptation Sometimes Helps and Sometimes Hurts
 
 The results point to one pattern. Under strict leave-one-subject-out evaluation, a large part of the error is a
-level offset between the held-out domain and the training pool (Section 4.1) [CITE: calibration / domain-level
-bias]. Full fine-tuning on a subject's earliest nights moves the model's predictions towards the level of those
-nights. When that level is close to the level of the later nights, the offset shrinks: this is the User02 case.
-When it is far from it, the model acquires a new offset: User07 temperature and User01 humidity at up to seven
-nights.
+level offset between the held-out domain and the training pool (Section 4.1). Full fine-tuning on a subject's
+earliest nights moves the model's predictions towards the level of those nights. When that level is close to the
+level of the later nights, the offset shrinks: this is the User02 case. When it is far from it, the model acquires a
+new offset: User07 temperature and User01 humidity at up to seven nights. The role of such offsets resembles that of
+calibration in deployed environmental sensing, where field recalibration corrects sensor offsets
+[@maag2018calibration; @delaine2019insitu].
 
 The post-hoc level comparison agrees with this in almost every cell (Section 4.5). These observations are consistent
-with temporal representativeness being an important condition for successful personalization. They do not show
-that temporal drift causes negative transfer: three subjects, confounded periods and one adaptation recipe allow
-association only [CITE: temporal concept drift].
+with temporal representativeness being an important condition for successful personalization. The pattern parallels
+two ideas from the literature:
+- concept drift, a change over time in the relation between inputs and target [@gama2014survey];
+- negative transfer from a less related source [@wang2019negative]. Here, the less related data would be the user's
+  own earliest nights.
+These parallels are interpretive and are not tested in this study. The observations do not show that temporal drift
+causes negative transfer: three subjects, confounded periods and one adaptation recipe allow association only.
 
 ### 5.2. Feature Engineering and Personalization Address Different Problems
 
@@ -577,15 +655,19 @@ User02 temperature illustrates both sides:
 - the night-level interval of the improvement was narrow and above zero;
 - yet one mat kept a negative residual after 14 nights.
 Both mats belong to one subject and were adapted jointly. The residual is consistent with one adapted model having to
-serve two mat microclimates at once. We do not attribute it to a device defect, to the heater or to a property of the
-user.
+serve two mat microclimates at once. Differences between devices are a known source of error in mobile sensing
+[@stisen2015smart]; here, the mat cannot be separated from its microclimate. We do not attribute the residual to a
+device defect, to the heater or to a property of the user.
 
 ### 5.6. Practical Implications (Not Tested)
 
-For deployment, these results suggest that personalization needs safeguards: selecting or weighting adaptation data
-by its similarity to current conditions, monitoring the level drift after adaptation, or falling back to a simpler
-offset calibration [CITE: calibration / domain-level bias]. None of these safeguards was evaluated here; they are
-future work.
+For deployment, these results suggest that personalization needs safeguards. Candidates exist in neighbouring
+fields:
+- selecting or weighting adaptation data by its similarity to current conditions;
+- monitoring drift after adaptation [@gama2014survey], or using adaptive estimators, as for data-driven soft sensors
+  [@kadlec2011adaptation];
+- falling back to a simpler offset recalibration, as for deployed environmental sensors [@delaine2019insitu].
+None of these safeguards was evaluated here; they are future work.
 
 ## 6. Limitations
 
@@ -641,13 +723,17 @@ the derived release package in a clean checkout; the hyperparameter searches wer
 [PI] Documented: the data provider confirmed that participant consent was obtained and that the data may be used and
 released for research. This confirmation is not an institutional ethics approval.
 
+## Acknowledgments
+
+[PI] [GENERATIVE-AI STATEMENT REQUIRED — tool, version and purpose, per the MDPI template (OPEN-28)]
+
 ## Author Contributions
 
 [PI — CRediT roles]
 
 ## Funding
 
-[PI — confirm whether the funding acknowledged in the conference paper applies to this work]
+[FUNDING TO BE CONFIRMED BY PI] (the conference paper's funding statement is not carried over automatically)
 
 ## Conflicts of Interest
 

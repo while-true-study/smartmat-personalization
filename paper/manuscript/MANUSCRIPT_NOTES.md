@@ -32,12 +32,27 @@ Counts of rows are written `{{COUNT:<table> | <col>=<value>, …}}`, e.g.
 Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, selection and rounding are defined in
 `docs/P8_TABLE_FIGURE_SELECTION.md` and implemented by the export script.
 
+## Citations (pass 3)
+
+- **Syntax:** `[@key]` or `[@key1; @key2]`, with keys from `references.bib`. At formatting they become numbers in
+  order of first appearance, in square brackets before punctuation (MDPI template).
+- **Eligible references:** only entries listed in `docs/P8_LITERATURE_EVIDENCE_MATRIX.md`. Each citation must support
+  the exact sentence it is attached to (`docs/P8_CITATION_AUDIT.md`).
+- **Own results:** sentences reporting this study's results carry no external citation; their source is the frozen
+  tables (tokens). Parallels to the literature go in separate, explicitly interpretive sentences.
+- **Preprints:** the only one is the canonical TCN preprint (`bai2018tcn`, not peer-reviewed). It is cited for the
+  architecture, never for universal superiority over recurrent networks.
+- **Conference paper:** `maeng2026icfice`, with verified title, authors, venue and paper number. Pages, DOI and URL
+  are pending (`note` field; OPEN-27).
+
 ## Placeholders
 
 | Placeholder | Meaning |
 |---|---|
-| `[CITE: <topic>]` | a verified reference is needed (see `RELATED_WORK_GAPS.md`); never replaced by an unverified one |
-| `[ICFICE CITATION]` | the authors' conference paper; the bibliographic details come from the PI |
+| `[CITE: <topic>]` | retired in pass 3; none remain. Any new claim needing literature gets a verified reference or is reworded |
+| `[ICFICE CITATION]` | retired in pass 3; replaced by `[@maeng2026icfice]` (bibliographic details pending, OPEN-27) |
+| `[FUNDING TO BE CONFIRMED BY PI]` | the conference paper's funding is not carried over |
+| `[GENERATIVE-AI DISCLOSURE REQUIRED]` / `[GENERATIVE-AI STATEMENT REQUIRED]` | MDPI template requirement (OPEN-28) |
 | `[DATA REPOSITORY]`, `[DOI]`, `[LICENSE]` | open publication decisions (P7 checklist D1–D2) |
 | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]` | institutional ethics information; the provider permission (D-002) is not an IRB approval |
 | `[PI DECISION: …]` | any other decision reserved for the PI |
