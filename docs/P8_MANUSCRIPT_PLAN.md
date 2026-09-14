@@ -70,7 +70,7 @@ Evidence (seed means, primary span nights ≥ 16, unless stated):
 | S4 | User01 humidity and User07 temperature are negative-transfer cases. | See §3.1. User07 temperature intervals exclude zero for seed 0 (4/4 budgets) and seed 2 (2/4), not seed 1 (0/4). (`p6_bootstrap_seed_sensitivity`) | User07: direction robust, interval support seed-dependent |
 | S5 | Adaptation effectiveness is descriptively associated with temporal target-level representativeness. | 23/24 consistency; trajectories in `p6_level_mismatch_trajectory` / Figure P6-4. | post hoc (D-047 B), association only |
 | S6 | User02/22482 keeps a residual temperature offset after adaptation. | 22482 b = 14 bias −1.975 °C (seed mean); seed-0 interval −1.923 [−2.230, −1.599]. It stays below zero in every quality-phase and heater-context stratum with ≥ 10 nights. 22480: −0.009 [−0.237, +0.229]. (`p5_user02_device_strata`, `p6_user02_device_context`) | not a confirmed device defect; mat, microclimate and control are not separable |
-| S7 | All major P3–P6 results are reproducible from the anonymized public release candidate. | 102 frozen prediction files bitwise, 9 P3 weight digests, 35/35 tables, clean checkout (P7 report §8–§10) | frozen selections reused; inner searches not re-run; release not yet public |
+| S7 | All major P3–P6 results are reproducible from the anonymized public release candidate. | 102 frozen prediction files bitwise, 9 P3 weight digests, all 35 reproduced result tables (of the 38 CSV artifacts in `paper/tables/`; the other 3 are selection/provenance records), clean checkout (P7 report §8–§10) | frozen selections reused; inner searches not re-run; release not yet public |
 
 ### 3.3 Not claimed (never write)
 
@@ -116,15 +116,17 @@ statement.
 ## 5. Target journal framing
 
 - **Target:** MDPI *Applied Sciences*, engineering / applied-AI article.
-- **Planned structure:**
+- **Planned structure (pass 2):**
   1. Introduction
   2. Related Work
-  3. Materials and Methods
-  4. Experimental Protocol
-  5. Results
-  6. Discussion
-  7. Limitations
-  8. Conclusions
+  3. Materials and Methods, with the experimental protocol as §3.5
+  4. Results
+  5. Discussion
+  6. Limitations
+  7. Conclusions
+  The protocol moved into Materials and Methods because that section is on the required-section list found for
+  Applied Sciences (`docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 1, to confirm). The §-references in §6 below
+  predate this renumbering; `paper/manuscript/MANUSCRIPT_NOTES.md` has the current numbering.
 - **Back matter:** Data Availability, Code Availability, ethics/consent, author information.
 - **Unverified:** the current Applied Sciences template and instructions have not been checked in P8. Before
   formatting, they must be verified for:

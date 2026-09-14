@@ -44,6 +44,43 @@ Whole manuscript tables are referenced as `{{TABLE:<name>}}`. Their source, sele
 
 ## Privacy rules for manuscript content
 
-- No calendar date, absolute timestamp or month of recording. Nights are ordinals or `D####`.
-- No participant metadata or health information; nothing from excluded sources.
-- Subjects are only `User01`, `User02`, `User07`. The two mats `22480` and `22482` belong to User02.
+**Calendar-date policy (fixed in P8 pass 2):**
+- **Not used:** exact calendar dates, months of recording, original night/date identifiers, absolute timestamps.
+- **Allowed wording:** early / later recording period; earliest adaptation nights; future deployment nights; night
+  ordinals (night 1, nights ≥ 16) or `D####` keys; sensor phase s1/s2; quality phase; recording-period shift; temporal
+  drift; seasonal variation as a generic confounder.
+- **Direct calendar labels** ("winter", "spring", a month name) are not scientifically necessary and are not used.
+  Adding them would need PI approval and a separate decision entry.
+- **Other content rules:**
+  - no participant metadata or health information; nothing from excluded sources;
+  - subjects are only `User01`, `User02`, `User07`; the two mats `22480` and `22482` belong to User02.
+- **Bibliographic dates** (e.g. the conference year and venue dates) are not subject data and may be cited.
+
+## Precision rules carried from evidence checks
+
+- **Drift sensitivity:** never write that the gain sign was identical for every subject, target, budget, seed and
+  start night.
+  - At the aggregated subject–target–budget level, the directions were stable across the start points.
+  - At the seed level there are borderline exceptions: User07 temperature, start night 12, b = 1, where 1 of 3 seeds
+    is positive. `p6_drift_sensitivity` is the source.
+- **User07 temperature:** the negative-transfer direction was dominant but not literally invariant. The interval
+  support depends on the seed (seed 0: 4/4 budgets, seed 2: 2/4, seed 1: 0/4).
+- **Low budgets:** write "one to three adaptation nights did not provide reliable improvement", not "few-shot
+  personalization improves".
+- **Level mismatch:** "consistent with temporal representativeness being an important condition"; never "drift
+  causes negative transfer".
+- **Artifact counts:** `paper/tables/` holds 38 CSV artifacts, 35 reproduced result tables and 3 selection/provenance
+  records.
+
+## Section numbering (pass 2)
+
+1. Introduction
+2. Related Work (structure only)
+3. Materials and Methods, with the experimental protocol as §3.5, statistics as §3.6 and reproducibility as §3.7
+4. Results (4.1–4.6)
+5. Discussion
+6. Limitations
+7. Conclusions
+
+This follows the required-section list found for Applied Sciences (to confirm: `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`
+item 1).

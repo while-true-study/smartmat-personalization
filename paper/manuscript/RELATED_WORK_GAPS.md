@@ -20,6 +20,16 @@
 | 10 | Cluster / block bootstrap for dependent data | the night-level paired cluster bootstrap; its limits under serial dependence | §4.4, §7 | cluster bootstrap, block bootstrap, dependent data | not searched |
 | 11 | The authors' conference paper | prior work and extension | §1 | — | details from the PI: [ICFICE CITATION] |
 
+**Candidate sources found in the conference paper's reference list.** These are not yet verified and are not in
+`references.bib`:
+- the generic convolutional-vs-recurrent sequence-modelling evaluation by Bai, Kolter and Koltun (arXiv, 2018), for
+  topic 3 (TCN);
+- the international pressure ulcer/injury prevention and treatment clinical practice guideline (NPIAP, EPUAP, PPPIA;
+  3rd ed., 2019), for the Introduction's motivation;
+- a movement-score late-fusion temperature/humidity regression manuscript by Lee, Kim and Bang (listed as unpublished,
+  2025). It can be cited only if the PI confirms its status.
+Each must be checked against the original source before use.
+
 **Rules for the literature pass:**
 - Prefer peer-reviewed sources and read at least the abstract and method of each.
 - Record the claim each reference supports.
