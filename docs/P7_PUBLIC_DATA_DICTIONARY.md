@@ -1,8 +1,7 @@
 # P7 — Public data dictionary (`public_release_v1`)
 
 > Column-level documentation of the public release package (D-049, D-050). The machine-readable window schema is
-> `schema.json` in the package. Counts and ranges below are those of `public_release_v1` (manifest
-> `f6bf2210d443…`).
+> `schema.json` in the package. Counts and ranges below are those of `public_release_v1`.
 
 | | |
 |---|---|
