@@ -666,10 +666,12 @@ def _seed_mean(rows: list[dict], keys: tuple[str, ...]) -> list[dict]:
     return out
 
 
-def aggregate() -> dict[str, list[dict]]:
+def aggregate(include_selection: bool = True) -> dict[str, list[dict]]:
     """All P3 tables from complete runs only (fails if anything is missing or incomplete).
 
     Seeds are aggregated by averaging their metrics (never by averaging predictions: no ensemble is declared).
+    include_selection=False leaves out the inner-search and selection tables, which need the inner-search records
+    (the public-release reproduction re-runs the frozen final models only; D-050).
     """
     cfg = load_protocol()
     folds = {int(k): v for k, v in cfg["loso"]["outer_folds"].items()}
@@ -742,6 +744,8 @@ def aggregate() -> dict[str, list[dict]]:
     tables["secondary_strata"] = strata + [
         {"model": "tcn_raw", **r} for r in _seed_mean(tcn_strata, ("fold", "subject_id", "stratum_type", "stratum",
                                                                    "target", "metric"))]
+    if not include_selection:
+        return tables
     inner_rows, sel_rows = [], []
     for f in folds:
         if not selection_path(f).exists():

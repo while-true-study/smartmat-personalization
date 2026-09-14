@@ -35,20 +35,30 @@ def md(header: list[str], rows: list[list]) -> str:
     return "\n".join(out)
 
 
+def export_csvs(t: dict[str, list[dict]]) -> None:
+    """paper/tables/p3_*.csv. A missing "tcn_selected_configs" is skipped: the public-release reproduction has no
+    inner-search record (D-050)."""
+    tables = paths.PROJECT_ROOT / "paper" / "tables"
+    for name, src in (("p3_primary_summary", "tcn_outer_summary"), ("p3_tcn_outer_by_seed", "tcn_outer_by_seed"),
+                      ("p3_selected_configs", "tcn_selected_configs"),
+                      ("p3_training_mean_by_fold", "training_mean_by_fold")):
+        if src in t:
+            write_csv(tables / f"{name}.csv", t[src], list(t[src][0]))
+    keep = [r for r in t["secondary_strata"] if r["stratum_type"] != "per_night_mae"
+            and (r["model"] == "training_mean" or r["seed"] == "mean")]
+    cols = ["model", "fold", "subject_id", "stratum_type", "stratum", "target", "metric", "value", "seed_sd",
+            "n_windows"]
+    write_csv(tables / "p3_secondary_strata.csv", [{c: r.get(c, "") for c in cols} for r in keep], cols)
+
+
 def main() -> int:
     summary, by_seed, by_fold = read("tcn_outer_summary"), read("tcn_outer_by_seed"), read("tcn_outer_by_fold")
     sel, tm, strata = read("tcn_selected_configs"), read("training_mean_by_fold"), read("secondary_strata")
     pooled, inner = read("secondary_window_weighted_pooled"), read("tcn_inner_search")
-    tables = paths.PROJECT_ROOT / "paper" / "tables"
-    write_csv(tables / "p3_primary_summary.csv", summary, list(summary[0]))
-    write_csv(tables / "p3_tcn_outer_by_seed.csv", by_seed, list(by_seed[0]))
-    write_csv(tables / "p3_selected_configs.csv", sel, list(sel[0]))
-    write_csv(tables / "p3_training_mean_by_fold.csv", tm, list(tm[0]))
+    export_csvs({"tcn_outer_summary": summary, "tcn_outer_by_seed": by_seed, "tcn_selected_configs": sel,
+                 "training_mean_by_fold": tm, "secondary_strata": strata})
     keep = [r for r in strata if r["stratum_type"] != "per_night_mae" and (r["model"] == "training_mean"
                                                                            or r["seed"] == "mean")]
-    cols = ["model", "fold", "subject_id", "stratum_type", "stratum", "target", "metric", "value", "seed_sd",
-            "n_windows"]
-    write_csv(tables / "p3_secondary_strata.csv", [{c: r.get(c, "") for c in cols} for r in keep], cols)
 
     parts = []
     # T1 primary

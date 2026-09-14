@@ -495,10 +495,11 @@ def p3_reference_unchanged() -> None:
             raise P4Error(f"{rel} differs from {P3_TAG} (or the tag is missing)")
 
 
-def p3_reference(root: Path | None = None, verify_tag: bool = True) -> dict:
+def p3_reference(root: Path | None = None, verify_tag: bool = True, include_selection: bool = True) -> dict:
     """RAW-TCN per-seed results, training-mean results, strata and selections as frozen by P3 (committed files only).
 
     RAW seed means are recomputed from the per-seed table and must equal the committed P3 summary (1e-12).
+    include_selection=False skips the selection table (absent from a public-release reproduction; D-050).
     """
     root = paths.PROJECT_ROOT if root is None else root
     if verify_tag:
@@ -536,8 +537,8 @@ def p3_reference(root: Path | None = None, verify_tag: bool = True) -> dict:
                        "seed_sd": float(r["seed_sd"]) if r["seed_sd"] else "", "n_windows": int(r["n_windows"]),
                        "source": "p3_frozen"})
     sel = [{**r, "family": REFERENCE_FAMILY, "n_inputs": FAMILY_DIMS[REFERENCE_FAMILY], "source": "p3_frozen"}
-           for r in t("p3_selected_configs.csv")]
-    files = {rel: S.file_sha256_lf(root / rel) for rel in P3_REFERENCE_FILES}
+           for r in t("p3_selected_configs.csv")] if include_selection else []
+    files = {rel: S.file_sha256_lf(root / rel) for rel in P3_REFERENCE_FILES} if include_selection else {}
     return {"outer": outer, "training_mean": tm, "strata": strata, "selected": sel, "files_sha256": files}
 
 
@@ -674,12 +675,17 @@ def build_tables(outer: list[dict], tm: list[dict], subjects: list[str]) -> dict
     return tables
 
 
-def aggregate() -> dict[str, list[dict]]:
-    """All P4 tables from complete final runs and the frozen P3 reference (fails if anything is missing)."""
+def aggregate(include_selection: bool = True, p3_root: Path | None = None) -> dict[str, list[dict]]:
+    """All P4 tables from complete final runs and the frozen P3 reference (fails if anything is missing).
+
+    Public-release reproduction (D-050): include_selection=False leaves out the inner-search, selection and
+    reference-provenance tables (no inner-search record); p3_root points at the reproduced P3 tables (no tag check).
+    """
     cfg = load_protocol()
     folds = {int(k): v for k, v in cfg["loso"]["outer_folds"].items()}
     seeds = [int(s) for s in cfg["models"]["seeds"]]
-    ref = p3_reference()
+    ref = p3_reference() if p3_root is None else p3_reference(p3_root, verify_tag=False,
+                                                                 include_selection=include_selection)
     doc = frozen_selection()
     outer, strata, pooled_parts = list(ref["outer"]), [], {}
     for fam in P4_FAMILIES:
@@ -717,6 +723,8 @@ def aggregate() -> dict[str, list[dict]]:
             for k, v in dd.items():
                 pooled.append({"family": fam, "seed": s, "target": t, "metric": k, "value": v, "n_windows": len(yy)})
     tables["secondary_window_weighted_pooled"] = pooled
+    if not include_selection:
+        return tables
     inner_rows = []
     sel_rows = list(ref["selected"])
     for fam in P4_FAMILIES:
