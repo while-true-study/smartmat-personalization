@@ -25,8 +25,9 @@ BUDGETS = ("0", "1", "3", "7", "14")
 UNIT = {"temperature": "°C", "humidity": "%RH"}
 MARK = re.compile(r"<!-- BEGIN GENERATED P5:(?P<name>[a-z_0-9]+) -->.*?<!-- END GENERATED P5:(?P=name) -->", re.S)
 # categorical slots 1-3 of the validated default palette (dataviz); the cohort mean is drawn in primary ink
-COLORS = {"User01": "#2a78d6", "User02": "#eb6834", "User07": "#1baf7a", "unweighted_mean": "#0b0b0b"}
-MARKERS = {"User01": "o", "User02": "s", "User07": "^", "unweighted_mean": "D"}
+COLORS = {"User01": "#2a78d6", "User02": "#eb6834", "User07": "#1baf7a", "unweighted_mean": "#0b0b0b",
+          "22480": "#4a3aa7", "22482": "#e87ba4"}          # mats: their own validated pair, not a subject's colour
+MARKERS = {"User01": "o", "User02": "s", "User07": "^", "unweighted_mean": "D", "22480": "o", "22482": "s"}
 INK, MUTED, GRID, SURFACE = "#0b0b0b", "#898781", "#e1e0d9", "#fcfcfb"
 
 
@@ -66,7 +67,8 @@ def export_csvs(t: dict[str, list[dict]]) -> None:
         write_csv(out / f"p5_primary_{metric}.csv", rows, cols)
     write_csv(out / "p5_later_span_mae.csv", [r for r in t["later_summary"] if r["metric"] == "mae"], cols)
     for name, src in (("p5_adaptation_gain", "adaptation_gain"), ("p5_by_seed", "by_seed"),
-                      ("p5_per_night", "per_night"), ("p5_budget_counts", "budget_counts")):
+                      ("p5_per_night", "per_night"), ("p5_budget_counts", "budget_counts"),
+                      ("p5_level_diagnostic", "level_diagnostic")):
         rows = t[src]
         write_csv(out / f"{name}.csv", rows, list(dict.fromkeys(k for r in rows for k in r)))
     scols = ["subject_id", "budget_nights", "seed", "stratum_type", "stratum", "target", "metric", "value", "seed_sd",
@@ -125,19 +127,26 @@ def draw_figures(fd: list[dict]) -> None:
         for ax, panel in zip(axes[0], panels):
             rows = [r for r in fd if r["figure"] == fig_id and r["panel"] == panel]
             series = list(dict.fromkeys(r["series"] for r in rows))
-            for i, s in enumerate(series):
+            ends = []
+            for s in series:
                 pts = sorted((r for r in rows if r["series"] == s), key=lambda r: BUDGETS.index(r["budget_nights"]))
                 y = [float(r["value"]) for r in pts]
-                color = COLORS.get(s, ["#2a78d6", "#eb6834"][i % 2])
                 mean = s == "unweighted_mean"
-                ax.plot(xs, y, color=color, lw=2, ls="--" if mean else "-", marker=MARKERS.get(s, "os"[i % 2]),
-                        ms=6, label="unweighted mean" if mean else s, zorder=3)
+                ax.plot(xs, y, color=COLORS[s], lw=2, ls="--" if mean else "-", marker=MARKERS[s], ms=6,
+                        label="unweighted mean" if mean else s, zorder=3)
                 if not mean:
                     lo = [float(r["seed_min"]) for r in pts]
                     hi = [float(r["seed_max"]) for r in pts]
-                    ax.vlines(xs, lo, hi, color=color, lw=1, alpha=0.6, zorder=2)
-                ax.annotate("mean" if mean else s, (xs[-1], y[-1]), xytext=(6, 0), textcoords="offset points",
-                            va="center", fontsize=8, color=INK)
+                    ax.vlines(xs, lo, hi, color=COLORS[s], lw=1, alpha=0.6, zorder=2)
+                ends.append([y[-1], "mean" if mean else s])
+            lo_y, hi_y = ax.get_ylim()
+            gap = 0.06 * (hi_y - lo_y)                    # direct end labels, nudged apart so none overlap
+            ends.sort()
+            for i in range(1, len(ends)):
+                ends[i][0] = max(ends[i][0], ends[i - 1][0] + gap)
+            for y_lab, name in ends:
+                ax.annotate(name, (xs[-1], y_lab), xytext=(8, 0), textcoords="offset points", va="center",
+                            fontsize=8, color=INK)
             ax.set_xticks(xs, BUDGETS)
             ax.set_xlabel("adaptation budget (nights; 0 = base model)")
             unit = rows[0]["unit"]
@@ -145,7 +154,8 @@ def draw_figures(fd: list[dict]) -> None:
             ax.grid(axis="y", color=GRID, lw=0.6)
             ax.set_xlim(-0.3, len(xs) - 0.2)
             ax.legend(frameon=False, fontsize=7.5, loc="best")
-        fig.suptitle(title + " (seed mean; bars: seed min–max)", fontsize=9.5, color=INK)
+        fig.suptitle(title + ("\n" if len(panels) == 1 else " ") + "(seed mean; bars: seed min–max)", fontsize=9.5,
+                     color=INK)
         fig.tight_layout()
         with open_for_write(out / fname, "wb") as fh:
             fig.savefig(fh, format="png", dpi=160, metadata={"Software": None})
@@ -253,12 +263,42 @@ def blocks(t: dict[str, list[dict]]) -> dict[str, str]:
             rows.append([tgt, metric.upper(), *cells])
     b["pooled"] = ("**Table P5-9 — Secondary: window-weighted pooled metric over the three subjects' primary spans "
                    "(seed mean).**\n\n" + md(["Target", "Metric", *[f"b = {x}" for x in BUDGETS]], rows))
+    with open(paths.PROJECT_ROOT / "paper" / "tables" / "p3_tcn_outer_by_seed.csv", encoding="utf-8",
+              newline="") as fh:
+        p3 = {(r["held_out_subject"], r["seed"], r["target"]): r for r in csv.DictReader(fh)}
+    rows = []
+    for s in SUBJECTS:
+        for tgt in ("temperature", "humidity"):
+            later0 = [r for r in bs if r["subject_id"] == s and r["budget_nights"] == "0" and r["span"] == "later"
+                      and r["target"] == tgt]
+            d = max(abs(float(r[m]) - float(p3[(s, r["seed"], tgt)][m])) for r in later0 for m in ("mae", "rmse",
+                                                                                                   "bias"))
+            n = {(r["n_windows"], p3[(s, r["seed"], tgt)]["n_windows"]) for r in later0}
+            rows.append([s, tgt, " / ".join(f"{a} vs {c}" for a, c in sorted(n)), f"{d:.2g}"])
+    b["p3_consistency"] = ("**Table P5-11 — b = 0 later span (all nights, RQ2 windows) against the frozen P3 outer "
+                           "results (`paper/tables/p3_tcn_outer_by_seed.csv`): largest absolute difference over "
+                           "seeds and MAE/RMSE/bias.**\n\n"
+                           + md(["Subject", "Target", "Windows (P5 vs P3)", "Max \\|Δ\\|"], rows))
+    lv = t["level_diagnostic"]
+    rows = []
+    for tgt in ("temperature", "humidity"):
+        for s in SUBJECTS:
+            r0 = pick(lv, subject_id=s, budget_nights="0", target=tgt)
+            cells = [sgn(pick(lv, subject_id=s, budget_nights=x, target=tgt)["adaptation_minus_primary"])
+                     for x in BUDGETS[1:]]
+            rows.append([f"{tgt} ({UNIT[tgt]})", s, f3(r0["primary_test_mean"]), sgn(r0["training_pool_minus_primary"]),
+                         *cells])
+    b["levels"] = ("**Table P5-10 — Post-hoc descriptive (not pre-declared): mean target level of the adaptation "
+                   "windows and of the base model's training pool, minus the mean of the primary test windows. No "
+                   "model is involved.**\n\n"
+                   + md(["Target", "Subject", "Primary test mean", "Training pool − primary",
+                         *[f"Adaptation (b = {x}) − primary" for x in BUDGETS[1:]]], rows))
     return b
 
 
 def main() -> int:
     names = ("primary_summary", "later_summary", "adaptation_gain", "by_seed", "per_night", "strata",
-             "budget_counts", "pooled_primary")
+             "budget_counts", "pooled_primary", "level_diagnostic")
     t = {n: read(n) for n in names}
     export_csvs(t)
     draw_figures(figure_data(t))
