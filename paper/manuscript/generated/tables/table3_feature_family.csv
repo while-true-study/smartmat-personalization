@@ -1,0 +1,8 @@
+Representation,Temperature MAE (°C),"Δ vs RAW, °C (improved)",Humidity MAE (%RH),"Δ vs RAW, %RH (improved)","User02 bias, °C","User02 bias, %RH"
+Training-mean predictor,3.05,—,19.56,—,−4.59,−27.49
+RAW (reference),3.33,—,18.28,—,−4.82,−24.17
+MOVEMENT,3.09,−0.25 (3/3),19.61,+1.33 (1/3),−4.73,−26.49
+CONTACT,3.24,−0.09 (3/3),18.01,−0.27 (2/3),−4.81,−24.14
+RAW+MOVEMENT,3.12,−0.21 (3/3),18.38,+0.09 (1/3),−4.75,−23.97
+RAW+CONTACT,3.36,+0.03 (1/3),17.73,−0.55 (3/3),−4.77,−23.83
+RAW+MOVEMENT+CONTACT,3.30,−0.03 (2/3),18.00,−0.28 (2/3),−4.69,−23.62

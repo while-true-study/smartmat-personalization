@@ -2,3 +2,7 @@
 data/splits/** text eol=lf
 # Public release files are hashed in their manifest.json; store and check them out byte for byte (D-050).
 data/release/** -text
+# Manuscript production outputs are hashed in paper/submission_candidate/MANIFEST.json; store and check them out
+# byte for byte (D-054).
+paper/manuscript/generated/** -text
+paper/submission_candidate/** -text
