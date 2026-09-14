@@ -459,6 +459,8 @@ PATH_RE = re.compile(r"[A-Za-z]:[\\/]|/Users/|/home/|\\\\[A-Za-z]|AppData|Deskto
 MESSENGER_RE = re.compile(r"(?i)chat_?ids?\s*=|kakao|telegram|line_?id|wechat")
 HASH_RE = re.compile(r"[0-9a-f]{32,}")
 LONG_DIGITS_RE = re.compile(r"(?<![\d.])\d{9,}(?![\d.])")
+SECRET_RE = re.compile(r"(?i)password|passwd|secret|\btokens?\b|api[_-]?key|bearer\s|credential|private[_-]?key|"
+                       r"BEGIN [A-Z ]*KEY")
 RAW_NAME_RE = re.compile(r"\.(txt|xlsx|xls|TXT)\b|sm2248[02]_\d|phase_[abc]\b|mat_2248[02]|legacy_csv|"
                          r"\buser0\d/|스마트")
 RESTRICTED_RE = re.compile(r"(?i)\b(diagnos\w*|medicat\w*|medicine|disease|illness|symptoms?|birth\w*|gender|sex|"
@@ -482,7 +484,7 @@ def _text_findings(text: str, allow_excluded: bool) -> list[str]:
     found = []
     stripped = HASH_RE.sub("#", text)
     checks = [("calendar date", DATE_RE), ("absolute path", PATH_RE), ("messenger id", MESSENGER_RE),
-              ("long digit identifier", LONG_DIGITS_RE)]
+              ("long digit identifier", LONG_DIGITS_RE), ("secret or credential", SECRET_RE)]
     if not allow_excluded:
         checks.append(("raw filename/folder", RAW_NAME_RE))
     for label, rx in checks:

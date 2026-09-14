@@ -157,6 +157,8 @@ def failing(out: Path) -> set[str]:
     ("splits/v1.0_loso/outer_folds.csv", "v1.0,x,1,User06,User06,unknown,s,s1,normal,test,D0001 00:00:00,"
                                          "D0001 00:00:01,1\n", "text_scan:splits/v1.0_loso/outer_folds.csv"),
     ("schema.json", '{"diagnosis": "x"}', "restricted_fields:schema.json"),
+    ("README.md", "\napi_key: abc\n", "text_scan:README.md"),
+    ("p5_plan_public.yaml", "note: password=hunter2\n", "text_scan:p5_plan_public.yaml"),
 ])
 def test_validator_fails_on_injected_private_content(tmp_path, artifact, inject, check):
     out, *_ = build_into(tmp_path)
