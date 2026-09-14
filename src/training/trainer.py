@@ -160,8 +160,13 @@ class TrainResult:
 
 def train_tcn(cfg: TCNConfig, pressure_tr: np.ndarray, y_tr: np.ndarray, scaler: TargetScaler, seed: int, *,
               epochs: int | None = None, pressure_va: np.ndarray | None = None, y_va: np.ndarray | None = None,
-              log: Callable[[str], None] = print, family: str = "RAW") -> TrainResult:
-    """Either early stopping on (pressure_va, y_va) (inner runs) or exactly `epochs` epochs (final runs)."""
+              log: Callable[[str], None] = print, family: str = "RAW",
+              init_state: dict | None = None) -> TrainResult:
+    """Either early stopping on (pressure_va, y_va) (inner runs) or exactly `epochs` epochs (final runs).
+
+    `init_state` (P5 personalization, D-037): start from these weights (a frozen base model) instead of a fresh
+    initialisation; every parameter stays trainable. None (P3/P4) leaves the procedure unchanged.
+    """
     if (epochs is None) == (pressure_va is None):
         raise ValueError("give either a fixed epoch count or validation data, not both / neither")
     set_determinism(seed)
@@ -170,6 +175,8 @@ def train_tcn(cfg: TCNConfig, pressure_tr: np.ndarray, y_tr: np.ndarray, scaler:
     y = torch.as_tensor(scaler.transform(y_tr), dtype=torch.float32, device=dev)
     xv = to_tensor(pressure_va, dev, family) if pressure_va is not None else None
     model = TCN(len(family_features(family)), cfg.channels, cfg.kernel_size, cfg.dropout).to(dev)
+    if init_state is not None:
+        model.load_state_dict(init_state)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
     gen = torch.Generator().manual_seed(seed)
     n = x.shape[0]

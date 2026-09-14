@@ -1184,3 +1184,81 @@ Evidence: D-039, D-040, D-041, D-043; `src/evaluation/p4_ablation.py`, `src/trai
 results were known and no P4 model had been trained.
 Consequence: P4 outer results are interpreted only through these comparisons. A change to any feature formula, grid,
 selection rule or epoch rule after P4 results are seen would be a protocol version bump reported next to v1.0.
+
+## D-045 — P5 execution and pre-declared adaptation measures (no protocol change)
+Date: 2026-09-14
+Status: Accepted
+Context:
+- P5 answers RQ2 with the chronological personalization protocol of D-037, which uses the base models of D-040.
+- The P3 and P4 outer-test results were seen before this entry was written. No P5 model had been adapted or
+  evaluated.
+- Nothing below changes a v1.0 item. The split, budgets, buffer, primary test span, fine-tuning recipe, seeds,
+  metrics, windowing and RAW inputs stay as frozen in P2. The P4 results do not change the primary family (RAW,
+  EXPERIMENT_PROTOCOL §8).
+Decision:
+- **Base models.**
+  - The base model is the P3 final RAW-TCN of the fold that holds the subject out.
+  - The local P3 checkpoints are used. Before use, each must be a verifiably complete P3 run, and it must reproduce
+    its stored P3 outer predictions bitwise.
+  - Adaptation seed s starts from the base model of seed s, so each seed is a paired chain from base to adapted
+    model.
+  - b = 0 evaluates the base model as it is. It is not retrained.
+- **Fine-tuning.**
+  - The recipe is exactly `protocol.yaml` `personalization.fine_tuning`: all parameters, AdamW, learning rate
+    0.1 × the fold's selected base rate, the base weight decay, 10 epochs, batch 256, no early stopping, no validation.
+  - It uses the base model's outer target scaler; nothing is refit.
+  - Implementation: the P3 trainer starts from the base weights (`train_tcn(init_state=…)`). Per-epoch shuffling uses
+    the seeded generator, and the last partial batch is kept (D-043).
+- **Data.**
+  - Windows follow D-032 and are also cut at night and partition boundaries (D-037); they are built from the split
+    file.
+  - Adaptation uses every labelled window of the b adaptation nights (both User02 mats).
+  - Each model is evaluated once, on the labelled windows of its budget's test partition. The primary span
+    (night ordinal ≥ 16) is reported apart from the per-budget later span (secondary).
+- **Plan before evaluation.**
+  - Before any adaptation or P5 evaluation, `configs/experiments/v1.0/p5_personalization_plan.yaml` is generated from
+    frozen inputs only and committed. It holds, per subject:
+    - nights;
+    - window counts, and a digest proving the primary windows are identical for every budget;
+    - base configuration and learning rates;
+    - scaler statistics;
+    - base checkpoint hashes.
+  - Runs refuse unless this file is committed and unmodified.
+- **Checks per run** (fail closed): the P2 gate with the personalization context, plus ten P5 checks:
+  1. target not in the base training pool;
+  2. adaptation and test nights disjoint;
+  3. buffer night unused;
+  4. all devices of a night in one partition;
+  5. each session × night piece in one partition;
+  6. scaler fitted on the outer training subjects only;
+  7. scaler not refit;
+  8. windows inside partition, night, session and phase;
+  9. adaptation rows earlier than any buffer or test row;
+  10. recipe equal to the frozen one, and primary windows equal to the plan.
+- **Pre-declared measures** (descriptive; D-041 statistics unchanged; no significance test):
+  - Primary endpoints: MAE, RMSE and bias per target, subject, budget and seed on the primary span; seed means; the
+    unweighted 3-subject mean.
+  - E = MAE:
+    - G_b = (E_0 − E_b) / E_0 × 100;
+    - ΔE_b = E_0 − E_b;
+    - C_b = |Bias_0| − |Bias_b|.
+    These come from seed means per subject and target. Negative values mean adaptation made things worse; nothing is
+    clipped.
+  - Seed-paired gains (seed s adapted vs its own base): seeds improved and the per-seed range.
+  - Cohort row: G and ΔE come from the unweighted means of MAE. |bias|, C_b and the error SD are averaged over
+    subjects, because signed biases would cancel.
+  - Error SD = √(RMSE² − bias²), a descriptive split into offset and variation (as in D-044).
+  - The per-budget later span, a window-weighted pooled metric and per-night metrics (per seed; the unit for P6) are
+    secondary.
+  - Strata on the primary span: User02 22480 / 22482 (and 22482 quality phases); User01 s1 / s2. No stratum gets its
+    own model or scaler.
+- **Reproduction criterion,** fixed before any P5 run:
+  - a clean checkout of the plan commit regenerates the nine P3 base models with the committed P3 selection; their
+    weights must be bitwise identical to the plan's hashes;
+  - it then re-runs all 45 P5 runs. Every MAE, RMSE and bias must agree within 1e-6, and predictions are compared
+    bitwise.
+Evidence: D-032, D-037, D-040, D-041, D-043; `src/evaluation/p5_personalization.py`, `src/training/trainer.py`,
+`tests/test_p5_personalization.py` (synthetic data only). When this entry was written, the P3 and P4 results were
+known, and no P5 adaptation or evaluation had run.
+Consequence: P5 results are interpreted only through these measures. A change to the recipe, the split or the base
+models after P5 results are seen would be a protocol version bump reported next to v1.0.
