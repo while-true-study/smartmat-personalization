@@ -85,3 +85,44 @@ python -m pytest
 ```
 
 Raw data are not distributed with this repository (`data/raw/README.md`).
+
+## Reproducing the results from the public release
+
+`public_release_v1` (D-049, D-050) holds the model-ready windows, the public split copies and the reference digests.
+It is enough to re-run the frozen P3–P6 results without the raw data or canonical_v1. The package metadata is under
+`data/release/public_release_v1/`. `windows.parquet` (30 MB) is distributed separately: its hosting is pending
+(`docs/P7_PUBLIC_RELEASE_CHECKLIST.md`), and the data owner can rebuild it byte for byte with
+`scripts/build_public_release.py`. Columns and files: `docs/P7_PUBLIC_DATA_DICTIONARY.md`.
+
+```bash
+python -m pip install -r requirements.txt           # plus the torch build that matches your CUDA
+python scripts/validate_public_release.py --data data/release/public_release_v1
+python scripts/reproduce_public_release.py --data data/release/public_release_v1 --tier core
+python scripts/reproduce_public_release.py --data data/release/public_release_v1 --tier extended
+```
+
+- **Tiers:**
+  - `core` re-trains the 9 frozen P3 RAW-TCN models, re-runs the 45 P5 personalization runs and the P6 analysis.
+  - `extended` also re-trains the 45 frozen P4 feature-family models.
+  - Both use the committed selections and the frozen P5 plan. Neither re-runs a hyperparameter search.
+- **Checks:** every prediction file bitwise against the release's reference digests, the P3 weights against the P5
+  plan, and every paper table cell by cell against its committed version. The summary goes to
+  `outputs/p7/reproduction/p7_reproduction_summary.json`. Exit code 0 only if every check passes.
+- **Needs:** a git checkout of this repository and the release directory. Interrupted runs resume.
+
+Environment used for the P3–P7 results and for the P7 verification:
+
+| Component | Version / setting |
+|---|---|
+| OS | Windows 11 (10.0.26200) |
+| Python | 3.12.1 |
+| Packages | numpy 2.4.4, PyYAML 6.0.3, pyarrow 24.0.0, torch 2.12.0+cu126, matplotlib 3.10.9, pytest 9.0.2 (`requirements.txt`) |
+| GPU | NVIDIA GeForce RTX 4060 Ti 16 GB, driver 581.29, CUDA 12.6, cuDNN 9.10.2 |
+| Determinism | `CUBLAS_WORKSPACE_CONFIG=:4096:8` (set by the scripts), `torch.use_deterministic_algorithms(True)`, cuDNN deterministic, benchmark off, per-run seeds, no data-loader workers |
+| Run time | core about 8 min on this GPU (P3 finals about 4.3 min, P5 about 3.3 min, P6 about 10 s); extended adds about 30 min (45 P4 finals); a release build by the data owner takes about 2 min |
+| Disk | release package 30.6 MB; reproduction outputs about 370 MB (core) and 660 MB (extended); about 4 GB RAM and 2.2 GB GPU memory per process |
+
+Bitwise equality is verified on this stack only. A CPU run or another GPU, driver or library build trains in the
+same deterministic way, but its floating-point results can differ in the last bits. The digest checks then fail,
+and the table checks show the size of the difference. The figures are compared as well, for information only:
+their PNG bytes depend on the local fonts and matplotlib build.

@@ -1419,6 +1419,9 @@ Evidence: DATA_POLICY §5; D-030, D-032, D-037; code review of `src/training/los
 results were known; no result depends on the representation of dates.
 Consequence: the release reproduces every P3–P6 quantity without any calendar date. Public night keys differ from the
 private date strings, so any table carrying a night key is compared through `night_ordinal`.
+Note (P7 build, 2026-09-14): the public reproduction compares such cells more strictly. A committed night date and its
+public key must differ by one whole-day shift per subject, the same in every table
+(`src/evaluation/public_reproduction.py`, report §5). The shift values are never written out.
 
 ## D-050 — `public_release_v1`: model-ready window release, content and storage
 Date: 2026-09-14
@@ -1478,3 +1481,7 @@ Decision:
 Evidence: D-002, D-017, D-023, D-042, D-049; DATA_POLICY §3–§5; P7 report §2–§4.
 Consequence: public users reproduce the main results without canonical_v1. Private canonical_v1 stays the source of
 truth, and the release is a derived, versioned product.
+Note (P7 build, 2026-09-14):
+- The public P5 plan also drops the P3 run ids and local run paths (`p3_run_id`, `p3_run_dir`); their run ids carry
+  run dates. Every other value, and the key types, are unchanged; the build checks this.
+- The metadata files are stored byte-exact in Git (`.gitattributes`), because `manifest.json` hashes them.
