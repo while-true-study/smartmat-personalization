@@ -12,6 +12,9 @@
 > - `python scripts/validate_manuscript_results.py` passes (11/11). With `--final` it reports **NOT READY** while any
 >   item below is open.
 > - The PI's decisions are collected in `docs/P8_PI_APPROVAL_CHECKLIST.md`.
+> - **Additional external validation (P9, D-061; branch `experiment/p9-user03-external-validation`):** one further
+>   subject (User03) was evaluated post hoc as an external sensitivity subject (Section 3.5.7, Section 4.9, Table 9,
+>   Tables S32–S34). It is not part of the primary cohort and changes no primary result. It is conditional on OPEN-29.
 
 ## A. Scientific blockers
 
@@ -20,6 +23,14 @@ pending, and it now includes the revised interpretation and scientific identity 
 gains were mainly level corrections and that the pressure models showed no demonstrable within-subject tracking; the
 manuscript is framed as an evaluation with a substantial negative result (`docs/P8_POSTHOC_VALIDATION_REPORT.md` §6).
 See `docs/P8_PI_APPROVAL_CHECKLIST.md`, "Scientific content". No result may change during that review.
+
+**One confirmation from the additional external validation (P9, D-061), not a primary-result blocker:**
+- OPEN-29: the PI/provider confirms that the setting problem behind the D-017 exclusion does not affect the
+  second-level timestamps of the seven complementary User03 exports.
+- Until then, the P9 section is reported as conditional on it (Section 3.5.7 and the Limitations).
+- If it is not confirmed, Section 3.5.7, Section 4.9, Table 9 and Tables S32–S34 are withdrawn from the submission.
+  No primary result depends on them.
+- Report: `docs/P9_USER03_EXTERNAL_VALIDATION_REPORT.md`.
 
 ## B. Metadata blockers (PI / authors)
 

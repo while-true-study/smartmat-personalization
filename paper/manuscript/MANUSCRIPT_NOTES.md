@@ -14,7 +14,7 @@ Working rules for `paper/manuscript/`. The plan is `docs/P8_MANUSCRIPT_PLAN.md`.
 | `FIGURE1_SCHEMATIC.md` | Figure 1 specification (no data); the figure is drawn by `src/paper/manuscript_figures.py` |
 | `RELATED_WORK_GAPS.md` | resolved topic → section → reference map |
 | `references.bib` | 31 verified references |
-| `generated/tables/`, `generated/supplementary/`, `generated/figures/` | Tables 1–8 (Markdown, CSV, cell provenance), Tables S1–S31 and figure data, Figures 1–5 and S1–S4. Written only by the scripts below; never edited by hand |
+| `generated/tables/`, `generated/supplementary/`, `generated/figures/` | Tables 1–9 (Markdown, CSV, cell provenance), Tables S1–S34 and figure data, Figures 1–5 and S1–S4. Written only by the scripts below; never edited by hand |
 | `../submission_candidate/` | the staging directory: rendered manuscript, copies of the generated assets and drafts, `MANIFEST.json`, hand-written `README_CHECKLIST.md` |
 
 ## Source tokens
@@ -41,7 +41,7 @@ Whole manuscript tables and figures are inserted as `{{TABLE:<stem>}}` (from `ge
 
 **Production commands** (formatting pass):
 ```
-python scripts/export_manuscript_tables.py      # Tables 1–8, S1–S31, provenance
+python scripts/export_manuscript_tables.py      # Tables 1–9, S1–S34, provenance
 python scripts/render_manuscript_figures.py     # Figures 1–5, S1–S4
 python scripts/build_submission_candidate.py    # rendered manuscript and staging directory
 python scripts/validate_manuscript_results.py   # read-only checks (add --rerender-figures for figure bytes)
@@ -163,8 +163,8 @@ item 1).
   personalization effectiveness or negative transfer in this application.
 
 **Figures and tables:**
-- main: Tables 1–8 and Figures 1–5 (Tables 6–8, Figure 5 and the A, B, D columns of Table 4 are post hoc, D-058, D-060);
-- supplementary: Tables S1–S31 (S20–S31 post hoc) and Figures S1–S4 (`docs/P8_TABLE_FIGURE_SELECTION.md` §4).
+- main: Tables 1–9 and Figures 1–5 (Table 9 is the P9 additional external validation, D-061; Tables 6–8, Figure 5 and the A, B, D columns of Table 4 are post hoc, D-058, D-060);
+- supplementary: Tables S1–S34 (S20–S34 post hoc) and Figures S1–S4 (`docs/P8_TABLE_FIGURE_SELECTION.md` §4).
 - Captions sit at the first citation, as the template requires (requirements item 14).
 
 ## Submission closure (D-055)

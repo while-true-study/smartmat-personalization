@@ -30,7 +30,8 @@ whether short user-specific adaptation helps.
 - [x] P8 Manuscript (merged as a PI-review manuscript candidate; `paper/manuscript/manuscript.md`, post-hoc
   analyses `docs/P8_POSTHOC_VALIDATION_REPORT.md` and `docs/P8_DYNAMIC_SIGNAL_REPORT.md`; submission metadata and
   release items open in `docs/P8_FINAL_BLOCKERS.md`; no `v1.0-paper` tag)
-- [ ] P9 User03 external sensitivity validation (post hoc; branch `experiment/p9-user03-external-validation`)
+- [x] P9 User03 external sensitivity validation (post hoc, D-061; `docs/P9_USER03_EXTERNAL_VALIDATION_REPORT.md`;
+  conditional on OPEN-29; on branch `experiment/p9-user03-external-validation`, not merged)
 
 Current status: P0 is closed and tagged `p0-data-freeze`.
 - The data audit is summarised in `docs/P0_DATASET_AUDIT_REPORT.md`, and the frozen policies are in
@@ -56,7 +57,9 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
 - P8 (manuscript) is merged as a PI-review candidate: a strict evaluation of smart-mat microclimate estimation
   against simple level baselines (D-057–D-060). Submission metadata, PI approval and the public release remain open
   (`docs/P8_FINAL_BLOCKERS.md`); the `v1.0-paper` tag is not created.
-- P9 (post-hoc external sensitivity validation on User03) is the next phase.
+- P9 (post-hoc external sensitivity validation on User03, protocol v1.3, D-061) is complete on its branch: the
+  training-mean predictor had a lower error than every source-only RAW-TCN configuration for both targets, with no
+  demonstrable within-night co-variation. It is not pooled with the primary three-subject results.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure

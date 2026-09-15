@@ -1,4 +1,4 @@
-"""Manuscript Tables 1-8 and the supplementary table package, built only from frozen cells (P8).
+"""Manuscript Tables 1-9 and the supplementary table package, built only from frozen cells (P8).
 
 Rules (docs/P8_MANUSCRIPT_PLAN.md §7, docs/P8_TABLE_FIGURE_SELECTION.md):
 - Every printed number is a formatted frozen cell. Each table cell records the cells it was built from, so a
@@ -420,7 +420,43 @@ def table8() -> ManuscriptTable:
          "predictors A and B have R = 1, Q = 0 and undefined correlations. All budgets and seeds: Tables S27–S31."])
 
 
-MAIN_TABLES = (table1, table2, table3, table4, table5, table6, table7, table8)
+# --- Table 9: additional external validation (P9, post hoc) -------------------------------------------------------
+
+EXT_ROWS = (("training_mean", "", "Training-mean predictor"), ("raw_tcn", "1", "RAW-TCN, fold-1 configuration"),
+            ("raw_tcn", "2", "RAW-TCN, fold-2 configuration"), ("raw_tcn", "3", "RAW-TCN, fold-3 configuration"))
+
+
+def table9() -> ManuscriptTable:
+    body = []
+    for t in TARGETS:
+        for model, cfg, label in EXT_ROWS:
+            f = dict(model=model, config_fold=cfg, target=t)
+            corr = ([val("p9_user03_summary", c, "+.2f", **f) for c in ("r_pooled", "r_within")]
+                    if model != "training_mean" else [txt("NA"), txt("NA")])
+            mae = val("p9_user03_summary", "mae", ".2f", **f)
+            if model != "training_mean":
+                mae = join("{} [{}–{}]", mae, val("p9_user03_summary", "mae_seed_min", ".2f", **f),
+                           val("p9_user03_summary", "mae_seed_max", ".2f", **f))
+            body.append([txt(TARGET_LABEL[t]), txt(label), mae, val("p9_user03_summary", "rmse", ".2f", **f),
+                         val("p9_user03_summary", "bias", "+.2f", **f), val("p9_user03_summary", "R", ".2f", **f),
+                         val("p9_user03_summary", "Q", ".2f", **f), *corr])
+    return ManuscriptTable(
+        9, "table9_external_validation",
+        ["Target", "Predictor", "MAE [seed range]", "RMSE", "Bias", "R", "Q", "r pooled", "r within night"],
+        body,
+        ["Additional external validation (post hoc, Section 3.5.7): one further subject, not part of the primary "
+         "cohort, evaluated on all its labelled 40-s windows. These results are not pooled with the three primary "
+         "subjects.",
+         "Models trained on all labelled windows of the three primary subjects: the training-mean predictor and the "
+         "three frozen RAW-TCN configurations of the strict leave-one-subject-out folds, each with its frozen epoch "
+         "count; RAW-TCN values are means over model seeds 0, 1 and 2, in brackets the seed range of MAE.",
+         "R = error SD / target SD, Q = prediction SD / target SD (population SDs); r within night: correlation of "
+         "night-centred values. The constant predictor has R = 1, Q = 0 and undefined correlations.",
+         "With fewer than 10 nights, no night-bootstrap interval is computed (P6 rule). MAE, RMSE and bias in °C "
+         "(temperature) or %RH (humidity). Coverage, per-seed and per-night results: Tables S32–S34."])
+
+
+MAIN_TABLES = (table1, table2, table3, table4, table5, table6, table7, table8, table9)
 
 
 # --- rendering ------------------------------------------------------------------------------------------------------
@@ -510,6 +546,12 @@ SUPPLEMENT: tuple[tuple[str, str, tuple[str, ...]], ...] = (
      ("p8_dynamic_oracle_affine", "p8_dynamic_trigger")),
     ("S31", "Pre-registered dynamic-signal cases J1–J8 and headlines (second-order post hoc)",
      ("p8_dynamic_cases", "p8_dynamic_headlines")),
+    ("S32", "Additional external validation: source reconciliation coverage and windows (post hoc)",
+     ("p9_user03_qa_coverage", "p9_user03_qa_nights", "p9_user03_qa_totals")),
+    ("S33", "Additional external validation: results per predictor, configuration and seed (post hoc)",
+     ("p9_user03_summary", "p9_user03_by_seed")),
+    ("S34", "Additional external validation: per-night results and the pre-registered interpretation (post hoc)",
+     ("p9_user03_per_night_summary", "p9_user03_interpretation")),
 )
 REPRODUCTION_RECORD = "S19"
 FIGURE_DATA = ("p5_figure_data", "p6_figure_data")
@@ -615,7 +657,7 @@ def build_main() -> list[ManuscriptTable]:
 
 
 def export(out_dir: Path = GENERATED) -> dict[str, int]:
-    """Write Tables 1-8 and the supplementary package; files from an earlier export that are no longer produced are
+    """Write Tables 1-9 and the supplementary package; files from an earlier export that are no longer produced are
     removed, so the directories always equal the current build."""
     before = {p for sub in ("tables", "supplementary") if (out_dir / sub).is_dir()
               for p in (out_dir / sub).iterdir() if p.is_file()}

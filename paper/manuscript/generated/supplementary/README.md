@@ -35,6 +35,9 @@ Machine-readable copies of the frozen result tables (full precision). Calendar n
 | S29 | Dynamic-signal diagnostic: night-cluster bootstrap of the correlations (second-order post hoc) | `TableS29_p8_dynamic_bootstrap.csv` |
 | S30 | Retrospective oracle affine ratio and the affine-calibration trigger (second-order post hoc) | `TableS30a_p8_dynamic_oracle_affine.csv`, `TableS30b_p8_dynamic_trigger.csv` |
 | S31 | Pre-registered dynamic-signal cases J1–J8 and headlines (second-order post hoc) | `TableS31a_p8_dynamic_cases.csv`, `TableS31b_p8_dynamic_headlines.csv` |
+| S32 | Additional external validation: source reconciliation coverage and windows (post hoc) | `TableS32a_p9_user03_qa_coverage.csv`, `TableS32b_p9_user03_qa_nights.csv`, `TableS32c_p9_user03_qa_totals.csv` |
+| S33 | Additional external validation: results per predictor, configuration and seed (post hoc) | `TableS33a_p9_user03_summary.csv`, `TableS33b_p9_user03_by_seed.csv` |
+| S34 | Additional external validation: per-night results and the pre-registered interpretation (post hoc) | `TableS34a_p9_user03_per_night_summary.csv`, `TableS34b_p9_user03_interpretation.csv` |
 
 Figure source data: `FigureData_p5_figure_data.csv`, `FigureData_p6_figure_data.csv`.
 
