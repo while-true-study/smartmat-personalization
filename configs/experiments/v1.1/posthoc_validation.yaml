@@ -1,0 +1,53 @@
+# Protocol v1.1 — post-hoc validation addendum (D-057; docs/P8_POSTHOC_VALIDATION_PLAN.md).
+# v1.1 adds comparators, a descriptive metric and an initialization control. It changes nothing in v1.0: the v1.0
+# protocol file, split files, canonical data and windowing are reused unchanged and verified by hash, so there are
+# no new split files. The v1.0 primary results stay the primary results; everything here is post hoc and
+# supplementary.
+protocol_version: v1.1
+kind: post_hoc_validation_addendum
+decision: D-057
+base_protocol:
+  version: v1.0
+  file: configs/experiments/v1.0/protocol.yaml
+  sha256: 96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84
+  splits_manifest: data/splits/v1.0_manifest.json
+results_seen_before_design: [p3_strict_loso, p4_feature_families, p5_personalization, p6_robustness, p8_manuscript_draft]
+status_of_results: post_hoc_supplementary
+subjects: [User01, User02, User07]
+targets: [temperature, humidity]
+budgets_nights: [0, 1, 3, 7, 14]
+primary_test_from_ordinal: 16
+seeds: [0, 1, 2]
+
+calibration:
+  statistic: mean over labelled adaptation windows of (y - prediction), per target
+  applies_to: [training_mean, raw_tcn_base]
+  user02_primary: pooled_over_mats
+  user02_per_mat_supplement:
+    budgets_nights: [1, 3, 7, 14]
+    mats: ["22480", "22482"]
+    missing_adaptation_windows: not_estimable     # no fallback
+  optimisation: none
+  uses_test_labels: false
+  refit_scaler: false
+
+residual_variation:
+  error_sd: population            # ddof = 0, identical to sqrt(RMSE^2 - bias^2) (p5_personalization.err_sd)
+  target_sd: population
+  ratio: error_sd / target_sd     # R; descriptive, not explained variance
+  settings: [loso_all_windows, rq2_primary_span]
+
+initialization_control:
+  budget_nights: 14
+  init: random                    # train_tcn(init_state=None), seeded by the run seed
+  architecture: fold_selected_raw_tcn
+  recipe: frozen_p5_fine_tuning   # AdamW, lr 0.1 x selected base lr, base weight decay, 10 epochs, batch 256,
+                                  # no early stopping, no validation, base target scaler (not refit)
+  seeds: [0, 1, 2]
+
+bootstrap: {unit: night, resamples: 2000, seed: 0, level: 0.95, primary_model_seed: 0, sensitivity_seeds: [1, 2]}
+comparisons:
+  all_budgets: [[D, E], [B, E], [B, D]]      # delta = MAE(first) - MAE(second); positive = second better
+  budget_14: [[S, E], [B, S]]
+
+heater_context: reuse_p6_strata   # p6_user02_device_context(_bootstrap); no recomputation; never an input

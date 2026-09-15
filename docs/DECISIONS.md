@@ -1671,3 +1671,58 @@ and the venue section; ISSN Portal record 2384-3004.
 Consequence:
 - The conference bibliography no longer blocks the P8 PR.
 - The copyright status and the target Special Issue join the PI checklist.
+
+## D-057 — Post-hoc validation analyses: calibration comparators, residual variation, initialization control (protocol v1.1 addendum)
+Date: 2026-09-16
+Status: Accepted (research lead). **Post hoc**; the results are supplementary and never replace the v1.0 primary
+results.
+Context:
+- **Results already seen:** the P3 strict-LOSO, P4 feature-family, P5 personalization and P6 robustness results, and
+  the P8 manuscript draft.
+- **Motivation:** a reviewer-style inspection of the manuscript raised alternative explanations that the frozen
+  analyses do not rule out:
+  - (1) the fine-tuning gains may be a correction of a domain-level output offset;
+  - (2) the pressure model may track little within-subject variation beyond a constant level;
+  - (3) whether the cross-subject pretrained initialisation helps, relative to training only on the target user's
+    early nights, was not tested.
+- **The rules apply:** RESEARCH_PROTOCOL §3.4 (one look per protocol version) and §6, and EXPERIMENT_PROTOCOL §14.
+  New comparators, a descriptive metric and a new training arm evaluated on the test span therefore need a new
+  protocol version.
+Decision:
+- **Protocol v1.1 (`configs/experiments/v1.1/posthoc_validation.yaml`) is an addendum.**
+  - It reuses the v1.0 protocol file, split files, canonical data and windows unchanged, verified by hash. No split
+    file changes, so none is rebuilt.
+  - v1.0 stays frozen and is not edited.
+- **Analyses,** fully specified in `docs/P8_POSTHOC_VALIDATION_PLAN.md` before any of them touched the test span:
+  - bias-calibration comparators, with the offset estimated only from adaptation windows (training mean → the
+    adaptation-target mean; RAW-TCN → bias-calibrated RAW-TCN), against the frozen full fine-tuning;
+  - User02 pooled calibration as the primary comparator, and a per-mat calibration labelled "post-hoc per-device
+    calibration diagnostic added after the primary results were known";
+  - the residual-variation ratio R = error SD / target SD (population SDs, the existing error-decomposition
+    convention), for the strict-LOSO and RQ2 primary-span settings;
+  - a within-subject initialization control at b = 14: a randomly initialised RAW-TCN trained on nights 1–14 with the
+    frozen fine-tuning recipe (only the initialisation differs), evaluated on nights ≥ 16, seeds 0–2;
+  - night-level paired bootstrap comparisons with the frozen P6 settings;
+  - reuse of the existing P6 heater-context strata.
+- **Interpretation map:** written into the plan before the results (Cases A–I) and not changed afterwards.
+- **Reporting:**
+  - Every result is reported, whether or not it supports the current manuscript.
+  - The analyses are labelled post hoc wherever they appear.
+  - The primary RQ2 definition is unchanged: earliest b ∈ {0, 1, 3, 7, 14} nights, a buffer night, the common
+    primary span of nights ≥ 16, the RAW-TCN base, and the frozen P5 recipe.
+- **Excluded:**
+  - personalization of other feature families;
+  - a change of base model;
+  - selection of adaptation nights by similarity to test labels;
+  - oracle selection;
+  - heater state as an input;
+  - tuning any recipe on the primary span.
+Evidence: `docs/P8_POSTHOC_VALIDATION_PLAN.md` (its SHA-256 is recorded in every new run and table);
+`configs/experiments/v1.1/posthoc_validation.yaml`; the frozen tags `p3-loso-baseline`, `p5-personalization` and
+`p6-robustness`.
+Consequence:
+- New code in `src/evaluation/p8_posthoc.py`, with `scripts/run_p8_posthoc.py` and
+  `scripts/export_p8_posthoc_tables.py`.
+- Outputs go under `outputs/runs/p8_posthoc/` and `outputs/metrics/p8_posthoc/`, and paper-facing tables are
+  `paper/tables/p8_*.csv`.
+- No P3–P6 artifact or tag changes. The manuscript is revised only after the analyses pass their tests and checks.
