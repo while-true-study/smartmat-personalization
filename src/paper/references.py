@@ -6,8 +6,11 @@
   Only fields present in the verified entry are printed; nothing is looked up or completed here.
 - Journal names use the verified `shortjournal` field (ISO abbreviation; see the header of references.bib), or the
   full name when no abbreviation is recorded. Proceedings print the conference location and dates when recorded.
-- A `pending` field (e.g. the conference proceedings pages or DOI) is not printed: an unresolved bibliographic item
-  is a submission blocker (`pending_items`, docs/P8_FINAL_BLOCKERS.md), not text in the submission file.
+- A `pending` field (a missing element the reference needs) is not printed: it is a submission blocker
+  (`pending_items`, docs/P8_FINAL_BLOCKERS.md), not text in the submission file.
+- An `unconfirmed` field (e.g. whether a DOI exists) is not printed either. It records an open check that does not
+  block the citation (`unconfirmed_items`); no DOI or URL is printed unless it is verified.
+- Proceedings published as a numbered series print "Volume v, Number n, pp. x–y" after the conference details.
 """
 from __future__ import annotations
 
@@ -102,6 +105,11 @@ def pending_items(entries: dict[str, Entry]) -> dict[str, str]:
     return {k: clean(e.get("pending")) for k, e in entries.items() if e.get("pending")}
 
 
+def unconfirmed_items(entries: dict[str, Entry]) -> dict[str, str]:
+    """Open non-blocking checks, by key (reported as notes, never printed)."""
+    return {k: clean(e.get("unconfirmed")) for k, e in entries.items() if e.get("unconfirmed")}
+
+
 def render(entry: Entry) -> str:
     """One reference in the MDPI template pattern (Markdown emphasis for italics and bold)."""
     head = f"{authors(entry.get('author'))} {_title(entry)}"
@@ -121,8 +129,14 @@ def render(entry: Entry) -> str:
                 s += f", {clean(entry.get(f))}"
         if year not in book and not entry.get("eventdate"):
             s += f", {year}"
+        tail = []
+        if entry.get("volume"):
+            tail.append(f"Volume {clean(entry.get('volume'))}"
+                        + (f", Number {clean(entry.get('number'))}" if entry.get("number") else ""))
         if entry.get("pages"):
-            s += f"; pp. {clean(entry.get('pages'))}"
+            tail.append(f"pp. {clean(entry.get('pages'))}")
+        if tail:
+            s += "; " + ", ".join(tail)
         return s + "." + _doi(entry)
     if entry.kind == "misc" and entry.get("archiveprefix").lower() == "arxiv":
         return f"{head} *arXiv* **{year}**, arXiv:{clean(entry.get('eprint'))}."

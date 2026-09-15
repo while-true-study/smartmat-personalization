@@ -282,10 +282,25 @@ def check_conference() -> list[str]:
     e = R.load().get("maeng2026icfice")
     if e is None:
         return ["conference reference maeng2026icfice missing"]
-    out = [f"conference reference has an unverified field: {f}" for f in ("doi", "pages", "volume", "url", "number")
-           if e.get(f)]
+    # volume, issue and pages are verified (D-056); a DOI or URL may be printed only after it is confirmed
+    out = [f"conference reference has an unconfirmed field: {f}" for f in ("doi", "url")
+           if e.get(f) and e.get("unconfirmed")]
     if "[PENDING" in R.render(e):
         out.append("rendered conference reference prints a pending marker (it must be a blocker, not text)")
+    # the same proceedings record everywhere it is quoted (D-056); the KIICE venue, never the Special Issue page's
+    v, n, pp = (R.clean(e.get(f)) for f in ("volume", "number", "pages"))
+    date = R.clean(e.get("eventdate"))
+    texts = {name: RD.read_source(RD.MANUSCRIPT_DIR / name)
+             for name in ("manuscript.md", "COVER_LETTER_DRAFT.md", "CONFERENCE_EXTENSION_DISCLOSURE_DRAFT.md")}
+    expected = {"COVER_LETTER_DRAFT.md": f"Volume {v}, Number {n}, pp. {pp}",
+                "CONFERENCE_EXTENSION_DISCLOSURE_DRAFT.md": f"Vol. {v}, No. {n}, pp. {pp}",
+                "manuscript.md": f"Sapporo, Japan, {date}"}
+    for name, phrase in expected.items():
+        if " ".join(phrase.split()) not in " ".join(texts[name].split()):
+            out.append(f"{name}: conference record does not match references.bib ({phrase!r} missing)")
+    for name, text in texts.items():
+        if "Guam" in S.strip_comments(text):
+            out.append(f"{name}: names Guam as the conference venue (the KIICE programme says Sapporo)")
     return out
 
 
@@ -293,6 +308,9 @@ def readiness_blockers(source: str, rendered: str | None) -> list[str]:
     """Items that keep the candidate from being a final submission file (--final). Not failures of the draft."""
     out = [f"bibliography pending for {k}: {v}" for k, v in R.pending_items(R.load()).items()]
     text = rendered if rendered is not None else S.strip_comments(source)
+    if source:                                   # the cover letter is part of the submission
+        letter = RD.read_source(RD.MANUSCRIPT_DIR / "COVER_LETTER_DRAFT.md").split("\n---\n", 1)[-1]
+        out += [f"cover letter: {b}" for b in readiness_blockers("", letter)]
     seen: set[int] = set()
     for label, rx in FINAL_FORBIDDEN.items():
         for m in re.finditer(rx, text):

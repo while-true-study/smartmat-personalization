@@ -63,7 +63,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-24 | **Open (P8 publication blocker).** PI approval of the release subset (the P7 exit criterion) and of the final manuscript/release state. | PI | before `v1.0-paper` | `v1.0-paper`; external publication | P7 checklist D3; D-051 |
 | OPEN-25 | **Open (P8 publication blocker).** Public scope of the session-level calendar dates in committed repository files outside the release package (split files, P5 plan, subject mapping, three paper tables, reports): keep the repository private, publish a de-identified copy, or accept. No history rewrite without a decision. | PI | before any public repository or code archive | Code Availability; public repository | P7 checklist D4; D-049 |
 | OPEN-26 | **Open (P8).** Ethics / IRB information for the manuscript. The provider confirmation of consent and release permission (D-002) is not an IRB approval; no institutional identifier may be invented. | PI | before submission | IRB / informed-consent statements | `paper/manuscript/manuscript.md` |
-| OPEN-27 | **Open (P8); a P8-PR blocker since D-055.** Scope verified in pass 2. Bibliographic details still open: the proceedings series is ISSN 2765-3811 (online), and ICFICE 2025 was Vol. 16, No. 1; the paper's own pages, DOI or URL and the copyright holder were not found in an official record. Original question: Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
+| OPEN-27 | **Largely resolved by D-056:** citation metadata complete (title, authors, year, Vol. 17, No. 1, pp. 27–30, ISSN, KIICE, dates, venue). Still open: official confirmation that no DOI exists, a paper-specific URL (neither blocks the citation), and the copyright holder / reuse-right status (a submission-compliance item for the cover letter; it does not block the manuscript, which reuses no conference material). History: **Open (P8); a P8-PR blocker since D-055.** Scope verified in pass 2. Bibliographic details still open: the proceedings series is ISSN 2765-3811 (online), and ICFICE 2025 was Vol. 16, No. 1; the paper's own pages, DOI or URL and the copyright holder were not found in an official record. Original question: Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
 | OPEN-28 | **Open (P8); disclosure drafted by D-053 (Proposed; supersedes D-052).** Still needed: the PI's approval of the text. The ChatGPT use stated by the authors is included; its historical model versions were not logged and are not inferred. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
 
 ---
@@ -1637,3 +1637,37 @@ Evidence: `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` (sources I and T); `docs/P8
 `docs/P8_FINAL_BLOCKERS.md`.
 Consequence: the manuscript is formatting-complete in the journal's format. Submission and the P8 PR depend only on
 the PI and metadata items; no frozen artifact changed.
+
+## D-056 — ICFICE 2026 bibliographic metadata, venue source and target Special Issue
+Date: 2026-09-15
+Status: Accepted for the bibliographic metadata and the venue policy (research lead); the target Special Issue is
+Proposed (PI confirmation required)
+Context:
+- The research lead supplied the conference paper's proceedings record from external sources.
+- The official KIICE ICFICE 2026 presenter guide (a local copy) confirms the dates, venue, e-ISSN, volume/issue and
+  session AI-06.
+- The ISSN Portal confirms the print ISSN 2384-3004 as the linking ISSN of the same series; 2765-3811 is the online
+  ISSN.
+- The page range 27–30 and the issuing society rest on the research lead's external record.
+- No DOI and no paper-specific URL was found. The copyright holder is not stated in any source read.
+- The current Applied Sciences Special Issue page, as read by the authors, names Hotel Nikko Guam as the venue. This
+  conflicts with the KIICE programme (ANA Crowne Plaza Sapporo).
+Decision:
+- **Reference:** `maeng2026icfice` carries volume 17, number 1, pages 27–30, both ISSNs, the issuing society and
+  session AI-06.
+  - It is rendered as "In Proceedings of the 18th International Conference on Future Information & Communication
+    Engineering (ICFICE 2026), Sapporo, Japan, 7–10 July 2026; Volume 17, Number 1, pp. 27–30."
+  - No DOI or URL is printed. Their existence stays an open check, recorded as the `unconfirmed` field; it does not
+    block the citation.
+- **Venue:** the KIICE programme is the primary source. The Special Issue page's venue text is not copied, the cover
+  letter omits the venue, and the manuscript does not discuss the discrepancy.
+- **Copyright:** the holder and reuse-right status stay open, as a submission-compliance item in the cover letter
+  (Applied Sciences condition 3). They do not block the manuscript, which reuses no conference text, table or figure.
+- **Target:** the Applied Sciences Special Issue "Future Information & Communication Engineering 2026" (section
+  Computing and Artificial Intelligence; deadline 30 June 2027) is the recommended target. Its status is
+  RECOMMENDED / PI CONFIRMATION REQUIRED. The cover letter names it with a confirmation placeholder.
+Evidence: `paper/manuscript/references.bib` (header and entry); `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` items 22–23
+and the venue section; ISSN Portal record 2384-3004.
+Consequence:
+- The conference bibliography no longer blocks the P8 PR.
+- The copyright status and the target Special Issue join the PI checklist.

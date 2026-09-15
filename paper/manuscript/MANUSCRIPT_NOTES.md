@@ -57,8 +57,9 @@ python scripts/validate_manuscript_results.py   # read-only checks (add --rerend
   tables (tokens). Parallels to the literature go in separate, explicitly interpretive sentences.
 - **Preprints:** the only one is the canonical TCN preprint (`bai2018tcn`, not peer-reviewed). It is cited for the
   architecture, never for universal superiority over recurrent networks.
-- **Conference paper:** `maeng2026icfice`, with verified title, authors, venue, dates and paper number. Pages, DOI and
-  URL are pending: the `pending` field prints `[PENDING: …]` in the rendered reference until OPEN-27 is resolved.
+- **Conference paper:** `maeng2026icfice`, with verified title, authors, dates, venue (Sapporo; KIICE programme as the
+  primary source), Vol. 17, No. 1, pp. 27–30, both ISSNs, the issuing society and paper AI-06 (D-056). No DOI or URL is
+  printed: their existence is an open, non-blocking check (`unconfirmed`).
 - **Rendering (formatting pass):** `src/paper/references.py` numbers citations by first appearance and renders the
   MDPI template patterns with full journal names and verified DOIs only.
 

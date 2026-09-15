@@ -127,3 +127,10 @@ The checks below ran as scratch scripts on the integrated `manuscript.md`. They 
 - **ICFICE entry:** only verified fields are printed. Its missing proceedings volume, pages and DOI or URL are a
   blocker (OPEN-27), no longer printed text.
 - **No citation, claim or reference changed.** Rows #1–#42 stand.
+
+## Metadata-resolution pass (2026-09-15)
+
+- `maeng2026icfice` now carries Vol. 17, No. 1, pp. 27–30, e-ISSN 2765-3811 / print ISSN 2384-3004 and the issuing
+  society KIICE (D-056).
+- Row #1 (what the conference paper did) is unchanged. The citation now points to a complete proceedings record.
+- No DOI or URL was added.

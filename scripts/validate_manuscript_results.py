@@ -16,6 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from src.paper import references as R  # noqa: E402
 from src.paper import render as RD  # noqa: E402
 from src.paper.docx_export import docx_text  # noqa: E402
 from src.paper.manuscript_validation import check_privacy, readiness_blockers, validate  # noqa: E402
@@ -43,6 +44,8 @@ def main() -> int:
             blockers += [f"docx: {b}" for b in readiness_blockers("", text) if not b.startswith("bibliography")]
             blockers += [f"docx: {p}" for p in check_privacy({args.docx.name: text})]
         print(f"final submission readiness: {len(blockers)} blocker(s) -> {'READY' if not blockers else 'NOT READY'}")
+        for key, what in R.unconfirmed_items(R.load()).items():
+            print(f"    note (not blocking): {key}: unconfirmed: {what}")
         for b in blockers:
             print("    -", b)
         failed += bool(blockers)

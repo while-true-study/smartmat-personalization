@@ -33,8 +33,9 @@ def test_repository_manuscript_passes_the_validator():
 def test_final_readiness_reports_open_placeholders_and_pending_bibliography():
     source = RD.read_source()
     blockers = V.readiness_blockers(source, RD.RENDERED.read_text(encoding="utf-8"))
-    assert any(b.startswith("bibliography pending for maeng2026icfice") for b in blockers)
+    assert not any(b.startswith("bibliography pending") for b in blockers)      # resolved (D-056)
     assert any("[FUNDING TO BE CONFIRMED BY PI]" in b for b in blockers)
+    assert any(b.startswith("cover letter:") and "COPYRIGHT HOLDER" in b for b in blockers)
     def text_blockers(text):                  # the bibliography blocker comes from references.bib, not the text
         return [b for b in V.readiness_blockers("", text) if not b.startswith("bibliography")]
 

@@ -68,6 +68,7 @@ python scripts/validate_manuscript_results.py --final    # also fails while any 
 - [ ] Live Applied Sciences Instructions page re-read (requirements were verified from the latest archived copy) and
   the current template version confirmed
 - [ ] Word file built from the current template (`scripts/build_submission_docx.py`) and checked
-- [ ] Conference bibliography (proceedings volume, pages, DOI or URL) and copyright holder. The reference prints only
-  verified fields; the gap is a blocker, not text
+- [x] Conference bibliography (Vol. 17, No. 1, pp. 27–30; D-056). No DOI or URL is confirmed, so none is printed
+- [ ] Conference copyright holder and permission status
+- [ ] Target Special Issue (Future Information & Communication Engineering 2026) confirmed by the PI
 - [ ] Cover letter completed (`drafts/cover_letter_draft.md`)

@@ -36,13 +36,15 @@ def test_every_bibliography_entry_is_cited_and_renders():
         assert R.render(e)
 
 
-def test_conference_reference_has_no_invented_identifiers_and_pending_is_a_blocker():
+def test_conference_reference_prints_verified_fields_and_no_invented_identifiers():
     entries = R.load()
     e = entries["maeng2026icfice"]
-    for f in ("doi", "pages", "volume", "url"):
-        assert not e.get(f)
-    assert "[PENDING" not in R.render(e) and "doi.org" not in R.render(e)
-    assert "maeng2026icfice" in R.pending_items(entries)
+    assert not e.get("doi") and not e.get("url")
+    ref = R.render(e)
+    assert ref.endswith("(ICFICE 2026), Sapporo, Japan, 7–10 July 2026; Volume 17, Number 1, pp. 27–30.")
+    assert "[PENDING" not in ref and "doi.org" not in ref and "http" not in ref
+    assert "maeng2026icfice" not in R.pending_items(entries)
+    assert "DOI" in R.unconfirmed_items(entries)["maeng2026icfice"]
 
 
 def test_references_use_verified_abbreviations_and_conference_details():

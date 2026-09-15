@@ -14,8 +14,9 @@
 Dear Editor,
 
 We submit the manuscript **"Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative
-Transfer in Smart-Mat Temperature and Humidity Estimation"** for consideration as an Article in *Applied Sciences*
-[SECTION; SPECIAL ISSUE, IF ANY — CONFIRM].
+Transfer in Smart-Mat Temperature and Humidity Estimation"** for consideration as an Article in *Applied Sciences*,
+section Computing and Artificial Intelligence, for the Special Issue "Future Information & Communication Engineering
+2026", which collects selected papers from ICFICE 2026 [TARGET SPECIAL ISSUE — PI CONFIRMATION REQUIRED].
 
 **Summary and fit to the journal.**
 - Pressure-sensing smart mats could estimate the temperature and humidity of the bed microclimate without
@@ -34,8 +35,8 @@ Transfer in Smart-Mat Temperature and Humidity Estimation"** for consideration a
 **Expanded conference paper.** This manuscript is a revised and expanded version of our conference paper "Robust
 Temperature and Humidity Estimation from Smart Bedding Pressure Sequences Using Movement and Contact-Structure
 Features", presented at the 18th International Conference on Future Information & Communication Engineering
-(ICFICE 2026), Sapporo, Japan, 7–10 July 2026 [PROCEEDINGS VOLUME, PAGES AND DOI OR URL — CONFIRM]. The conference
-paper is cited in the manuscript and noted on its first page.
+(ICFICE 2026) and published in its proceedings (Volume 17, Number 1, pp. 27–30). The conference paper is cited in
+the manuscript and noted on its first page.
 - **Scope of the conference paper:**
   - the same broad regression task (temperature and humidity from smart-bedding pressure sequences) and the temporal
     convolutional network lineage;

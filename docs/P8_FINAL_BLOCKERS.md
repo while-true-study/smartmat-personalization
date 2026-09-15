@@ -1,9 +1,10 @@
 # P8 — Final blockers before submission, the P8 PR and `v1.0-paper`
 
-> **State at the end of the P8 submission-closure pass** (branch `paper/p8-manuscript`).
+> **State at the end of the P8 metadata-resolution pass** (branch `paper/p8-manuscript`). The conference
+> bibliography is resolved (D-056); the PI handoff is `docs/P8_PI_REVIEW_REQUEST_KO.md`.
 > - The manuscript is formatting-complete and in the Applied Sciences back-matter order. A Word file can be built
 >   from the local template (`scripts/build_submission_docx.py`; not committed).
-> - **No PI input has been received:** every metadata and release item below is still open. Each open item appears
+> - **No PI input has been received:** every PI metadata and release item below is still open. Each open item appears
 >   as a bracketed placeholder in the manuscript or drafts, never as a fact.
 > - `python scripts/validate_manuscript_results.py` passes (11/11). With `--final` it reports **NOT READY** while any
 >   item below is open.
@@ -25,10 +26,11 @@
 | B5 | Ethics: IRB approval (code, date, committee), exemption, or the legislation that exempts the study. Provider permission is not one of these | BLOCKED | `[ETHICS / IRB INFORMATION REQUIRED FROM PI]` | OPEN-26 |
 | B6 | Informed consent statement | BLOCKED | `[INFORMED CONSENT WORDING REQUIRED FROM PI]` | OPEN-26 |
 | B7 | GenAI disclosure approval | drafted; PI approval pending | §3.8 and Acknowledgments | OPEN-28; D-053 (Proposed) |
-| B8 | Conference bibliography (proceedings volume, pages, DOI or URL, if they exist). Kept out of the text; must be resolved **before the P8 PR** | BLOCKED | `pending` field in `references.bib`; cover-letter placeholder | OPEN-27 |
-| B9 | Conference copyright holder and permission status | BLOCKED | cover-letter placeholder | OPEN-27 |
+| B8 | Conference bibliography | **RESOLVED** (D-056): title, authors, year, Vol. 17, No. 1, pp. 27–30, e-ISSN 2765-3811, print ISSN 2384-3004, KIICE, 7–10 July 2026, Sapporo. **Open, not blocking:** official confirmation that no DOI exists; a paper-specific URL. Neither is printed | `unconfirmed` field in `references.bib` | OPEN-27 |
+| B9 | Conference copyright holder and reuse-right status | BLOCKED. **A submission-compliance item** (Applied Sciences condition 3; cover letter), **not a manuscript blocker**: no conference text, table or figure is reused. Needed before submission | `[COPYRIGHT HOLDER — CONFIRM]` in the cover letter and disclosure draft | OPEN-27 |
 | B10 | Final title, keywords, Featured Application (KEEP by default) | proposed | — | D-054 |
 | B11 | Every author's approval of the submission (mandatory cover-letter statement) | BLOCKED | `[CONFIRM: every author has approved]` | — |
+| B12 | Target Special Issue: Applied Sciences "Future Information & Communication Engineering 2026" (section Computing and Artificial Intelligence; Guest Editors Yun Seop Yu, Dae-hwan Kim, Daesung Lee; deadline 30 June 2027; selected papers from ICFICE 2026) | RECOMMENDED / PI CONFIRMATION REQUIRED | `[TARGET SPECIAL ISSUE — PI CONFIRMATION REQUIRED]` in the cover letter | D-056 |
 
 ## C. External-release blockers
 
@@ -52,8 +54,8 @@ item 11).
 |---|---|---|
 | D1 | Re-read the live Applied Sciences Instructions page (requirements were verified from its 2025-11-17 archived copy) | NEEDS FINAL CHECK |
 | D2 | Confirm the current template version (the local template is the 2025 version) and rebuild the DOCX from it | NEEDS FINAL CHECK |
-| D3 | Special Issue: none selected. If one is chosen, read its page | NOT APPLICABLE until chosen |
-| D4 | Cover letter completion (`paper/manuscript/COVER_LETTER_DRAFT.md`) | final draft; placeholders B1, B3–B6, B8, B9, B11 |
+| D3 | Special Issue page read directly before submission. The authors read it; mdpi.com is blocked here | NEEDS FINAL CHECK (B12) |
+| D4 | Cover letter completion (`paper/manuscript/COVER_LETTER_DRAFT.md`) | final draft; placeholders B1, B3–B6, B9, B11, B12 |
 
 **Resolved in the closure pass:**
 - section structure checked against the instructions;
@@ -76,7 +78,7 @@ item 11).
 
 - **P8 PR — ready only when** all of the following hold:
   - PI scientific approval;
-  - B1–B7 resolved; B8 and B9 resolved;
+  - B1–B7 resolved (B8 is resolved);
   - D1 and D2 confirmed;
   - `validate_manuscript_results.py --final --docx <DOCX>` reports READY.
   - C1–C7 must be resolved as far as the chosen Data Availability state requires.
@@ -84,3 +86,18 @@ item 11).
   - created only after the P8 PR is merged, on the P8 merge commit on `main`, never on a branch head;
   - requires the final artifact validated, the submission metadata fixed, and the frozen P3–P7 artifacts unchanged
     against `p7-release-candidate`.
+
+## Conference venue: source conflict
+
+| Source | ICFICE 2026 venue |
+|---|---|
+| Official KIICE ICFICE 2026 programme and presenter guide (**primary**) | ANA Crowne Plaza Sapporo, Japan, 7–10 July 2026 |
+| Current Applied Sciences Special Issue page | Hotel Nikko Guam, USA |
+
+**Policy (D-056):**
+- the KIICE programme is used for the conference's bibliographic and venue data;
+- the manuscript and its references say Sapporo, Japan;
+- the Special Issue page's Guam wording is not copied as conference provenance;
+- the cover letter omits the venue;
+- the discrepancy is not discussed in the manuscript.
+

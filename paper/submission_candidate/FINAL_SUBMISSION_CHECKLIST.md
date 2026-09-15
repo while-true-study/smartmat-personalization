@@ -6,8 +6,9 @@
 > The file is ready for submission only when every box is ticked and
 > `python scripts/validate_manuscript_results.py --final --docx <built DOCX>` reports READY.
 
-**State at the end of the P8 submission-closure pass: no item ticked.** The draft validation passes (11/11). The
-final-readiness check reports the open placeholders and the pending conference bibliography.
+**State at the end of the P8 metadata-resolution pass:** only the conference bibliography is ticked. The draft
+validation passes (11/11). The final-readiness check reports the open PI placeholders in the manuscript and the
+cover letter.
 
 ## Scientific
 
@@ -34,7 +35,9 @@ final-readiness check reports the open placeholders and the pending conference b
 - [ ] Conflicts of interest
 - [ ] GenAI disclosure approved (OPEN-28; D-053 → Accepted)
 - [ ] Conference extension: first-page note, Introduction paragraph, cover-letter statement of the changes
-- [ ] Conference copyright holder and permission status; conference bibliography (OPEN-27)
+- [x] Conference bibliography: Vol. 17, No. 1, pp. 27–30, ISSNs, KIICE, dates, venue (D-056). No DOI or URL is
+  confirmed, so none is given
+- [ ] Conference copyright holder and permission status (OPEN-27)
 
 ## Availability
 
@@ -48,6 +51,8 @@ final-readiness check reports the open placeholders and the pending conference b
 
 ## Formatting
 
+- [ ] Target Special Issue confirmed: Applied Sciences, "Future Information & Communication Engineering 2026"
+  (recommended; submission deadline in docs/P8_FINAL_BLOCKERS.md)
 - [ ] Live Applied Sciences Instructions page re-read; current template version confirmed
 - [ ] DOCX built from the current template: `python scripts/build_submission_docx.py --template <template.docx>`
 - [ ] References checked in the DOCX (numbering, abbreviations, DOIs, conference details)

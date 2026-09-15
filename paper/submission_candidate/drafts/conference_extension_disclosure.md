@@ -24,9 +24,10 @@
 |---|---|
 | Title | Robust Temperature and Humidity Estimation from Smart Bedding Pressure Sequences Using Movement and Contact-Structure Features |
 | Authors | Dong-Hoon Maeng, Jin-Suk Bang |
-| Venue | The 18th International Conference on Future Information & Communication Engineering (ICFICE 2026), Sapporo, Japan, 7–10 July 2026 (oral, AI-06) |
-| Proceedings / pages / DOI | [VERIFY BIBLIOGRAPHIC DETAILS] (program booklet cover: ISSN 2765-3811, Vol. 17, No. 1; to be confirmed) |
-| Copyright holder | [VERIFY] |
+| Venue | The 18th International Conference on Future Information & Communication Engineering (ICFICE 2026), ANA Crowne Plaza Sapporo, Japan, 7–10 July 2026 (oral, AI-06); source: the official KIICE ICFICE 2026 programme |
+| Proceedings | Proceedings of ICFICE 2026, Vol. 17, No. 1, pp. 27–30; e-ISSN 2765-3811, print ISSN 2384-3004; issued by the Korea Institute of Information and Communication Engineering (KIICE) |
+| DOI / article URL | none confirmed; none is given (open check, not blocking the citation) |
+| Copyright holder | [COPYRIGHT HOLDER — CONFIRM] |
 
 ## What the conference paper evaluated
 
@@ -79,7 +80,8 @@
 
 > This manuscript is an extended version of our conference paper "Robust Temperature and Humidity Estimation from
 > Smart Bedding Pressure Sequences Using Movement and Contact-Structure Features", presented at ICFICE 2026
-> [VERIFY BIBLIOGRAPHIC DETAILS]. The conference paper is cited in the manuscript and noted on its first page.
+> (Proceedings of ICFICE 2026, Vol. 17, No. 1, pp. 27–30). The conference paper is cited in the manuscript and noted on its
+> first page.
 >
 > The conference study examined movement and contact-structure feature fusion on fixed-length pressure sequences.
 > Because some logs lacked second-level timestamps, it did not perform strict elapsed-time or leave-one-subject-out
