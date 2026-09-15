@@ -1,0 +1,3 @@
+target,qualifying_subjects,fires,oracle_User01,oracle_User02,oracle_User07,status,protocol_version
+temperature,,False,0.9979728024946892,0.9659599963607715,0.9914258300769822,post_hoc_second_order_diagnostic,v1.2
+humidity,,False,0.9998439259252914,0.9662922481064061,0.9997872673587166,post_hoc_second_order_diagnostic,v1.2

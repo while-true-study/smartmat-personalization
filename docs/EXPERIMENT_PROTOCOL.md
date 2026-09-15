@@ -317,3 +317,17 @@ checks pass.
   - OPEN-18: release dates (P7);
   - OPEN-20: channel layout;
   - OPEN-21: acquisition changes inside User01 `s1`.
+
+**Version history:**
+- v1.0: frozen in P2. It governs every primary result.
+- v1.1 (D-057): a post-hoc validation addendum (`configs/experiments/v1.1/posthoc_validation.yaml`,
+  `docs/P8_POSTHOC_VALIDATION_PLAN.md`).
+  - It reuses the v1.0 data, splits and windows unchanged.
+  - It adds calibration comparators, a residual-variation ratio and an initialization control.
+  - Its results are supplementary and do not replace v1.0.
+- v1.2 (D-059): a second-order post-hoc diagnostic addendum (`configs/experiments/v1.2/dynamic_signal_diagnostic.yaml`,
+  `docs/P8_DYNAMIC_SIGNAL_PLAN.md`).
+  - It adds prediction-scale, correlation and oracle-affine metrics on existing predictions, and one conditionally
+    triggered comparator.
+  - It reuses v1.0 and v1.1 unchanged.
+  - It is the final planned diagnostic for the current manuscript.

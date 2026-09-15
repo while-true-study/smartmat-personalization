@@ -27,7 +27,10 @@ whether short user-specific adaptation helps.
 - [x] P7 Reproducibility & Public Data Release (release candidate `public_release_v1` reproduced from a clean checkout;
   `docs/P7_REPRODUCIBILITY_PUBLIC_RELEASE_REPORT.md`; external publication pending the license, hosting and PI
   approval, `docs/P7_PUBLIC_RELEASE_CHECKLIST.md`)
-- [ ] P8 Manuscript & Final Release  ← **current phase** (starts from `main` after the P7 merge)
+- [x] P8 Manuscript (merged as a PI-review manuscript candidate; `paper/manuscript/manuscript.md`, post-hoc
+  analyses `docs/P8_POSTHOC_VALIDATION_REPORT.md` and `docs/P8_DYNAMIC_SIGNAL_REPORT.md`; submission metadata and
+  release items open in `docs/P8_FINAL_BLOCKERS.md`; no `v1.0-paper` tag)
+- [ ] P9 User03 external sensitivity validation (post hoc; branch `experiment/p9-user03-external-validation`)
 
 Current status: P0 is closed and tagged `p0-data-freeze`.
 - The data audit is summarised in `docs/P0_DATASET_AUDIT_REPORT.md`, and the frozen policies are in
@@ -50,7 +53,10 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
   - The de-identified window release `public_release_v1` reproduces every P3–P6 result from a clean checkout
     (see "Reproducing the results from the public release" below).
   - External publication waits for the license, hosting/DOI and PI approval (`docs/P7_PUBLIC_RELEASE_CHECKLIST.md`).
-- P8 (manuscript and final release) is the next phase.
+- P8 (manuscript) is merged as a PI-review candidate: a strict evaluation of smart-mat microclimate estimation
+  against simple level baselines (D-057–D-060). Submission metadata, PI approval and the public release remain open
+  (`docs/P8_FINAL_BLOCKERS.md`); the `v1.0-paper` tag is not created.
+- P9 (post-hoc external sensitivity validation on User03) is the next phase.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
@@ -127,6 +133,21 @@ Environment used for the P3–P7 results and for the P7 verification:
 | Determinism | `CUBLAS_WORKSPACE_CONFIG=:4096:8` (set by the scripts), `torch.use_deterministic_algorithms(True)`, cuDNN deterministic, benchmark off, per-run seeds, no data-loader workers |
 | Run time | core about 8 min on this GPU (P3 finals about 4.3 min, P5 about 3.3 min, P6 about 10 s); extended adds about 30 min (45 P4 finals); a release build by the data owner takes about 2 min |
 | Disk | release package 30.6 MB; reproduction outputs about 370 MB (core) and 660 MB (extended); about 4 GB RAM and 2.2 GB GPU memory per process |
+
+## Manuscript production (P8)
+
+The manuscript tables, figures and submission candidate are generated from the frozen `paper/tables/` only;
+no result is recomputed (D-054). The code is in `src/paper/`.
+
+```bash
+python scripts/export_manuscript_tables.py      # Tables 1–5 and S1–S19 -> paper/manuscript/generated/
+python scripts/render_manuscript_figures.py     # Figures 1–4 and S1–S4 -> paper/manuscript/generated/figures/
+python scripts/build_submission_candidate.py    # rendered manuscript and staging directory -> paper/submission_candidate/
+python scripts/validate_manuscript_results.py   # read-only checks; exit code 0 only if all pass (--final: submission-ready)
+python scripts/build_submission_docx.py --template <Applied Sciences Word template .docx>   # -> outputs/p8/submission/
+```
+
+Open submission and release items: `docs/P8_FINAL_BLOCKERS.md`.
 
 Bitwise equality is verified on this stack only. A CPU run or another GPU, driver or library build trains in the
 same deterministic way, but its floating-point results can differ in the last bits. The digest checks then fail,

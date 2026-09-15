@@ -1,0 +1,7 @@
+condition,budget_nights,target,subjects_within_positive,subjects_pooled_positive,headline,status,protocol_version
+C,0,temperature,0,1,little linear co-variation,post_hoc_second_order_diagnostic,v1.2
+C,0,humidity,0,0,little linear co-variation,post_hoc_second_order_diagnostic,v1.2
+E,14,temperature,0,2,only between-night association,post_hoc_second_order_diagnostic,v1.2
+E,14,humidity,0,1,little linear co-variation,post_hoc_second_order_diagnostic,v1.2
+S,14,temperature,1,2,only between-night association,post_hoc_second_order_diagnostic,v1.2
+S,14,humidity,0,1,little linear co-variation,post_hoc_second_order_diagnostic,v1.2

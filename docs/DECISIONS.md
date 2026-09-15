@@ -58,6 +58,13 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-19 | **Closed 2026-09-13 by D-022 — class B, non-blocking but flagged. Handling fixed by D-035 (P2):** the phase is a window boundary and a reporting stratum; 22482 P1 is used as recorded, and no phase is excluded. A9b re-derived the change without assuming the date:<br>• The P1 response collapses in the recording of the night 2026-08-19 (hourly onset ≈ 08-20 02:00) and is fully shifted from 2026-08-20 21:37:33.<br>• The collapse is abrupt: complete separation over ±3/±7 nights; step R² 0.83 vs line 0.60.<br>• It is persistent to the last night (recovered fraction ≈ 0).<br>• It is P1-only: the other channels have \|δ\| ≤ 0.51, and the pressure sum without P1 is stable.<br>• 22480 and T/H show no concurrent shift, and no schema/firmware boundary is nearby.<br>The P6 decline is a separate later change (2026-08-25), recorded under OPEN-03. Cause still asked of the provider; handling in P2. Original text: User02/22482 channel P1 from 2026-08-20 (A9): active share 0.49 → 0.13, median when active 759 → 26, p99 2,007 → 371. P6 active share 0.57 → 0.28 over the same dates. P2–P5 unchanged; the other mat (22480) shows no such drop. Was the mat moved, replaced or damaged? Use of 22482 data after that date as test/adaptation data depends on it. **A11 (2026-09-13):**<br>• The affected slice is 202.0 h in 22 nights (41 % of 22482's hours); 64.9 h of it are also covered by 22480.<br>• Without it, User02 keeps 438.8 h in 45 nights.<br>• **Not blocking for the cohort** (D-020). It is a device-period quality issue whose flag (start, channels) must be defined before P0 closes: provider answer, or the short audit A9b. | data provider + PI | P2 (handling) | User02 splits | D-022; `docs/P0_A9B_USER02_CHANNEL_ANOMALY_REPORT.md`; `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §5; `docs/P0_A11_COVERAGE_CONFOUNDING_REPORT.md` §3 |
 | OPEN-20 | **Non-blocking; protocol v1.0 does not depend on it (D-039):** geometry-free features only; a layout-based feature needs a protocol version bump. Physical layout of P1–P6 on the mat and the legacy `FSR_k` ↔ P_k mapping (positional assumption). A9: the strongest positive correlations are P1–P4, P2–P5, P3–P6 on all current mats. This is compatible with, but not proof of, paired positions. Needed before any spatial or channel-selection feature. | data provider | P2 (non-blocking) | spatial features | `docs/P0_A9_PRESSURE_QUALITY_REPORT.md` §2, §6 |
 | OPEN-21 | **Non-blocking; not a boundary in v1.0 (D-035).** Reported as a known limitation (window rule D-032 is time-based, so the 2-s episode does not change the time scale). Other User01 acquisition changes inside `sensor_phase` s1 (A10):<br>• **2025-12-17**, the documented log-format change (first compressed log): active channels 1.51 → 2.49 and dominant-channel switches 29 → 92 /h, both with complete separation over ±7 nights. The 4095 share is unchanged.<br>• **2026-01-03…07**: a temporary 2 s sampling regime, with the 4095 share dipping for about a week.<br>• From **2026-01-08**: 3 s sampling with wider jitter.<br>• **2025-12-25**: an undocumented +49 % pressure-sum level shift.<br>Did firmware/logging changes alter pressure reporting? Should acquisition-period labels (log format, sampling regime) be carried as further provenance fields? Not merged into `sensor_phase`. | data provider + PI | P2 (non-blocking) | RQ2 spans within User01 | `docs/P0_A10_USER01_SENSOR_PHASE_REPORT.md` §6, §8 |
+| OPEN-22 | **Open (P8 publication blocker).** Code license of the repository and data license of `public_release_v1`. The repository has no LICENSE file. | PI | before `v1.0-paper` | Data/Code Availability final text; external publication | P7 checklist D1; D-051 |
+| OPEN-23 | **Open (P8 publication blocker).** External hosting and persistent identifier (DOI) for `public_release_v1` (`windows.parquet` is not in Git, D-050). | PI | before `v1.0-paper` | Data Availability final text; external publication | P7 checklist D2; D-051 |
+| OPEN-24 | **Open (P8 publication blocker).** PI approval of the release subset (the P7 exit criterion) and of the final manuscript/release state. | PI | before `v1.0-paper` | `v1.0-paper`; external publication | P7 checklist D3; D-051 |
+| OPEN-25 | **Open (P8 publication blocker).** Public scope of the session-level calendar dates in committed repository files outside the release package (split files, P5 plan, subject mapping, three paper tables, reports): keep the repository private, publish a de-identified copy, or accept. No history rewrite without a decision. | PI | before any public repository or code archive | Code Availability; public repository | P7 checklist D4; D-049 |
+| OPEN-26 | **Open (P8).** Ethics / IRB information for the manuscript. The provider confirmation of consent and release permission (D-002) is not an IRB approval; no institutional identifier may be invented. | PI | before submission | IRB / informed-consent statements | `paper/manuscript/manuscript.md` |
+| OPEN-27 | **Largely resolved by D-056:** citation metadata complete (title, authors, year, Vol. 17, No. 1, pp. 27–30, ISSN, KIICE, dates, venue). Still open: official confirmation that no DOI exists, a paper-specific URL (neither blocks the citation), and the copyright holder / reuse-right status (a submission-compliance item for the cover letter; it does not block the manuscript, which reuses no conference material). History: **Open (P8); a P8-PR blocker since D-055.** Scope verified in pass 2. Bibliographic details still open: the proceedings series is ISSN 2765-3811 (online), and ICFICE 2025 was Vol. 16, No. 1; the paper's own pages, DOI or URL and the copyright holder were not found in an official record. Original question: Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
+| OPEN-28 | **Open (P8); disclosure drafted by D-053 (Proposed; supersedes D-052).** Still needed: the PI's approval of the text. The ChatGPT use stated by the authors is included; its historical model versions were not logged and are not inferred. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
 
 ---
 
@@ -1485,3 +1492,362 @@ Note (P7 build, 2026-09-14):
 - The public P5 plan also drops the P3 run ids and local run paths (`p3_run_id`, `p3_run_dir`); their run ids carry
   run dates. Every other value, and the key types, are unchanged; the build checks this.
 - The metadata files are stored byte-exact in Git (`.gitattributes`), because `manifest.json` hashes them.
+
+## D-051 — P7 release-candidate checkpoint tag `p7-release-candidate` (repository metadata only)
+Date: 2026-09-14
+Status: Accepted
+Context:
+- RESEARCH_PROTOCOL §5 defined no freeze tag for P7. Its exit criterion "release subset approved" is still a PI
+  decision (P7 report §14).
+- The research lead decided to mark the completed P7 release-candidate state explicitly before P8, as for P4 (D-046)
+  and P6 (D-048).
+Decision:
+- The annotated tag `p7-release-candidate` (tag object `88c98b3`) was created on the P7 merge commit `c9c15bc` (PR #8)
+  and pushed. P8 starts from it (branch `paper/p8-manuscript`).
+- **It is a reproducibility checkpoint, not a public release.** It marks the repository state in which
+  `public_release_v1` was built, validated and shown to reproduce the P3–P6 results from a clean checkout.
+- **Still pending:** the code and data license, the external hosting and DOI, the PI's approval of the release subset
+  and of the final release, and the public scope of the absolute dates in committed repository files.
+- Protocol v1.0, the splits, canonical_v1, the release package and the P3–P7 results are unchanged. Tags are still
+  never moved, deleted or re-pointed.
+- RESEARCH_PROTOCOL §5 and CONVENTIONS §6.5 now list the tag.
+Evidence: tag `p7-release-candidate` → `c9c15bc3ae67cafe783360011c87e5b6ccdc5daf` locally and on origin; merge
+parents `16980ae` (main after P6) and `43e2fec` (P7 branch head); merge tree equal to the P7 branch tree;
+`docs/P7_REPRODUCIBILITY_PUBLIC_RELEASE_REPORT.md`, `docs/P7_PUBLIC_RELEASE_CHECKLIST.md`.
+Consequence: the P0 and P2–P7 boundaries are tagged. `v1.0-paper` stays reserved for the final validated manuscript
+and release state (P8). It may not state that the data are public, that a DOI or license exists, or that the PI has
+approved, until each is actually resolved.
+
+## D-052 — Generative-AI disclosure draft and tool inventory (manuscript text only)
+Date: 2026-09-14
+Status: Superseded by D-053
+Context:
+- The MDPI template requires Materials and Methods to describe generative-AI use for text, data, graphics, study
+  design, data collection, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose
+  (`docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12).
+- The research lead set the principles in the P8 final integration pass:
+  - disclose the use;
+  - never state that a tool decided the protocol or a result;
+  - name only tools and versions found in the records, and write `[VERSION TO BE CONFIRMED]` otherwise.
+Decision:
+- **Inventory:** the local Claude Code session logs of this repository record one tool: Claude Code (Anthropic),
+  client versions 2.1.263 and 2.1.270, with the model Claude Opus 5 (`claude-opus-5`). No other AI tool appears in
+  the repository or its history. Tools used outside these sessions are left as an author placeholder.
+- **Manuscript §3.8:**
+  - The stated purposes are code drafting and debugging, analysis-workflow organization and orchestration, research
+    documentation, literature screening and reference-metadata checks, manuscript drafting, and language refinement.
+  - The protocol, dataset policies, model-selection rules, statistics and interpretation boundaries are stated as
+    determined and reviewed by the authors.
+  - Executable results are stated as validated independently: tests, frozen-result checks, deterministic tables and
+    clean-checkout reproduction.
+  - No numerical result was accepted solely from AI output.
+- **Acknowledgments:** the MDPI sentence with the inventoried tool, a placeholder for any other tool, and the
+  authors' responsibility statement.
+Evidence: local session logs (model and client version fields); `git grep` and `git log` over the repository; MDPI
+Applied Sciences Word template (read directly, pass 3); `docs/P8_FINAL_BLOCKERS.md` §2.
+Consequence: OPEN-28 needs only the PI's approval and the completion of the author placeholder. No result, protocol
+or frozen artifact changes.
+
+## D-053 — Generative-AI disclosure with the authors' ChatGPT statement (manuscript text only)
+Date: 2026-09-15
+Status: Proposed (PI approval pending; OPEN-28 stays open)
+Context:
+- D-052 inventoried the one tool recorded in this repository's session logs and left other tools as a placeholder.
+- In the P8 formatting pass, the research lead stated a second tool:
+  - ChatGPT (OpenAI), used for research planning, analysis and protocol review, manuscript architecture, manuscript
+    drafting, language refinement and consistency review;
+  - its historical model versions were not consistently logged; GPT-5.6 Sol was used in the final
+    manuscript-review interaction.
+Decision:
+- **Acknowledgments:** the research lead's wording, naming both tools:
+  - Claude Code (Anthropic; CLI 2.1.263 and 2.1.270; Claude Opus 5), with the purposes recorded in the logs: code
+    drafting, debugging, analysis-workflow organization, repository documentation, reference-metadata checks and
+    manuscript drafting;
+  - ChatGPT (OpenAI), with the stated purposes and the statement that model versions were not consistently logged.
+- No historical ChatGPT model version is inferred or added.
+- **Manuscript §3.8** lists the combined purposes. It states that protocols, dataset policies, model-selection rules,
+  statistics, reported numbers and interpretations stayed under author control and were validated independently.
+- **Supersedes D-052:** the inventory and principles are unchanged; only the second tool is added.
+Evidence: local Claude Code session logs (D-052); the research lead's statement in the P8 formatting pass; MDPI
+Applied Sciences template (item 12 of `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`).
+Consequence: the disclosure no longer has an unknown-tool placeholder. OPEN-28 closes only with the PI's approval.
+
+## D-054 — P8 manuscript production conventions and working title
+Date: 2026-09-15
+Status: Accepted (research lead, P8 formatting pass)
+Context: The formatting pass turns the integrated draft into a submission candidate. It must not change any result,
+and every printed number must stay traceable.
+Decision:
+- **Working final title:** "Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative
+  Transfer in Smart-Mat Temperature and Humidity Estimation".
+  - "Unseen-domain" is used because subject, recording period, season and device configuration are confounded in
+    the strict LOSO folds.
+  - The title changes only on PI request, a journal length requirement, or an overclaim found in the final review.
+- **Production code:** `src/paper/` with thin scripts:
+  - `export_manuscript_tables.py`: Tables 1–5, S1–S19 and cell provenance;
+  - `render_manuscript_figures.py`: Figures 1–4 and S1–S4;
+  - `build_submission_candidate.py`: the rendered manuscript, numbered references and the staging directory
+    `paper/submission_candidate/`;
+  - `validate_manuscript_results.py`: read-only checks.
+  The frozen `paper/tables/` and `paper/figures/` are inputs only.
+- **Precision:** °C and %RH values are printed with two decimals, percentages with one, counts as integers.
+  Negative numbers use the typographic minus sign. This is formatting of frozen cells; no value is recomputed.
+- **Supplementary tables** are copies of the frozen tables. Calendar night ids are replaced by the night ordinals of
+  the frozen trajectory table, and the conversion is checked against the budget definition.
+- **References** are rendered from `references.bib` in the MDPI template patterns, numbered by first appearance.
+  Journal names are printed in full; ISO 4 abbreviation is a formatting item. The conference entry carries a visible
+  `pending` field until its bibliography is confirmed.
+- **Byte-exact storage:** `paper/manuscript/generated/**` and `paper/submission_candidate/**` are `-text` in
+  `.gitattributes`, as for the release package (D-050), because `MANIFEST.json` hashes them.
+Evidence: `docs/P8_TABLE_FIGURE_SELECTION.md` §4–§5; `docs/P8_TITLE_CANDIDATES.md`; the validator output in
+`docs/P8_FINAL_BLOCKERS.md`.
+Consequence: the candidate is formatting-complete for PI review. No frozen artifact changed. Submission still depends
+on the metadata and release blockers.
+
+## D-055 — Applied Sciences submission-format alignment (formatting only)
+Date: 2026-09-15
+Status: Accepted (research lead, P8 submission-closure pass; no scientific change)
+Context:
+- The live Applied Sciences Instructions for Authors page returns HTTP 403 to automated access.
+- Its latest Internet Archive copy (2025-11-17) was read directly. So was the local 2025 Applied Sciences Word
+  template (`docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md`).
+Decision:
+- **Structure:** the required sections are present. The separate Related Work and Limitations sections are kept,
+  since the instructions list the sections an article "should include" and prohibit none.
+- **Back matter** follows the template order: Supplementary Materials, Author Contributions, Funding, IRB, Informed
+  Consent, Data Availability, Acknowledgments, Conflicts of Interest, Abbreviations, References. Code availability
+  and the reproduction statement move into the Data Availability Statement, as the template has no sections for them.
+- **Other front- and body-matter changes:**
+  - a first-page note cites the conference paper, a verified journal requirement;
+  - abbreviations are defined at first use, with an Abbreviations section;
+  - Methods state the software versions;
+  - the supplementary items are listed as "Figure S1: title".
+- **References:**
+  - journal names use NLM Catalog ISO abbreviations (IEEE/CAA J. Autom. Sinica from Crossref);
+  - proceedings give the conference location and dates from the Crossref event metadata;
+  - a pending bibliographic field is not printed but reported as a blocker (`--final`).
+- **Word output:** `scripts/build_submission_docx.py` builds the DOCX from a user-supplied template into
+  `outputs/p8/submission/`.
+  - Neither the template nor template-formatted files are committed: the journal restricts its templates to
+    submission for peer review.
+  - The builder drops the template's author and company fields and its local template path.
+- **Validator:** `--final` (and `--docx`) fails while any placeholder, pending field or blocker remains.
+- **PR gate:** the conference bibliography (OPEN-27) must be resolved before the P8 PR.
+Evidence: `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` (sources I and T); `docs/P8_PI_APPROVAL_CHECKLIST.md`;
+`docs/P8_FINAL_BLOCKERS.md`.
+Consequence: the manuscript is formatting-complete in the journal's format. Submission and the P8 PR depend only on
+the PI and metadata items; no frozen artifact changed.
+
+## D-056 — ICFICE 2026 bibliographic metadata, venue source and target Special Issue
+Date: 2026-09-15
+Status: Accepted for the bibliographic metadata and the venue policy (research lead); the target Special Issue is
+Proposed (PI confirmation required)
+Context:
+- The research lead supplied the conference paper's proceedings record from external sources.
+- The official KIICE ICFICE 2026 presenter guide (a local copy) confirms the dates, venue, e-ISSN, volume/issue and
+  session AI-06.
+- The ISSN Portal confirms the print ISSN 2384-3004 as the linking ISSN of the same series; 2765-3811 is the online
+  ISSN.
+- The page range 27–30 and the issuing society rest on the research lead's external record.
+- No DOI and no paper-specific URL was found. The copyright holder is not stated in any source read.
+- The current Applied Sciences Special Issue page, as read by the authors, names Hotel Nikko Guam as the venue. This
+  conflicts with the KIICE programme (ANA Crowne Plaza Sapporo).
+Decision:
+- **Reference:** `maeng2026icfice` carries volume 17, number 1, pages 27–30, both ISSNs, the issuing society and
+  session AI-06.
+  - It is rendered as "In Proceedings of the 18th International Conference on Future Information & Communication
+    Engineering (ICFICE 2026), Sapporo, Japan, 7–10 July 2026; Volume 17, Number 1, pp. 27–30."
+  - No DOI or URL is printed. Their existence stays an open check, recorded as the `unconfirmed` field; it does not
+    block the citation.
+- **Venue:** the KIICE programme is the primary source. The Special Issue page's venue text is not copied, the cover
+  letter omits the venue, and the manuscript does not discuss the discrepancy.
+- **Copyright:** the holder and reuse-right status stay open, as a submission-compliance item in the cover letter
+  (Applied Sciences condition 3). They do not block the manuscript, which reuses no conference text, table or figure.
+- **Target:** the Applied Sciences Special Issue "Future Information & Communication Engineering 2026" (section
+  Computing and Artificial Intelligence; deadline 30 June 2027) is the recommended target. Its status is
+  RECOMMENDED / PI CONFIRMATION REQUIRED. The cover letter names it with a confirmation placeholder.
+Evidence: `paper/manuscript/references.bib` (header and entry); `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` items 22–23
+and the venue section; ISSN Portal record 2384-3004.
+Consequence:
+- The conference bibliography no longer blocks the P8 PR.
+- The copyright status and the target Special Issue join the PI checklist.
+
+## D-057 — Post-hoc validation analyses: calibration comparators, residual variation, initialization control (protocol v1.1 addendum)
+Date: 2026-09-16
+Status: Accepted (research lead). **Post hoc**; the results are supplementary and never replace the v1.0 primary
+results.
+Context:
+- **Results already seen:** the P3 strict-LOSO, P4 feature-family, P5 personalization and P6 robustness results, and
+  the P8 manuscript draft.
+- **Motivation:** a reviewer-style inspection of the manuscript raised alternative explanations that the frozen
+  analyses do not rule out:
+  - (1) the fine-tuning gains may be a correction of a domain-level output offset;
+  - (2) the pressure model may track little within-subject variation beyond a constant level;
+  - (3) whether the cross-subject pretrained initialisation helps, relative to training only on the target user's
+    early nights, was not tested.
+- **The rules apply:** RESEARCH_PROTOCOL §3.4 (one look per protocol version) and §6, and EXPERIMENT_PROTOCOL §14.
+  New comparators, a descriptive metric and a new training arm evaluated on the test span therefore need a new
+  protocol version.
+Decision:
+- **Protocol v1.1 (`configs/experiments/v1.1/posthoc_validation.yaml`) is an addendum.**
+  - It reuses the v1.0 protocol file, split files, canonical data and windows unchanged, verified by hash. No split
+    file changes, so none is rebuilt.
+  - v1.0 stays frozen and is not edited.
+- **Analyses,** fully specified in `docs/P8_POSTHOC_VALIDATION_PLAN.md` before any of them touched the test span:
+  - bias-calibration comparators, with the offset estimated only from adaptation windows (training mean → the
+    adaptation-target mean; RAW-TCN → bias-calibrated RAW-TCN), against the frozen full fine-tuning;
+  - User02 pooled calibration as the primary comparator, and a per-mat calibration labelled "post-hoc per-device
+    calibration diagnostic added after the primary results were known";
+  - the residual-variation ratio R = error SD / target SD (population SDs, the existing error-decomposition
+    convention), for the strict-LOSO and RQ2 primary-span settings;
+  - a within-subject initialization control at b = 14: a randomly initialised RAW-TCN trained on nights 1–14 with the
+    frozen fine-tuning recipe (only the initialisation differs), evaluated on nights ≥ 16, seeds 0–2;
+  - night-level paired bootstrap comparisons with the frozen P6 settings;
+  - reuse of the existing P6 heater-context strata.
+- **Interpretation map:** written into the plan before the results (Cases A–I) and not changed afterwards.
+- **Reporting:**
+  - Every result is reported, whether or not it supports the current manuscript.
+  - The analyses are labelled post hoc wherever they appear.
+  - The primary RQ2 definition is unchanged: earliest b ∈ {0, 1, 3, 7, 14} nights, a buffer night, the common
+    primary span of nights ≥ 16, the RAW-TCN base, and the frozen P5 recipe.
+- **Excluded:**
+  - personalization of other feature families;
+  - a change of base model;
+  - selection of adaptation nights by similarity to test labels;
+  - oracle selection;
+  - heater state as an input;
+  - tuning any recipe on the primary span.
+Evidence: `docs/P8_POSTHOC_VALIDATION_PLAN.md` (its SHA-256 is recorded in every new run and table);
+`configs/experiments/v1.1/posthoc_validation.yaml`; the frozen tags `p3-loso-baseline`, `p5-personalization` and
+`p6-robustness`.
+Consequence:
+- New code in `src/evaluation/p8_posthoc.py`, with `scripts/run_p8_posthoc.py` and
+  `scripts/export_p8_posthoc_tables.py`.
+- Outputs go under `outputs/runs/p8_posthoc/` and `outputs/metrics/p8_posthoc/`, and paper-facing tables are
+  `paper/tables/p8_*.csv`.
+- No P3–P6 artifact or tag changes. The manuscript is revised only after the analyses pass their tests and checks.
+
+## D-058 — Manuscript interpretation revised after the v1.1 post-hoc validation; evaluation-focused working title
+Date: 2026-09-16
+Status: Accepted (research lead). The title is a working title and still needs PI confirmation (P8 PI checklist).
+Context:
+- The D-057 analyses were run exactly as pre-registered (`docs/P8_POSTHOC_VALIDATION_REPORT.md`).
+- Under the pre-registered case map they contradict parts of the draft's interpretation:
+  - **Case A:** the adaptation-target mean (a constant computed from the adaptation labels) had a seed-mean MAE no
+    higher than full fine-tuning in half of the subject × target × budget cells. This includes User02 temperature,
+    the draft's headline offset correction, at every budget.
+  - **Residual variation:** no pressure-based model reduced the residual variation clearly below that of a constant;
+    the unadapted and strict-LOSO models had R > 1.
+  - **Case I:** a randomly initialised network trained on the same adaptation nights matched the pretrained
+    fine-tuning in five of six b = 14 cells.
+  - **Case D:** for User07 temperature, a pure offset calibration also produced negative transfer.
+- The draft's abstract headlined a retrospective level-mismatch agreement that uses the later span's labels.
+Decision:
+- **Primary results unchanged.** The v1.0 primary results (Tables 2, 4 and 5 values, G_b, bootstrap intervals) stay
+  unchanged and are reported in full.
+- **Interpretation rewritten:**
+  - The paper is an evaluation with a substantial negative result.
+  - Under unseen-domain shift, chronological personalization in this cohort mainly corrected level offsets, which a
+    personalized constant corrected as well.
+  - The pressure-based models showed no demonstrable within-subject tracking of temperature or humidity.
+  - The level-mismatch agreement is presented as a retrospective descriptive diagnostic, not as a deployable
+    safeguard, and it is removed from the abstract headline.
+  - The post-hoc comparators are labelled post hoc wherever they appear.
+- **Manuscript assets:**
+  - Table 4 shows predictors A–E side by side.
+  - Two tables are added: residual variation, and the b = 14 comparator intervals.
+  - Figure 5 is added: the comparators by budget.
+  - The budget axes use numeric spacing.
+  - Table 3 shows fold–seed consistency.
+  - Supplementary Tables S20–S26 carry the addendum tables.
+- **Working title:** changed to "Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation
+  under Unseen-Domain Shift" (`docs/P8_TITLE_CANDIDATES.md` §6).
+  - The D-054 title rule did not anticipate a change of the paper's scientific framing. This decision supersedes it
+    for this change.
+  - The PI may restore the previous title; both are recorded.
+Evidence: `docs/P8_POSTHOC_VALIDATION_REPORT.md` §5–§6; `paper/tables/p8_*.csv`;
+`paper/tables/p8_posthoc_provenance.json`.
+Consequence:
+- Manuscript, generated tables and figures, and the submission candidate are rebuilt; the PI handoff documents
+  carry the new title and summary.
+- No frozen P3–P6 artifact, tag or v1.0 configuration changed.
+
+## D-059 — Final dynamic-signal diagnostic: prediction scale and within-night correlation (protocol v1.2 addendum)
+Date: 2026-09-16
+Status: Accepted (research lead). **Second-order post hoc and diagnostic.** The results are supplementary and never
+replace a v1.0 primary or v1.1 result.
+Context:
+- **Results already seen:** the P3–P6 results, and the v1.1 post-hoc results (D-057,
+  `docs/P8_POSTHOC_VALIDATION_REPORT.md`):
+  - simple level predictors often matched or beat the neural models;
+  - the residual-variation ratio R was about 1 or above;
+  - the scratch control did not consistently beat the personalized constant.
+- **What R cannot show:** R does not show whether the predictions co-vary with the target.
+  - By R² = 1 + Q² − 2rQ, a positive correlation can coexist with R ≈ 1 when the prediction scale Q is mismatched.
+  - Before stopping model experimentation, the manuscript's scientific identity therefore depends on whether the
+    neural predictions carry temporal co-variation hidden by offset or scale mismatch.
+- **The rules apply:** RESEARCH_PROTOCOL §6 counts a metric change as a protocol change, and a change made after
+  results were seen must say so. The new metrics are evaluated on the test span, so a new protocol version is
+  needed.
+Decision:
+- **Protocol v1.2 (`configs/experiments/v1.2/dynamic_signal_diagnostic.yaml`) is a second-order post-hoc addendum.**
+  - It reuses v1.0 and v1.1 unchanged, verified by hash.
+  - v1.0 and v1.1 are not edited.
+- **Analyses,** fully specified in `docs/P8_DYNAMIC_SIGNAL_PLAN.md` before any new metric was computed:
+  - Q, pooled and night-centred (primary) correlations, a night × mat sensitivity variant, per-night correlations
+    and the retrospective oracle affine ratio;
+  - computed on the existing primary-span predictions of C, D, E and S (A and B are constants: R = 1, Q = 0,
+    r = NA);
+  - night-cluster bootstrap with the frozen P6 settings.
+- **Fixed before the results:** the interpretation map (Cases J1–J8), the operational thresholds and an affine
+  calibration trigger. Leakage-free adaptation-only affine calibration is run only if the base model's oracle affine
+  ratio is ≤ 0.90 for at least two subjects for the same target (seed mean, and at least two of three seeds). Nothing
+  is changed after the results.
+- **Reporting:** all results are reported whichever way they point. Nothing is retrained, apart from the triggered
+  comparator's base inference on adaptation windows, if the trigger fires.
+- **Stop rule:** this is the final planned scientific diagnostic for the current manuscript. No further
+  representation, adaptation variant, window length, input, architecture or search is added without a new,
+  explicitly authorized phase.
+Evidence: `docs/P8_DYNAMIC_SIGNAL_PLAN.md` (its SHA-256 is recorded in every output);
+`configs/experiments/v1.2/dynamic_signal_diagnostic.yaml`; the frozen P5 predictions and v1.1 tables.
+Consequence:
+- New code in `src/evaluation/p8_dynamic.py`, with `scripts/run_p8_dynamic.py` and
+  `scripts/export_p8_dynamic_tables.py`.
+- Outputs go under `outputs/metrics/p8_dynamic/`, and paper-facing tables are `paper/tables/p8_dynamic_*.csv`.
+- No P0–P7 artifact, no v1.1 artifact and no tag changes.
+
+## D-060 — Scientific identity after the v1.2 dynamic-signal diagnostic; neutral evaluation title
+Date: 2026-09-16
+Status: Accepted (research lead). Title and scientific identity require PI approval (P8 PI checklist).
+Context:
+- The v1.2 diagnostic (D-059, `docs/P8_DYNAMIC_SIGNAL_REPORT.md`) ran as pre-registered.
+  - The neural predictions showed no consistent within-night co-variation with the targets in any condition. At
+    most one of three subjects met the within-night rule, and none for the base model or full fine-tuning.
+  - Pooled associations after 14 nights of adaptation were level alignments between nights or between User02's
+    mats.
+  - The retrospective oracle affine ratio was at least 0.93 everywhere, so the affine trigger did not fire and no
+    affine comparator was run.
+- The plan's title rule applied: an evaluation title is favoured when J3 is not consistently supported and simple
+  level baselines remain the dominant comparator. Both conditions hold.
+Decision:
+- **Scientific identity:** the manuscript is a strict evaluation / failure-analysis study of pressure-based smart-mat
+  microclimate estimation against simple level baselines under unseen-domain shift. Chronological personalization
+  is one of the evaluated conditions.
+- **Primary results unchanged:** the v1.0 primary results and the v1.1 results are unchanged and reported in full.
+- **Working title:** "Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level
+  Baselines". It replaces the D-058 working title; the history is in `docs/P8_TITLE_CANDIDATES.md` §7.
+- **Scope of the negative result:** it is limited to the tested formulation (40-s RAW-pressure representation, TCN,
+  fixed training and adaptation schedules). Temporal-scale mismatch is offered only as a plausible, non-causal
+  explanation.
+- **Conference relationship:** relative improvements among neural representations do not establish superiority over
+  level baselines or unseen-domain validity. The conference results are not called wrong.
+- **Table 3 stays in the main text:** it is the direct evidence for that reconciliation, because it shows the
+  training-mean predictor next to every representation. It now also shows the fold–seed consistency of each
+  difference.
+- **Stop rule:** no further model experiment for this manuscript (D-059 stop rule).
+Evidence: `docs/P8_DYNAMIC_SIGNAL_REPORT.md` §4–§5; `paper/tables/p8_dynamic_*.csv`.
+Consequence:
+- Manuscript §3.5.6, §4.8 and Table 8 are added. The Abstract, Introduction, Discussion, Limitations and Conclusions
+  are revised, and Supplementary Tables S27–S31 are added.
+- The PI review request opens with the identity change.
+- No frozen artifact, tag or protocol version changed.

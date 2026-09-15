@@ -1,0 +1,71 @@
+# Protocol v1.2 — second-order post-hoc dynamic-signal diagnostic (D-059; docs/P8_DYNAMIC_SIGNAL_PLAN.md).
+# Written after the P3-P6 results and the v1.1 post-hoc results were seen, before any v1.2 metric was computed.
+# v1.2 adds metrics (Q, pooled and within-night correlations, oracle affine ratio) on existing predictions and one
+# conditionally triggered comparator. It changes nothing in v1.0 or v1.1; both are reused unchanged and verified by
+# hash. Results are diagnostic, post hoc (second order) and supplementary.
+protocol_version: v1.2
+kind: post_hoc_dynamic_signal_diagnostic
+decision: D-059
+status_of_results: post_hoc_second_order_diagnostic
+base_protocol:
+  version: v1.0
+  file: configs/experiments/v1.0/protocol.yaml
+  sha256: 96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84
+previous_addendum:
+  version: v1.1
+  file: configs/experiments/v1.1/posthoc_validation.yaml
+  sha256_lf: b17da23839d19c1fc164a39fe6bbb5c0019a8b0e3eb381b0e7f1bcef7b714479
+  plan_sha256_lf: 3328bdeace0c356d63420e684365cda065d8e36b12d0fb07c20161e0cca774f1
+results_seen_before_design: [p3_strict_loso, p4_feature_families, p5_personalization, p6_robustness,
+                             v1_1_calibration_comparators, v1_1_residual_variation, v1_1_initialization_control]
+subjects: [User01, User02, User07]
+targets: [temperature, humidity]
+primary_test_from_ordinal: 16
+seeds: [0, 1, 2]
+conditions:
+  C: {source: p5_b00_predictions, budgets: [0]}
+  D: {source: C_plus_v1_1_offset, offset_table: paper/tables/p8_calibration_by_seed.csv, budgets: [1, 3, 7, 14]}
+  E: {source: p5_predictions, budgets: [1, 3, 7, 14]}
+  S: {source: v1_1_init_control_predictions, budgets: [14]}
+  A: {constant: training_mean}
+  B: {constant: adaptation_target_mean}
+metrics:
+  sd: population                  # ddof = 0 (v1.1 convention)
+  R: sd(pred - y) / sd(y)
+  Q: sd(pred) / sd(y)
+  r_pooled: pearson(pred, y) over all primary windows
+  r_within: pearson of night-centred pred and y, concatenated over nights (primary tracking diagnostic)
+  r_within_mat: pearson of night x mat centred values (sensitivity; differs from r_within only for User02)
+  per_night_r: {eligibility: {min_windows: 10, min_sd: 1.0e-12}, report: [median, n_eligible, n_excluded_by_reason]}
+  oracle_affine: sqrt(max(0, 1 - r_pooled^2))   # retrospective oracle; fitting on test labels would be leakage
+  constant_rule: sd(pred) <= 1.0e-12 * max(1, |mean(pred)|) -> Q = 0, R = 1, r = NA
+  identity_tolerance: 1.0e-9      # R^2 = 1 + Q^2 - 2 r Q
+bootstrap: {unit: night, resamples: 2000, seed: 0, level: 0.95, primary_model_seed: 0, sensitivity_seeds: [1, 2],
+            shared_resamples_per_subject: true}
+paired_differences: [[E, C, r_within, all_budgets], [S, E, r_within, budget_14]]
+definitions:
+  r_positive: {interval: above_zero, seed_mean_min: 0.10}
+  r_negative: {interval: below_zero, seed_mean_max: -0.10}
+  q_zero_below: 0.10
+  r_one_band: [0.95, 1.05]
+  oracle_near_one_from: 0.95
+  oracle_headroom_at_most: 0.90
+  user02_within_requires_both_centrings: true
+  headline_min_subjects: 2
+cases: [J1, J2, J3, J4, J5, J6, J7, J8, unmapped_within_only]
+affine_trigger:
+  condition: C
+  oracle_affine_at_most: 0.90
+  cell_rule: seed_mean <= 0.90 and at least 2 of 3 seeds <= 0.90
+  fires_if: at least 2 subjects qualify for the same target
+  comparator_if_fired:
+    label: F
+    name: adaptation_only_affine_calibration
+    status: triggered_second_order_post_hoc_comparator
+    fit: ols_with_intercept y = a * pred_base + c on labelled adaptation windows only
+    budgets: [1, 3, 7, 14]
+    user02: pooled_over_mats
+    degenerate: {rule: "sd(pred_adapt) <= 1.0e-12 * max(1, |mean|)", a: 0, c: "mean(y_adapt)"}
+    compare_with: [B, D, E]
+    bootstrap_mae_differences: [[F, B], [F, D], [F, E]]
+stop_rule: final planned diagnostic for the current manuscript

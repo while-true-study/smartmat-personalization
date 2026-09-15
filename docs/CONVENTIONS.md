@@ -29,12 +29,15 @@ data/
 src/
   data/                           raw access, provenance, parsing, audit helpers
   features/  models/  training/  evaluation/
+  paper/                          manuscript production (P8): tables, figures, rendering, validation from frozen tables
 scripts/                          thin command-line entry points that call src/
 tests/                            pytest suite; must pass before results are produced
 outputs/
   qa/  eda/  metrics/  predictions/  checkpoints/  figures/
 paper/
   manuscript/  tables/  figures/  publication material only (anonymous IDs only)
+  manuscript/generated/           manuscript tables, figures and supplementary files (generated; never edited by hand)
+  submission_candidate/           staging directory built from the manuscript source and the generated assets
 ```
 
 The supplied raw package `스마트 매트 데이터 정리/` sits at the repository root until OPEN-05 is decided.
@@ -133,7 +136,8 @@ A PR is merged only when tests and raw-integrity checks pass on its head commit.
 ### 6.5 Tags
 Annotated tags, created on `main` after the phase PR is merged, only for the freeze points listed in
 `RESEARCH_PROTOCOL.md` §5 (`p0-data-freeze`, `p2-protocol-freeze`, `p3-loso-baseline`,
-`p4-feature-ablation` (D-046), `p5-personalization`, `p6-robustness` (D-048), `v1.0-paper`). Tags are never moved, deleted or re-pointed; a correction gets a
+`p4-feature-ablation` (D-046), `p5-personalization`, `p6-robustness` (D-048), `p7-release-candidate` (D-051),
+`v1.0-paper`). Tags are never moved, deleted or re-pointed; a correction gets a
 new tag (e.g. `p0-data-freeze-r2`) and a decision entry.
 
 ### 6.6 Commits
