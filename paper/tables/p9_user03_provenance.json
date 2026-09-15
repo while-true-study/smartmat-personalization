@@ -1,0 +1,113 @@
+{
+  "description": "P9 post-hoc external sensitivity validation on User03 (protocol v1.3, D-061); not part of the primary cohort; conditional on OPEN-29",
+  "protocol_version": "v1.3",
+  "decision": "D-061",
+  "status": "post_hoc_external_sensitivity",
+  "plan_sha256_lf": "b995ee57ab5e783f6f6b4960ba534342e2c8a345b05e1973c44ad25253f46575",
+  "config_sha256_lf": "4357d8bcb6c3f953cec635db48112cf7cdb1e3228e388fc4e79556f500be3650",
+  "base_protocol_sha256": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84",
+  "analysis_git_commit": "ecb0af229c4aa5f3572808533a5ce65e1bd1a9ed",
+  "analysis_tree_dirty": true,
+  "source_files": [
+    {
+      "night": 1,
+      "role": "csv",
+      "file_id": "rf_c72768b318",
+      "sha256": "e752e8b384b01ff1c62dcc18a4c8ceca5bee3154694c4c10fcb272811c55c5bf"
+    },
+    {
+      "night": 2,
+      "role": "csv",
+      "file_id": "rf_472f51ed15",
+      "sha256": "9d774f21c13c4a89dec996ec0e4f3fee10f01af24c6ebc2b0d9981be89e07029"
+    },
+    {
+      "night": 3,
+      "role": "csv",
+      "file_id": "rf_f035bd1571",
+      "sha256": "e2946d5203303550d438bc35267523b37b57d4e3fcb303e319a450943d67922f"
+    },
+    {
+      "night": 4,
+      "role": "csv",
+      "file_id": "rf_d2e74f5942",
+      "sha256": "69e77bf246e6de04ada19082e77e3dbc0e3da41dfa3ba1cbbaf0572cb7526c67"
+    },
+    {
+      "night": 5,
+      "role": "csv",
+      "file_id": "rf_3cf412a98b",
+      "sha256": "f9953d815e0ed5e36882cfd9353f8c8967b80c9ea4643fa6361bb7626fe57ab8"
+    },
+    {
+      "night": 6,
+      "role": "csv",
+      "file_id": "rf_40880f4fea",
+      "sha256": "8147f080ce59d4e749d3b02688d0cf21372c022d8680d41342576ef93d6c5653"
+    },
+    {
+      "night": 7,
+      "role": "csv",
+      "file_id": "rf_5cad1a3c7b",
+      "sha256": "ed1fa26d51d8e276a689d6b4465aaf95e6c7f1fe0e35a22bae3ed2b7dcbafa8a"
+    },
+    {
+      "night": 1,
+      "role": "txt",
+      "file_id": "rf_2944020ba0",
+      "sha256": "5ae65cc15d88104ff7415a9a50b7146f21fcd7eeb4467e2a0de9c07af345eebc"
+    },
+    {
+      "night": 2,
+      "role": "txt",
+      "file_id": "rf_1fb716dd00",
+      "sha256": "58bb113ab41d0a52619d934fd4aa6304f3e21e8900446cfe935ff10db0d85473"
+    },
+    {
+      "night": 3,
+      "role": "txt",
+      "file_id": "rf_0b4ddadd99",
+      "sha256": "7cbbca907730fd4b0cb0c0f468b04d6cd2057bb7bc26da4ba1f6e36fe7ec8d35"
+    },
+    {
+      "night": 4,
+      "role": "txt",
+      "file_id": "rf_8c0064f0b6",
+      "sha256": "427e64008dfacf4af8209ca423e5febc8cd40cdbde2f482162b36f3e5ef8f5cc"
+    },
+    {
+      "night": 5,
+      "role": "txt",
+      "file_id": "rf_ab6b6cd91c",
+      "sha256": "bf6ff33911c58885b180146be5792ecb43b4f26d0054308d00ffda197538bb0f"
+    },
+    {
+      "night": 6,
+      "role": "txt",
+      "file_id": "rf_7a1b82ea57",
+      "sha256": "6e8c763d03a1c3e8fcc2a5ce5de6d682317a31f13d1357e8cb3e3997a87b1669"
+    },
+    {
+      "night": 7,
+      "role": "txt",
+      "file_id": "rf_f49bb1007e",
+      "sha256": "95b1867d6dc541fd4c81921ac37eaf22c4bbabd3067e727062e95de47b4d8e40"
+    }
+  ],
+  "external_rows_content_sha256": "499d2f92ac45f6ad80cca398631daa6fa8589f2e420e46f7f35d95ebff9d50c3",
+  "training_mean": [
+    27.114042830257986,
+    37.603615554824366
+  ],
+  "prediction_sha256": {
+    "config_fold1/seed0": "ec8e1cf7b39734d50a38d9b7f47a50be71b37c71a5e8eb53c5c72e6bbd0b6fc3",
+    "config_fold1/seed1": "1d3bd59b9249b04fe102085d0ec98a188188cc244a8efec4c7f6e7434403391d",
+    "config_fold1/seed2": "e247660ddcb81ab477e09155d1e78dfe7d338f2d6f59606ccf5a837cfba1ebb3",
+    "config_fold2/seed0": "37c844db36f121f65faa7ec130bdc04671e4aeb25982a0bcc0211e2bcd670d8d",
+    "config_fold2/seed1": "a0646843355554efceb5ea7c242969d4cf674fb47c0ba21bdde626295b6e3556",
+    "config_fold2/seed2": "c5572ab33d89a609a903d75aca32cba362ed20580f681a45fbb442f53f45ec40",
+    "config_fold3/seed0": "d5930b40d306f62db2a4c62f98ef2ba167419f94bb4e06d82fd4973446a67a6f",
+    "config_fold3/seed1": "ea8a3510b5dbb748c9df32985ba731c456a6ce5a580a38b3c6fd17dcd77132a5",
+    "config_fold3/seed2": "fa8202172f8d4540ee89248166a966f85de2c4ecba8a79d3b0b702fdfad10331"
+  }
+}
