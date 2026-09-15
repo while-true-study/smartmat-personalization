@@ -132,6 +132,21 @@ The pre-registered post-hoc comparators (`docs/P8_POSTHOC_VALIDATION_PLAN.md`, r
 - **Wording:** User07 temperature is written "the seed-mean MAE was higher than that of the base model at every
   adaptation budget", with the seed-specific results.
 
+### 3.6 Final identity after the dynamic-signal diagnostic (D-060)
+
+- **Identity:** a strict evaluation / failure-analysis study against simple level baselines. §3.5 still governs, with
+  one addition.
+- **Additional claim (second-order post hoc, v1.2):** the neural predictions showed no consistent within-night
+  co-variation with the targets. Pooled associations after adaptation were level alignments between nights or mats,
+  and the retrospective oracle affine ratio was at least 0.93, so no affine comparator was triggered.
+- **Wording:**
+  - the negative result is scoped to the tested formulation (40-s RAW windows, TCN, fixed schedules);
+  - temporal-scale mismatch is a plausible, non-causal explanation;
+  - never "pressure cannot estimate microclimate";
+  - never "the model only generates noise".
+- **Conference relationship:** relative improvements among representations do not establish superiority over level
+  baselines. The conference results are not called wrong.
+
 ## 4. Terminology
 
 | Use | Avoid or qualify |

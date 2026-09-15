@@ -15,7 +15,7 @@ cover letter.
 - [ ] PI scientific approval (no result, statistic or interpretation boundary changes at this step)
 - [ ] Title approved (working final title, D-054)
 - [ ] Abstract approved (200 words; source-linked numbers)
-- [ ] Tables 1–7 approved (Tables 6–7 and the A, B, D columns of Table 4 are post hoc, D-057/D-058)
+- [ ] Tables 1–8 approved (Tables 6–8 and the A, B, D columns of Table 4 are post hoc, D-057–D-060)
 - [ ] Figures 1–5 approved (Figure 5 is post hoc)
 - [ ] Limitations approved
 
@@ -58,5 +58,5 @@ cover letter.
 - [ ] References checked in the DOCX (numbering, abbreviations, DOIs, conference details)
 - [ ] Keywords confirmed
 - [ ] Featured Application kept or removed
-- [ ] Supplementary material uploaded (Tables S1–S26, Figures S1–S4) and listed in the back matter
+- [ ] Supplementary material uploaded (Tables S1–S31, Figures S1–S4) and listed in the back matter
 - [ ] Cover letter completed and every author's approval obtained

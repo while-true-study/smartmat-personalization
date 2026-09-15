@@ -168,3 +168,14 @@ Every new cell is a formatted frozen cell of `paper/tables/p8_*.csv` (`scripts/e
   "(a) …" labels only. The report figures in `paper/figures/` keep their report titles and are not part of the
   submission candidate.
 
+## 7. Dynamic-signal revision (D-059, D-060)
+
+| Item | Change | Evidence role |
+|---|---|---|
+| Table 8 (new) | dynamic-signal diagnostic for the base model (b = 0), full fine-tuning and the scratch control (b = 14): R, Q, pooled and within-night correlations (seed mean, seed-0 interval), the night × mat variant and the oracle ratio | second-order post hoc (D-059) |
+| Tables S27–S31 (new) | `p8_dynamic_summary`, `p8_dynamic_by_seed`, `p8_dynamic_bootstrap`, `p8_dynamic_oracle_affine` + `p8_dynamic_trigger`, `p8_dynamic_cases` + `p8_dynamic_headlines` | second-order post hoc |
+| Table 3 | **kept in the main text** (assessed in D-060): it is the direct evidence for the conference reconciliation, because it shows the training-mean predictor next to every representation, with fold–seed consistency | secondary (P4) |
+| Table 4 (A–E) | unchanged | primary + post hoc |
+
+- **Main text size:** 8 tables and 5 figures.
+- No figure was added. The affine comparator was not triggered, so no affine table exists.

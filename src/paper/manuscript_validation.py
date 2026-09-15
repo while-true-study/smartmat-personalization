@@ -31,11 +31,13 @@ from src.paper.manuscript_figures import FIGURES
 
 ALLOWED_SPECS = {".2f", "+.2f", ".1f", "+.1f", "d", ",d", "s"}
 MAIN_TABLES = ("table1_dataset_protocol", "table2_strict_loso", "table3_feature_family", "table4_personalization",
-               "table5_night_robustness", "table6_residual_variation", "table7_posthoc_comparators")
+               "table5_night_robustness", "table6_residual_variation", "table7_posthoc_comparators",
+               "table8_dynamic_signal")
 MAIN_FIGURES = ("figure1_study_design", "figure2_temperature_personalization", "figure3_humidity_personalization",
                 "figure4_night_robustness", "figure5_posthoc_comparators")
 # Decimals or percentages that may be typed: design constants of the frozen protocol, not results.
-DESIGN_LITERALS = {"0.1", "0.3", "95 %", "100 %"}
+DESIGN_LITERALS = {"0.1", "0.3", "95 %", "100 %",
+                   "0.10", "0.90"}                    # v1.2 addendum thresholds (D-059), design constants
 MONTHS = r"January|February|March|April|June|July|August|September|October|November|December"
 PRIVATE = {
     "ISO calendar date": re.compile(r"\b(19|20)\d{2}-\d{2}-\d{2}\b"),

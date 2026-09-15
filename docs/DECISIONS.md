@@ -1816,3 +1816,38 @@ Consequence:
 - Outputs go under `outputs/metrics/p8_dynamic/`, and paper-facing tables are `paper/tables/p8_dynamic_*.csv`.
 - No P0–P7 artifact, no v1.1 artifact and no tag changes.
 
+## D-060 — Scientific identity after the v1.2 dynamic-signal diagnostic; neutral evaluation title
+Date: 2026-09-16
+Status: Accepted (research lead). Title and scientific identity require PI approval (P8 PI checklist).
+Context:
+- The v1.2 diagnostic (D-059, `docs/P8_DYNAMIC_SIGNAL_REPORT.md`) ran as pre-registered.
+  - The neural predictions showed no consistent within-night co-variation with the targets in any condition. At
+    most one of three subjects met the within-night rule, and none for the base model or full fine-tuning.
+  - Pooled associations after 14 nights of adaptation were level alignments between nights or between User02's
+    mats.
+  - The retrospective oracle affine ratio was at least 0.93 everywhere, so the affine trigger did not fire and no
+    affine comparator was run.
+- The plan's title rule applied: an evaluation title is favoured when J3 is not consistently supported and simple
+  level baselines remain the dominant comparator. Both conditions hold.
+Decision:
+- **Scientific identity:** the manuscript is a strict evaluation / failure-analysis study of pressure-based smart-mat
+  microclimate estimation against simple level baselines under unseen-domain shift. Chronological personalization
+  is one of the evaluated conditions.
+- **Primary results unchanged:** the v1.0 primary results and the v1.1 results are unchanged and reported in full.
+- **Working title:** "Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level
+  Baselines". It replaces the D-058 working title; the history is in `docs/P8_TITLE_CANDIDATES.md` §7.
+- **Scope of the negative result:** it is limited to the tested formulation (40-s RAW-pressure representation, TCN,
+  fixed training and adaptation schedules). Temporal-scale mismatch is offered only as a plausible, non-causal
+  explanation.
+- **Conference relationship:** relative improvements among neural representations do not establish superiority over
+  level baselines or unseen-domain validity. The conference results are not called wrong.
+- **Table 3 stays in the main text:** it is the direct evidence for that reconciliation, because it shows the
+  training-mean predictor next to every representation. It now also shows the fold–seed consistency of each
+  difference.
+- **Stop rule:** no further model experiment for this manuscript (D-059 stop rule).
+Evidence: `docs/P8_DYNAMIC_SIGNAL_REPORT.md` §4–§5; `paper/tables/p8_dynamic_*.csv`.
+Consequence:
+- Manuscript §3.5.6, §4.8 and Table 8 are added. The Abstract, Introduction, Discussion, Limitations and Conclusions
+  are revised, and Supplementary Tables S27–S31 are added.
+- The PI review request opens with the identity change.
+- No frozen artifact, tag or protocol version changed.

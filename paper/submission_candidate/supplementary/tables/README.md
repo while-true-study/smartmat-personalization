@@ -30,6 +30,11 @@ Machine-readable copies of the frozen result tables (full precision). Calendar n
 | S24 | Initialization control at b = 14 (post hoc) | `TableS24_p8_initialization_control.csv` |
 | S25 | Night-level bootstrap of the comparator differences, all budgets and seeds (post hoc) | `TableS25_p8_comparator_bootstrap.csv` |
 | S26 | Pre-registered interpretation map: cases per subject, target and budget (post hoc) | `TableS26_p8_interpretation_cases.csv` |
+| S27 | Dynamic-signal diagnostic: R, Q, pooled and within-night correlations, oracle ratio (seed summary; second-order post hoc) | `TableS27_p8_dynamic_summary.csv` |
+| S28 | Dynamic-signal diagnostic per seed (second-order post hoc) | `TableS28_p8_dynamic_by_seed.csv` |
+| S29 | Dynamic-signal diagnostic: night-cluster bootstrap of the correlations (second-order post hoc) | `TableS29_p8_dynamic_bootstrap.csv` |
+| S30 | Retrospective oracle affine ratio and the affine-calibration trigger (second-order post hoc) | `TableS30a_p8_dynamic_oracle_affine.csv`, `TableS30b_p8_dynamic_trigger.csv` |
+| S31 | Pre-registered dynamic-signal cases J1–J8 and headlines (second-order post hoc) | `TableS31a_p8_dynamic_cases.csv`, `TableS31b_p8_dynamic_headlines.csv` |
 
 Figure source data: `FigureData_p5_figure_data.csv`, `FigureData_p6_figure_data.csv`.
 

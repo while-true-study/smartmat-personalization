@@ -1,8 +1,8 @@
 # P8 — Title candidates
 
-> **Working title (post-hoc validation, D-058):** "Evaluating Chronological Personalization for Smart-Mat Microclimate
-> Estimation under Unseen-Domain Shift". It replaced the formatting-pass working title (D-054) after the post-hoc
-> validation (§6); PI confirmation is required, and the PI may restore the previous title. The history below is kept.
+> **Working title (dynamic-signal diagnostic, D-060):** "Strict Unseen-Domain Evaluation of Smart-Mat Microclimate
+> Estimation against Simple Level Baselines" (§7). It replaced the D-058 title, which had replaced the D-054 title;
+> PI confirmation is required, and the PI may choose any recorded candidate. The history below is kept.
 
 > **History.** Before the working title was set, the candidates were ranked against five criteria:
 > 1. framing priority: chronological personalization under unseen-user/domain shift, then benefit **and** negative
@@ -119,3 +119,33 @@ paper's contribution is the evaluation, not a demonstration of personalization.
 - population generalization;
 - "first" or "novel";
 - the conference title's lead phrase "Robust Temperature and Humidity Estimation".
+
+## 7. Final re-evaluation after the dynamic-signal diagnostic (D-060)
+
+The task fixed the decision rule before the results:
+- if within-night co-variation (J3) is not consistently supported and simple level baselines remain the dominant
+  practical comparator, strongly favour the neutral baseline/evaluation title;
+- if clear within-night co-variation exists across subjects and targets, keep a formulation that allows a
+  calibration or dynamic-signal interpretation.
+
+**Result** (`docs/P8_DYNAMIC_SIGNAL_REPORT.md`):
+- J3 held in one cell only (the scratch control for User02 temperature);
+- no condition met the headline rule of at least two subjects;
+- pooled associations were level alignments;
+- the oracle affine ratio was at least 0.93 everywhere;
+- simple level baselines remain the practical comparator.
+The first branch applies.
+
+| Candidate | Accuracy after v1.2 | Overclaim risk | Signals the baseline comparison | Words |
+|---|---|---|---|---|
+| **"Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines"** (preferred neutral) | every term true: strict unseen-domain evaluation, the task, and the comparator that decides the result | low: states the design and the comparator, not an outcome | yes, in the title | 13 |
+| "Evaluating Pressure-Based Smart-Mat Microclimate Estimation against Simple Level Baselines under Unseen-Domain Shift" (alternative) | true; names the input modality | low | yes | 14 |
+| "Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation under Unseen-Domain Shift" (D-058) | true, but centres personalization, which is now one condition among several | low–medium: implies personalization is the object whose value is at stake | no | 13 |
+| "Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative Transfer in …" (D-054) | the outcomes are true, but it frames offset correction as a capability of the neural adaptation | medium after v1.1/v1.2 | no | 16 |
+
+- **Recommendation: the preferred neutral candidate.** It puts the strict evaluation and the simple level baselines,
+  the two things that decide the paper's result, in the title.
+- **The alternative** is acceptable if the PI prefers to name pressure explicitly. The Abstract names it in either
+  case.
+- "Personalization" and "negative transfer" remain in the Abstract, the body and the keywords.
+- **Adopted as the working title (D-060)**, explicitly. PI approval is pending.

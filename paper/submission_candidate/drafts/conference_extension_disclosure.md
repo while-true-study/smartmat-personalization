@@ -57,7 +57,8 @@
   - seed and start-span sensitivity;
   - a post-hoc temporal level-mismatch analysis;
   - device residual strata;
-  - post-hoc comparators and a residual-variation analysis, fixed before they were computed;
+  - post-hoc comparators, a residual-variation analysis and a dynamic-signal diagnostic, each fixed before it was
+    computed;
   - a de-identified reproduction package with clean-checkout reproduction.
 - **New conclusions:**
   - under strict unseen-domain evaluation, the error is dominated by level offsets that representation changes do
@@ -65,7 +66,10 @@
   - chronological personalization corrects them when the early nights represent later conditions, and produces
     negative transfer when they do not;
   - the gains are mainly level corrections that a constant computed from the adaptation nights often matches, and
-    the pressure-based models show no demonstrable within-subject tracking of temperature or humidity.
+    the pressure-based models show no demonstrable within-subject tracking of temperature or humidity;
+  - relative improvements among pressure representations, as reported in the conference paper, do not by themselves
+    establish superiority over simple level baselines under strict evaluation. The conference results are not
+    disputed.
 
 ## Reuse
 

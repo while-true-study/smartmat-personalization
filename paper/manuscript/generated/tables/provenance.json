@@ -5852,5 +5852,1445 @@
       "−0.06",
       "+0.07"
     ]
+  },
+  {
+    "table": 8,
+    "row": 0,
+    "column": "R",
+    "text": "1.83",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=C, budget_nights=0].R"
+    ],
+    "values": [
+      "1.83"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 0,
+    "column": "Q",
+    "text": "1.59",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=C, budget_nights=0].Q"
+    ],
+    "values": [
+      "1.59"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 0,
+    "column": "r pooled [95 %]",
+    "text": "+0.06 [+0.01, +0.10]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=C, budget_nights=0].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=temperature, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=temperature, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "+0.06",
+      "+0.01",
+      "+0.10"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 0,
+    "column": "r within night [95 %]",
+    "text": "+0.02 [−0.02, +0.04]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=C, budget_nights=0].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=temperature, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=temperature, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "+0.02",
+      "−0.02",
+      "+0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 0,
+    "column": "r within night × mat",
+    "text": "+0.02",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=C, budget_nights=0].r_within_mat"
+    ],
+    "values": [
+      "+0.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 0,
+    "column": "R_oracle",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=C, budget_nights=0].oracle_affine"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 1,
+    "column": "R",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=E, budget_nights=14].R"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 1,
+    "column": "Q",
+    "text": "0.26",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=E, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.26"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 1,
+    "column": "r pooled [95 %]",
+    "text": "+0.14 [+0.11, +0.22]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=E, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=temperature, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=temperature, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.14",
+      "+0.11",
+      "+0.22"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 1,
+    "column": "r within night [95 %]",
+    "text": "−0.00 [−0.03, +0.01]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=E, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=temperature, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=temperature, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "−0.00",
+      "−0.03",
+      "+0.01"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 1,
+    "column": "r within night × mat",
+    "text": "−0.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=E, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "−0.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 1,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=E, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 2,
+    "column": "R",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=S, budget_nights=14].R"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 2,
+    "column": "Q",
+    "text": "0.15",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=S, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.15"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 2,
+    "column": "r pooled [95 %]",
+    "text": "+0.14 [+0.07, +0.16]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=S, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=temperature, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=temperature, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.14",
+      "+0.07",
+      "+0.16"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 2,
+    "column": "r within night [95 %]",
+    "text": "+0.01 [−0.02, +0.03]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=S, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=temperature, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=temperature, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.01",
+      "−0.02",
+      "+0.03"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 2,
+    "column": "r within night × mat",
+    "text": "+0.01",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=S, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.01"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 2,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=temperature, condition=S, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 3,
+    "column": "R",
+    "text": "1.09",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=C, budget_nights=0].R"
+    ],
+    "values": [
+      "1.09"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 3,
+    "column": "Q",
+    "text": "0.24",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=C, budget_nights=0].Q"
+    ],
+    "values": [
+      "0.24"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 3,
+    "column": "r pooled [95 %]",
+    "text": "−0.26 [−0.33, −0.19]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=C, budget_nights=0].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=temperature, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=temperature, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "−0.26",
+      "−0.33",
+      "−0.19"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 3,
+    "column": "r within night [95 %]",
+    "text": "−0.28 [−0.36, −0.21]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=C, budget_nights=0].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=temperature, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=temperature, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "−0.28",
+      "−0.36",
+      "−0.21"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 3,
+    "column": "r within night × mat",
+    "text": "−0.05",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=C, budget_nights=0].r_within_mat"
+    ],
+    "values": [
+      "−0.05"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 3,
+    "column": "R_oracle",
+    "text": "0.97",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=C, budget_nights=0].oracle_affine"
+    ],
+    "values": [
+      "0.97"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 4,
+    "column": "R",
+    "text": "0.96",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=E, budget_nights=14].R"
+    ],
+    "values": [
+      "0.96"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 4,
+    "column": "Q",
+    "text": "0.30",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=E, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.30"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 4,
+    "column": "r pooled [95 %]",
+    "text": "+0.28 [+0.27, +0.40]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=E, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=temperature, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=temperature, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.28",
+      "+0.27",
+      "+0.40"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 4,
+    "column": "r within night [95 %]",
+    "text": "+0.31 [+0.30, +0.43]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=E, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=temperature, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=temperature, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.31",
+      "+0.30",
+      "+0.43"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 4,
+    "column": "r within night × mat",
+    "text": "+0.09",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=E, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.09"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 4,
+    "column": "R_oracle",
+    "text": "0.96",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=E, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.96"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 5,
+    "column": "R",
+    "text": "0.94",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=S, budget_nights=14].R"
+    ],
+    "values": [
+      "0.94"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 5,
+    "column": "Q",
+    "text": "0.26",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=S, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.26"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 5,
+    "column": "r pooled [95 %]",
+    "text": "+0.36 [+0.32, +0.44]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=S, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=temperature, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=temperature, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.36",
+      "+0.32",
+      "+0.44"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 5,
+    "column": "r within night [95 %]",
+    "text": "+0.40 [+0.36, +0.47]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=S, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=temperature, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=temperature, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.40",
+      "+0.36",
+      "+0.47"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 5,
+    "column": "r within night × mat",
+    "text": "+0.12",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=S, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.12"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 5,
+    "column": "R_oracle",
+    "text": "0.93",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=temperature, condition=S, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.93"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 6,
+    "column": "R",
+    "text": "1.14",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=C, budget_nights=0].R"
+    ],
+    "values": [
+      "1.14"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 6,
+    "column": "Q",
+    "text": "0.69",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=C, budget_nights=0].Q"
+    ],
+    "values": [
+      "0.69"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 6,
+    "column": "r pooled [95 %]",
+    "text": "+0.13 [+0.05, +0.18]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=C, budget_nights=0].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=temperature, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=temperature, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "+0.13",
+      "+0.05",
+      "+0.18"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 6,
+    "column": "r within night [95 %]",
+    "text": "−0.02 [−0.05, +0.02]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=C, budget_nights=0].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=temperature, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=temperature, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "−0.02",
+      "−0.05",
+      "+0.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 6,
+    "column": "r within night × mat",
+    "text": "−0.02",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=C, budget_nights=0].r_within_mat"
+    ],
+    "values": [
+      "−0.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 6,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=C, budget_nights=0].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 7,
+    "column": "R",
+    "text": "1.02",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=E, budget_nights=14].R"
+    ],
+    "values": [
+      "1.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 7,
+    "column": "Q",
+    "text": "0.13",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=E, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.13"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 7,
+    "column": "r pooled [95 %]",
+    "text": "−0.11 [−0.18, −0.08]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=E, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=temperature, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=temperature, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "−0.11",
+      "−0.18",
+      "−0.08"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 7,
+    "column": "r within night [95 %]",
+    "text": "+0.04 [−0.01, +0.07]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=E, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=temperature, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=temperature, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.04",
+      "−0.01",
+      "+0.07"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 7,
+    "column": "r within night × mat",
+    "text": "+0.04",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=E, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 7,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=E, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 8,
+    "column": "R",
+    "text": "1.02",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=S, budget_nights=14].R"
+    ],
+    "values": [
+      "1.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 8,
+    "column": "Q",
+    "text": "0.10",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=S, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.10"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 8,
+    "column": "r pooled [95 %]",
+    "text": "−0.14 [−0.20, −0.07]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=S, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=temperature, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=temperature, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "−0.14",
+      "−0.20",
+      "−0.07"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 8,
+    "column": "r within night [95 %]",
+    "text": "+0.04 [−0.02, +0.08]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=S, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=temperature, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=temperature, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.04",
+      "−0.02",
+      "+0.08"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 8,
+    "column": "r within night × mat",
+    "text": "+0.04",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=S, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 8,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=temperature, condition=S, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 9,
+    "column": "R",
+    "text": "1.37",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=C, budget_nights=0].R"
+    ],
+    "values": [
+      "1.37"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 9,
+    "column": "Q",
+    "text": "0.94",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=C, budget_nights=0].Q"
+    ],
+    "values": [
+      "0.94"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 9,
+    "column": "r pooled [95 %]",
+    "text": "+0.01 [−0.04, +0.04]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=C, budget_nights=0].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=humidity, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=humidity, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "+0.01",
+      "−0.04",
+      "+0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 9,
+    "column": "r within night [95 %]",
+    "text": "−0.02 [−0.03, +0.02]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=C, budget_nights=0].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=humidity, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=humidity, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "−0.02",
+      "−0.03",
+      "+0.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 9,
+    "column": "r within night × mat",
+    "text": "−0.02",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=C, budget_nights=0].r_within_mat"
+    ],
+    "values": [
+      "−0.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 9,
+    "column": "R_oracle",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=C, budget_nights=0].oracle_affine"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 10,
+    "column": "R",
+    "text": "1.32",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=E, budget_nights=14].R"
+    ],
+    "values": [
+      "1.32"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 10,
+    "column": "Q",
+    "text": "0.72",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=E, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.72"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 10,
+    "column": "r pooled [95 %]",
+    "text": "−0.15 [−0.24, −0.08]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=E, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=humidity, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=humidity, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "−0.15",
+      "−0.24",
+      "−0.08"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 10,
+    "column": "r within night [95 %]",
+    "text": "−0.04 [−0.07, −0.02]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=E, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=humidity, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=humidity, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "−0.04",
+      "−0.07",
+      "−0.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 10,
+    "column": "r within night × mat",
+    "text": "−0.04",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=E, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "−0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 10,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=E, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 11,
+    "column": "R",
+    "text": "1.30",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=S, budget_nights=14].R"
+    ],
+    "values": [
+      "1.30"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 11,
+    "column": "Q",
+    "text": "0.73",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=S, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.73"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 11,
+    "column": "r pooled [95 %]",
+    "text": "−0.11 [−0.16, −0.05]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=S, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=humidity, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User01, target=humidity, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "−0.11",
+      "−0.16",
+      "−0.05"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 11,
+    "column": "r within night [95 %]",
+    "text": "−0.07 [−0.10, −0.04]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=S, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=humidity, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User01, target=humidity, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "−0.07",
+      "−0.10",
+      "−0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 11,
+    "column": "r within night × mat",
+    "text": "−0.07",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=S, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "−0.07"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 11,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User01, target=humidity, condition=S, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 12,
+    "column": "R",
+    "text": "1.09",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=C, budget_nights=0].R"
+    ],
+    "values": [
+      "1.09"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 12,
+    "column": "Q",
+    "text": "0.26",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=C, budget_nights=0].Q"
+    ],
+    "values": [
+      "0.26"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 12,
+    "column": "r pooled [95 %]",
+    "text": "−0.26 [−0.33, −0.19]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=C, budget_nights=0].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=humidity, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=humidity, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "−0.26",
+      "−0.33",
+      "−0.19"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 12,
+    "column": "r within night [95 %]",
+    "text": "−0.37 [−0.45, −0.30]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=C, budget_nights=0].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=humidity, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=humidity, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "−0.37",
+      "−0.45",
+      "−0.30"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 12,
+    "column": "r within night × mat",
+    "text": "−0.11",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=C, budget_nights=0].r_within_mat"
+    ],
+    "values": [
+      "−0.11"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 12,
+    "column": "R_oracle",
+    "text": "0.97",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=C, budget_nights=0].oracle_affine"
+    ],
+    "values": [
+      "0.97"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 13,
+    "column": "R",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=E, budget_nights=14].R"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 13,
+    "column": "Q",
+    "text": "0.24",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=E, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.24"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 13,
+    "column": "r pooled [95 %]",
+    "text": "+0.17 [+0.14, +0.29]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=E, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=humidity, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=humidity, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.17",
+      "+0.14",
+      "+0.29"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 13,
+    "column": "r within night [95 %]",
+    "text": "+0.27 [+0.25, +0.39]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=E, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=humidity, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=humidity, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.27",
+      "+0.25",
+      "+0.39"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 13,
+    "column": "r within night × mat",
+    "text": "+0.01",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=E, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.01"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 13,
+    "column": "R_oracle",
+    "text": "0.99",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=E, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.99"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 14,
+    "column": "R",
+    "text": "0.97",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=S, budget_nights=14].R"
+    ],
+    "values": [
+      "0.97"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 14,
+    "column": "Q",
+    "text": "0.25",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=S, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.25"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 14,
+    "column": "r pooled [95 %]",
+    "text": "+0.24 [+0.17, +0.31]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=S, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=humidity, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User02, target=humidity, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.24",
+      "+0.17",
+      "+0.31"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 14,
+    "column": "r within night [95 %]",
+    "text": "+0.37 [+0.31, +0.43]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=S, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=humidity, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User02, target=humidity, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.37",
+      "+0.31",
+      "+0.43"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 14,
+    "column": "r within night × mat",
+    "text": "+0.02",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=S, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.02"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 14,
+    "column": "R_oracle",
+    "text": "0.97",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User02, target=humidity, condition=S, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "0.97"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 15,
+    "column": "R",
+    "text": "1.23",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=C, budget_nights=0].R"
+    ],
+    "values": [
+      "1.23"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 15,
+    "column": "Q",
+    "text": "0.73",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=C, budget_nights=0].Q"
+    ],
+    "values": [
+      "0.73"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 15,
+    "column": "r pooled [95 %]",
+    "text": "+0.02 [−0.08, +0.08]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=C, budget_nights=0].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=humidity, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=humidity, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "+0.02",
+      "−0.08",
+      "+0.08"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 15,
+    "column": "r within night [95 %]",
+    "text": "−0.04 [−0.13, +0.01]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=C, budget_nights=0].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=humidity, condition=C, budget_nights=0].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=humidity, condition=C, budget_nights=0].ci_upper"
+    ],
+    "values": [
+      "−0.04",
+      "−0.13",
+      "+0.01"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 15,
+    "column": "r within night × mat",
+    "text": "−0.04",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=C, budget_nights=0].r_within_mat"
+    ],
+    "values": [
+      "−0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 15,
+    "column": "R_oracle",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=C, budget_nights=0].oracle_affine"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 16,
+    "column": "R",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=E, budget_nights=14].R"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 16,
+    "column": "Q",
+    "text": "0.14",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=E, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.14"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 16,
+    "column": "r pooled [95 %]",
+    "text": "+0.09 [+0.03, +0.16]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=E, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=humidity, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=humidity, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.09",
+      "+0.03",
+      "+0.16"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 16,
+    "column": "r within night [95 %]",
+    "text": "+0.04 [−0.00, +0.12]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=E, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=humidity, condition=E, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=humidity, condition=E, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.04",
+      "−0.00",
+      "+0.12"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 16,
+    "column": "r within night × mat",
+    "text": "+0.04",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=E, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.04"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 16,
+    "column": "R_oracle",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=E, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 17,
+    "column": "R",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=S, budget_nights=14].R"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 17,
+    "column": "Q",
+    "text": "0.10",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=S, budget_nights=14].Q"
+    ],
+    "values": [
+      "0.10"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 17,
+    "column": "r pooled [95 %]",
+    "text": "+0.08 [+0.00, +0.15]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=S, budget_nights=14].r_pooled",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=humidity, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_pooled, subject_id=User07, target=humidity, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.08",
+      "+0.00",
+      "+0.15"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 17,
+    "column": "r within night [95 %]",
+    "text": "+0.06 [−0.00, +0.12]",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=S, budget_nights=14].r_within",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=humidity, condition=S, budget_nights=14].ci_lower",
+      "p8_dynamic_bootstrap[seed=0, statistic=r_within, subject_id=User07, target=humidity, condition=S, budget_nights=14].ci_upper"
+    ],
+    "values": [
+      "+0.06",
+      "−0.00",
+      "+0.12"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 17,
+    "column": "r within night × mat",
+    "text": "+0.06",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=S, budget_nights=14].r_within_mat"
+    ],
+    "values": [
+      "+0.06"
+    ]
+  },
+  {
+    "table": 8,
+    "row": 17,
+    "column": "R_oracle",
+    "text": "1.00",
+    "sources": [
+      "p8_dynamic_summary[subject_id=User07, target=humidity, condition=S, budget_nights=14].oracle_affine"
+    ],
+    "values": [
+      "1.00"
+    ]
   }
 ]

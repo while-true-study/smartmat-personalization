@@ -1,4 +1,4 @@
-"""Export manuscript Tables 1-7 and the supplementary tables from the frozen paper tables (P8).
+"""Export manuscript Tables 1-8 and the supplementary tables from the frozen paper tables (P8).
 
 Writes paper/manuscript/generated/tables/ (Markdown, CSV, cell provenance) and
 paper/manuscript/generated/supplementary/ (CSV copies without calendar dates, Table S19, index).

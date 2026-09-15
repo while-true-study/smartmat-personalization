@@ -59,7 +59,7 @@ def test_docx_maps_styles_drops_private_metadata_and_is_deterministic(tmp_path):
                   "MDPI51figurecaption", "MDPI62backmatter", "MDPI81references"):
         assert f'w:val="{style}"' in doc, style
     assert doc.count('w:val="MDPI81references"') == 31
-    assert doc.count("<w:tbl>") == 8                       # Tables 1-7 and the abbreviation table
+    assert doc.count("<w:tbl>") == 9                       # Tables 1-8 and the abbreviation table
     assert sum(n.startswith("word/media/p8_figure") for n in names) == 5
     text = D.docx_text(out1)
     assert text.startswith("REVIEW DRAFT")

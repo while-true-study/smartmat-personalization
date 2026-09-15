@@ -78,9 +78,12 @@ The data provider's permission to use and release the data (D-002) is none of th
   Computing and Artificial Intelligence; selected papers from ICFICE 2026; deadline 30 June 2027)? yes / no
 - [ ] Copyright holder of the ICFICE 2026 paper, and whether its reuse terms need a permission (no conference material
   is reused): ______
-- [ ] Title: the new working title "Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation
-  under Unseen-Domain Shift" (D-058) / restore the previous title (D-054) / other: ______
+- [ ] Scientific identity: a strict evaluation / failure-analysis study against simple level baselines (D-060),
+  instead of a neural-personalization study: approve / comments ______
+- [ ] Title: the working title "Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple
+  Level Baselines" (D-060) / the alternative in `docs/P8_TITLE_CANDIDATES.md` §7 / an earlier title (D-058, D-054) /
+  other: ______
 - [ ] Keep the eight keywords and the revised Featured Application? yes / changes: ______
 - [ ] Scientific approval of the abstract, tables, figures and limitations, including the post-hoc validation
-  (Tables 6–7, Figure 5, the A/B/D columns of Table 4; D-057) and the revised interpretation (D-058). No result may
-  change at this step: yes / comments ______
+  (Tables 6–7, Figure 5, the A/B/D columns of Table 4; D-057), the dynamic-signal diagnostic (Table 8; D-059) and
+  the revised interpretation (D-058, D-060). No result may change at this step: yes / comments ______

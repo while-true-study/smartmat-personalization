@@ -2,7 +2,7 @@
 
 
 
-# Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation under Unseen-Domain Shift
+# Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines
 
 **Authors:** [AUTHOR NAMES AND ORDER — CONFIRM]
 
@@ -18,30 +18,28 @@ the 18th International Conference on Future Information & Communication Engineer
 
 **Featured Application:** This study provides a deployment-oriented evaluation framework for smart-mat temperature
 and humidity estimation. In three held-out cases, limited chronological user adaptation mainly corrected
-unseen-domain prediction offsets, which a personalized constant corrected as well, and temporally unrepresentative
-adaptation data produced negative transfer; personalized constant baselines are therefore needed to judge such
-systems.
+unseen-domain prediction offsets, which a personalized constant corrected as well, and the neural predictions showed
+no consistent within-night co-variation with the measured microclimate; simple level baselines are therefore needed to
+judge such systems.
 
 ## Abstract
 
 Smart-mat pressure could yield bed-microclimate temperature and humidity estimates without extra sensors, but
-deployed models face unseen users, periods and mats. We evaluated temporal convolutional networks on
-40-s pressure windows from three subjects (four mat streams) under strict leave-one-subject-out evaluation with
-nested model selection; each held-out fold was an unseen domain of subject, period and mat. Each held-out model was
-fine-tuned on the subject's earliest 1–14 nights and tested on a fixed later span. Strict-evaluation errors were dominated by level offsets;
-for temperature, the network did not outperform a training-mean predictor. Fine-tuning moved one subject's temperature bias from
+deployed models face unseen users, periods and mats. We evaluated temporal convolutional networks on 40-s pressure
+windows from three subjects (four mat streams) under strict leave-one-subject-out evaluation; each held-out fold was an
+unseen domain of subject, period and mat. Models were fine-tuned on each subject's earliest 1–14 nights and tested
+on a fixed later span. Under strict evaluation, errors were dominated by level offsets, and for temperature the network did not outperform a
+training-mean predictor. Fine-tuning moved one subject's temperature bias from
 −5.06 to
 −1.21 °C after 14 nights,
 whereas another subject's seed-mean temperature error exceeded its base model's at every budget. Post-hoc comparators
-showed that the gains were mainly level corrections: the mean target of the adaptation nights, which uses no pressure
-input, was not worse than full fine-tuning in 12 of 24
-subject–target–budget cells, including the largest correction. After 14 nights, fine-tuned models' error standard deviation
-was
-0.96–1.32
-times the target's, and scratch-trained networks were not worse than pretrained ones in
-5 of six cells. The pressure-based models
-showed no demonstrable within-subject tracking of the microclimate. With three subjects, these are case-level
-findings, not population estimates.
+showed mainly level corrections: the mean target of the adaptation nights, which uses no pressure input, was not worse
+than full fine-tuning in 12 of 24 subject–target–budget cells.
+Night-centred correlations showed no consistent within-night co-variation between predictions and targets, and an
+affine recalibration fitted retrospectively on the test labels could not have lowered the residual standard deviation
+below 0.93 times the target's. Under the tested representation, architecture and schedules,
+pressure-based neural estimation showed no consistent advantage over simple level baselines. With three subjects, these
+findings are case-level.
 
 **Keywords:** smart bedding; pressure sensing; temperature and humidity estimation; temporal convolutional network;
 cross-subject generalization; leave-one-subject-out evaluation; negative transfer; baseline comparison
@@ -88,9 +86,10 @@ over time [14], adaptation can move the model towards a level that no longer hol
 hurt instead of help [15,16], and adaptation may correct an offset or introduce a new
 one.
 
-This study asks how far limited chronological personalization mitigates the unseen-domain failure of smart-mat
-temperature and humidity estimation, and how its effect depends on the temporal representativeness of the adaptation
-data. It addresses three research questions:
+This study evaluates, under strict subject-wise and chronological evaluation, whether pressure-based neural
+estimation of the smart-mat microclimate and its limited chronological personalization outperform simple level
+baselines for an unseen domain, and how the effect of personalization depends on the temporal representativeness of the
+adaptation data. It addresses three research questions:
 - **RQ1:** How accurate and how systematic is the estimation for an unseen subject under strict
   leave-one-subject-out evaluation?
 - **RQ2:** How far does fine-tuning on a limited number of the new subject's earliest nights reduce this error, and
@@ -101,7 +100,10 @@ data. It addresses three research questions:
 A gain in RQ2 could come from correcting the output level alone, which needs no pressure information. After the
 primary results were known, we therefore compared the adapted models, post hoc and with a design fixed before the
 comparison was computed, with simpler predictors: constant predictors, the base model shifted by an offset estimated
-on the adaptation nights, and a network trained from scratch on those nights (Section 3.5.5).
+on the adaptation nights, and a network trained from scratch on those nights (Section 3.5.5). A residual-variation
+ratio near one does not by itself exclude co-variation hidden by an offset or scale mismatch, so a final second-order
+post-hoc diagnostic measured the prediction scale and the pooled and within-night correlations between predictions and
+targets (Section 3.5.6).
 
 The contributions are:
 1. A leakage-controlled strict leave-one-subject-out evaluation of smart-mat temperature and humidity estimation
@@ -113,7 +115,8 @@ The contributions are:
    personalized constant had an error no higher than full fine-tuning in
    12 of 24 cells, the pressure-based models showed no
    demonstrable within-subject tracking of the targets, and cross-subject pretraining added little over training on
-   the adaptation nights alone.
+   the adaptation nights alone. A final diagnostic found no consistent within-night co-variation between the neural
+   predictions and the targets and little retrospective linear-calibration headroom.
 4. A night-level robustness analysis: a paired cluster bootstrap, seed and start-span sensitivity, and post-hoc
    temporal level-mismatch and device-residual diagnostics.
 5. A secondary comparison of six pressure feature families under the same protocol. It shows target-dependent,
@@ -132,7 +135,11 @@ fine-tuning. The present article:
   personalization, a negative-transfer analysis, night-level robustness analyses and a de-identified reproduction
   package.
 No text, table or figure of the conference paper is reused. Its results are not compared numerically with those
-reported here, because the data policies differ.
+reported here, because the data policies differ. The conference study found relative improvements from movement- and
+contact-aware pressure representations under its original evaluation setting. The present study shows that relative
+improvements among neural representations do not, by themselves, establish superiority over simple level baselines or
+unseen-domain validity under subject-wise and chronological evaluation (Section 5.4). It does not show that the
+conference results were wrong, and it does not attribute them to leakage or to level artefacts.
 
 Section 2 reviews related work. Section 3 describes the data, the protocol and the analysis. Section 4 reports the
 results, Section 5 discusses them, Section 6 states the limitations, and Section 7 concludes.
@@ -459,6 +466,31 @@ appear and replace no primary result.
 - **Leakage control:** every calibration budget and every control run passed the automated gate of Section 3.5.4, and
   explicit checks confirmed that no offset or training window lies in the buffer night or the test span.
 
+#### 3.5.6. Dynamic-Signal Diagnostic (Second-Order Post Hoc)
+
+A residual-variation ratio near one does not show that predictions and targets are uncorrelated. With
+Q = prediction SD / target SD and the pooled Pearson correlation r, R² = 1 + Q² − 2·r·Q, so a positive r can coexist
+with R ≈ 1 when the prediction scale is mismatched. After the results of Section 3.5.5 were known, a final diagnostic was
+therefore added under a further protocol addendum. Its plan, thresholds and interpretation rules were fixed before any
+of its metrics was computed. It uses the existing primary-span predictions of the base model, the offset-calibrated base
+model, full fine-tuning and the scratch control; nothing was retrained.
+- **Metrics:**
+  - Q and the pooled correlation r;
+  - the within-night correlation, the primary tracking diagnostic: predictions and targets are centred on each
+    night's own mean, and the centred values of all nights are correlated;
+  - a variant centred within night and mat, which removes the level difference between User02's two mats inside a
+    night;
+  - R_oracle = √(1 − r²), the smallest R that an affine recalibration fitted on the same test labels could reach. It
+    is a retrospective oracle, not a result: such a fit would be leakage.
+  - Constant predictors have Q = 0, R = 1 and undefined correlations.
+- **Uncertainty:** the night-level bootstrap of Section 3.6 on the same resampled nights, with model seed 0 primary.
+- **Classification:** a correlation counts as positive if its seed-0 interval lies above zero and its seed-mean value
+  is at least 0.10, a pragmatic magnitude floor, not a significance threshold. For User02, within-night co-variation
+  also requires a positive night × mat-centred correlation.
+- **Trigger:** a leakage-free affine calibration, fitted on the adaptation windows only, was pre-specified as the only
+  possible additional comparator. It was to be run only if R_oracle of the base model was at most 0.90 for at least
+  two subjects for the same target.
+
 ### 3.6. Metrics and Statistical Analysis
 
 - **Primary endpoints:** MAE and root-mean-square error (RMSE) for temperature (°C) and humidity (%RH), computed
@@ -487,7 +519,8 @@ appear and replace no primary result.
   - User02 strata by mat, quality phase and heater context. Heater context is the most recent heater on/off code on
     the same mat within 60 min before the target time, used for stratification only;
   - the comparators, the initialization control and the residual-variation ratio of Section 3.5.5, which follow a
-    later protocol addendum.
+    later protocol addendum;
+  - the dynamic-signal diagnostic of Section 3.5.6, which follows a second addendum written after those results.
 
 ### 3.7. Reproducibility
 
@@ -1082,6 +1115,79 @@ slightly to the right of b = 14 for legibility. Markers: seed means; bars: seed 
     [−0.47,
     −0.11]).
 
+### 4.8. Dynamic-Signal Diagnostic (Second-Order Post Hoc)
+
+Table 8 reports the diagnostic of Section 3.5.6 for the base model, and for full fine-tuning and the scratch control at
+b = 14. All budgets and seeds are in Tables S27–S31.
+
+**Table 8.** Dynamic-signal diagnostic (second-order post hoc) on the primary test span: R = error SD / target SD,
+Q = prediction SD / target SD, the pooled correlation, the within-night correlation (night-centred values) and the
+night × mat-centred variant, and the retrospective oracle ratio R_oracle = √(1 − r²). Values: means over three model
+seeds, which are the basis of the case classification; intervals: model seed 0, 95 % night-cluster bootstrap with
+2,000 resamples. R_oracle refers to an affine map fitted on the test labels and is therefore a retrospective
+diagnostic only.
+
+| Target | Subject | Model | R | Q | r pooled [95 %] | r within night [95 %] | r within night × mat | R_oracle |
+|---|---|---|---|---|---|---|---|---|
+| Temperature (°C) | User01 | Base model (b = 0) | 1.83 | 1.59 | +0.06 [+0.01, +0.10] | +0.02 [−0.02, +0.04] | +0.02 | 1.00 |
+| Temperature (°C) | User01 | Full fine-tuning (b = 14) | 1.00 | 0.26 | +0.14 [+0.11, +0.22] | −0.00 [−0.03, +0.01] | −0.00 | 0.99 |
+| Temperature (°C) | User01 | Scratch control (b = 14) | 0.99 | 0.15 | +0.14 [+0.07, +0.16] | +0.01 [−0.02, +0.03] | +0.01 | 0.99 |
+| Temperature (°C) | User02 | Base model (b = 0) | 1.09 | 0.24 | −0.26 [−0.33, −0.19] | −0.28 [−0.36, −0.21] | −0.05 | 0.97 |
+| Temperature (°C) | User02 | Full fine-tuning (b = 14) | 0.96 | 0.30 | +0.28 [+0.27, +0.40] | +0.31 [+0.30, +0.43] | +0.09 | 0.96 |
+| Temperature (°C) | User02 | Scratch control (b = 14) | 0.94 | 0.26 | +0.36 [+0.32, +0.44] | +0.40 [+0.36, +0.47] | +0.12 | 0.93 |
+| Temperature (°C) | User07 | Base model (b = 0) | 1.14 | 0.69 | +0.13 [+0.05, +0.18] | −0.02 [−0.05, +0.02] | −0.02 | 0.99 |
+| Temperature (°C) | User07 | Full fine-tuning (b = 14) | 1.02 | 0.13 | −0.11 [−0.18, −0.08] | +0.04 [−0.01, +0.07] | +0.04 | 0.99 |
+| Temperature (°C) | User07 | Scratch control (b = 14) | 1.02 | 0.10 | −0.14 [−0.20, −0.07] | +0.04 [−0.02, +0.08] | +0.04 | 0.99 |
+| Humidity (%RH) | User01 | Base model (b = 0) | 1.37 | 0.94 | +0.01 [−0.04, +0.04] | −0.02 [−0.03, +0.02] | −0.02 | 1.00 |
+| Humidity (%RH) | User01 | Full fine-tuning (b = 14) | 1.32 | 0.72 | −0.15 [−0.24, −0.08] | −0.04 [−0.07, −0.02] | −0.04 | 0.99 |
+| Humidity (%RH) | User01 | Scratch control (b = 14) | 1.30 | 0.73 | −0.11 [−0.16, −0.05] | −0.07 [−0.10, −0.04] | −0.07 | 0.99 |
+| Humidity (%RH) | User02 | Base model (b = 0) | 1.09 | 0.26 | −0.26 [−0.33, −0.19] | −0.37 [−0.45, −0.30] | −0.11 | 0.97 |
+| Humidity (%RH) | User02 | Full fine-tuning (b = 14) | 0.99 | 0.24 | +0.17 [+0.14, +0.29] | +0.27 [+0.25, +0.39] | +0.01 | 0.99 |
+| Humidity (%RH) | User02 | Scratch control (b = 14) | 0.97 | 0.25 | +0.24 [+0.17, +0.31] | +0.37 [+0.31, +0.43] | +0.02 | 0.97 |
+| Humidity (%RH) | User07 | Base model (b = 0) | 1.23 | 0.73 | +0.02 [−0.08, +0.08] | −0.04 [−0.13, +0.01] | −0.04 | 1.00 |
+| Humidity (%RH) | User07 | Full fine-tuning (b = 14) | 1.00 | 0.14 | +0.09 [+0.03, +0.16] | +0.04 [−0.00, +0.12] | +0.04 | 1.00 |
+| Humidity (%RH) | User07 | Scratch control (b = 14) | 1.00 | 0.10 | +0.08 [+0.00, +0.15] | +0.06 [−0.00, +0.12] | +0.06 | 1.00 |
+
+Notes:
+
+- Second-order post-hoc diagnostic (Section 3.5.6) on the primary span (nights ≥ 16). R, Q, R_oracle and the correlations are means over model seeds 0, 1 and 2, the values the case classification uses; intervals: model seed 0, 2,000 night-cluster bootstrap resamples.
+- R = error SD / target SD and Q = prediction SD / target SD (population SDs), with R² = 1 + Q² − 2·r·Q for the pooled correlation r. r within night: correlation of night-centred predictions and targets (primary tracking diagnostic); r within night × mat: centred within night and mat (differs only for User02, whose two mats share each night).
+- R_oracle = √(1 − r²) for the pooled r: the smallest R that an affine recalibration fitted on the same test labels could reach. It is a retrospective oracle, not a result: fitting on test labels would be leakage.
+- The base model plus the adaptation offset (D in Table 4) has exactly the base model's values; the constant predictors A and B have R = 1, Q = 0 and undefined correlations. All budgets and seeds: Tables S27–S31.
+
+- **No consistent within-night co-variation.** Under the pre-registered rule, the within-night correlation was
+  positive in:
+  - 0 of six subject–target cells for the base model;
+  - 0 of 24 cells for full fine-tuning (all budgets);
+  - 1 of six for the scratch control. This was User02
+    temperature, with a night × mat-centred correlation of +0.12.
+- **Base model: variation without co-variation.**
+  - The base model's predictions varied: for User01 temperature they varied more than the target
+    (Q = 1.59).
+  - Their within-night correlations were near zero for User01 and User07.
+  - For User02, the pooled and night-centred correlations were negative, for example
+    −0.26 (pooled) for temperature. Centring within night and
+    mat left −0.05: most of the association came from the two
+    mats' level difference.
+- **After adaptation: level alignment between nights or mats.** At b = 14:
+  - for User01 temperature, the pooled correlation of full fine-tuning was
+    +0.14, and its within-night correlation
+    −0.00;
+  - for User02 temperature, the night-centred correlation +0.31 fell to
+    +0.09 when centred within night and mat.
+  These are level alignments between nights or between mats, not within-night tracking. For User07 temperature and
+  User01 humidity, the pooled correlations were negative.
+- **Little linear headroom.**
+  - R_oracle was at least 0.93 in every neural cell (Table S30). Even an affine map fitted on the
+    test labels could not have brought the residual standard deviation far below the target standard deviation.
+  - The pre-specified trigger for an adaptation-only affine calibration fired for
+    0 of two targets, so that comparator was not run.
+- **Cases (Table S31):**
+  - the cells fell under the pre-registered cases of variation without linear co-variation, between-night association
+    only, misaligned association and little calibration headroom;
+  - the case of within-night co-variation held in 1 cell;
+  - linearly recoverable structure (R_oracle at most 0.90) held in 0.
+
 ## 5. Discussion
 
 ### 5.1. What Did Personalization Correct?
@@ -1093,14 +1199,22 @@ The post-hoc comparators (Section 4.7) change how the personalization results sh
   full fine-tuning in 12 of 24 cells, including the study's largest correction (User02 temperature).
 - **No demonstrable tracking.** The unadapted network's errors varied more than the targets themselves, and after
   fine-tuning the error spread was about that of a constant (Table 6).
-  - Where the adapted networks beat the constant, they did so through a different level on the later span.
-  - Whether that level difference reflects a relation between pressure and microclimate or an incidental
-    association cannot be decided with three subjects.
+  - A direct correlation diagnostic (Section 4.8) found no consistent within-night co-variation.
+  - Pooled associations after adaptation reflected level alignment between nights or between mats.
+  - Even a retrospective affine recalibration on the test labels would have left the residual variation close to the
+    target variation.
+  - Where the adapted networks beat the constant, they did so through a different level on the later span. Whether
+    that level difference reflects a relation between pressure and microclimate or an incidental association cannot
+    be decided with three subjects.
 - **Limited value of pretraining.** A randomly initialised network of the same architecture, trained on the
   adaptation nights with the same recipe, reached the error of the pretrained fine-tuning in most cells.
-- **Consequence.** In this cohort, the evidence supports chronological personalization as a level correction, which
-  simpler predictors achieve as well. It does not support pressure-based estimation of the within-subject
-  microclimate. This is the main negative result of the study.
+- **Consequence.** Under the tested 40-s RAW-pressure representation, TCN architecture and fixed training and
+  adaptation schedules, we found no consistent evidence of superiority over simple level baselines.
+  - In this cohort, the evidence supports chronological personalization as a level correction, which simpler
+    predictors achieve as well.
+  - It does not support within-subject microclimate tracking by this formulation.
+  This is the main negative result of the study. It is a result about the tested formulation, not a statement that
+  pressure cannot carry microclimate information.
 
 ### 5.2. Why Did the Same Recipe Help One Held-Out Domain and Hurt Another?
 
@@ -1117,8 +1231,11 @@ The results suggest one descriptive account, built from four observations:
     humidity once 14 nights were used.
   - When the early level was far from the later one, the model acquired a new offset: User07 temperature at every
     budget and User01 humidity at up to seven nights.
-- **Negative transfer without fine-tuning dynamics.** For User07 temperature, the offset-calibrated base model and
-  the adaptation-target mean were also worse than the unadapted predictors (Section 4.7).
+- **Failure of chronological level calibration, not only of fine-tuning.** For User07 temperature, the
+  offset-calibrated base model and the adaptation-target mean were also worse than the unadapted predictors
+  (Section 4.7). The early nights were not representative of the later period, and every predictor that adopted their
+  level failed there. Full fine-tuning's negative transfer (a higher error than its own base model on the same nights)
+  is one instance of this.
   - The loss does not arise from the fine-tuning procedure alone: the early nights' level was itself misleading for
     the later period.
   - Fine-tuning added a further loss.
@@ -1139,7 +1256,7 @@ These parallels are interpretive and are not tested in this study. The associati
 observations do not show that temporal drift causes negative transfer. Three subjects, confounded periods and one
 adaptation recipe allow association only.
 
-### 5.3. What Pressure Can and Cannot Carry
+### 5.3. What the Tested Pressure Formulation Can and Cannot Carry
 
 - **What pressure records:** the body on the mat. Pressure sequences carry information about the person, their
   contact with the mat and their movement (Section 2.1), all of which relate to the microclimate through body heat
@@ -1151,10 +1268,18 @@ adaptation recipe allow association only.
   - the seasonal climate.
   These factors were unobserved here, and the heater state was excluded from the inputs by design (Section 3.1).
 - **Consistency with the results:** within a subject, the pressure-based models did not follow the target variation
-  (Table 6).
-- **Consequence:** in this cohort, a pressure-only input did not suffice for within-subject microclimate estimation.
-  Whether contextual measurements that do not leak the target would close the gap was not tested. They would also
-  reduce the sensor savings that motivate the approach.
+  (Table 6), and their within-night correlations with the targets were not consistently positive (Table 8).
+- **A plausible limitation (not a demonstrated mechanism): temporal-scale mismatch.**
+  - The 40-s pressure window captures short-term contact and movement.
+  - The mat microclimate may also depend on longer occupancy history, accumulated thermal conditions, heater and
+    controller state, ventilation and other contextual variables unavailable to the model.
+  - This study does not test the explanation.
+- **Consequence:** in this cohort, a pressure-only input under the tested formulation did not suffice for
+  within-subject microclimate estimation.
+  - Other formulations were not tested: longer occupancy or history windows, state-space or long-context temporal
+    models, contextual variables that are not derived from the target, and explicitly designed calibration
+    mechanisms.
+  - Contextual measurements would also reduce the sensor savings that motivate the approach.
 
 ### 5.4. Feature Engineering and Personalization Address Different Problems
 
@@ -1167,6 +1292,14 @@ adaptation recipe allow association only.
   adaptation labels.
 - **Consequence:** in this setting, a better representation of pressure dynamics is not a substitute for
   information about the target user's level, and that level information did not require the pressure signal.
+- **Relation to the conference study:**
+  - The previous conference study found relative improvements from movement- and contact-aware pressure
+    representations under its original evaluation setting.
+  - Table 3 shows the same kind of relative differences between representations under the strict protocol, but no
+    representation reached the training-mean predictor for temperature.
+  - Relative improvements among neural representations therefore do not, by themselves, establish superiority over
+    simple level baselines or unseen-domain validity under subject-wise and chronological evaluation.
+  - The present data do not show that the conference results were wrong or caused by leakage.
 
 ### 5.5. Personalization Is Not Intrinsically Beneficial
 
@@ -1214,7 +1347,8 @@ contextual factor. We do not attribute the residual to a device defect, to the h
 ### 5.8. Practical Implications (Not Tested)
 
 - **Baselines:** an adaptive smart-mat estimator should be compared with a personalized constant computed from the
-  same adaptation labels. In this cohort, that constant was a strong competitor.
+  same adaptation labels, and its within-night co-variation with the target should be reported. In this cohort, that
+  constant was a strong competitor.
 - **Commissioning:** in the commissioning scenario of Section 1, the reference labels of the first nights already
   yield the personalized constant. A pressure model adds value only if it improves on that constant in the later
   period, which was not shown here.
@@ -1240,8 +1374,14 @@ None of these safeguards was evaluated here; they are future work.
     not an upper bound on what a within-subject model could learn.
   - R is a descriptive ratio of population standard deviations over spans with drifting levels. R ≈ 1 does not
     exclude a small tracking component masked by noise.
-- **Inputs:** only pressure was used. Room climate, bedding and the heater and controller state were unobserved; the
-  heater codes were excluded from the inputs under the leakage policy.
+  - The dynamic-signal diagnostic is second-order post hoc: it was added after the comparator results were known,
+    although its rules were fixed before it was computed. Its correlations and the oracle ratio are linear
+    diagnostics. They do not exclude a nonlinear relation or one at a longer time scale than the 40-s window, and
+    night-centring removes between-night trends by design.
+- **Inputs and scope:** only pressure was used, in one representation (40-s RAW windows), one model family (TCN)
+  and fixed training and adaptation schedules. The negative result is scoped to this formulation. Room climate,
+  bedding and the heater and controller state were unobserved; the heater codes were excluded from the inputs under
+  the leakage policy.
 - **Adaptation design:**
   - One frozen full fine-tuning recipe was evaluated (learning rate, epochs and scope fixed in advance).
   - Adaptation always used the earliest recorded nights, as a deployment would, so its effect is tied to how
@@ -1272,11 +1412,19 @@ None of these safeguards was evaluated here; they are future work.
 - **What the gains were:** post-hoc comparators showed that the gains were mainly level corrections.
   - The mean target of the adaptation nights, which needs no pressure input, was not worse than full fine-tuning in
     12 of 24 cells.
-  - No pressure-based model showed demonstrable within-subject tracking of temperature or humidity.
+  - No pressure-based model showed demonstrable within-subject tracking of temperature or humidity, and the neural
+    predictions showed no consistent within-night co-variation with the targets. Where pooled associations appeared,
+    they were level alignments between nights or mats.
   - Cross-subject pretraining added little over training on the adaptation nights alone.
-- **Consequence:** in these three cases, smart-mat pressure did not support within-subject microclimate estimation
-  beyond a personalized level. Before such estimation is deployed, future work should include personalized constant
-  baselines, contextual inputs that do not leak the target, and larger cohorts.
+- **Consequence:** under the tested 40-s RAW-pressure representation, TCN architecture and fixed training and
+  adaptation schedules, pressure-dependent neural prediction did not show a consistent advantage over simple level
+  baselines in these three cases. Future work should evaluate other formulations against the same baselines:
+  - longer history windows;
+  - long-context temporal models;
+  - contextual inputs that do not leak the target;
+  - explicitly designed calibration;
+  - larger cohorts.
+  This should happen before pressure-based microclimate estimation is deployed.
 
 ## Supplementary Materials
 
@@ -1297,7 +1445,9 @@ S17: Start-span sensitivity, post hoc; Table S18: User02 device, quality-phase a
 Reproduction record; Table S20: Post-hoc calibration comparators A–E; Table S21: Post-hoc calibration comparators
 per seed; Table S22: User02 per-mat calibration diagnostic, post hoc; Table S23: Residual variation, post hoc;
 Table S24: Initialization control, post hoc; Table S25: Night-level bootstrap of the comparator differences,
-post hoc; Table S26: Pre-registered interpretation map, post hoc.
+post hoc; Table S26: Pre-registered interpretation map, post hoc; Table S27: Dynamic-signal diagnostic, second-order
+post hoc; Table S28: Dynamic-signal diagnostic per seed; Table S29: Night-level bootstrap of the correlations; Table
+S30: Retrospective oracle affine ratio and calibration trigger; Table S31: Dynamic-signal cases J1–J8.
 
 ## Author Contributions
 

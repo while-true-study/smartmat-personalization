@@ -1,7 +1,9 @@
 # P8 — Final blockers before submission, the P8 PR and `v1.0-paper`
 
-> **State after the post-hoc validation pass** (branch `paper/p8-manuscript`). The post-hoc validation analyses
-> (D-057) were run as pre-registered, and the manuscript interpretation and working title were revised (D-058). The
+> **State after the final dynamic-signal diagnostic** (branch `paper/p8-manuscript`). The post-hoc validation
+> analyses (D-057) and the final dynamic-signal diagnostic (D-059) ran as pre-registered. The manuscript was
+> reframed as a strict evaluation against simple level baselines, with a new working title (D-058, D-060).
+> Scientific experimentation for this manuscript has stopped (D-059 stop rule). The
 > conference bibliography is resolved (D-056); the PI handoff is `docs/P8_PI_REVIEW_REQUEST_KO.md`.
 > - The manuscript is formatting-complete and in the Applied Sciences back-matter order. A Word file can be built
 >   from the local template (`scripts/build_submission_docx.py`; not committed).
@@ -14,7 +16,7 @@
 ## A. Scientific blockers
 
 **None open in the analyses.** All results and claims are fixed and validated. PI scientific approval is still
-pending, and it now includes the revised interpretation (D-058). The post-hoc comparators show that the personalization
+pending, and it now includes the revised interpretation and scientific identity (D-058, D-060). The post-hoc comparators show that the personalization
 gains were mainly level corrections and that the pressure models showed no demonstrable within-subject tracking; the
 manuscript is framed as an evaluation with a substantial negative result (`docs/P8_POSTHOC_VALIDATION_REPORT.md` §6).
 See `docs/P8_PI_APPROVAL_CHECKLIST.md`, "Scientific content". No result may change during that review.
@@ -32,7 +34,7 @@ See `docs/P8_PI_APPROVAL_CHECKLIST.md`, "Scientific content". No result may chan
 | B7 | GenAI disclosure approval | drafted; PI approval pending | §3.8 and Acknowledgments | OPEN-28; D-053 (Proposed) |
 | B8 | Conference bibliography | **RESOLVED** (D-056): title, authors, year, Vol. 17, No. 1, pp. 27–30, e-ISSN 2765-3811, print ISSN 2384-3004, KIICE, 7–10 July 2026, Sapporo. **Open, not blocking:** official confirmation that no DOI exists; a paper-specific URL. Neither is printed | `unconfirmed` field in `references.bib` | OPEN-27 |
 | B9 | Conference copyright holder and reuse-right status | BLOCKED. **A submission-compliance item** (Applied Sciences condition 3; cover letter), **not a manuscript blocker**: no conference text, table or figure is reused. Needed before submission | `[COPYRIGHT HOLDER — CONFIRM]` in the cover letter and disclosure draft | OPEN-27 |
-| B10 | Final title, keywords, Featured Application | working title changed to "Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation under Unseen-Domain Shift" (D-058; the D-054 title may be restored); eight keywords; Featured Application revised; PI confirmation required | — | D-054, D-058 |
+| B10 | Scientific identity, final title, keywords, Featured Application | identity reframed as a strict evaluation against simple level baselines; working title "Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines" (D-060; earlier titles recorded); eight keywords; Featured Application revised; PI approval required | — | D-054, D-058, D-060 |
 | B11 | Every author's approval of the submission (mandatory cover-letter statement) | BLOCKED | `[CONFIRM: every author has approved]` | — |
 | B12 | Target Special Issue: Applied Sciences "Future Information & Communication Engineering 2026" (section Computing and Artificial Intelligence; Guest Editors Yun Seop Yu, Dae-hwan Kim, Daesung Lee; deadline 30 June 2027; selected papers from ICFICE 2026) | RECOMMENDED / PI CONFIRMATION REQUIRED | `[TARGET SPECIAL ISSUE — PI CONFIRMATION REQUIRED]` in the cover letter | D-056 |
 

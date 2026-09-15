@@ -1,4 +1,4 @@
-"""Manuscript Tables 1-7 and the supplementary table package, built only from frozen cells (P8).
+"""Manuscript Tables 1-8 and the supplementary table package, built only from frozen cells (P8).
 
 Rules (docs/P8_MANUSCRIPT_PLAN.md §7, docs/P8_TABLE_FIGURE_SELECTION.md):
 - Every printed number is a formatted frozen cell. Each table cell records the cells it was built from, so a
@@ -378,7 +378,49 @@ def table7() -> ManuscriptTable:
          "significance. All budgets: Table S25."])
 
 
-MAIN_TABLES = (table1, table2, table3, table4, table5, table6, table7)
+# --- Table 8: dynamic-signal diagnostic (second-order post hoc) -----------------------------------------------------
+
+DYN_MODELS = (("C", "0", "Base model (b = 0)"), ("E", "14", "Full fine-tuning (b = 14)"),
+              ("S", "14", "Scratch control (b = 14)"))
+
+
+def _r_ci(subject: str, target: str, cond: str, b: str, stat: str) -> Cell:
+    f = dict(subject_id=subject, target=target, condition=cond, budget_nights=b)
+    return join("{} [{}, {}]", val("p8_dynamic_summary", stat, "+.2f", **f),
+                val("p8_dynamic_bootstrap", "ci_lower", "+.2f", seed=0, statistic=stat, **f),
+                val("p8_dynamic_bootstrap", "ci_upper", "+.2f", seed=0, statistic=stat, **f))
+
+
+def table8() -> ManuscriptTable:
+    body = []
+    for t in TARGETS:
+        for s in SUBJECTS:
+            for cond, b, label in DYN_MODELS:
+                f = dict(subject_id=s, target=t, condition=cond, budget_nights=b)
+                body.append([txt(TARGET_LABEL[t]), txt(s), txt(label),
+                             val("p8_dynamic_summary", "R", ".2f", **f), val("p8_dynamic_summary", "Q", ".2f", **f),
+                             _r_ci(s, t, cond, b, "r_pooled"), _r_ci(s, t, cond, b, "r_within"),
+                             val("p8_dynamic_summary", "r_within_mat", "+.2f", **f),
+                             val("p8_dynamic_summary", "oracle_affine", ".2f", **f)])
+    return ManuscriptTable(
+        8, "table8_dynamic_signal",
+        ["Target", "Subject", "Model", "R", "Q", "r pooled [95 %]", "r within night [95 %]", "r within night × mat",
+         "R_oracle"],
+        body,
+        ["Second-order post-hoc diagnostic (Section 3.5.6) on the primary span (nights ≥ 16). R, Q, R_oracle and the "
+         "correlations are means over model seeds 0, 1 and 2, the values the case classification uses; intervals: model "
+         "seed 0, 2,000 night-cluster bootstrap resamples.",
+         "R = error SD / target SD and Q = prediction SD / target SD (population SDs), with R² = 1 + Q² − 2·r·Q for "
+         "the pooled correlation r. r within night: correlation of night-centred predictions and targets (primary "
+         "tracking diagnostic); r within night × mat: centred within night and mat (differs only for User02, whose two "
+         "mats share each night).",
+         "R_oracle = √(1 − r²) for the pooled r: the smallest R that an affine recalibration fitted on the same test "
+         "labels could reach. It is a retrospective oracle, not a result: fitting on test labels would be leakage.",
+         "The base model plus the adaptation offset (D in Table 4) has exactly the base model's values; the constant "
+         "predictors A and B have R = 1, Q = 0 and undefined correlations. All budgets and seeds: Tables S27–S31."])
+
+
+MAIN_TABLES = (table1, table2, table3, table4, table5, table6, table7, table8)
 
 
 # --- rendering ------------------------------------------------------------------------------------------------------
@@ -459,6 +501,15 @@ SUPPLEMENT: tuple[tuple[str, str, tuple[str, ...]], ...] = (
      ("p8_comparator_bootstrap",)),
     ("S26", "Pre-registered interpretation map: cases per subject, target and budget (post hoc)",
      ("p8_interpretation_cases",)),
+    ("S27", "Dynamic-signal diagnostic: R, Q, pooled and within-night correlations, oracle ratio (seed summary; "
+            "second-order post hoc)", ("p8_dynamic_summary",)),
+    ("S28", "Dynamic-signal diagnostic per seed (second-order post hoc)", ("p8_dynamic_by_seed",)),
+    ("S29", "Dynamic-signal diagnostic: night-cluster bootstrap of the correlations (second-order post hoc)",
+     ("p8_dynamic_bootstrap",)),
+    ("S30", "Retrospective oracle affine ratio and the affine-calibration trigger (second-order post hoc)",
+     ("p8_dynamic_oracle_affine", "p8_dynamic_trigger")),
+    ("S31", "Pre-registered dynamic-signal cases J1–J8 and headlines (second-order post hoc)",
+     ("p8_dynamic_cases", "p8_dynamic_headlines")),
 )
 REPRODUCTION_RECORD = "S19"
 FIGURE_DATA = ("p5_figure_data", "p6_figure_data")
@@ -564,7 +615,7 @@ def build_main() -> list[ManuscriptTable]:
 
 
 def export(out_dir: Path = GENERATED) -> dict[str, int]:
-    """Write Tables 1-7 and the supplementary package; files from an earlier export that are no longer produced are
+    """Write Tables 1-8 and the supplementary package; files from an earlier export that are no longer produced are
     removed, so the directories always equal the current build."""
     before = {p for sub in ("tables", "supplementary") if (out_dir / sub).is_dir()
               for p in (out_dir / sub).iterdir() if p.is_file()}
