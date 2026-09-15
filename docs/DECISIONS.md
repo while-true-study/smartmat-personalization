@@ -65,6 +65,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-26 | **Open (P8).** Ethics / IRB information for the manuscript. The provider confirmation of consent and release permission (D-002) is not an IRB approval; no institutional identifier may be invented. | PI | before submission | IRB / informed-consent statements | `paper/manuscript/manuscript.md` |
 | OPEN-27 | **Largely resolved by D-056:** citation metadata complete (title, authors, year, Vol. 17, No. 1, pp. 27–30, ISSN, KIICE, dates, venue). Still open: official confirmation that no DOI exists, a paper-specific URL (neither blocks the citation), and the copyright holder / reuse-right status (a submission-compliance item for the cover letter; it does not block the manuscript, which reuses no conference material). History: **Open (P8); a P8-PR blocker since D-055.** Scope verified in pass 2. Bibliographic details still open: the proceedings series is ISSN 2765-3811 (online), and ICFICE 2025 was Vol. 16, No. 1; the paper's own pages, DOI or URL and the copyright holder were not found in an official record. Original question: Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
 | OPEN-28 | **Open (P8); disclosure drafted by D-053 (Proposed; supersedes D-052).** Still needed: the PI's approval of the text. The ChatGPT use stated by the authors is included; its historical model versions were not logged and are not inferred. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
+| OPEN-29 | Confirm with the PI/provider that the setting problem behind the D-017 exclusion of `user06_auxiliary` does not affect the second-level timestamps of the seven TXT nights that D-061 admits as the timestamp source of verified User03 rows. P9 external results are conditional on it. | PI | open | P9 (external sensitivity only) | D-061; `docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md` §2 |
 
 ---
 
@@ -1851,3 +1852,61 @@ Consequence:
   are revised, and Supplementary Tables S27–S31 are added.
 - The PI review request opens with the identity change.
 - No frozen artifact, tag or protocol version changed.
+
+## D-061 — P9: User03 as a post-hoc external sensitivity subject (protocol v1.3 addendum); narrow amendment of D-017
+Date: 2026-09-16
+Status: Accepted (research lead). **Post hoc**; results are supplementary external-sensitivity results. OPEN-29 is
+open.
+Context:
+- **P8 merge:** P8 was merged into `main` as a PI-review manuscript candidate (PR #9, merge commit `ecb0af2`) at
+  the research lead's instruction, while the PI metadata and release blockers remained open. `v1.0-paper` was not
+  created.
+- **New phase:** the research lead authorized a new phase (P9) outside the D-059 stop rule for the current
+  manuscript analyses. It is an external sensitivity check on User03.
+- **Results already seen:** all P3–P8 results (v1.0, v1.1, v1.2).
+- **The User03 data:**
+  - User03's valid export (`user03_legacy`, D-021) has minute timestamps, which the v1.0 window rule cannot use.
+  - A complementary TXT export of the same seven nights has second-level timestamps. It is stored in the raw folder
+    `user06_auxiliary`.
+  - P0 (A1, D-013, D-017) showed that every User03 CSV row is contained, row for row, in those recordings.
+  - D-017 excluded that source as a whole after the provider reported a setting problem.
+- **The rules apply:** RESEARCH_PROTOCOL §6 counts a cohort or dataset change as a protocol change, and a change
+  made after results were seen must say so.
+Decision:
+- **Protocol v1.3** (`configs/experiments/v1.3/p9_user03_external_validation.yaml`,
+  `docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md`) is written before any User03 reconciliation, window, label or model
+  output. It reuses v1.0–v1.2 unchanged.
+- **Role of User03:** User03 is **not** added to the primary cohort. The primary cohort, splits, canonical_v1 and
+  every P3–P8 result are unchanged.
+  - Scope: RQ1-like external evaluation of models trained on User01, User02 and User07; no RQ2 personalization.
+  - User03's results are never pooled with the primary three-subject results.
+  - Wording: "additional external validation (post hoc)". Never "N = 4", a four-subject cohort, independent
+    replication or population generalization.
+- **Narrow amendment of D-017:** for this addendum only, a row of the seven paired TXT nights may be used as the
+  timestamp source (and, for night 7, as a second copy of P1), but only where its minute passes the deterministic
+  reconciliation against the valid User03 CSV:
+  - one file per source;
+  - equal row counts;
+  - identical compared sensor fields row by row;
+  - non-decreasing seconds;
+  - events equal up to punctuation.
+  - Everything else in `user06_auxiliary` stays excluded, and D-017's text is not changed.
+  - The results are conditional on OPEN-29.
+- **Derived dataset:** `data/external/p9_user03_v1/` is a separate external-validation artifact.
+  - It is processed with the canonical_v1 rules but is never part of canonical_v1 or the public release.
+  - Its values stay local, and only a manifest of hashes and counts is committed.
+- **Model rule, fixed before any User03 label is evaluated:**
+  - The frozen P3 folds selected different RAW-TCN configurations. All three are trained, each with its frozen
+    epoch count, on all labelled windows of User01, User02 and User07, seeds 0–2.
+  - Comparator: the training-mean predictor.
+  - User03 is used only for evaluation.
+- **Metrics and interpretation rules:** fixed in the plan. They reuse the v1.2 definitions and the P6 minimum of
+  10 nights for night-level intervals.
+Evidence: `docs/P0_A1_PROVENANCE_REPORT.md` §4; D-013, D-017, D-021; the plan and config above.
+Consequence:
+- New code in `src/data/p9_user03.py` (reconstruction and QA) and `src/evaluation/p9_external.py` (models and
+  metrics), with thin scripts.
+- Outputs go under `outputs/runs/p9_user03/` and `outputs/metrics/p9_user03/`, and paper tables are
+  `paper/tables/p9_user03_*.csv`.
+- No tag, no history rewrite, no change to a frozen artifact, no merge of P9.
+

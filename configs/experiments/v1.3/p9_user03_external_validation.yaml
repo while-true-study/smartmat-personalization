@@ -1,0 +1,93 @@
+# Protocol v1.3 — P9 post-hoc external sensitivity validation on User03 (D-061; docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md).
+# Written after the P3-P8 results were known and before any User03 reconciliation, window, label or model output was
+# computed. It changes nothing in v1.0-v1.2: canonical_v1, the split files, the frozen P3 selections and every P3-P8
+# result are reused unchanged and verified by hash. User03 is NOT added to the primary cohort; RQ1-like external
+# evaluation only; no RQ2 personalization. Results are post hoc, supplementary and never pooled with the primary
+# three-subject results.
+protocol_version: v1.3
+kind: post_hoc_external_sensitivity_validation
+decision: D-061
+status_of_results: post_hoc_external_sensitivity
+base_protocol:
+  version: v1.0
+  file: configs/experiments/v1.0/protocol.yaml
+  sha256: 96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84
+  p3_selection_file: configs/experiments/v1.0/p3_selected_configs.yaml
+results_seen_before_design: [p3_strict_loso, p4_feature_families, p5_personalization, p6_robustness,
+                             v1_1_posthoc_validation, v1_2_dynamic_signal_diagnostic]
+external_subject: User03
+primary_cohort_unchanged: [User01, User02, User07]
+source_subjects: [User01, User02, User07]
+targets: [temperature, humidity]
+seeds: [0, 1, 2]
+
+sources:
+  # night pairs: the valid User03 CSV export (user03_legacy, D-021) and the complementary second-resolution TXT export
+  # (raw folder user06_auxiliary; D-017 exclusion narrowly amended by D-061 for verified rows only)
+  csv_source_id: user03_legacy
+  txt_source_id: user06_auxiliary
+  pairs:
+    - {night: 1, csv: {file_id: rf_c72768b318, sha256: e752e8b384b01ff1c62dcc18a4c8ceca5bee3154694c4c10fcb272811c55c5bf}, txt: {file_id: rf_2944020ba0, sha256: 5ae65cc15d88104ff7415a9a50b7146f21fcd7eeb4467e2a0de9c07af345eebc}, txt_layout: dot_p2_p6}
+    - {night: 2, csv: {file_id: rf_472f51ed15, sha256: 9d774f21c13c4a89dec996ec0e4f3fee10f01af24c6ebc2b0d9981be89e07029}, txt: {file_id: rf_1fb716dd00, sha256: 58bb113ab41d0a52619d934fd4aa6304f3e21e8900446cfe935ff10db0d85473}, txt_layout: dot_p2_p6}
+    - {night: 3, csv: {file_id: rf_f035bd1571, sha256: e2946d5203303550d438bc35267523b37b57d4e3fcb303e319a450943d67922f}, txt: {file_id: rf_0b4ddadd99, sha256: 7cbbca907730fd4b0cb0c0f468b04d6cd2057bb7bc26da4ba1f6e36fe7ec8d35}, txt_layout: dot_p2_p6}
+    - {night: 4, csv: {file_id: rf_d2e74f5942, sha256: 69e77bf246e6de04ada19082e77e3dbc0e3da41dfa3ba1cbbaf0572cb7526c67}, txt: {file_id: rf_8c0064f0b6, sha256: 427e64008dfacf4af8209ca423e5febc8cd40cdbde2f482162b36f3e5ef8f5cc}, txt_layout: dot_p2_p6}
+    - {night: 5, csv: {file_id: rf_3cf412a98b, sha256: f9953d815e0ed5e36882cfd9353f8c8967b80c9ea4643fa6361bb7626fe57ab8}, txt: {file_id: rf_ab6b6cd91c, sha256: bf6ff33911c58885b180146be5792ecb43b4f26d0054308d00ffda197538bb0f}, txt_layout: dot_p2_p6}
+    - {night: 6, csv: {file_id: rf_40880f4fea, sha256: 8147f080ce59d4e749d3b02688d0cf21372c022d8680d41342576ef93d6c5653}, txt: {file_id: rf_7a1b82ea57, sha256: 6e8c763d03a1c3e8fcc2a5ce5de6d682317a31f13d1357e8cb3e3997a87b1669}, txt_layout: dot_p2_p6}
+    - {night: 7, csv: {file_id: rf_5cad1a3c7b, sha256: ed1fa26d51d8e276a689d6b4465aaf95e6c7f1fe0e35a22bae3ed2b7dcbafa8a}, txt: {file_id: rf_f49bb1007e, sha256: 95b1867d6dc541fd4c81921ac37eaf22c4bbabd3067e727062e95de47b4d8e40}, txt_layout: comma_p1_p6}
+  out_of_scope_txt_file_ids: [rf_7196d1ff4a, rf_5dbb07790f, rf_82b149b8f5, rf_0cd2920b21]   # no CSV counterpart
+  provider_annotated_error: {txt_file_id: rf_0b4ddadd99, time_of_day_from: "07:20:11", time_of_day_to: "07:20:51"}
+
+reconciliation:
+  unit: minute                     # rows are grouped by their minute; no row is matched across minutes
+  require_single_file_per_source: true
+  require_equal_row_counts: true
+  row_matching: file_order_within_minute
+  compared_fields:
+    dot_p2_p6: [P2, P3, P4, P5, P6, temperature, humidity]     # the dot-fused first value is audited, never compared
+    comma_p1_p6: [P1, P2, P3, P4, P5, P6, temperature, humidity]
+  txt_seconds_non_decreasing_within_minute: true
+  event_rule:
+    identical_after_whitespace_strip: include
+    punctuation_only_difference: include_flagged     # letters, digits and Hangul equal after removing the rest
+    other_text_difference: exclude_minute
+  reconstructed_row:
+    timestamp: txt_second_level      # never modified, interpolated or invented
+    P1: {dot_p2_p6: csv, comma_p1_p6: csv_equals_txt}
+    P2_P6_temperature_humidity: verified_common_values
+    event: csv_event_string          # provenance only; never a model input
+  forbidden: [timestamp_interpolation, pressure_imputation, invented_seconds, nearest_neighbour_join]
+  exclusion_categories: [csv_only, txt_only, ambiguous_source, count_mismatch, value_mismatch,
+                         txt_time_order_violation, event_text_mismatch, provider_annotated_error]
+
+processing:
+  canonical_rules: configs/canonical_v1.yaml    # D-014 dedup, D-024 sessions, D-025 target validity, D-018 pressure
+  subject_id: User03
+  device_id: unknown
+  dataset_role: external_validation
+  artifact_dir: data/external/p9_user03_v1      # git-ignored values; committed manifest has hashes and counts only
+  windows: protocol_v1_0_window_spec             # 40 s, 20 s stride, 8 x 5 s bins, gap > 5 s break, no invented bins
+  window_groups: [subject, device, session, sensor_phase, channel_quality_phase, partition]
+  night: protocol_v1_0_noon_to_noon
+
+model_rule:
+  selection_observation: the three frozen P3 folds selected different RAW-TCN configurations (indices 12, 7, 8)
+  rule: train_all_three_frozen_configurations_as_source_only_sensitivity_models
+  configurations: [{fold: 1, selected_index: 12}, {fold: 2, selected_index: 7}, {fold: 3, selected_index: 8}]
+  epochs: frozen_final_epochs_of_each_configuration
+  training_data: all labelled windows of User01, User02 and User07 (union of the P3 outer test windows)
+  target_scaler: fit on the source training windows
+  early_stopping: none
+  validation_data: none
+  user03_used_for: [evaluation_only]
+  comparator: training_mean_of_source_windows
+  raw_tcn_summary: each configuration separately; the unweighted mean over configurations is descriptive, not a selection
+
+metrics:
+  reuse: src/evaluation/p8_dynamic.py         # signal_stats, per_night_summary; population SDs
+  per_target: [mae, rmse, bias, R, Q, r_pooled, r_within, per_night_mae, per_night_bias, per_night_r]
+  night_bootstrap_min_nights: 10              # P6 MIN_NIGHTS; below it no interval is computed
+interpretation:
+  better_rule: every configuration has the lower seed-mean MAE and the lower seed-mean per-night MAE on >= 2/3 of usable nights
+  within_supported: every configuration has seed-mean r_within >= 0.10 and per-night r > 0 on >= 2/3 of eligible nights
+  within_absent: every configuration has |seed-mean r_within| < 0.10
+  relation_to_n3: [strengthened, weakened, mixed]
