@@ -325,4 +325,9 @@ checks pass.
   - It reuses the v1.0 data, splits and windows unchanged.
   - It adds calibration comparators, a residual-variation ratio and an initialization control.
   - Its results are supplementary and do not replace v1.0.
-
+- v1.2 (D-059): a second-order post-hoc diagnostic addendum (`configs/experiments/v1.2/dynamic_signal_diagnostic.yaml`,
+  `docs/P8_DYNAMIC_SIGNAL_PLAN.md`).
+  - It adds prediction-scale, correlation and oracle-affine metrics on existing predictions, and one conditionally
+    triggered comparator.
+  - It reuses v1.0 and v1.1 unchanged.
+  - It is the final planned diagnostic for the current manuscript.

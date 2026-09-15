@@ -1772,3 +1772,47 @@ Consequence:
   carry the new title and summary.
 - No frozen P3–P6 artifact, tag or v1.0 configuration changed.
 
+## D-059 — Final dynamic-signal diagnostic: prediction scale and within-night correlation (protocol v1.2 addendum)
+Date: 2026-09-16
+Status: Accepted (research lead). **Second-order post hoc and diagnostic.** The results are supplementary and never
+replace a v1.0 primary or v1.1 result.
+Context:
+- **Results already seen:** the P3–P6 results, and the v1.1 post-hoc results (D-057,
+  `docs/P8_POSTHOC_VALIDATION_REPORT.md`):
+  - simple level predictors often matched or beat the neural models;
+  - the residual-variation ratio R was about 1 or above;
+  - the scratch control did not consistently beat the personalized constant.
+- **What R cannot show:** R does not show whether the predictions co-vary with the target.
+  - By R² = 1 + Q² − 2rQ, a positive correlation can coexist with R ≈ 1 when the prediction scale Q is mismatched.
+  - Before stopping model experimentation, the manuscript's scientific identity therefore depends on whether the
+    neural predictions carry temporal co-variation hidden by offset or scale mismatch.
+- **The rules apply:** RESEARCH_PROTOCOL §6 counts a metric change as a protocol change, and a change made after
+  results were seen must say so. The new metrics are evaluated on the test span, so a new protocol version is
+  needed.
+Decision:
+- **Protocol v1.2 (`configs/experiments/v1.2/dynamic_signal_diagnostic.yaml`) is a second-order post-hoc addendum.**
+  - It reuses v1.0 and v1.1 unchanged, verified by hash.
+  - v1.0 and v1.1 are not edited.
+- **Analyses,** fully specified in `docs/P8_DYNAMIC_SIGNAL_PLAN.md` before any new metric was computed:
+  - Q, pooled and night-centred (primary) correlations, a night × mat sensitivity variant, per-night correlations
+    and the retrospective oracle affine ratio;
+  - computed on the existing primary-span predictions of C, D, E and S (A and B are constants: R = 1, Q = 0,
+    r = NA);
+  - night-cluster bootstrap with the frozen P6 settings.
+- **Fixed before the results:** the interpretation map (Cases J1–J8), the operational thresholds and an affine
+  calibration trigger. Leakage-free adaptation-only affine calibration is run only if the base model's oracle affine
+  ratio is ≤ 0.90 for at least two subjects for the same target (seed mean, and at least two of three seeds). Nothing
+  is changed after the results.
+- **Reporting:** all results are reported whichever way they point. Nothing is retrained, apart from the triggered
+  comparator's base inference on adaptation windows, if the trigger fires.
+- **Stop rule:** this is the final planned scientific diagnostic for the current manuscript. No further
+  representation, adaptation variant, window length, input, architecture or search is added without a new,
+  explicitly authorized phase.
+Evidence: `docs/P8_DYNAMIC_SIGNAL_PLAN.md` (its SHA-256 is recorded in every output);
+`configs/experiments/v1.2/dynamic_signal_diagnostic.yaml`; the frozen P5 predictions and v1.1 tables.
+Consequence:
+- New code in `src/evaluation/p8_dynamic.py`, with `scripts/run_p8_dynamic.py` and
+  `scripts/export_p8_dynamic_tables.py`.
+- Outputs go under `outputs/metrics/p8_dynamic/`, and paper-facing tables are `paper/tables/p8_dynamic_*.csv`.
+- No P0–P7 artifact, no v1.1 artifact and no tag changes.
+
