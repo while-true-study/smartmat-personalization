@@ -1,4 +1,4 @@
-"""Manuscript Tables 1-5 and the supplementary table package, built only from frozen cells (P8).
+"""Manuscript Tables 1-7 and the supplementary table package, built only from frozen cells (P8).
 
 Rules (docs/P8_MANUSCRIPT_PLAN.md §7, docs/P8_TABLE_FIGURE_SELECTION.md):
 - Every printed number is a formatted frozen cell. Each table cell records the cells it was built from, so a
@@ -162,6 +162,20 @@ def _delta(family: str, target: str) -> Cell:
                 val("p4_vs_raw", "improved_subjects", "d", **f))
 
 
+SEED_EFFECT = {"MOVEMENT": "S1", "CONTACT": "S2", "RAW+MOVEMENT": "A", "RAW+CONTACT": "B",
+               "RAW+MOVEMENT+CONTACT": "C"}          # p4_seed_consistency effect: the family vs RAW, per fold and seed
+
+
+def _seed_pairs(family: str, target: str) -> Cell:
+    if family not in SEED_EFFECT:
+        return txt("—")
+    f = dict(effect=SEED_EFFECT[family], target=target, metric="mae")
+    return join("{}/{}; {} to {}", val("p4_seed_consistency", "improved_fold_seeds", "d", **f),
+                val("p4_seed_consistency", "n_fold_seeds", "d", **f),
+                val("p4_seed_consistency", "min_delta", "+.2f", **f),
+                val("p4_seed_consistency", "max_delta", "+.2f", **f))
+
+
 def table3() -> ManuscriptTable:
     label = {"training_mean": "Training-mean predictor", "RAW": "RAW (reference)"}
     body = []
@@ -169,18 +183,22 @@ def table3() -> ManuscriptTable:
         row = [txt(label.get(fam, fam))]
         for t in TARGETS:
             row += [val("p4_primary_summary", "unweighted_subject_mean", ".2f", model=fam, target=t, metric="mae"),
-                    _delta(fam, t)]
+                    _delta(fam, t), _seed_pairs(fam, t)]
         row += [val("p4_primary_summary", "User02", "+.2f", model=fam, target=t, metric="bias") for t in TARGETS]
         body.append(row)
     return ManuscriptTable(
         3, "table3_feature_family",
-        ["Representation", "Temperature MAE (°C)", "Δ vs RAW, °C (improved)", "Humidity MAE (%RH)",
-         "Δ vs RAW, %RH (improved)", "User02 bias, °C", "User02 bias, %RH"],
+        ["Representation", "Temperature MAE (°C)", "Δ vs RAW, °C (improved)", "Fold–seed pairs improved; Δ range, °C",
+         "Humidity MAE (%RH)", "Δ vs RAW, %RH (improved)", "Fold–seed pairs improved; Δ range, %RH",
+         "User02 bias, °C", "User02 bias, %RH"],
         body,
         ["Secondary analysis (RQ3).",
          "MAE: unweighted mean across three held-out subjects of the seed means (seeds 0, 1, 2); descriptive.",
          "Δ vs RAW = family MAE − RAW MAE (negative = lower error); in brackets the number of subjects, of three, "
          "whose MAE improved.",
+         "Seed variation: the family is compared with RAW separately for each held-out subject and model seed (nine "
+         "fold–seed pairs, same seed for both); the column gives the pairs with a lower MAE and the smallest and "
+         "largest per-pair Δ.",
          "Each representation has its own pre-declared nested selection; the comparison is between selected "
          "representations, not a fixed-model ablation.",
          "User02 bias (predicted − observed) shows the domain-level offset that remains in every representation.",
@@ -205,27 +223,44 @@ def _gain(subject: str, target: str, b: str) -> Cell:
                 val("p5_adaptation_gain", "seeds_improved", "d", **f))
 
 
+def _p8(predictor: str, subject: str, target: str, b: str, column: str = "mae", spec: str = ".2f") -> Cell:
+    f = dict(subject_id=subject, target=target, budget_nights=b, predictor=predictor)
+    mean = val("p8_calibration_main", column, spec, **f)
+    if column != "mae" or S.cell("p8_calibration_main", "mae_seed_sd", **f) == "":
+        return mean
+    return join("{} ± {}", mean, val("p8_calibration_main", "mae_seed_sd", ".2f", **f))
+
+
 def table4() -> ManuscriptTable:
     body = []
     for t in TARGETS:
         for s in SUBJECTS:
-            body.append([txt(TARGET_LABEL[t]), txt(s), txt("MAE"), *[_mae(s, t, b) for b in BUDGETS]])
-            body.append([txt(TARGET_LABEL[t]), txt(s), txt("G_b, % (seeds improved)"),
-                         *[_gain(s, t, b) for b in BUDGETS]])
-        body.append([txt(TARGET_LABEL[t]), txt(MEAN_LABEL), txt("MAE"),
-                     *[_mae("unweighted_mean", t, b) for b in BUDGETS]])
+            for b in BUDGETS:
+                adapted = b != "0"
+                body.append([txt(TARGET_LABEL[t]), txt(s), txt(b), _p8("A", s, t, "0"),
+                             _p8("B", s, t, b) if adapted else txt("—"), _mae(s, t, "0"),
+                             _p8("D", s, t, b) if adapted else txt("—"),
+                             _mae(s, t, b) if adapted else txt("= C"), _gain(s, t, b)])
     return ManuscriptTable(
         4, "table4_personalization",
-        ["Target", "Subject", "Quantity", "b = 0", "b = 1", "b = 3", "b = 7", "b = 14"],
+        ["Target", "Subject", "b", "A: training mean", "B: adaptation-target mean", "C: RAW-TCN base",
+         "D: RAW-TCN + offset", "E: full fine-tuning", "G_b of E, % (seeds improved)"],
         body,
-        ["Primary test span: nights ≥ 16, identical for every budget b; b = 0 is the base model on this span (it "
-         "differs from Table 2, which covers all nights).",
-         "MAE: mean ± standard deviation over model seeds 0, 1 and 2.",
-         "G_b = (MAE_0 − MAE_b) / MAE_0 × 100 %, from the seed-mean MAE; G_b > 0 is an improvement and G_b < 0 is "
-         "negative transfer (the adapted model is worse than its own base model on the same nights). In brackets: "
+        ["Primary test span: nights ≥ 16, identical for every budget b (it differs from Table 2, which covers all "
+         "nights). MAE in °C (temperature) or %RH (humidity).",
+         "C and E are the pre-declared RQ2 models (base model and full fine-tuning); their values and G_b are the "
+         "primary results. A, B and D are post-hoc comparators (protocol addendum, Section 3.6): A predicts the "
+         "base model's training-pool mean; D adds to C the offset c_b = mean(y − C) over the labelled adaptation "
+         "windows of budget b; B adds the same kind of offset to A, which equals the mean target of the adaptation "
+         "windows. No offset uses a test label; User02 uses one offset for both mats. A and C do not depend on b "
+         "and are repeated in every row.",
+         "Neural predictors (C, D, E): mean ± standard deviation over model seeds 0, 1 and 2; A and B are "
+         "deterministic.",
+         "G_b = (MAE_0 − MAE_b) / MAE_0 × 100 % for E, from the seed-mean MAE; G_b > 0 is an improvement and G_b < 0 "
+         "is negative transfer (the adapted model is worse than its own base model on the same nights). In brackets: "
          "seeds, of three, with G_b > 0.",
-         "The unweighted mean across three held-out subjects is descriptive, not a population estimate. Bias and RMSE "
-         "by budget: Table S10."])
+         "Unweighted means across the three subjects: Section 4.3 and Figures 2–3. Bias and RMSE by budget: Tables S10 "
+         "and S20."])
 
 
 # --- Table 5: night-level robustness --------------------------------------------------------------------------------
@@ -262,7 +297,88 @@ def table5() -> ManuscriptTable:
          "uncertainty; an interval that excludes zero is not population-level statistical significance."])
 
 
-MAIN_TABLES = (table1, table2, table3, table4, table5)
+# --- Table 6: residual variation (post hoc) ---------------------------------------------------------------------------
+
+def _r(setting: str, subject: str, target: str, predictor: str, b: str = "", seed_range: bool = False) -> Cell:
+    f = dict(setting=setting, subject_id=subject, target=target, budget_nights=b, predictor=predictor)
+    r = val("p8_residual_variation", "R", ".2f", **f)
+    if not seed_range:
+        return r
+    return join("{} ({}–{})", r, val("p8_residual_variation", "R_seed_min", ".2f", **f),
+                val("p8_residual_variation", "R_seed_max", ".2f", **f))
+
+
+def table6() -> ManuscriptTable:
+    body = []
+    for t in TARGETS:
+        for s in SUBJECTS:
+            body.append([txt(TARGET_LABEL[t]), txt(s),
+                         val("p8_residual_variation", "target_sd", ".2f", setting="strict_loso", subject_id=s,
+                             target=t, budget_nights="", predictor="A"),
+                         _r("strict_loso", s, t, "C", seed_range=True),
+                         val("p8_residual_variation", "target_sd", ".2f", setting="rq2_primary_span", subject_id=s,
+                             target=t, budget_nights="0", predictor="A"),
+                         _r("rq2_primary_span", s, t, "C", "0", True), _r("rq2_primary_span", s, t, "E", "14", True),
+                         _r("rq2_primary_span", s, t, "S", "14", True)])
+    return ManuscriptTable(
+        6, "table6_residual_variation",
+        ["Target", "Subject", "Strict LOSO: target SD", "Strict LOSO: R, RAW-TCN", "Primary span: target SD",
+         "R, base (b = 0)", "R, full fine-tuning (b = 14)", "R, scratch control (b = 14)"],
+        body,
+        ["Post-hoc analysis (Section 3.5.5). R = error SD / target SD, with population standard deviations "
+         "(error = predicted − observed); R is a descriptive ratio of residual to target variation, not explained "
+         "variance.",
+         "A constant predictor (the training mean A or the adaptation-target mean B) has R = 1 by construction, and a "
+         "constant offset leaves R unchanged (D has the R of C). R < 1 means less residual variation than a constant "
+         "predictor; R > 1 means more.",
+         "Strict LOSO: all labelled windows of the held-out subject (the Table 2 setting). Primary span: nights ≥ 16. "
+         "Target SD in °C (temperature) or %RH (humidity).",
+         "Neural models: mean over model seeds 0, 1 and 2, in brackets the seed range. Scratch control: the same "
+         "architecture and fine-tuning recipe as full fine-tuning, randomly initialised and trained on nights 1–14 "
+         "only. All values: Table S23."])
+
+
+# --- Table 7: post-hoc comparator intervals at b = 14 -------------------------------------------------------------------
+
+def _delta_ci(subject: str, target: str, first: str, second: str) -> Cell:
+    f = dict(subject_id=subject, target=target, budget_nights="14", first=first, second=second)
+    sides = [S.select("p8_comparator_bootstrap", seed=k, **f)["interval"] for k in ("0", "1", "2")]
+    main = join("{} [{}, {}]", val("p8_comparator_bootstrap", "point_estimate", "+.2f", seed=0, **f),
+                val("p8_comparator_bootstrap", "ci_lower", "+.2f", seed=0, **f),
+                val("p8_comparator_bootstrap", "ci_upper", "+.2f", seed=0, **f))
+    srcs = tuple(S.source_id("p8_comparator_bootstrap", "interval", seed=k, **f) for k in ("0", "1", "2"))
+    return Cell(f"{main.text} {'/'.join(SIDE_SHORT[x] for x in sides)}", main.sources + srcs, main.values,
+                main.constants + ("0",))                                   # "0" is the includes-zero symbol
+
+
+def table7() -> ManuscriptTable:
+    body = []
+    for t in TARGETS:
+        for s in SUBJECTS:
+            body.append([txt(TARGET_LABEL[t]), txt(s), _p8("B", s, t, "14"), _mae(s, t, "14"),
+                         join("{} ± {}", val("p8_initialization_control", "mae", ".2f", subject_id=s, target=t,
+                                             predictor="S", seed="mean"),
+                              val("p8_initialization_control", "mae_seed_sd", ".2f", subject_id=s, target=t,
+                                  predictor="S", seed="mean")),
+                         *[_delta_ci(s, t, a, b) for a, b in (("B", "E"), ("D", "E"), ("S", "E"), ("B", "S"))]])
+    return ManuscriptTable(
+        7, "table7_posthoc_comparators",
+        ["Target", "Subject", "MAE, B: adaptation-target mean", "MAE, E: full fine-tuning",
+         "MAE, S: scratch control", "Δ B − E", "Δ D − E", "Δ S − E", "Δ B − S"],
+        body,
+        ["Post-hoc analysis (Section 3.5.5) at b = 14 on the primary span (nights ≥ 16). MAE in °C (temperature) or "
+         "%RH (humidity); neural models: mean ± standard deviation over model seeds 0, 1 and 2.",
+         "Δ X − Y = MAE(X) − MAE(Y): Δ > 0 means that Y has the lower error. Seed 0: full-sample point estimate and "
+         "95 % interval from 2,000 paired night-cluster bootstrap resamples (the Table 5 procedure, with the same "
+         "resampled nights). Then the side of zero for seeds 0 / 1 / 2: + above zero, − below zero, 0 includes zero.",
+         "D: RAW-TCN base plus the adaptation-window offset (Table 4). S: randomly initialised RAW-TCN of the same "
+         "architecture, trained on nights 1–14 with the full fine-tuning recipe; only the initialisation differs "
+         "from E. It is an initialization control, not an upper bound on within-subject learning.",
+         "The intervals describe within-subject night-level uncertainty, not population-level statistical "
+         "significance. All budgets: Table S25."])
+
+
+MAIN_TABLES = (table1, table2, table3, table4, table5, table6, table7)
 
 
 # --- rendering ------------------------------------------------------------------------------------------------------
@@ -333,7 +449,18 @@ SUPPLEMENT: tuple[tuple[str, str, tuple[str, ...]], ...] = (
     ("S17", "Start-span sensitivity (post hoc)", ("p6_drift_sensitivity",)),
     ("S18", "User02 device, quality-phase and heater-context strata", ("p6_user02_device_context",
                                                                         "p6_user02_device_context_bootstrap")),
+    ("S20", "Post-hoc calibration comparators A–E on the primary span (seed summary)", ("p8_calibration_main",)),
+    ("S21", "Post-hoc calibration comparators per seed", ("p8_calibration_by_seed",)),
+    ("S22", "User02 per-mat calibration diagnostic (post hoc, added after the primary results were known)",
+     ("p8_calibration_user02_per_mat",)),
+    ("S23", "Residual variation: target SD, error SD and R (post hoc)", ("p8_residual_variation",)),
+    ("S24", "Initialization control at b = 14 (post hoc)", ("p8_initialization_control",)),
+    ("S25", "Night-level bootstrap of the comparator differences, all budgets and seeds (post hoc)",
+     ("p8_comparator_bootstrap",)),
+    ("S26", "Pre-registered interpretation map: cases per subject, target and budget (post hoc)",
+     ("p8_interpretation_cases",)),
 )
+REPRODUCTION_RECORD = "S19"
 FIGURE_DATA = ("p5_figure_data", "p6_figure_data")
 NOT_IN_SUPPLEMENT = {"p5_per_night": "night-level predictions summary with calendar night ids; distributed through "
                                      "the release candidate with relative night keys instead",
@@ -412,10 +539,14 @@ def supplementary_index() -> str:
              "by night ordinals (Table S13) or removed where the ordinal is already present (Table S15). Generated by "
              "`scripts/export_manuscript_tables.py`; do not edit by hand.", "",
              "| Table | Content | Files |", "|---|---|---|"]
+    record = "| S19 | Reproduction record (P7 report §6, §8–§10) | `TableS19_reproduction_record.md` |"
     for sid, title, names in SUPPLEMENT:
+        if int(sid[1:]) > int(REPRODUCTION_RECORD[1:]) and record not in lines:
+            lines.append(record)
         files = ", ".join(f"`{supp_file(sid, n, k, len(names))}`" for k, n in enumerate(names))
         lines.append(f"| {sid} | {title} | {files} |")
-    lines.append("| S19 | Reproduction record (P7 report §6, §8–§10) | `TableS19_reproduction_record.md` |")
+    if record not in lines:
+        lines.append(record)
     lines += ["", "Figure source data: " + ", ".join(f"`FigureData_{n}.csv`" for n in FIGURE_DATA) + ".", "",
               "Not included: " + "; ".join(f"`{k}` ({v})" for k, v in NOT_IN_SUPPLEMENT.items()) + "."]
     return "\n".join(lines) + "\n"
@@ -433,7 +564,7 @@ def build_main() -> list[ManuscriptTable]:
 
 
 def export(out_dir: Path = GENERATED) -> dict[str, int]:
-    """Write Tables 1-5 and the supplementary package; files from an earlier export that are no longer produced are
+    """Write Tables 1-7 and the supplementary package; files from an earlier export that are no longer produced are
     removed, so the directories always equal the current build."""
     before = {p for sub in ("tables", "supplementary") if (out_dir / sub).is_dir()
               for p in (out_dir / sub).iterdir() if p.is_file()}

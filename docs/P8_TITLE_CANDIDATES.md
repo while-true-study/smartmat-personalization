@@ -1,8 +1,8 @@
 # P8 — Title candidates
 
-> **Working final title (formatting pass, D-054):** "Chronological Personalization under Unseen-Domain Shift: Offset
-> Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation". It changes only if the PI requests
-> it, the journal requires a shorter title, or the final manuscript review finds an overclaim. The history below is kept.
+> **Working title (post-hoc validation, D-058):** "Evaluating Chronological Personalization for Smart-Mat Microclimate
+> Estimation under Unseen-Domain Shift". It replaced the formatting-pass working title (D-054) after the post-hoc
+> validation (§6); PI confirmation is required, and the PI may restore the previous title. The history below is kept.
 
 > **History.** Before the working title was set, the candidates were ranked against five criteria:
 > 1. framing priority: chronological personalization under unseen-user/domain shift, then benefit **and** negative
@@ -67,6 +67,39 @@ Rank 1 is adopted as the primary candidate. Before the title freeze, two variant
 - The shorter fallback is unaffected, because it drops the shift phrase altogether: "Chronological Personalization
   of Smart-Mat Temperature and Humidity Estimation: Offset Correction and Negative Transfer".
 - Adopted as the working final title in the formatting pass (D-054). The PI may still change it (`docs/P8_FINAL_BLOCKERS.md` B10).
+
+## 6. Post-hoc validation re-evaluation (D-058)
+
+The post-hoc validation plan (`docs/P8_POSTHOC_VALIDATION_PLAN.md` §8) fixed in advance that the title would be
+re-evaluated after the results, with an evaluation-focused title favoured if the simple baselines dominated. The
+results (`docs/P8_POSTHOC_VALIDATION_REPORT.md` §5–§6):
+- a personalized constant was not worse than full fine-tuning in half of the subject × target × budget cells, including
+  the case the old subtitle's "Offset Correction" rests on (User02 temperature);
+- the pressure-based models showed no demonstrable within-subject tracking (residual-variation ratio about 1 or more);
+- cross-subject pretraining added little over a scratch control;
+- the training mean beat the neural models for every strict-LOSO temperature cell.
+
+The simple baselines do not dominate every cell, but they match or beat the neural approach often enough that the
+paper's contribution is the evaluation, not a demonstration of personalization.
+
+| Criterion | D-054 title: "Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation" | Proposed: "Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation under Unseen-Domain Shift" |
+|---|---|---|
+| Accuracy of each term | "Offset Correction" is true of the outcomes, but, attached to personalization, reads as a capability of the neural adaptation; the constant comparator achieved the same correction | every term is neutral and true: an evaluation of chronological personalization, for microclimate estimation, under the confounded shift |
+| Overclaim risk after the post-hoc results | low–medium: implies that personalization is the mechanism of offset correction | low: states the design, not an outcome |
+| Signals the negative result | partly ("Negative Transfer") | through "Evaluating"; the negative result is in the Abstract |
+| Search terms | personalization, domain shift, negative transfer, temperature, humidity | personalization, domain shift, microclimate; "negative transfer" moves to the keywords |
+| Distinct from the conference title | yes | yes |
+| Length | 16 words | 13 words |
+| Precision of "microclimate" | — | the targets are the mat-surface temperature and relative humidity, i.e. the bed microclimate (Section 3.1); the Abstract names both quantities |
+
+- **Recommendation: adopt the proposed title.** It is shorter, makes no outcome claim that the post-hoc comparators
+  weaken, and matches the paper's reframed contribution: an evaluation with a substantial negative result.
+- **Adopted as the working title (D-058)**, explicitly and not silently; the change is listed in the PI review request
+  and the PI checklist.
+- **The PI may restore the D-054 title.** It remains accurate as a description of the primary outcomes; it would then
+  need the Abstract to carry the comparator result, which it already does.
+- **Keywords:** "negative transfer" and "baseline comparison" were added so the search terms of the D-054 subtitle are
+  not lost.
 
 ## Earlier candidates (first pass), for the record
 

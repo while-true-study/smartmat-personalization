@@ -146,3 +146,25 @@ Built by `src/paper/` (D-054) and checked by `scripts/validate_manuscript_result
 - **Not in the supplement:** `p5_per_night` (calendar night ids; it is distributed through the release candidate with
   relative keys), and the full-precision sources of Tables 2, 4 and 5 (`p3_primary_summary`, `p5_primary_mae`,
   `p6_bootstrap_mae`), which the main tables show completely. `p4_primary_summary` is in S6 (per-subject family values).
+
+## 6. Post-hoc validation revision (D-057, D-058)
+
+The post-hoc validation analyses (`docs/P8_POSTHOC_VALIDATION_REPORT.md`) changed the main-text evidence as follows.
+Every new cell is a formatted frozen cell of `paper/tables/p8_*.csv` (`scripts/export_p8_posthoc_tables.py`).
+
+| Item | Change | Evidence role |
+|---|---|---|
+| Table 3 | two columns added: fold–seed pairs (of nine) with a lower MAE than RAW, and the range of the per-pair Δ, from `p4_seed_consistency` (seed variation made visible) | secondary (P4) |
+| Table 4 | redesigned: rows target × subject × b; columns A training mean, B adaptation-target mean, C RAW-TCN base, D RAW-TCN + offset, E full fine-tuning (± seed SD), G_b of E (seeds improved). C, E and G_b are the frozen primary values (`p5_primary_mae`, `p5_adaptation_gain`); A, B and D come from `p8_calibration_main` and are labelled post hoc in the notes. The unweighted-mean rows moved to the text (§4.3) and Figures 2–3 | primary (P5) + post hoc |
+| Table 6 (new) | residual variation: target SD and R for strict LOSO (RAW-TCN) and the primary span (base, full fine-tuning and scratch control at b = 14) | post hoc (D-057) |
+| Table 7 (new) | b = 14 comparators: MAE of B, E, S and the night-level bootstrap Δ for B − E, D − E, S − E, B − S (seed 0 interval, seeds 0/1/2 sides) | post hoc (D-057) |
+| Figure 1 | panel (d) and caption now list the post-hoc comparators; the caption describes every box of panels (a)–(d) | design |
+| Figures 2–4, S1, S4 | budgets plotted at their numeric value in nights (0, 1, 3, 7, 14), no longer as equally spaced categories | unchanged data |
+| Figure 5 (new) | comparators versus budget, 2 × 3 panels (target × subject): E, D, B lines and S at b = 14; hues from validated palette slots not used for subjects, each series with its own marker and dash | post hoc (D-057) |
+| Tables S20–S26 (new) | `p8_calibration_main`, `p8_calibration_by_seed`, `p8_calibration_user02_per_mat`, `p8_residual_variation`, `p8_initialization_control`, `p8_comparator_bootstrap`, `p8_interpretation_cases`; S19 (reproduction record) keeps its number | post hoc (D-057) |
+
+- **Main text size:** 7 tables and 5 figures.
+- **Figure artwork:** no manuscript figure carries an internal title such as "Figure P5-1"; panel titles are
+  "(a) …" labels only. The report figures in `paper/figures/` keep their report titles and are not part of the
+  submission candidate.
+

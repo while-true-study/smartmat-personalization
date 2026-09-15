@@ -16,7 +16,7 @@
 | movement/contact late-fusion framework | movement/contact representations re-evaluated as six feature families, each with frozen nested selection |
 | no strict elapsed-time leave-one-subject-out evaluation | strict leave-one-subject-out evaluation with a training-mean reference and a leakage gate |
 | no target-user fine-tuning | chronological personalization (0–14 nights, fixed future test span) with a negative-transfer analysis |
-| — | night-level robustness analyses; a de-identified reproduction package (release candidate) |
+| — | night-level robustness analyses; post-hoc comparators (personalized constant, offset-calibrated base model, scratch initialization control) with a residual-variation analysis; a de-identified reproduction package (release candidate) |
 
 ## Conference paper
 
@@ -57,12 +57,15 @@
   - seed and start-span sensitivity;
   - a post-hoc temporal level-mismatch analysis;
   - device residual strata;
+  - post-hoc comparators and a residual-variation analysis, fixed before they were computed;
   - a de-identified reproduction package with clean-checkout reproduction.
 - **New conclusions:**
   - under strict unseen-domain evaluation, the error is dominated by level offsets that representation changes do
     not remove;
   - chronological personalization corrects them when the early nights represent later conditions, and produces
-    negative transfer when they do not.
+    negative transfer when they do not;
+  - the gains are mainly level corrections that a constant computed from the adaptation nights often matches, and
+    the pressure-based models show no demonstrable within-subject tracking of temperature or humidity.
 
 ## Reuse
 
@@ -96,6 +99,8 @@
 > - chronological user personalization with 0–14 adaptation nights on a fixed future test span, with a
 >   negative-transfer analysis: it shows both large offset corrections and negative transfer;
 > - night-level uncertainty and sensitivity analyses;
+> - post-hoc comparators showing that the gains are mainly level corrections, which a personalized constant often
+>   matches;
 > - a de-identified reproduction package, prepared as a release candidate (its public release is pending).
 >
 > No text, figure or table of the conference paper is reused, and its results are not compared numerically with the

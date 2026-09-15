@@ -26,10 +26,10 @@ def test_token_parsing_and_resolution():
 def test_main_tables_trace_every_number_to_a_frozen_cell():
     for t in T.build_main():
         assert T.check_traceable(t) == []
-        # every numeric cell except the budget labels of Table 5 declares its frozen source cells
+        # every numeric cell except the budget labels of Tables 4 and 5 declares its frozen source cells
         untraced = [c.text for r in t.rows for c in r
                     if re.fullmatch(r"[+−\-\d.,±/()\[\] ]*\d[+−\-\d.,±/()\[\] ]*", c.text) and not c.sources
-                    and not (t.number == 5 and c.text in T.ADAPT_BUDGETS)]
+                    and not (t.number in (4, 5) and c.text in T.BUDGETS)]
         assert untraced == [], (t.number, untraced)
 
 
@@ -58,6 +58,25 @@ def test_table3_is_marked_secondary():
 def test_table4_defines_gain_and_negative_transfer():
     notes = " ".join(T.table4().notes)
     assert "G_b = (MAE_0 − MAE_b) / MAE_0" in notes and "negative transfer" in notes
+
+
+def test_table4_separates_the_primary_models_from_the_posthoc_comparators():
+    t4 = T.table4()
+    assert t4.header[3:8] == ["A: training mean", "B: adaptation-target mean", "C: RAW-TCN base",
+                              "D: RAW-TCN + offset", "E: full fine-tuning"]
+    assert len(t4.rows) == 2 * 3 * 5
+    notes = " ".join(t4.notes)
+    assert "post-hoc comparators" in notes and "primary results" in notes and "No offset uses a test label" in notes
+    b0 = [r for r in t4.rows if r[2].text == "0"]
+    assert all(r[4].text == "—" and r[6].text == "—" and r[7].text == "= C" for r in b0)   # no offset at b = 0
+
+
+def test_posthoc_tables_are_labelled_and_define_the_ratio():
+    t6, t7 = T.table6(), T.table7()
+    assert t6.notes[0].startswith("Post-hoc analysis") and "not explained variance" in t6.notes[0]
+    assert t7.notes[0].startswith("Post-hoc analysis") and "not an upper bound" in " ".join(t7.notes)
+    assert len(t6.rows) == len(t7.rows) == 6
+    assert "fold–seed" in " ".join(T.table3().notes)                       # Table 3 exposes seed variation
 
 
 def test_table5_states_sign_and_no_population_significance():

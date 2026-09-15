@@ -8,12 +8,12 @@
 
 | Path | Content | Produced by |
 |---|---|---|
-| `manuscript/manuscript_rendered.md` | the manuscript with every number resolved, Tables 1–5 inlined, Figures 1–4 linked, citations numbered and the reference list rendered | `scripts/build_submission_candidate.py` |
+| `manuscript/manuscript_rendered.md` | the manuscript with every number resolved, Tables 1–7 inlined, Figures 1–5 linked, citations numbered and the reference list rendered | `scripts/build_submission_candidate.py` |
 | `manuscript/manuscript_source.md` | the source with its source tokens and `[@key]` citations | copy of `paper/manuscript/manuscript.md` |
 | `manuscript/references.bib` | the 31 verified references | copy |
-| `tables/` | Tables 1–5 as Markdown and CSV | `scripts/export_manuscript_tables.py` |
-| `figures/` | Figures 1–4 (PNG, 300 dpi at print size) | `scripts/render_manuscript_figures.py` |
-| `supplementary/tables/` | Tables S1–S19 and the figure source data (index: `supplementary/tables/README.md`) | `scripts/export_manuscript_tables.py` |
+| `tables/` | Tables 1–7 as Markdown and CSV | `scripts/export_manuscript_tables.py` |
+| `figures/` | Figures 1–5 (PNG, 300 dpi at print size) | `scripts/render_manuscript_figures.py` |
+| `supplementary/tables/` | Tables S1–S26 and the figure source data (index: `supplementary/tables/README.md`) | `scripts/export_manuscript_tables.py` |
 | `supplementary/figures/` | Figures S1–S4 | `scripts/render_manuscript_figures.py` |
 | `drafts/` | cover letter, conference-extension disclosure, author contributions, data and code availability drafts | copies of `paper/manuscript/*_DRAFT.md` |
 | `MANIFEST.json` | SHA-256 of every file above | `scripts/build_submission_candidate.py` |

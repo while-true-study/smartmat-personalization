@@ -1,4 +1,4 @@
-"""Render manuscript Figures 1-4 and S1-S4 into paper/manuscript/generated/figures/ (P8).
+"""Render manuscript Figures 1-5 and S1-S4 into paper/manuscript/generated/figures/ (P8).
 
 Figure 1 is a design schematic; every other figure is drawn from the frozen figure-data tables
 (src/paper/manuscript_figures.py). The committed report figures in paper/figures/ are not touched.

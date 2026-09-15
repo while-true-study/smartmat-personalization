@@ -13,8 +13,8 @@
 
 Dear Editor,
 
-We submit the manuscript **"Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative
-Transfer in Smart-Mat Temperature and Humidity Estimation"** for consideration as an Article in *Applied Sciences*,
+We submit the manuscript **"Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation under
+Unseen-Domain Shift"** for consideration as an Article in *Applied Sciences*,
 section Computing and Artificial Intelligence, for the Special Issue "Future Information & Communication Engineering
 2026", which collects selected papers from ICFICE 2026 [TARGET SPECIAL ISSUE — PI CONFIRMATION REQUIRED].
 
@@ -26,8 +26,10 @@ section Computing and Artificial Intelligence, for the Special Issue "Future Inf
 - Under strict leave-one-subject-out evaluation, the errors are dominated by systematic level offsets that
   alternative pressure representations do not remove.
 - Chronological fine-tuning on the user's earliest nights corrects a large offset in one case and produces negative
-  transfer in others. The direction of adaptation is associated with how well the early nights represent the later
-  period.
+  transfer in others.
+- Post-hoc comparators, fixed before they were computed, show that these gains are mainly level corrections: a
+  constant computed from the same adaptation nights often does as well, and the pressure-based models show no
+  demonstrable within-subject tracking of temperature or humidity. We report this negative result in full.
 - With three subjects, the findings are reported as cases with night-level uncertainty, not as population estimates.
 - The work fits the journal's scope in applied sensing and machine learning for health-related monitoring: a
   deployment-oriented evaluation of a sensing application, with a reproducible, de-identified data package.
@@ -52,6 +54,8 @@ the manuscript and noted on its first page.
   - chronological personalization with 0–14 adaptation nights on a fixed future test span, with a negative-transfer
     analysis;
   - night-level robustness analyses (paired cluster bootstrap, seed and start-span sensitivity);
+  - post-hoc comparators (personalized constant, offset-calibrated base model, scratch initialization control) and a
+    residual-variation analysis;
   - a de-identified reproduction package, from which the selected models, predictions and result tables were
     reproduced. It is prepared as a release candidate, and its public release is pending.
 - **Reuse:** no text, table or figure of the conference paper is reused, and its results are not compared

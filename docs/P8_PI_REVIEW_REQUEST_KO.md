@@ -1,19 +1,24 @@
 # 논문 투고 전 확인 요청 (교수님 검토용)
 
 **논문 제목 (working title)**
-Chronological Personalization under Unseen-Domain Shift: Offset Correction and Negative Transfer in Smart-Mat
-Temperature and Humidity Estimation
+Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation under Unseen-Domain Shift
+(사후 검증 결과에 따라 변경, D-058. 이전 제목 "Chronological Personalization under Unseen-Domain Shift: Offset
+Correction and Negative Transfer in Smart-Mat Temperature and Humidity Estimation"으로 되돌릴 수 있습니다.)
 
 **연구 핵심**
 스마트 매트 압력 신호로 침상 미세기후(온도·습도)를 추정할 때, 처음 보는 사용자·기간·매트에서 모델이 어떻게
 동작하는지를 strict leave-one-subject-out으로 평가했습니다. 오차는 대부분 사용자별 수준 오프셋이었고, 압력 표현을
 바꿔도 사라지지 않았습니다. 새 사용자의 초기 며칠로 미세조정하면 한 사용자에서는 오프셋이 크게 교정됐지만, 다른
-사용자에서는 오히려 성능이 나빠졌습니다(negative transfer). 적응 효과의 방향은 초기 밤들이 이후 기간을 얼마나
-대표하는지와 연관되어 있었습니다. 대상자가 3명이므로 결과는 모집단 추정이 아닌 사례로만 보고합니다. ICFICE 2026
-학회 논문을 확장한 저널 논문입니다.
+사용자에서는 오히려 성능이 나빠졌습니다(negative transfer). 이후 사전에 설계를 고정한 사후(post-hoc) 검증에서,
+적응 밤들의 목표값 평균(압력 입력을 쓰지 않는 상수)이 전체 미세조정보다 나쁘지 않은 경우가 절반의 셀에서
+나왔고, 압력 기반 모델은 사용자 내부의 온도·습도 변동을 수준(level) 이상으로 추적한다는 근거를 보이지
+않았습니다. 즉 개인화의 이득은 주로 수준 보정이었습니다. 따라서 논문은 상당한 부정적 결과를 포함한 평가
+논문으로 해석을 다시 썼고, 주요(1차) 결과 수치는 바뀌지 않았습니다. 대상자가 3명이므로 결과는 모집단 추정이
+아닌 사례로만 보고합니다. ICFICE 2026 학회 논문을 확장한 저널 논문입니다.
 
 **현재 상태**
-- 과학적 본문, 표 1–5, 그림 1–4, 참고문헌 31편, 보충자료, 표지 편지 초안이 완성되었습니다.
+- 과학적 본문, 표 1–7, 그림 1–5, 참고문헌 31편, 보충자료(표 S1–S26), 표지 편지 초안이 완성되었습니다.
+- 사후 검증(D-057)과 해석 수정(D-058)이 반영되었습니다: `docs/P8_POSTHOC_VALIDATION_REPORT.md`.
 - 자동 검증(수치 출처, 인용, 개인정보)을 모두 통과했고, 동결된 실험 결과는 바뀌지 않았습니다.
 - 학회 논문 서지(Vol. 17, No. 1, pp. 27–30)를 반영했습니다. DOI는 확인되지 않아 넣지 않았습니다.
 - 아래 항목은 교수님 결정 없이는 채울 수 없어 모두 비워 두었습니다. 추측으로 채운 항목은 없습니다.
@@ -70,5 +75,6 @@ Applied Sciences는 사람 데이터 연구에 대해 아래 셋 중 하나를 �
 ---
 
 **기타 확인 (선택)**
-제목, 키워드 7개, Featured Application 유지 여부, 본문·표·그림·한계점에 대한 과학적 승인을 부탁드립니다. 검토
-과정에서도 실험 결과와 수치는 바꾸지 않습니다. 코멘트: ________
+새 제목(또는 이전 제목 복원), 키워드 8개, 수정된 Featured Application, 그리고 사후 검증을 반영한 해석(평가
+논문 + 부정적 결과)과 본문·표·그림·한계점에 대한 과학적 승인을 부탁드립니다. 검토 과정에서도 실험 결과와 수치는
+바꾸지 않습니다. 코멘트: ________

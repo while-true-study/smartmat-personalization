@@ -1,9 +1,11 @@
-"""Manuscript Figures 1-4 and S1-S4 (P8), drawn only from the frozen figure-data tables.
+"""Manuscript Figures 1-5 and S1-S4 (P8), drawn only from frozen tables.
 
 - Figure 1 is a design schematic without data (paper/manuscript/FIGURE1_SCHEMATIC.md).
 - Figures 2-4 and S1-S4 re-draw the committed report figures from `p5_figure_data` / `p6_figure_data` with the same
   encodings and palette (scripts/export_p5_tables.py, scripts/export_p6_tables.py), without report titles, at print
   size. Axis limits are matplotlib's automatic limits of the plotted data; nothing is cropped or rescaled.
+- Figure 5 (post hoc, D-057/D-058) is drawn from `p8_calibration_main` and `p8_residual_variation`.
+- Budgets are plotted at their numeric value in nights (not as equally spaced categories).
 - No calendar date: the x axes use budgets, start nights or night ordinals.
 """
 from __future__ import annotations
@@ -35,6 +37,7 @@ FIGURES = {
     "figure2_temperature_personalization": "Figure 2",
     "figure3_humidity_personalization": "Figure 3",
     "figure4_night_robustness": "Figure 4",
+    "figure5_posthoc_comparators": "Figure 5",
     "figureS1_abs_bias": "Figure S1",
     "figureS2_start_span_sensitivity": "Figure S2",
     "figureS3_level_trajectory": "Figure S3",
@@ -163,11 +166,12 @@ def figure1(out_dir: Path) -> Path:
         ax.text(lx + 2.5, ly + 0.9, label, ha="left", va="center", fontsize=6.2, color=INK)
 
     # (d) evaluation and reproduction
-    title(1, 7.6, "(d) Evaluation and reproduction")
-    box(1, 0.6, 47.5, 6.0, "Per-subject MAE, RMSE and bias on the primary span;\n"
-                           "night-level paired bootstrap of ΔMAE (base − adapted)")
-    box(51.5, 0.6, 47.5, 6.0, "Selected models, predictions and result tables\n"
-                              "reproduced from the de-identified release candidate")
+    title(1, 7.6, "(d) Evaluation, post-hoc comparators and reproduction")
+    box(1, 0.6, 31.0, 6.0, "Per-subject MAE, RMSE and bias;\nnight-level paired bootstrap\nof ΔMAE (base − adapted)")
+    box(34.5, 0.6, 31.0, 6.0, "Post hoc: constant predictors,\nbase + adaptation offset, scratch\n"
+                              "control; residual ratio R")
+    box(68.0, 0.6, 31.0, 6.0, "Pre-declared models, predictions\nand tables reproduced from the\n"
+                              "de-identified release candidate")
     return _save(fig, out_dir, "figure1_study_design")
 
 def _fit(fig, ax, text, width: float, height: float, minimum: float = 6.0) -> None:
@@ -211,9 +215,17 @@ def text_overlaps(fig) -> list[tuple[str, str]]:
 
 # --- Figures 2, 3, S1, S4: MAE-type curves over the adaptation budget ------------------------------------------------
 
+BUDGET_X = [int(b) for b in BUDGETS]          # budgets at their numeric spacing (nights), not as categories
+
+
+def _budget_axis(ax, budgets: tuple[str, ...] = BUDGETS, right: float = 14.9) -> None:
+    ax.set_xticks([int(b) for b in budgets], budgets)
+    ax.set_xlim(-0.8 if budgets[0] == "0" else 0.0, right)
+
+
 def _budget_curves(ax, figure: str, panel: str, ylabel: str) -> None:
     rows = _p5(figure, panel)
-    xs = list(range(len(BUDGETS)))
+    xs = BUDGET_X
     series = list(dict.fromkeys(r["series"] for r in rows))
     ends = []
     for s in series:
@@ -230,8 +242,7 @@ def _budget_curves(ax, figure: str, panel: str, ylabel: str) -> None:
     for y_lab, name in spread_labels(ends, 0.065 * (hi - lo)):
         ax.annotate(name, (xs[-1], y_lab), xytext=(6, 0), textcoords="offset points", va="center", fontsize=7,
                     color=INK)
-    ax.set_xticks(xs, BUDGETS)
-    ax.set_xlim(-0.3, len(xs) - 0.25)
+    _budget_axis(ax)
     ax.set_xlabel("Adaptation budget b (nights; b = 0: base model)")
     ax.set_ylabel(ylabel)
     ax.grid(axis="y", color=GRID, lw=0.5)
@@ -306,13 +317,13 @@ def figure4(out_dir: Path) -> Path:
         ax.axhline(0, color=INK, lw=0.8, zorder=1)
         for i, s in enumerate(SUBJECTS):
             pts = sorted(_p6(fig_id, series=s), key=lambda r: ADAPT_BUDGETS.index(r["x"]))
-            xs = [ADAPT_BUDGETS.index(r["x"]) + (i - 1) * 0.2 for r in pts]
+            xs = [int(r["x"]) + (i - 1) * 0.3 for r in pts]
             y = [float(r["value"]) for r in pts]
             lo = [float(r["value"]) - float(r["lower"]) for r in pts]
             hi = [float(r["upper"]) - float(r["value"]) for r in pts]
             ax.errorbar(xs, y, yerr=[lo, hi], fmt=MARKERS[s], color=COLORS[s], ms=4.5, lw=1.2, capsize=2.5,
                         label=s, zorder=3)
-        ax.set_xticks(range(len(ADAPT_BUDGETS)), ADAPT_BUDGETS)
+        _budget_axis(ax, ADAPT_BUDGETS, 14.9)
         ax.set_xlabel("Adaptation budget b (nights)")
         ax.set_ylabel(f"ΔMAE = base − adapted ({UNIT[t]})")
         ax.set_title(f"{tag} {t.capitalize()}", loc="left")
@@ -320,6 +331,60 @@ def figure4(out_dir: Path) -> Path:
     fig.tight_layout()
     _legend_below(fig, axes, 3, y=0.0)
     return _save(fig, out_dir, "figure4_night_robustness")
+
+
+# --- Figure 5: post-hoc comparators over the budget ------------------------------------------------------------------
+
+# predictor hues from the validated default palette, slots not used for subjects (checked with the dataviz validator:
+# CVD and contrast pass only with the secondary encoding below, so every series also has its own marker and dash)
+PREDICTOR_STYLE = {
+    "E": dict(color="#4a3aa7", ls="-", marker="o", label="E: full fine-tuning (b = 0: C, base model)"),
+    "D": dict(color="#e34948", ls="-.", marker="s", label="D: base model + adaptation offset (b = 0: C)"),
+    "B": dict(color="#eda100", ls="--", marker="^", label="B: adaptation-target mean (b = 0: A)"),
+    "S": dict(color="#008300", ls="none", marker="*", label="S: scratch control (b = 14)"),
+}
+
+
+def _main(predictor: str, subject: str, target: str, b: str) -> dict[str, str]:
+    return S.select("p8_calibration_main" if predictor != "S" else "p8_residual_variation",
+                    **({} if predictor != "S" else {"setting": "rq2_primary_span"}),
+                    subject_id=subject, target=target, budget_nights=b, predictor=predictor)
+
+
+def figure5(out_dir: Path) -> Path:
+    plt = _plt()
+    fig, axes = plt.subplots(2, 3, figsize=(FULL_WIDTH, 4.6))
+    tags = iter("abcdef")
+    for row, t in enumerate(("temperature", "humidity")):
+        for col, s in enumerate(SUBJECTS):
+            ax = axes[row][col]
+            start = {"E": "C", "D": "C", "B": "A"}
+            for p in ("B", "D", "E"):
+                pts = [_main(start[p], s, t, "0")] + [_main(p, s, t, b) for b in ADAPT_BUDGETS]
+                st = PREDICTOR_STYLE[p]
+                ax.plot(BUDGET_X, [float(r["mae"]) for r in pts], color=st["color"], ls=st["ls"], marker=st["marker"],
+                        ms=3.6, lw=1.3, label=st["label"], zorder=3)
+                if p in ("D", "E"):
+                    lo = [float(r["mae_seed_min"]) for r in pts]
+                    hi = [float(r["mae_seed_max"]) for r in pts]
+                    ax.vlines(BUDGET_X, lo, hi, color=st["color"], lw=0.8, alpha=0.7, zorder=2)
+            sc = _main("S", s, t, "14")
+            st = PREDICTOR_STYLE["S"]
+            ax.plot([14.6], [float(sc["mae"])], color=st["color"], ls="none", marker=st["marker"], ms=6.5,
+                    label=st["label"], zorder=4)
+            ax.vlines([14.6], [float(sc["mae_seed_min"])], [float(sc["mae_seed_max"])], color=st["color"], lw=0.8,
+                      zorder=2)
+            _budget_axis(ax, right=15.4)
+            ax.set_title(f"({next(tags)}) {s}, {t}", loc="left", fontsize=7.5)
+            ax.tick_params(labelsize=6.5)
+            ax.grid(axis="y", color=GRID, lw=0.5)
+            if row == 1:
+                ax.set_xlabel("Adaptation budget b (nights)", fontsize=7)
+            if col == 0:
+                ax.set_ylabel(f"MAE ({UNIT[t]})", fontsize=7)
+    fig.tight_layout()
+    _legend_below(fig, axes[0], 2, y=0.0)
+    return _save(fig, out_dir, "figure5_posthoc_comparators")
 
 
 # --- Figure S2: start-span sensitivity -------------------------------------------------------------------------------
@@ -391,6 +456,7 @@ def render_all(out_dir: Path = GENERATED / "figures") -> list[Path]:
             figure_personalization(out_dir, "temperature"),
             figure_personalization(out_dir, "humidity"),
             figure4(out_dir),
+            figure5(out_dir),
             figure_s1(out_dir),
             figure_s2(out_dir),
             figure_s3(out_dir),

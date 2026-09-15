@@ -1726,3 +1726,49 @@ Consequence:
 - Outputs go under `outputs/runs/p8_posthoc/` and `outputs/metrics/p8_posthoc/`, and paper-facing tables are
   `paper/tables/p8_*.csv`.
 - No P3–P6 artifact or tag changes. The manuscript is revised only after the analyses pass their tests and checks.
+
+## D-058 — Manuscript interpretation revised after the v1.1 post-hoc validation; evaluation-focused working title
+Date: 2026-09-16
+Status: Accepted (research lead). The title is a working title and still needs PI confirmation (P8 PI checklist).
+Context:
+- The D-057 analyses were run exactly as pre-registered (`docs/P8_POSTHOC_VALIDATION_REPORT.md`).
+- Under the pre-registered case map they contradict parts of the draft's interpretation:
+  - **Case A:** the adaptation-target mean (a constant computed from the adaptation labels) had a seed-mean MAE no
+    higher than full fine-tuning in half of the subject × target × budget cells. This includes User02 temperature,
+    the draft's headline offset correction, at every budget.
+  - **Residual variation:** no pressure-based model reduced the residual variation clearly below that of a constant;
+    the unadapted and strict-LOSO models had R > 1.
+  - **Case I:** a randomly initialised network trained on the same adaptation nights matched the pretrained
+    fine-tuning in five of six b = 14 cells.
+  - **Case D:** for User07 temperature, a pure offset calibration also produced negative transfer.
+- The draft's abstract headlined a retrospective level-mismatch agreement that uses the later span's labels.
+Decision:
+- **Primary results unchanged.** The v1.0 primary results (Tables 2, 4 and 5 values, G_b, bootstrap intervals) stay
+  unchanged and are reported in full.
+- **Interpretation rewritten:**
+  - The paper is an evaluation with a substantial negative result.
+  - Under unseen-domain shift, chronological personalization in this cohort mainly corrected level offsets, which a
+    personalized constant corrected as well.
+  - The pressure-based models showed no demonstrable within-subject tracking of temperature or humidity.
+  - The level-mismatch agreement is presented as a retrospective descriptive diagnostic, not as a deployable
+    safeguard, and it is removed from the abstract headline.
+  - The post-hoc comparators are labelled post hoc wherever they appear.
+- **Manuscript assets:**
+  - Table 4 shows predictors A–E side by side.
+  - Two tables are added: residual variation, and the b = 14 comparator intervals.
+  - Figure 5 is added: the comparators by budget.
+  - The budget axes use numeric spacing.
+  - Table 3 shows fold–seed consistency.
+  - Supplementary Tables S20–S26 carry the addendum tables.
+- **Working title:** changed to "Evaluating Chronological Personalization for Smart-Mat Microclimate Estimation
+  under Unseen-Domain Shift" (`docs/P8_TITLE_CANDIDATES.md` §6).
+  - The D-054 title rule did not anticipate a change of the paper's scientific framing. This decision supersedes it
+    for this change.
+  - The PI may restore the previous title; both are recorded.
+Evidence: `docs/P8_POSTHOC_VALIDATION_REPORT.md` §5–§6; `paper/tables/p8_*.csv`;
+`paper/tables/p8_posthoc_provenance.json`.
+Consequence:
+- Manuscript, generated tables and figures, and the submission candidate are rebuilt; the PI handoff documents
+  carry the new title and summary.
+- No frozen P3–P6 artifact, tag or v1.0 configuration changed.
+

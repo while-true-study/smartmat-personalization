@@ -894,6 +894,24 @@
   {
     "table": 3,
     "row": 2,
+    "column": "Fold–seed pairs improved; Δ range, °C",
+    "text": "9/9; −0.54 to −0.04",
+    "sources": [
+      "p4_seed_consistency[effect=S1, target=temperature, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=S1, target=temperature, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=S1, target=temperature, metric=mae].min_delta",
+      "p4_seed_consistency[effect=S1, target=temperature, metric=mae].max_delta"
+    ],
+    "values": [
+      "9",
+      "9",
+      "−0.54",
+      "−0.04"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 2,
     "column": "Humidity MAE (%RH)",
     "text": "19.61",
     "sources": [
@@ -915,6 +933,24 @@
     "values": [
       "+1.33",
       "1"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 2,
+    "column": "Fold–seed pairs improved; Δ range, %RH",
+    "text": "3/9; −0.41 to +3.52",
+    "sources": [
+      "p4_seed_consistency[effect=S1, target=humidity, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=S1, target=humidity, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=S1, target=humidity, metric=mae].min_delta",
+      "p4_seed_consistency[effect=S1, target=humidity, metric=mae].max_delta"
+    ],
+    "values": [
+      "3",
+      "9",
+      "−0.41",
+      "+3.52"
     ]
   },
   {
@@ -970,6 +1006,24 @@
   {
     "table": 3,
     "row": 3,
+    "column": "Fold–seed pairs improved; Δ range, °C",
+    "text": "7/9; −0.37 to +0.10",
+    "sources": [
+      "p4_seed_consistency[effect=S2, target=temperature, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=S2, target=temperature, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=S2, target=temperature, metric=mae].min_delta",
+      "p4_seed_consistency[effect=S2, target=temperature, metric=mae].max_delta"
+    ],
+    "values": [
+      "7",
+      "9",
+      "−0.37",
+      "+0.10"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 3,
     "column": "Humidity MAE (%RH)",
     "text": "18.01",
     "sources": [
@@ -991,6 +1045,24 @@
     "values": [
       "−0.27",
       "2"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 3,
+    "column": "Fold–seed pairs improved; Δ range, %RH",
+    "text": "4/9; −2.06 to +0.97",
+    "sources": [
+      "p4_seed_consistency[effect=S2, target=humidity, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=S2, target=humidity, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=S2, target=humidity, metric=mae].min_delta",
+      "p4_seed_consistency[effect=S2, target=humidity, metric=mae].max_delta"
+    ],
+    "values": [
+      "4",
+      "9",
+      "−2.06",
+      "+0.97"
     ]
   },
   {
@@ -1046,6 +1118,24 @@
   {
     "table": 3,
     "row": 4,
+    "column": "Fold–seed pairs improved; Δ range, °C",
+    "text": "8/9; −0.86 to +0.01",
+    "sources": [
+      "p4_seed_consistency[effect=A, target=temperature, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=A, target=temperature, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=A, target=temperature, metric=mae].min_delta",
+      "p4_seed_consistency[effect=A, target=temperature, metric=mae].max_delta"
+    ],
+    "values": [
+      "8",
+      "9",
+      "−0.86",
+      "+0.01"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 4,
     "column": "Humidity MAE (%RH)",
     "text": "18.38",
     "sources": [
@@ -1067,6 +1157,24 @@
     "values": [
       "+0.09",
       "1"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 4,
+    "column": "Fold–seed pairs improved; Δ range, %RH",
+    "text": "3/9; −1.47 to +2.28",
+    "sources": [
+      "p4_seed_consistency[effect=A, target=humidity, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=A, target=humidity, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=A, target=humidity, metric=mae].min_delta",
+      "p4_seed_consistency[effect=A, target=humidity, metric=mae].max_delta"
+    ],
+    "values": [
+      "3",
+      "9",
+      "−1.47",
+      "+2.28"
     ]
   },
   {
@@ -1122,6 +1230,24 @@
   {
     "table": 3,
     "row": 5,
+    "column": "Fold–seed pairs improved; Δ range, °C",
+    "text": "3/9; −0.18 to +0.26",
+    "sources": [
+      "p4_seed_consistency[effect=B, target=temperature, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=B, target=temperature, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=B, target=temperature, metric=mae].min_delta",
+      "p4_seed_consistency[effect=B, target=temperature, metric=mae].max_delta"
+    ],
+    "values": [
+      "3",
+      "9",
+      "−0.18",
+      "+0.26"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 5,
     "column": "Humidity MAE (%RH)",
     "text": "17.73",
     "sources": [
@@ -1143,6 +1269,24 @@
     "values": [
       "−0.55",
       "3"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 5,
+    "column": "Fold–seed pairs improved; Δ range, %RH",
+    "text": "7/9; −2.37 to +0.53",
+    "sources": [
+      "p4_seed_consistency[effect=B, target=humidity, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=B, target=humidity, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=B, target=humidity, metric=mae].min_delta",
+      "p4_seed_consistency[effect=B, target=humidity, metric=mae].max_delta"
+    ],
+    "values": [
+      "7",
+      "9",
+      "−2.37",
+      "+0.53"
     ]
   },
   {
@@ -1198,6 +1342,24 @@
   {
     "table": 3,
     "row": 6,
+    "column": "Fold–seed pairs improved; Δ range, °C",
+    "text": "5/9; −0.32 to +0.22",
+    "sources": [
+      "p4_seed_consistency[effect=C, target=temperature, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=C, target=temperature, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=C, target=temperature, metric=mae].min_delta",
+      "p4_seed_consistency[effect=C, target=temperature, metric=mae].max_delta"
+    ],
+    "values": [
+      "5",
+      "9",
+      "−0.32",
+      "+0.22"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 6,
     "column": "Humidity MAE (%RH)",
     "text": "18.00",
     "sources": [
@@ -1219,6 +1381,24 @@
     "values": [
       "−0.28",
       "2"
+    ]
+  },
+  {
+    "table": 3,
+    "row": 6,
+    "column": "Fold–seed pairs improved; Δ range, %RH",
+    "text": "6/9; −1.47 to +1.28",
+    "sources": [
+      "p4_seed_consistency[effect=C, target=humidity, metric=mae].improved_fold_seeds",
+      "p4_seed_consistency[effect=C, target=humidity, metric=mae].n_fold_seeds",
+      "p4_seed_consistency[effect=C, target=humidity, metric=mae].min_delta",
+      "p4_seed_consistency[effect=C, target=humidity, metric=mae].max_delta"
+    ],
+    "values": [
+      "6",
+      "9",
+      "−1.47",
+      "+1.28"
     ]
   },
   {
@@ -1248,7 +1428,19 @@
   {
     "table": 4,
     "row": 0,
-    "column": "b = 0",
+    "column": "A: training mean",
+    "text": "2.84",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "2.84"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 0,
+    "column": "C: RAW-TCN base",
     "text": "3.09 ± 0.26",
     "sources": [
       "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_mean",
@@ -1261,8 +1453,60 @@
   },
   {
     "table": 4,
-    "row": 0,
-    "column": "b = 1",
+    "row": 1,
+    "column": "A: training mean",
+    "text": "2.84",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "2.84"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 1,
+    "column": "B: adaptation-target mean",
+    "text": "2.31",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=1, predictor=B].mae"
+    ],
+    "values": [
+      "2.31"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 1,
+    "column": "C: RAW-TCN base",
+    "text": "3.09 ± 0.26",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "3.09",
+      "0.26"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 1,
+    "column": "D: RAW-TCN + offset",
+    "text": "4.92 ± 0.29",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=1, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=1, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "4.92",
+      "0.29"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 1,
+    "column": "E: full fine-tuning",
     "text": "3.14 ± 0.31",
     "sources": [
       "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=1].seed_mean",
@@ -1275,50 +1519,8 @@
   },
   {
     "table": 4,
-    "row": 0,
-    "column": "b = 3",
-    "text": "2.85 ± 0.10",
-    "sources": [
-      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=3].seed_mean",
-      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=3].seed_sd"
-    ],
-    "values": [
-      "2.85",
-      "0.10"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 0,
-    "column": "b = 7",
-    "text": "2.31 ± 0.10",
-    "sources": [
-      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=7].seed_mean",
-      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=7].seed_sd"
-    ],
-    "values": [
-      "2.31",
-      "0.10"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 0,
-    "column": "b = 14",
-    "text": "1.75 ± 0.05",
-    "sources": [
-      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=14].seed_mean",
-      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=14].seed_sd"
-    ],
-    "values": [
-      "1.75",
-      "0.05"
-    ]
-  },
-  {
-    "table": 4,
     "row": 1,
-    "column": "b = 1",
+    "column": "G_b of E, % (seeds improved)",
     "text": "−1.7 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=temperature, budget_nights=1].G_pct",
@@ -1331,8 +1533,74 @@
   },
   {
     "table": 4,
-    "row": 1,
-    "column": "b = 3",
+    "row": 2,
+    "column": "A: training mean",
+    "text": "2.84",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "2.84"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 2,
+    "column": "B: adaptation-target mean",
+    "text": "2.27",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=3, predictor=B].mae"
+    ],
+    "values": [
+      "2.27"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 2,
+    "column": "C: RAW-TCN base",
+    "text": "3.09 ± 0.26",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "3.09",
+      "0.26"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 2,
+    "column": "D: RAW-TCN + offset",
+    "text": "3.67 ± 0.22",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=3, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=3, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "3.67",
+      "0.22"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 2,
+    "column": "E: full fine-tuning",
+    "text": "2.85 ± 0.10",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=3].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=3].seed_sd"
+    ],
+    "values": [
+      "2.85",
+      "0.10"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 2,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+7.7 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=temperature, budget_nights=3].G_pct",
@@ -1345,8 +1613,74 @@
   },
   {
     "table": 4,
-    "row": 1,
-    "column": "b = 7",
+    "row": 3,
+    "column": "A: training mean",
+    "text": "2.84",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "2.84"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 3,
+    "column": "B: adaptation-target mean",
+    "text": "2.16",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=7, predictor=B].mae"
+    ],
+    "values": [
+      "2.16"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 3,
+    "column": "C: RAW-TCN base",
+    "text": "3.09 ± 0.26",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "3.09",
+      "0.26"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 3,
+    "column": "D: RAW-TCN + offset",
+    "text": "2.88 ± 0.20",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=7, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=7, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "2.88",
+      "0.20"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 3,
+    "column": "E: full fine-tuning",
+    "text": "2.31 ± 0.10",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=7].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=7].seed_sd"
+    ],
+    "values": [
+      "2.31",
+      "0.10"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 3,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+25.5 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=temperature, budget_nights=7].G_pct",
@@ -1359,8 +1693,74 @@
   },
   {
     "table": 4,
-    "row": 1,
-    "column": "b = 14",
+    "row": 4,
+    "column": "A: training mean",
+    "text": "2.84",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "2.84"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 4,
+    "column": "B: adaptation-target mean",
+    "text": "1.87",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "1.87"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 4,
+    "column": "C: RAW-TCN base",
+    "text": "3.09 ± 0.26",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "3.09",
+      "0.26"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 4,
+    "column": "D: RAW-TCN + offset",
+    "text": "2.62 ± 0.14",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=14, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=14, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "2.62",
+      "0.14"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 4,
+    "column": "E: full fine-tuning",
+    "text": "1.75 ± 0.05",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "1.75",
+      "0.05"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 4,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+43.3 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=temperature, budget_nights=14].G_pct",
@@ -1373,8 +1773,20 @@
   },
   {
     "table": 4,
-    "row": 2,
-    "column": "b = 0",
+    "row": 5,
+    "column": "A: training mean",
+    "text": "4.85",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "4.85"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 5,
+    "column": "C: RAW-TCN base",
     "text": "5.06 ± 0.07",
     "sources": [
       "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_mean",
@@ -1387,8 +1799,60 @@
   },
   {
     "table": 4,
-    "row": 2,
-    "column": "b = 1",
+    "row": 6,
+    "column": "A: training mean",
+    "text": "4.85",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "4.85"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 6,
+    "column": "B: adaptation-target mean",
+    "text": "1.98",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=1, predictor=B].mae"
+    ],
+    "values": [
+      "1.98"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 6,
+    "column": "C: RAW-TCN base",
+    "text": "5.06 ± 0.07",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "5.06",
+      "0.07"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 6,
+    "column": "D: RAW-TCN + offset",
+    "text": "2.08 ± 0.02",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=1, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=1, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "2.08",
+      "0.02"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 6,
+    "column": "E: full fine-tuning",
     "text": "4.34 ± 0.03",
     "sources": [
       "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=1].seed_mean",
@@ -1401,50 +1865,8 @@
   },
   {
     "table": 4,
-    "row": 2,
-    "column": "b = 3",
-    "text": "2.76 ± 0.32",
-    "sources": [
-      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=3].seed_mean",
-      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=3].seed_sd"
-    ],
-    "values": [
-      "2.76",
-      "0.32"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 2,
-    "column": "b = 7",
-    "text": "1.96 ± 0.04",
-    "sources": [
-      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=7].seed_mean",
-      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=7].seed_sd"
-    ],
-    "values": [
-      "1.96",
-      "0.04"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 2,
-    "column": "b = 14",
-    "text": "1.55 ± 0.03",
-    "sources": [
-      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=14].seed_mean",
-      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=14].seed_sd"
-    ],
-    "values": [
-      "1.55",
-      "0.03"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 3,
-    "column": "b = 1",
+    "row": 6,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+14.3 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=temperature, budget_nights=1].G_pct",
@@ -1457,8 +1879,74 @@
   },
   {
     "table": 4,
-    "row": 3,
-    "column": "b = 3",
+    "row": 7,
+    "column": "A: training mean",
+    "text": "4.85",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "4.85"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 7,
+    "column": "B: adaptation-target mean",
+    "text": "1.81",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=3, predictor=B].mae"
+    ],
+    "values": [
+      "1.81"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 7,
+    "column": "C: RAW-TCN base",
+    "text": "5.06 ± 0.07",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "5.06",
+      "0.07"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 7,
+    "column": "D: RAW-TCN + offset",
+    "text": "1.89 ± 0.01",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=3, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=3, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "1.89",
+      "0.01"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 7,
+    "column": "E: full fine-tuning",
+    "text": "2.76 ± 0.32",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=3].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=3].seed_sd"
+    ],
+    "values": [
+      "2.76",
+      "0.32"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 7,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+45.5 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=temperature, budget_nights=3].G_pct",
@@ -1471,8 +1959,74 @@
   },
   {
     "table": 4,
-    "row": 3,
-    "column": "b = 7",
+    "row": 8,
+    "column": "A: training mean",
+    "text": "4.85",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "4.85"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 8,
+    "column": "B: adaptation-target mean",
+    "text": "1.81",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=7, predictor=B].mae"
+    ],
+    "values": [
+      "1.81"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 8,
+    "column": "C: RAW-TCN base",
+    "text": "5.06 ± 0.07",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "5.06",
+      "0.07"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 8,
+    "column": "D: RAW-TCN + offset",
+    "text": "1.90 ± 0.01",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=7, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=7, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "1.90",
+      "0.01"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 8,
+    "column": "E: full fine-tuning",
+    "text": "1.96 ± 0.04",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=7].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=7].seed_sd"
+    ],
+    "values": [
+      "1.96",
+      "0.04"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 8,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+61.3 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=temperature, budget_nights=7].G_pct",
@@ -1485,8 +2039,74 @@
   },
   {
     "table": 4,
-    "row": 3,
-    "column": "b = 14",
+    "row": 9,
+    "column": "A: training mean",
+    "text": "4.85",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "4.85"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 9,
+    "column": "B: adaptation-target mean",
+    "text": "1.49",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "1.49"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 9,
+    "column": "C: RAW-TCN base",
+    "text": "5.06 ± 0.07",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "5.06",
+      "0.07"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 9,
+    "column": "D: RAW-TCN + offset",
+    "text": "1.61 ± 0.00",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=14, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=14, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "1.61",
+      "0.00"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 9,
+    "column": "E: full fine-tuning",
+    "text": "1.55 ± 0.03",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "1.55",
+      "0.03"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 9,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+69.4 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=temperature, budget_nights=14].G_pct",
@@ -1499,8 +2119,20 @@
   },
   {
     "table": 4,
-    "row": 4,
-    "column": "b = 0",
+    "row": 10,
+    "column": "A: training mean",
+    "text": "1.59",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "1.59"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 10,
+    "column": "C: RAW-TCN base",
     "text": "1.89 ± 0.16",
     "sources": [
       "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_mean",
@@ -1513,8 +2145,60 @@
   },
   {
     "table": 4,
-    "row": 4,
-    "column": "b = 1",
+    "row": 11,
+    "column": "A: training mean",
+    "text": "1.59",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "1.59"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 11,
+    "column": "B: adaptation-target mean",
+    "text": "2.41",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=1, predictor=B].mae"
+    ],
+    "values": [
+      "2.41"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 11,
+    "column": "C: RAW-TCN base",
+    "text": "1.89 ± 0.16",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "1.89",
+      "0.16"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 11,
+    "column": "D: RAW-TCN + offset",
+    "text": "2.12 ± 0.02",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=1, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=1, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "2.12",
+      "0.02"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 11,
+    "column": "E: full fine-tuning",
     "text": "2.16 ± 0.01",
     "sources": [
       "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=1].seed_mean",
@@ -1527,50 +2211,8 @@
   },
   {
     "table": 4,
-    "row": 4,
-    "column": "b = 3",
-    "text": "2.37 ± 0.00",
-    "sources": [
-      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=3].seed_mean",
-      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=3].seed_sd"
-    ],
-    "values": [
-      "2.37",
-      "0.00"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 4,
-    "column": "b = 7",
-    "text": "2.33 ± 0.01",
-    "sources": [
-      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=7].seed_mean",
-      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=7].seed_sd"
-    ],
-    "values": [
-      "2.33",
-      "0.01"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 4,
-    "column": "b = 14",
-    "text": "2.36 ± 0.01",
-    "sources": [
-      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=14].seed_mean",
-      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=14].seed_sd"
-    ],
-    "values": [
-      "2.36",
-      "0.01"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 5,
-    "column": "b = 1",
+    "row": 11,
+    "column": "G_b of E, % (seeds improved)",
     "text": "−14.4 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=temperature, budget_nights=1].G_pct",
@@ -1583,8 +2225,74 @@
   },
   {
     "table": 4,
-    "row": 5,
-    "column": "b = 3",
+    "row": 12,
+    "column": "A: training mean",
+    "text": "1.59",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "1.59"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 12,
+    "column": "B: adaptation-target mean",
+    "text": "2.45",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=3, predictor=B].mae"
+    ],
+    "values": [
+      "2.45"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 12,
+    "column": "C: RAW-TCN base",
+    "text": "1.89 ± 0.16",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "1.89",
+      "0.16"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 12,
+    "column": "D: RAW-TCN + offset",
+    "text": "2.18 ± 0.02",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=3, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=3, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "2.18",
+      "0.02"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 12,
+    "column": "E: full fine-tuning",
+    "text": "2.37 ± 0.00",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=3].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=3].seed_sd"
+    ],
+    "values": [
+      "2.37",
+      "0.00"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 12,
+    "column": "G_b of E, % (seeds improved)",
     "text": "−25.0 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=temperature, budget_nights=3].G_pct",
@@ -1597,8 +2305,74 @@
   },
   {
     "table": 4,
-    "row": 5,
-    "column": "b = 7",
+    "row": 13,
+    "column": "A: training mean",
+    "text": "1.59",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "1.59"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 13,
+    "column": "B: adaptation-target mean",
+    "text": "2.37",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=7, predictor=B].mae"
+    ],
+    "values": [
+      "2.37"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 13,
+    "column": "C: RAW-TCN base",
+    "text": "1.89 ± 0.16",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "1.89",
+      "0.16"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 13,
+    "column": "D: RAW-TCN + offset",
+    "text": "2.10 ± 0.01",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=7, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=7, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "2.10",
+      "0.01"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 13,
+    "column": "E: full fine-tuning",
+    "text": "2.33 ± 0.01",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=7].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=7].seed_sd"
+    ],
+    "values": [
+      "2.33",
+      "0.01"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 13,
+    "column": "G_b of E, % (seeds improved)",
     "text": "−23.3 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=temperature, budget_nights=7].G_pct",
@@ -1611,8 +2385,74 @@
   },
   {
     "table": 4,
-    "row": 5,
-    "column": "b = 14",
+    "row": 14,
+    "column": "A: training mean",
+    "text": "1.59",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "1.59"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 14,
+    "column": "B: adaptation-target mean",
+    "text": "2.33",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "2.33"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 14,
+    "column": "C: RAW-TCN base",
+    "text": "1.89 ± 0.16",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "1.89",
+      "0.16"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 14,
+    "column": "D: RAW-TCN + offset",
+    "text": "2.07 ± 0.01",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=14, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=14, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "2.07",
+      "0.01"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 14,
+    "column": "E: full fine-tuning",
+    "text": "2.36 ± 0.01",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "2.36",
+      "0.01"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 14,
+    "column": "G_b of E, % (seeds improved)",
     "text": "−25.0 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=temperature, budget_nights=14].G_pct",
@@ -1625,68 +2465,20 @@
   },
   {
     "table": 4,
-    "row": 6,
-    "column": "b = 0",
-    "text": "3.35",
+    "row": 15,
+    "column": "A: training mean",
+    "text": "23.72",
     "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=temperature, budget_nights=0].seed_mean"
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=0, predictor=A].mae"
     ],
     "values": [
-      "3.35"
+      "23.72"
     ]
   },
   {
     "table": 4,
-    "row": 6,
-    "column": "b = 1",
-    "text": "3.22",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=temperature, budget_nights=1].seed_mean"
-    ],
-    "values": [
-      "3.22"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 6,
-    "column": "b = 3",
-    "text": "2.66",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=temperature, budget_nights=3].seed_mean"
-    ],
-    "values": [
-      "2.66"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 6,
-    "column": "b = 7",
-    "text": "2.20",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=temperature, budget_nights=7].seed_mean"
-    ],
-    "values": [
-      "2.20"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 6,
-    "column": "b = 14",
-    "text": "1.89",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=temperature, budget_nights=14].seed_mean"
-    ],
-    "values": [
-      "1.89"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 7,
-    "column": "b = 0",
+    "row": 15,
+    "column": "C: RAW-TCN base",
     "text": "20.68 ± 1.34",
     "sources": [
       "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_mean",
@@ -1699,8 +2491,60 @@
   },
   {
     "table": 4,
-    "row": 7,
-    "column": "b = 1",
+    "row": 16,
+    "column": "A: training mean",
+    "text": "23.72",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "23.72"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 16,
+    "column": "B: adaptation-target mean",
+    "text": "44.63",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=1, predictor=B].mae"
+    ],
+    "values": [
+      "44.63"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 16,
+    "column": "C: RAW-TCN base",
+    "text": "20.68 ± 1.34",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "20.68",
+      "1.34"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 16,
+    "column": "D: RAW-TCN + offset",
+    "text": "51.35 ± 0.45",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=1, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=1, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "51.35",
+      "0.45"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 16,
+    "column": "E: full fine-tuning",
     "text": "27.83 ± 2.28",
     "sources": [
       "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=1].seed_mean",
@@ -1713,50 +2557,8 @@
   },
   {
     "table": 4,
-    "row": 7,
-    "column": "b = 3",
-    "text": "34.19 ± 1.22",
-    "sources": [
-      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=3].seed_mean",
-      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=3].seed_sd"
-    ],
-    "values": [
-      "34.19",
-      "1.22"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 7,
-    "column": "b = 7",
-    "text": "29.95 ± 0.51",
-    "sources": [
-      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=7].seed_mean",
-      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=7].seed_sd"
-    ],
-    "values": [
-      "29.95",
-      "0.51"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 7,
-    "column": "b = 14",
-    "text": "16.03 ± 0.42",
-    "sources": [
-      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=14].seed_mean",
-      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=14].seed_sd"
-    ],
-    "values": [
-      "16.03",
-      "0.42"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 8,
-    "column": "b = 1",
+    "row": 16,
+    "column": "G_b of E, % (seeds improved)",
     "text": "−34.6 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=humidity, budget_nights=1].G_pct",
@@ -1769,8 +2571,74 @@
   },
   {
     "table": 4,
-    "row": 8,
-    "column": "b = 3",
+    "row": 17,
+    "column": "A: training mean",
+    "text": "23.72",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "23.72"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 17,
+    "column": "B: adaptation-target mean",
+    "text": "44.16",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=3, predictor=B].mae"
+    ],
+    "values": [
+      "44.16"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 17,
+    "column": "C: RAW-TCN base",
+    "text": "20.68 ± 1.34",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "20.68",
+      "1.34"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 17,
+    "column": "D: RAW-TCN + offset",
+    "text": "47.16 ± 0.96",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=3, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=3, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "47.16",
+      "0.96"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 17,
+    "column": "E: full fine-tuning",
+    "text": "34.19 ± 1.22",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=3].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=3].seed_sd"
+    ],
+    "values": [
+      "34.19",
+      "1.22"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 17,
+    "column": "G_b of E, % (seeds improved)",
     "text": "−65.3 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=humidity, budget_nights=3].G_pct",
@@ -1783,8 +2651,74 @@
   },
   {
     "table": 4,
-    "row": 8,
-    "column": "b = 7",
+    "row": 18,
+    "column": "A: training mean",
+    "text": "23.72",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "23.72"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 18,
+    "column": "B: adaptation-target mean",
+    "text": "35.52",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=7, predictor=B].mae"
+    ],
+    "values": [
+      "35.52"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 18,
+    "column": "C: RAW-TCN base",
+    "text": "20.68 ± 1.34",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "20.68",
+      "1.34"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 18,
+    "column": "D: RAW-TCN + offset",
+    "text": "36.09 ± 1.20",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=7, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=7, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "36.09",
+      "1.20"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 18,
+    "column": "E: full fine-tuning",
+    "text": "29.95 ± 0.51",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=7].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=7].seed_sd"
+    ],
+    "values": [
+      "29.95",
+      "0.51"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 18,
+    "column": "G_b of E, % (seeds improved)",
     "text": "−44.8 (0/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=humidity, budget_nights=7].G_pct",
@@ -1797,8 +2731,74 @@
   },
   {
     "table": 4,
-    "row": 8,
-    "column": "b = 14",
+    "row": 19,
+    "column": "A: training mean",
+    "text": "23.72",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "23.72"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 19,
+    "column": "B: adaptation-target mean",
+    "text": "19.09",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "19.09"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 19,
+    "column": "C: RAW-TCN base",
+    "text": "20.68 ± 1.34",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "20.68",
+      "1.34"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 19,
+    "column": "D: RAW-TCN + offset",
+    "text": "18.54 ± 0.72",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=14, predictor=D].mae",
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=14, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "18.54",
+      "0.72"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 19,
+    "column": "E: full fine-tuning",
+    "text": "16.03 ± 0.42",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "16.03",
+      "0.42"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 19,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+22.5 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User01, target=humidity, budget_nights=14].G_pct",
@@ -1811,8 +2811,20 @@
   },
   {
     "table": 4,
-    "row": 9,
-    "column": "b = 0",
+    "row": 20,
+    "column": "A: training mean",
+    "text": "25.05",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "25.05"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 20,
+    "column": "C: RAW-TCN base",
     "text": "21.98 ± 0.50",
     "sources": [
       "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_mean",
@@ -1825,8 +2837,60 @@
   },
   {
     "table": 4,
-    "row": 9,
-    "column": "b = 1",
+    "row": 21,
+    "column": "A: training mean",
+    "text": "25.05",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "25.05"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 21,
+    "column": "B: adaptation-target mean",
+    "text": "13.72",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=1, predictor=B].mae"
+    ],
+    "values": [
+      "13.72"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 21,
+    "column": "C: RAW-TCN base",
+    "text": "21.98 ± 0.50",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "21.98",
+      "0.50"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 21,
+    "column": "D: RAW-TCN + offset",
+    "text": "15.08 ± 0.04",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=1, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=1, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "15.08",
+      "0.04"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 21,
+    "column": "E: full fine-tuning",
     "text": "17.29 ± 0.45",
     "sources": [
       "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=1].seed_mean",
@@ -1839,50 +2903,8 @@
   },
   {
     "table": 4,
-    "row": 9,
-    "column": "b = 3",
-    "text": "12.70 ± 0.84",
-    "sources": [
-      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=3].seed_mean",
-      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=3].seed_sd"
-    ],
-    "values": [
-      "12.70",
-      "0.84"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 9,
-    "column": "b = 7",
-    "text": "14.99 ± 0.21",
-    "sources": [
-      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=7].seed_mean",
-      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=7].seed_sd"
-    ],
-    "values": [
-      "14.99",
-      "0.21"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 9,
-    "column": "b = 14",
-    "text": "12.23 ± 0.16",
-    "sources": [
-      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=14].seed_mean",
-      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=14].seed_sd"
-    ],
-    "values": [
-      "12.23",
-      "0.16"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 10,
-    "column": "b = 1",
+    "row": 21,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+21.4 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=humidity, budget_nights=1].G_pct",
@@ -1895,8 +2917,74 @@
   },
   {
     "table": 4,
-    "row": 10,
-    "column": "b = 3",
+    "row": 22,
+    "column": "A: training mean",
+    "text": "25.05",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "25.05"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 22,
+    "column": "B: adaptation-target mean",
+    "text": "15.53",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=3, predictor=B].mae"
+    ],
+    "values": [
+      "15.53"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 22,
+    "column": "C: RAW-TCN base",
+    "text": "21.98 ± 0.50",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "21.98",
+      "0.50"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 22,
+    "column": "D: RAW-TCN + offset",
+    "text": "16.71 ± 0.02",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=3, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=3, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "16.71",
+      "0.02"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 22,
+    "column": "E: full fine-tuning",
+    "text": "12.70 ± 0.84",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=3].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=3].seed_sd"
+    ],
+    "values": [
+      "12.70",
+      "0.84"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 22,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+42.2 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=humidity, budget_nights=3].G_pct",
@@ -1909,8 +2997,74 @@
   },
   {
     "table": 4,
-    "row": 10,
-    "column": "b = 7",
+    "row": 23,
+    "column": "A: training mean",
+    "text": "25.05",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "25.05"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 23,
+    "column": "B: adaptation-target mean",
+    "text": "16.69",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=7, predictor=B].mae"
+    ],
+    "values": [
+      "16.69"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 23,
+    "column": "C: RAW-TCN base",
+    "text": "21.98 ± 0.50",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "21.98",
+      "0.50"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 23,
+    "column": "D: RAW-TCN + offset",
+    "text": "17.60 ± 0.03",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=7, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=7, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "17.60",
+      "0.03"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 23,
+    "column": "E: full fine-tuning",
+    "text": "14.99 ± 0.21",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=7].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=7].seed_sd"
+    ],
+    "values": [
+      "14.99",
+      "0.21"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 23,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+31.8 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=humidity, budget_nights=7].G_pct",
@@ -1923,8 +3077,74 @@
   },
   {
     "table": 4,
-    "row": 10,
-    "column": "b = 14",
+    "row": 24,
+    "column": "A: training mean",
+    "text": "25.05",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "25.05"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 24,
+    "column": "B: adaptation-target mean",
+    "text": "13.42",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "13.42"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 24,
+    "column": "C: RAW-TCN base",
+    "text": "21.98 ± 0.50",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "21.98",
+      "0.50"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 24,
+    "column": "D: RAW-TCN + offset",
+    "text": "14.70 ± 0.04",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=14, predictor=D].mae",
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=14, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "14.70",
+      "0.04"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 24,
+    "column": "E: full fine-tuning",
+    "text": "12.23 ± 0.16",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "12.23",
+      "0.16"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 24,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+44.3 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User02, target=humidity, budget_nights=14].G_pct",
@@ -1937,8 +3157,20 @@
   },
   {
     "table": 4,
-    "row": 11,
-    "column": "b = 0",
+    "row": 25,
+    "column": "A: training mean",
+    "text": "8.39",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "8.39"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 25,
+    "column": "C: RAW-TCN base",
     "text": "10.25 ± 0.30",
     "sources": [
       "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_mean",
@@ -1951,8 +3183,60 @@
   },
   {
     "table": 4,
-    "row": 11,
-    "column": "b = 1",
+    "row": 26,
+    "column": "A: training mean",
+    "text": "8.39",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "8.39"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 26,
+    "column": "B: adaptation-target mean",
+    "text": "8.34",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=1, predictor=B].mae"
+    ],
+    "values": [
+      "8.34"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 26,
+    "column": "C: RAW-TCN base",
+    "text": "10.25 ± 0.30",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "10.25",
+      "0.30"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 26,
+    "column": "D: RAW-TCN + offset",
+    "text": "9.89 ± 0.22",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=1, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=1, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "9.89",
+      "0.22"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 26,
+    "column": "E: full fine-tuning",
     "text": "8.56 ± 0.06",
     "sources": [
       "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=1].seed_mean",
@@ -1965,50 +3249,8 @@
   },
   {
     "table": 4,
-    "row": 11,
-    "column": "b = 3",
-    "text": "8.35 ± 0.05",
-    "sources": [
-      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=3].seed_mean",
-      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=3].seed_sd"
-    ],
-    "values": [
-      "8.35",
-      "0.05"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 11,
-    "column": "b = 7",
-    "text": "8.38 ± 0.03",
-    "sources": [
-      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=7].seed_mean",
-      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=7].seed_sd"
-    ],
-    "values": [
-      "8.38",
-      "0.03"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 11,
-    "column": "b = 14",
-    "text": "8.28 ± 0.01",
-    "sources": [
-      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=14].seed_mean",
-      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=14].seed_sd"
-    ],
-    "values": [
-      "8.28",
-      "0.01"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 12,
-    "column": "b = 1",
+    "row": 26,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+16.5 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=humidity, budget_nights=1].G_pct",
@@ -2021,8 +3263,74 @@
   },
   {
     "table": 4,
-    "row": 12,
-    "column": "b = 3",
+    "row": 27,
+    "column": "A: training mean",
+    "text": "8.39",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "8.39"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 27,
+    "column": "B: adaptation-target mean",
+    "text": "8.31",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=3, predictor=B].mae"
+    ],
+    "values": [
+      "8.31"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 27,
+    "column": "C: RAW-TCN base",
+    "text": "10.25 ± 0.30",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "10.25",
+      "0.30"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 27,
+    "column": "D: RAW-TCN + offset",
+    "text": "9.94 ± 0.22",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=3, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=3, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "9.94",
+      "0.22"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 27,
+    "column": "E: full fine-tuning",
+    "text": "8.35 ± 0.05",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=3].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=3].seed_sd"
+    ],
+    "values": [
+      "8.35",
+      "0.05"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 27,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+18.6 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=humidity, budget_nights=3].G_pct",
@@ -2035,8 +3343,74 @@
   },
   {
     "table": 4,
-    "row": 12,
-    "column": "b = 7",
+    "row": 28,
+    "column": "A: training mean",
+    "text": "8.39",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "8.39"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 28,
+    "column": "B: adaptation-target mean",
+    "text": "8.38",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=7, predictor=B].mae"
+    ],
+    "values": [
+      "8.38"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 28,
+    "column": "C: RAW-TCN base",
+    "text": "10.25 ± 0.30",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "10.25",
+      "0.30"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 28,
+    "column": "D: RAW-TCN + offset",
+    "text": "9.84 ± 0.22",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=7, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=7, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "9.84",
+      "0.22"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 28,
+    "column": "E: full fine-tuning",
+    "text": "8.38 ± 0.03",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=7].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=7].seed_sd"
+    ],
+    "values": [
+      "8.38",
+      "0.03"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 28,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+18.2 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=humidity, budget_nights=7].G_pct",
@@ -2049,8 +3423,74 @@
   },
   {
     "table": 4,
-    "row": 12,
-    "column": "b = 14",
+    "row": 29,
+    "column": "A: training mean",
+    "text": "8.39",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=0, predictor=A].mae"
+    ],
+    "values": [
+      "8.39"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 29,
+    "column": "B: adaptation-target mean",
+    "text": "8.29",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "8.29"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 29,
+    "column": "C: RAW-TCN base",
+    "text": "10.25 ± 0.30",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=0].seed_sd"
+    ],
+    "values": [
+      "10.25",
+      "0.30"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 29,
+    "column": "D: RAW-TCN + offset",
+    "text": "10.28 ± 0.25",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=14, predictor=D].mae",
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=14, predictor=D].mae_seed_sd"
+    ],
+    "values": [
+      "10.28",
+      "0.25"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 29,
+    "column": "E: full fine-tuning",
+    "text": "8.28 ± 0.01",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "8.28",
+      "0.01"
+    ]
+  },
+  {
+    "table": 4,
+    "row": 29,
+    "column": "G_b of E, % (seeds improved)",
     "text": "+19.2 (3/3)",
     "sources": [
       "p5_adaptation_gain[subject_id=User07, target=humidity, budget_nights=14].G_pct",
@@ -2059,66 +3499,6 @@
     "values": [
       "+19.2",
       "3"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 13,
-    "column": "b = 0",
-    "text": "17.64",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=humidity, budget_nights=0].seed_mean"
-    ],
-    "values": [
-      "17.64"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 13,
-    "column": "b = 1",
-    "text": "17.89",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=humidity, budget_nights=1].seed_mean"
-    ],
-    "values": [
-      "17.89"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 13,
-    "column": "b = 3",
-    "text": "18.41",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=humidity, budget_nights=3].seed_mean"
-    ],
-    "values": [
-      "18.41"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 13,
-    "column": "b = 7",
-    "text": "17.77",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=humidity, budget_nights=7].seed_mean"
-    ],
-    "values": [
-      "17.77"
-    ]
-  },
-  {
-    "table": 4,
-    "row": 13,
-    "column": "b = 14",
-    "text": "12.18",
-    "sources": [
-      "p5_primary_mae[subject_id=unweighted_mean, target=humidity, budget_nights=14].seed_mean"
-    ],
-    "values": [
-      "12.18"
     ]
   },
   {
@@ -3248,5 +4628,1229 @@
       "p6_bootstrap_seed_sensitivity[metric=mae, seed=2, subject_id=User07, target=humidity, budget_nights=14].interval"
     ],
     "values": []
+  },
+  {
+    "table": 6,
+    "row": 0,
+    "column": "Strict LOSO: target SD",
+    "text": "1.78",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=temperature, budget_nights=, predictor=A].target_sd"
+    ],
+    "values": [
+      "1.78"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 0,
+    "column": "Strict LOSO: R, RAW-TCN",
+    "text": "1.86 (1.73–2.00)",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=temperature, budget_nights=, predictor=C].R",
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=temperature, budget_nights=, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=temperature, budget_nights=, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.86",
+      "1.73",
+      "2.00"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 0,
+    "column": "Primary span: target SD",
+    "text": "1.77",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=0, predictor=A].target_sd"
+    ],
+    "values": [
+      "1.77"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 0,
+    "column": "R, base (b = 0)",
+    "text": "1.83 (1.70–1.96)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=0, predictor=C].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=0, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=0, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.83",
+      "1.70",
+      "1.96"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 0,
+    "column": "R, full fine-tuning (b = 14)",
+    "text": "1.00 (0.99–1.01)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=14, predictor=E].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=14, predictor=E].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=14, predictor=E].R_seed_max"
+    ],
+    "values": [
+      "1.00",
+      "0.99",
+      "1.01"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 0,
+    "column": "R, scratch control (b = 14)",
+    "text": "0.99 (0.99–0.99)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=14, predictor=S].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=14, predictor=S].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=temperature, budget_nights=14, predictor=S].R_seed_max"
+    ],
+    "values": [
+      "0.99",
+      "0.99",
+      "0.99"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 1,
+    "column": "Strict LOSO: target SD",
+    "text": "1.94",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=temperature, budget_nights=, predictor=A].target_sd"
+    ],
+    "values": [
+      "1.94"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 1,
+    "column": "Strict LOSO: R, RAW-TCN",
+    "text": "1.08 (1.07–1.08)",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=temperature, budget_nights=, predictor=C].R",
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=temperature, budget_nights=, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=temperature, budget_nights=, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.08",
+      "1.07",
+      "1.08"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 1,
+    "column": "Primary span: target SD",
+    "text": "1.71",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=0, predictor=A].target_sd"
+    ],
+    "values": [
+      "1.71"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 1,
+    "column": "R, base (b = 0)",
+    "text": "1.09 (1.08–1.09)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=0, predictor=C].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=0, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=0, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.09",
+      "1.08",
+      "1.09"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 1,
+    "column": "R, full fine-tuning (b = 14)",
+    "text": "0.96 (0.94–0.98)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=14, predictor=E].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=14, predictor=E].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=14, predictor=E].R_seed_max"
+    ],
+    "values": [
+      "0.96",
+      "0.94",
+      "0.98"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 1,
+    "column": "R, scratch control (b = 14)",
+    "text": "0.94 (0.93–0.95)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=14, predictor=S].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=14, predictor=S].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=temperature, budget_nights=14, predictor=S].R_seed_max"
+    ],
+    "values": [
+      "0.94",
+      "0.93",
+      "0.95"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 2,
+    "column": "Strict LOSO: target SD",
+    "text": "1.87",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=temperature, budget_nights=, predictor=A].target_sd"
+    ],
+    "values": [
+      "1.87"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 2,
+    "column": "Strict LOSO: R, RAW-TCN",
+    "text": "1.12 (1.09–1.14)",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=temperature, budget_nights=, predictor=C].R",
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=temperature, budget_nights=, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=temperature, budget_nights=, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.12",
+      "1.09",
+      "1.14"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 2,
+    "column": "Primary span: target SD",
+    "text": "1.81",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=0, predictor=A].target_sd"
+    ],
+    "values": [
+      "1.81"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 2,
+    "column": "R, base (b = 0)",
+    "text": "1.14 (1.11–1.16)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=0, predictor=C].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=0, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=0, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.14",
+      "1.11",
+      "1.16"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 2,
+    "column": "R, full fine-tuning (b = 14)",
+    "text": "1.02 (1.02–1.02)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=14, predictor=E].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=14, predictor=E].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=14, predictor=E].R_seed_max"
+    ],
+    "values": [
+      "1.02",
+      "1.02",
+      "1.02"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 2,
+    "column": "R, scratch control (b = 14)",
+    "text": "1.02 (1.02–1.02)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=14, predictor=S].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=14, predictor=S].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=temperature, budget_nights=14, predictor=S].R_seed_max"
+    ],
+    "values": [
+      "1.02",
+      "1.02",
+      "1.02"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 3,
+    "column": "Strict LOSO: target SD",
+    "text": "10.68",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=humidity, budget_nights=, predictor=A].target_sd"
+    ],
+    "values": [
+      "10.68"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 3,
+    "column": "Strict LOSO: R, RAW-TCN",
+    "text": "1.25 (1.21–1.29)",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=humidity, budget_nights=, predictor=C].R",
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=humidity, budget_nights=, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=strict_loso, subject_id=User01, target=humidity, budget_nights=, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.25",
+      "1.21",
+      "1.29"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 3,
+    "column": "Primary span: target SD",
+    "text": "8.58",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=0, predictor=A].target_sd"
+    ],
+    "values": [
+      "8.58"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 3,
+    "column": "R, base (b = 0)",
+    "text": "1.37 (1.30–1.45)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=0, predictor=C].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=0, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=0, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.37",
+      "1.30",
+      "1.45"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 3,
+    "column": "R, full fine-tuning (b = 14)",
+    "text": "1.32 (1.26–1.37)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=14, predictor=E].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=14, predictor=E].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=14, predictor=E].R_seed_max"
+    ],
+    "values": [
+      "1.32",
+      "1.26",
+      "1.37"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 3,
+    "column": "R, scratch control (b = 14)",
+    "text": "1.30 (1.29–1.31)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=14, predictor=S].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=14, predictor=S].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User01, target=humidity, budget_nights=14, predictor=S].R_seed_max"
+    ],
+    "values": [
+      "1.30",
+      "1.29",
+      "1.31"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 4,
+    "column": "Strict LOSO: target SD",
+    "text": "14.49",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=humidity, budget_nights=, predictor=A].target_sd"
+    ],
+    "values": [
+      "14.49"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 4,
+    "column": "Strict LOSO: R, RAW-TCN",
+    "text": "1.10 (1.10–1.11)",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=humidity, budget_nights=, predictor=C].R",
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=humidity, budget_nights=, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=strict_loso, subject_id=User02, target=humidity, budget_nights=, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.10",
+      "1.10",
+      "1.11"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 4,
+    "column": "Primary span: target SD",
+    "text": "13.76",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=0, predictor=A].target_sd"
+    ],
+    "values": [
+      "13.76"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 4,
+    "column": "R, base (b = 0)",
+    "text": "1.09 (1.09–1.10)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=0, predictor=C].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=0, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=0, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.09",
+      "1.09",
+      "1.10"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 4,
+    "column": "R, full fine-tuning (b = 14)",
+    "text": "0.99 (0.98–1.00)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=14, predictor=E].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=14, predictor=E].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=14, predictor=E].R_seed_max"
+    ],
+    "values": [
+      "0.99",
+      "0.98",
+      "1.00"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 4,
+    "column": "R, scratch control (b = 14)",
+    "text": "0.97 (0.97–0.97)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=14, predictor=S].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=14, predictor=S].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User02, target=humidity, budget_nights=14, predictor=S].R_seed_max"
+    ],
+    "values": [
+      "0.97",
+      "0.97",
+      "0.97"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 5,
+    "column": "Strict LOSO: target SD",
+    "text": "9.37",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=humidity, budget_nights=, predictor=A].target_sd"
+    ],
+    "values": [
+      "9.37"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 5,
+    "column": "Strict LOSO: R, RAW-TCN",
+    "text": "1.26 (1.23–1.28)",
+    "sources": [
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=humidity, budget_nights=, predictor=C].R",
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=humidity, budget_nights=, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=strict_loso, subject_id=User07, target=humidity, budget_nights=, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.26",
+      "1.23",
+      "1.28"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 5,
+    "column": "Primary span: target SD",
+    "text": "9.74",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=0, predictor=A].target_sd"
+    ],
+    "values": [
+      "9.74"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 5,
+    "column": "R, base (b = 0)",
+    "text": "1.23 (1.19–1.26)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=0, predictor=C].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=0, predictor=C].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=0, predictor=C].R_seed_max"
+    ],
+    "values": [
+      "1.23",
+      "1.19",
+      "1.26"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 5,
+    "column": "R, full fine-tuning (b = 14)",
+    "text": "1.00 (1.00–1.00)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=14, predictor=E].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=14, predictor=E].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=14, predictor=E].R_seed_max"
+    ],
+    "values": [
+      "1.00",
+      "1.00",
+      "1.00"
+    ]
+  },
+  {
+    "table": 6,
+    "row": 5,
+    "column": "R, scratch control (b = 14)",
+    "text": "1.00 (1.00–1.00)",
+    "sources": [
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=14, predictor=S].R",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=14, predictor=S].R_seed_min",
+      "p8_residual_variation[setting=rq2_primary_span, subject_id=User07, target=humidity, budget_nights=14, predictor=S].R_seed_max"
+    ],
+    "values": [
+      "1.00",
+      "1.00",
+      "1.00"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 0,
+    "column": "MAE, B: adaptation-target mean",
+    "text": "1.87",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=temperature, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "1.87"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 0,
+    "column": "MAE, E: full fine-tuning",
+    "text": "1.75 ± 0.05",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=temperature, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "1.75",
+      "0.05"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 0,
+    "column": "MAE, S: scratch control",
+    "text": "1.78 ± 0.01",
+    "sources": [
+      "p8_initialization_control[subject_id=User01, target=temperature, predictor=S, seed=mean].mae",
+      "p8_initialization_control[subject_id=User01, target=temperature, predictor=S, seed=mean].mae_seed_sd"
+    ],
+    "values": [
+      "1.78",
+      "0.01"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 0,
+    "column": "Δ B − E",
+    "text": "+0.16 [+0.11, +0.21] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=temperature, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=temperature, budget_nights=14, first=B, second=E].interval"
+    ],
+    "values": [
+      "+0.16",
+      "+0.11",
+      "+0.21"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 0,
+    "column": "Δ D − E",
+    "text": "+0.75 [+0.58, +0.91] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=D, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=D, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=D, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=temperature, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=temperature, budget_nights=14, first=D, second=E].interval"
+    ],
+    "values": [
+      "+0.75",
+      "+0.58",
+      "+0.91"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 0,
+    "column": "Δ S − E",
+    "text": "+0.06 [+0.03, +0.08] +/−/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=S, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=S, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=S, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=temperature, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=temperature, budget_nights=14, first=S, second=E].interval"
+    ],
+    "values": [
+      "+0.06",
+      "+0.03",
+      "+0.08"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 0,
+    "column": "Δ B − S",
+    "text": "+0.10 [+0.07, +0.13] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=S].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=S].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=S].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=temperature, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=temperature, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=temperature, budget_nights=14, first=B, second=S].interval"
+    ],
+    "values": [
+      "+0.10",
+      "+0.07",
+      "+0.13"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 1,
+    "column": "MAE, B: adaptation-target mean",
+    "text": "1.49",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=temperature, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "1.49"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 1,
+    "column": "MAE, E: full fine-tuning",
+    "text": "1.55 ± 0.03",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=temperature, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "1.55",
+      "0.03"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 1,
+    "column": "MAE, S: scratch control",
+    "text": "1.57 ± 0.05",
+    "sources": [
+      "p8_initialization_control[subject_id=User02, target=temperature, predictor=S, seed=mean].mae",
+      "p8_initialization_control[subject_id=User02, target=temperature, predictor=S, seed=mean].mae_seed_sd"
+    ],
+    "values": [
+      "1.57",
+      "0.05"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 1,
+    "column": "Δ B − E",
+    "text": "−0.04 [−0.10, +0.02] 0/0/−",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=temperature, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=temperature, budget_nights=14, first=B, second=E].interval"
+    ],
+    "values": [
+      "−0.04",
+      "−0.10",
+      "+0.02"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 1,
+    "column": "Δ D − E",
+    "text": "+0.09 [−0.00, +0.17] 0/0/0",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=D, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=D, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=D, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=temperature, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=temperature, budget_nights=14, first=D, second=E].interval"
+    ],
+    "values": [
+      "+0.09",
+      "−0.00",
+      "+0.17"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 1,
+    "column": "Δ S − E",
+    "text": "−0.01 [−0.02, +0.00] 0/+/0",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=S, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=S, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=S, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=temperature, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=temperature, budget_nights=14, first=S, second=E].interval"
+    ],
+    "values": [
+      "−0.01",
+      "−0.02",
+      "+0.00"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 1,
+    "column": "Δ B − S",
+    "text": "−0.03 [−0.10, +0.04] 0/−/−",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=S].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=S].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=S].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=temperature, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=temperature, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=temperature, budget_nights=14, first=B, second=S].interval"
+    ],
+    "values": [
+      "−0.03",
+      "−0.10",
+      "+0.04"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 2,
+    "column": "MAE, B: adaptation-target mean",
+    "text": "2.33",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=temperature, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "2.33"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 2,
+    "column": "MAE, E: full fine-tuning",
+    "text": "2.36 ± 0.01",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=temperature, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "2.36",
+      "0.01"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 2,
+    "column": "MAE, S: scratch control",
+    "text": "2.36 ± 0.03",
+    "sources": [
+      "p8_initialization_control[subject_id=User07, target=temperature, predictor=S, seed=mean].mae",
+      "p8_initialization_control[subject_id=User07, target=temperature, predictor=S, seed=mean].mae_seed_sd"
+    ],
+    "values": [
+      "2.36",
+      "0.03"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 2,
+    "column": "Δ B − E",
+    "text": "−0.04 [−0.06, −0.03] −/−/−",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=temperature, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=temperature, budget_nights=14, first=B, second=E].interval"
+    ],
+    "values": [
+      "−0.04",
+      "−0.06",
+      "−0.03"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 2,
+    "column": "Δ D − E",
+    "text": "−0.29 [−0.47, −0.11] −/−/−",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=D, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=D, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=D, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=temperature, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=temperature, budget_nights=14, first=D, second=E].interval"
+    ],
+    "values": [
+      "−0.29",
+      "−0.47",
+      "−0.11"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 2,
+    "column": "Δ S − E",
+    "text": "+0.00 [−0.01, +0.01] 0/−/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=S, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=S, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=S, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=temperature, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=temperature, budget_nights=14, first=S, second=E].interval"
+    ],
+    "values": [
+      "+0.00",
+      "−0.01",
+      "+0.01"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 2,
+    "column": "Δ B − S",
+    "text": "−0.04 [−0.06, −0.03] −/0/−",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=S].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=S].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=S].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=temperature, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=temperature, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=temperature, budget_nights=14, first=B, second=S].interval"
+    ],
+    "values": [
+      "−0.04",
+      "−0.06",
+      "−0.03"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 3,
+    "column": "MAE, B: adaptation-target mean",
+    "text": "19.09",
+    "sources": [
+      "p8_calibration_main[subject_id=User01, target=humidity, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "19.09"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 3,
+    "column": "MAE, E: full fine-tuning",
+    "text": "16.03 ± 0.42",
+    "sources": [
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User01, target=humidity, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "16.03",
+      "0.42"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 3,
+    "column": "MAE, S: scratch control",
+    "text": "15.76 ± 0.31",
+    "sources": [
+      "p8_initialization_control[subject_id=User01, target=humidity, predictor=S, seed=mean].mae",
+      "p8_initialization_control[subject_id=User01, target=humidity, predictor=S, seed=mean].mae_seed_sd"
+    ],
+    "values": [
+      "15.76",
+      "0.31"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 3,
+    "column": "Δ B − E",
+    "text": "+3.31 [+2.75, +3.85] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=humidity, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=humidity, budget_nights=14, first=B, second=E].interval"
+    ],
+    "values": [
+      "+3.31",
+      "+2.75",
+      "+3.85"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 3,
+    "column": "Δ D − E",
+    "text": "+3.55 [+2.93, +4.16] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=D, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=D, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=D, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=humidity, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=humidity, budget_nights=14, first=D, second=E].interval"
+    ],
+    "values": [
+      "+3.55",
+      "+2.93",
+      "+4.16"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 3,
+    "column": "Δ S − E",
+    "text": "+0.10 [−0.11, +0.32] 0/−/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=S, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=S, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=S, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=humidity, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=humidity, budget_nights=14, first=S, second=E].interval"
+    ],
+    "values": [
+      "+0.10",
+      "−0.11",
+      "+0.32"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 3,
+    "column": "Δ B − S",
+    "text": "+3.20 [+2.81, +3.59] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=S].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=S].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=S].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User01, target=humidity, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User01, target=humidity, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User01, target=humidity, budget_nights=14, first=B, second=S].interval"
+    ],
+    "values": [
+      "+3.20",
+      "+2.81",
+      "+3.59"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 4,
+    "column": "MAE, B: adaptation-target mean",
+    "text": "13.42",
+    "sources": [
+      "p8_calibration_main[subject_id=User02, target=humidity, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "13.42"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 4,
+    "column": "MAE, E: full fine-tuning",
+    "text": "12.23 ± 0.16",
+    "sources": [
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User02, target=humidity, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "12.23",
+      "0.16"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 4,
+    "column": "MAE, S: scratch control",
+    "text": "11.55 ± 0.28",
+    "sources": [
+      "p8_initialization_control[subject_id=User02, target=humidity, predictor=S, seed=mean].mae",
+      "p8_initialization_control[subject_id=User02, target=humidity, predictor=S, seed=mean].mae_seed_sd"
+    ],
+    "values": [
+      "11.55",
+      "0.28"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 4,
+    "column": "Δ B − E",
+    "text": "+1.35 [+1.03, +1.65] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=humidity, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=humidity, budget_nights=14, first=B, second=E].interval"
+    ],
+    "values": [
+      "+1.35",
+      "+1.03",
+      "+1.65"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 4,
+    "column": "Δ D − E",
+    "text": "+2.64 [+2.25, +3.03] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=D, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=D, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=D, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=humidity, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=humidity, budget_nights=14, first=D, second=E].interval"
+    ],
+    "values": [
+      "+2.64",
+      "+2.25",
+      "+3.03"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 4,
+    "column": "Δ S − E",
+    "text": "−0.20 [−0.31, −0.08] −/−/−",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=S, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=S, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=S, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=humidity, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=humidity, budget_nights=14, first=S, second=E].interval"
+    ],
+    "values": [
+      "−0.20",
+      "−0.31",
+      "−0.08"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 4,
+    "column": "Δ B − S",
+    "text": "+1.55 [+1.19, +1.89] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=S].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=S].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=S].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User02, target=humidity, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User02, target=humidity, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User02, target=humidity, budget_nights=14, first=B, second=S].interval"
+    ],
+    "values": [
+      "+1.55",
+      "+1.19",
+      "+1.89"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 5,
+    "column": "MAE, B: adaptation-target mean",
+    "text": "8.29",
+    "sources": [
+      "p8_calibration_main[subject_id=User07, target=humidity, budget_nights=14, predictor=B].mae"
+    ],
+    "values": [
+      "8.29"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 5,
+    "column": "MAE, E: full fine-tuning",
+    "text": "8.28 ± 0.01",
+    "sources": [
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=14].seed_mean",
+      "p5_primary_mae[subject_id=User07, target=humidity, budget_nights=14].seed_sd"
+    ],
+    "values": [
+      "8.28",
+      "0.01"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 5,
+    "column": "MAE, S: scratch control",
+    "text": "8.28 ± 0.01",
+    "sources": [
+      "p8_initialization_control[subject_id=User07, target=humidity, predictor=S, seed=mean].mae",
+      "p8_initialization_control[subject_id=User07, target=humidity, predictor=S, seed=mean].mae_seed_sd"
+    ],
+    "values": [
+      "8.28",
+      "0.01"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 5,
+    "column": "Δ B − E",
+    "text": "+0.02 [−0.06, +0.11] 0/0/0",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=humidity, budget_nights=14, first=B, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=humidity, budget_nights=14, first=B, second=E].interval"
+    ],
+    "values": [
+      "+0.02",
+      "−0.06",
+      "+0.11"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 5,
+    "column": "Δ D − E",
+    "text": "+2.20 [+1.34, +3.04] +/+/+",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=D, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=D, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=D, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=humidity, budget_nights=14, first=D, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=humidity, budget_nights=14, first=D, second=E].interval"
+    ],
+    "values": [
+      "+2.20",
+      "+1.34",
+      "+3.04"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 5,
+    "column": "Δ S − E",
+    "text": "+0.02 [−0.02, +0.05] 0/0/0",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=S, second=E].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=S, second=E].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=S, second=E].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=humidity, budget_nights=14, first=S, second=E].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=humidity, budget_nights=14, first=S, second=E].interval"
+    ],
+    "values": [
+      "+0.02",
+      "−0.02",
+      "+0.05"
+    ]
+  },
+  {
+    "table": 7,
+    "row": 5,
+    "column": "Δ B − S",
+    "text": "+0.01 [−0.06, +0.07] 0/0/0",
+    "sources": [
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=S].point_estimate",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=S].ci_lower",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=S].ci_upper",
+      "p8_comparator_bootstrap[seed=0, subject_id=User07, target=humidity, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=1, subject_id=User07, target=humidity, budget_nights=14, first=B, second=S].interval",
+      "p8_comparator_bootstrap[seed=2, subject_id=User07, target=humidity, budget_nights=14, first=B, second=S].interval"
+    ],
+    "values": [
+      "+0.01",
+      "−0.06",
+      "+0.07"
+    ]
   }
 ]

@@ -37,6 +37,9 @@
 
 ## 3. Claim hierarchy
 
+> **Revised by D-058 (§3.5).** The post-hoc validation (D-057) qualifies the primary claim and adds claims; §3.1–§3.2
+> are kept as written for the record. Where they differ, §3.5 governs the manuscript.
+
 ### 3.1 Primary claim
 
 > Chronological personalization can substantially reduce unseen-domain level-offset error when the early adaptation
@@ -99,6 +102,35 @@ statement.
     of three seeds has G > 0 (`p6_drift_sensitivity`).
   The manuscript states it that way.
 - **Months in the P3/P5 reports** (e.g. recording periods): not carried into the manuscript (§8).
+
+### 3.5 Post-hoc validation revision (D-058)
+
+The pre-registered post-hoc comparators (`docs/P8_POSTHOC_VALIDATION_PLAN.md`, results in
+`docs/P8_POSTHOC_VALIDATION_REPORT.md`) change the claim hierarchy as follows. The primary v1.0 values are unchanged.
+- **Revised primary claim:**
+  > Under unseen-domain shift, limited chronological personalization of a pressure-based network mainly corrected
+  > level offsets. A personalized constant from the same adaptation labels corrected them as well, and the
+  > pressure-based models showed no demonstrable within-subject tracking of temperature or humidity. The same
+  > procedure produced negative transfer when the early nights did not represent the later period.
+- **New claims (post hoc, labelled as such):**
+  - P1: the adaptation-target mean was not worse than full fine-tuning in 12 of 24 cells (2 of 6 at b = 14),
+    including User02 temperature at every budget (`p8_interpretation_cases`, `p8_calibration_main`);
+  - P2: the residual-variation ratio R was above 1 for the unadapted and strict-LOSO networks in every cell and about
+    1 after fine-tuning (`p8_residual_variation`);
+  - P3: a randomly initialised network trained on nights 1–14 with the identical recipe was not worse than the
+    pretrained fine-tuning in 5 of 6 cells (`p8_initialization_control`, `p8_comparator_bootstrap`);
+  - P4: for User07 temperature, a pure offset calibration also degraded the later span at every budget (Case D).
+- **Demoted:**
+  - the 23/24 level-mismatch agreement (§3.1, S5) is a retrospective descriptive diagnostic that uses the later
+    span's labels. It is not an abstract headline and not a deployable safeguard;
+  - "offset correction" is not attributed to the neural adaptation as a capability.
+- **Added to "Not claimed":**
+  - that pressure-based models track within-subject microclimate variation;
+  - that cross-subject pretraining is necessary;
+  - that full parameter adaptation is required for the offset correction;
+  - that the heater caused any model failure.
+- **Wording:** User07 temperature is written "the seed-mean MAE was higher than that of the base model at every
+  adaptation budget", with the seed-specific results.
 
 ## 4. Terminology
 

@@ -11,10 +11,10 @@
 
 | Panel | Content | Protocol source |
 |---|---|---|
-| (a) Data | raw logs (read-only, checksum-verified) → audited canonical dataset (validity flags, sessions, phase labels) → 40-s windows cut after splitting | manuscript §3.2–§3.3 |
+| (a) Data | raw logs (read-only, checksum-verified) → audited canonical dataset (validity flags, sessions, phase labels) → 40-s windows cut after splitting → cohort of three subjects, four mat streams | manuscript §3.1–§3.3 |
 | (b) Strict leave-one-subject-out | three outer folds; one subject held out with all its mats; nested selection on the two training subjects with two swapped inner splits; retraining on the outer pool; a single evaluation of the held-out subject; training-mean reference | §3.5.1 |
 | (c) Chronological personalization | for one held-out subject: nights 1…b adaptation, night b + 1 unused buffer, nights ≥ 16 primary test span, identical for every b ∈ {0, 1, 3, 7, 14}; the base model comes from panel (b) | §3.5.3 |
-| (d) Analysis and reproduction | per-subject MAE, RMSE and bias; night-level paired cluster bootstrap; reproduction from the de-identified release candidate in a clean checkout | §3.6–§3.7 |
+| (d) Evaluation, post-hoc comparators and reproduction | per-subject MAE, RMSE and bias; night-level paired cluster bootstrap; post-hoc comparators (constant predictors, base model + adaptation offset, scratch control) and the residual ratio R (D-057/D-058); reproduction of the pre-declared models, predictions and tables from the de-identified release candidate in a clean checkout | §3.5.5–§3.7 |
 
 **Labels:** subjects are not named in the schematic. Nights appear as ordinals only.
 
@@ -35,8 +35,9 @@ flowchart LR
     C1["Nights 1 to b<br/>adaptation"] --> C2["Night b+1<br/>unused buffer"]
     C2 --> C3["Nights 16 and later<br/>primary test span, same for every b"]
   end
-  subgraph PD["(d) Analysis and reproduction"]
-    D1["Per-subject MAE, RMSE, bias<br/>night-level paired bootstrap"] --> D2["De-identified release candidate<br/>clean-checkout reproduction"]
+  subgraph PD["(d) Evaluation, post-hoc comparators and reproduction"]
+    D1["Per-subject MAE, RMSE, bias<br/>night-level paired bootstrap"] --> D2["Post hoc: constant predictors,<br/>base + offset, scratch control; R"]
+    D2 --> D3["De-identified release candidate<br/>clean-checkout reproduction"]
   end
   A3 --> B1
   B3 -- "base model" --> C1

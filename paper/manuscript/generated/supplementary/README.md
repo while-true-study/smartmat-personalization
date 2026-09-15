@@ -23,6 +23,13 @@ Machine-readable copies of the frozen result tables (full precision). Calendar n
 | S17 | Start-span sensitivity (post hoc) | `TableS17_p6_drift_sensitivity.csv` |
 | S18 | User02 device, quality-phase and heater-context strata | `TableS18a_p6_user02_device_context.csv`, `TableS18b_p6_user02_device_context_bootstrap.csv` |
 | S19 | Reproduction record (P7 report §6, §8–§10) | `TableS19_reproduction_record.md` |
+| S20 | Post-hoc calibration comparators A–E on the primary span (seed summary) | `TableS20_p8_calibration_main.csv` |
+| S21 | Post-hoc calibration comparators per seed | `TableS21_p8_calibration_by_seed.csv` |
+| S22 | User02 per-mat calibration diagnostic (post hoc, added after the primary results were known) | `TableS22_p8_calibration_user02_per_mat.csv` |
+| S23 | Residual variation: target SD, error SD and R (post hoc) | `TableS23_p8_residual_variation.csv` |
+| S24 | Initialization control at b = 14 (post hoc) | `TableS24_p8_initialization_control.csv` |
+| S25 | Night-level bootstrap of the comparator differences, all budgets and seeds (post hoc) | `TableS25_p8_comparator_bootstrap.csv` |
+| S26 | Pre-registered interpretation map: cases per subject, target and budget (post hoc) | `TableS26_p8_interpretation_cases.csv` |
 
 Figure source data: `FigureData_p5_figure_data.csv`, `FigureData_p6_figure_data.csv`.
 
