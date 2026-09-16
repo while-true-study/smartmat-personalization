@@ -1,10 +1,12 @@
-# P9 — User03 external-validation artifact: QA report (protocol v1.3, D-061)
+# P9 — User03 external-validation artifact: QA report (protocol v1.3, D-061, D-062)
 
 > **Status:** written from the reconstruction and windowing outputs **before any model output on User03 was
 > computed**. No target value is summarised here; only counts and validity flags.
 > - Generated blocks: `scripts/build_p9_user03.py` (tables from `outputs/metrics/p9_user03/p9_user03_qa_*.csv`).
 > - Nights are numbered 1–7 in time order; no calendar date appears.
-> - The results are conditional on OPEN-29 (timestamp validity of the complementary TXT export).
+> - **Timestamp validity confirmed (D-062, 2026-09-16):** the data provider confirmed that the setting problem
+>   behind the D-017 exclusion does not affect the second-level timestamps of the seven paired TXT nights.
+>   OPEN-29 is closed and these results are no longer conditional. No count or flag in this report changed.
 
 ## 1. Sources (hash-verified)
 

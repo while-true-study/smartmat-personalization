@@ -1,13 +1,13 @@
 {
-  "description": "P9 post-hoc external sensitivity validation on User03 (protocol v1.3, D-061); not part of the primary cohort; conditional on OPEN-29",
+  "description": "P9 post-hoc external sensitivity validation on User03 (protocol v1.3, D-061); not part of the primary cohort; OPEN-29 closed by the provider timestamp confirmation (D-062), so the results are not conditional",
   "protocol_version": "v1.3",
   "decision": "D-061",
   "status": "post_hoc_external_sensitivity",
   "plan_sha256_lf": "b995ee57ab5e783f6f6b4960ba534342e2c8a345b05e1973c44ad25253f46575",
   "config_sha256_lf": "4357d8bcb6c3f953cec635db48112cf7cdb1e3228e388fc4e79556f500be3650",
   "base_protocol_sha256": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84",
-  "analysis_git_commit": "ecb0af229c4aa5f3572808533a5ce65e1bd1a9ed",
-  "analysis_tree_dirty": true,
+  "analysis_git_commit": "55cd82b8f18c64af3179834bd5299959fed52794",
+  "analysis_tree_dirty": false,
   "source_files": [
     {
       "night": 1,

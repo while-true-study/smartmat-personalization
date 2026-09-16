@@ -65,7 +65,7 @@ Candidate policy proposed as D-015 (Proposed); not accepted. | PI | P0 | splits 
 | OPEN-26 | **Open (P8).** Ethics / IRB information for the manuscript. The provider confirmation of consent and release permission (D-002) is not an IRB approval; no institutional identifier may be invented. | PI | before submission | IRB / informed-consent statements | `paper/manuscript/manuscript.md` |
 | OPEN-27 | **Largely resolved by D-056:** citation metadata complete (title, authors, year, Vol. 17, No. 1, pp. 27–30, ISSN, KIICE, dates, venue). Still open: official confirmation that no DOI exists, a paper-specific URL (neither blocks the citation), and the copyright holder / reuse-right status (a submission-compliance item for the cover letter; it does not block the manuscript, which reuses no conference material). History: **Open (P8); a P8-PR blocker since D-055.** Scope verified in pass 2. Bibliographic details still open: the proceedings series is ISSN 2765-3811 (online), and ICFICE 2025 was Vol. 16, No. 1; the paper's own pages, DOI or URL and the copyright holder were not found in an official record. Original question: Bibliographic details and scope of the authors' ICFICE conference paper (not in the repository): needed for the Introduction and the extension map. | PI | before submission | Introduction; `docs/P8_CONFERENCE_EXTENSION_MAP.md` | `docs/P8_CONFERENCE_EXTENSION_MAP.md` |
 | OPEN-28 | **Open (P8); disclosure drafted by D-053 (Proposed; supersedes D-052).** Still needed: the PI's approval of the text. The ChatGPT use stated by the authors is included; its historical model versions were not logged and are not inferred. Original question: Generative-AI disclosure. The MDPI template requires Materials and Methods to describe any generative-AI use for text, data, graphics, study design, analysis or interpretation, and the Acknowledgments to name the tool, version and purpose. Generative-AI assistance was used in this project; the PI decides and approves the disclosure text. | PI | before submission | Materials and Methods; Acknowledgments | `docs/P8_APPLIED_SCIENCES_REQUIREMENTS.md` item 12 |
-| OPEN-29 | Confirm with the PI/provider that the setting problem behind the D-017 exclusion of `user06_auxiliary` does not affect the second-level timestamps of the seven TXT nights that D-061 admits as the timestamp source of verified User03 rows. P9 external results are conditional on it. | PI | open | P9 (external sensitivity only) | D-061; `docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md` §2 |
+| OPEN-29 | **Closed 2026-09-16 by D-062:** the data provider confirmed that the setting problem behind the D-017 exclusion does not affect the second-level timestamps of the seven paired TXT nights. The P9 external results are no longer conditional; nothing else in D-017 or D-061 changes. Original question: Confirm with the PI/provider that the setting problem behind the D-017 exclusion of `user06_auxiliary` does not affect the second-level timestamps of the seven TXT nights that D-061 admits as the timestamp source of verified User03 rows. P9 external results are conditional on it. | PI | closed | nothing (P9 wording only) | D-062; D-061; `docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md` §2 |
 
 ---
 
@@ -1855,8 +1855,8 @@ Consequence:
 
 ## D-061 — P9: User03 as a post-hoc external sensitivity subject (protocol v1.3 addendum); narrow amendment of D-017
 Date: 2026-09-16
-Status: Accepted (research lead). **Post hoc**; results are supplementary external-sensitivity results. OPEN-29 is
-open.
+Status: Accepted (research lead). **Post hoc**; results are supplementary external-sensitivity results. OPEN-29 was
+open when this entry was written; it is **closed by D-062** (2026-09-16), so the results are no longer conditional.
 Context:
 - **P8 merge:** P8 was merged into `main` as a PI-review manuscript candidate (PR #9, merge commit `ecb0af2`) at
   the research lead's instruction, while the PI metadata and release blockers remained open. `v1.0-paper` was not
@@ -1892,6 +1892,9 @@ Decision:
   - events equal up to punctuation.
   - Everything else in `user06_auxiliary` stays excluded, and D-017's text is not changed.
   - The results are conditional on OPEN-29.
+    **Resolved by D-062 (2026-09-16):** the data provider confirmed that the setting problem does not affect the
+    second-level timestamps of these seven nights. The results are no longer conditional; the narrow scope of this
+    amendment is unchanged.
 - **Derived dataset:** `data/external/p9_user03_v1/` is a separate external-validation artifact.
   - It is processed with the canonical_v1 rules but is never part of canonical_v1 or the public release.
   - Its values stay local, and only a manifest of hashes and counts is committed.
@@ -1909,4 +1912,90 @@ Consequence:
 - Outputs go under `outputs/runs/p9_user03/` and `outputs/metrics/p9_user03/`, and paper tables are
   `paper/tables/p9_user03_*.csv`.
 - No tag, no history rewrite, no change to a frozen artifact, no merge of P9.
+- **Later:** OPEN-29 closed by D-062; P9 reproducibility closed by D-063. No P9 number changed in either step.
 
+
+## D-062 — OPEN-29 closed: the D-017 setting problem does not affect the User03 TXT timestamps
+Date: 2026-09-16
+Status: Accepted (closes OPEN-29)
+Context:
+- D-061 admitted the seven paired TXT nights of the otherwise excluded `user06_auxiliary` source as the timestamp
+  source of verified User03 rows, and only for minutes whose sensor values are identical to the valid User03 CSV.
+- D-017 had excluded that source as a whole after the data provider reported a setting problem. Whether that problem
+  also affects the second-level timestamps of those seven nights was left open as OPEN-29, and every P9 result was
+  reported as conditional on it.
+Decision:
+- The data provider confirmed that the setting problem behind the D-017 exclusion **does not affect the second-level
+  timestamps** of the seven paired TXT nights used by D-061. The confirmation is a statement about the timestamps
+  only.
+- OPEN-29 is closed. The P9 external-sensitivity results are **no longer conditional**: `docs/P9_USER03_*`, the
+  P8 blocker documents, the PI handoff and manuscript Sections 3.5.7 and 4.9 and the Limitations drop the
+  conditional wording and state the confirmation instead.
+- **Nothing else in D-017 or D-061 changes.** The `user06_auxiliary` source stays `excluded_invalid` as a whole; the
+  narrow D-061 amendment keeps its exact scope (timestamp source for verified minutes, and for night 7 a second copy
+  of P1); every other use of that folder stays excluded. No value of that source enters any result.
+- **No frozen artifact, protocol version, config, split or result changes.** User03 remains a post-hoc external
+  sensitivity subject and is not added to the primary cohort. The scientific interpretation is unchanged: closing
+  OPEN-29 removes a caveat, it does not alter a number.
+- **The pre-registration is not edited.** `docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md` and
+  `configs/experiments/v1.3/p9_user03_external_validation.yaml` are frozen: their SHA-256 is recorded in every P9
+  output and in the committed external manifest. The plan keeps its original §2 open-item text as the historical
+  pre-registration record; this entry is its closure.
+Evidence:
+- Data-provider statement on the timestamp validity of the seven paired TXT nights, relayed by the PI and recorded
+  by the research lead on 2026-09-16. The correspondence is private: it is not quoted, attached or summarised
+  beyond the substance recorded here, and it carries no personal identifier into the repository.
+- D-013, D-017, D-021, D-061; `docs/P0_A1_PROVENANCE_REPORT.md` §4;
+  `docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md` §2.
+Consequence:
+- OPEN-29 is closed; the P8 blocker list keeps no open scientific confirmation. Section 3.5.7, Section 4.9, Table 9
+  and Tables S32–S34 stay in the submission, and the withdrawal contingency of `docs/P8_FINAL_BLOCKERS.md` §A lapses.
+- The description field of `paper/tables/p9_user03_provenance.json` (written by
+  `scripts/export_p9_user03_tables.py`) no longer says "conditional on OPEN-29". No other exported cell changes.
+- Recorded together with the P9 reproducibility closure of this branch (see D-063).
+
+## D-063 — P9 reproducibility closure: full retrain after the prediction-serialization change
+Date: 2026-09-16
+Status: Accepted
+Context:
+- After the previous full P9 rerun, the writer of the User03 prediction artifact was changed from `np.save` to
+  `np.lib.format.write_array` so that the file is opened through `src/data/io_guard.py`, as CONVENTIONS §2 requires.
+  The `.npy` payload is the same format, but the change touched the code path that produces a frozen artifact after
+  that artifact was produced.
+- A serialization change that is assumed to be byte-neutral is not evidence. P9 is closed only if the frozen
+  predictions can still be reproduced from scratch under the frozen protocol.
+- No new scientific experiment was authorised; this is a reproducibility check of results that already exist.
+Decision:
+- **All nine P9 models were retrained from scratch** (three frozen P3 RAW-TCN configurations × seeds 0–2, each with
+  its frozen epoch count, on all labelled windows of User01, User02 and User07) into a separate output root, with
+  the frozen protocol v1.3 addendum, the frozen plan and config, and the same environment as the P3–P8 results.
+  `scripts/verify_p9_user03_reproduction.py --root outputs/p9_repro_final`.
+- **The retrained artifacts are bitwise identical to the frozen ones:** 9/9 `external_predictions.npy` files and
+  9/9 `model.pt` weight files match the reference runs byte for byte. The serialization change is byte-neutral, and
+  no P9 number depends on it.
+- **The rest of the pipeline was re-run and re-validated** (reconciliation, analysis, all table exports, manuscript
+  generation, all validators). Full results are in `docs/P9_USER03_EXTERNAL_VALIDATION_REPORT.md` §5:
+
+  | Check | Result |
+  |---|---|
+  | Test suite | 415 passed |
+  | Leakage gate (`scripts/validate_p2_protocol.py`) | 118/118 |
+  | Public-release validation (`scripts/validate_public_release.py`) | 24/24 |
+  | Manuscript-result consistency (`scripts/validate_manuscript_results.py`) | 11/11 |
+  | Raw manifest, canonical_v1 manifests | unchanged |
+  | P3–P8 frozen artifacts, configs, splits | unchanged |
+  | P9 reconstruction: coverage, 107,192 reconstructed rows, content and source hashes | unchanged |
+  | Exported result tables (`paper/tables/*.csv`), generated manuscript tables and figures | unchanged |
+
+- **Nothing scientific changed.** The only committed content changes are documentation, the OPEN-29 closure wording
+  (D-062) and the `description` field of `paper/tables/p9_user03_provenance.json`; its `analysis_git_commit` and
+  `analysis_tree_dirty` fields record the rerun's git state, as designed. No result cell changed.
+- **Scope kept:** no new experiment, no tag created or moved, no history rewritten, no merge of P9 into `main`.
+Evidence: `outputs/metrics/p9_user03/p9_user03_reproduction_check.json` (all nine runs
+`predictions_bitwise_identical: true`, `artifact_rebuild_equals_manifest: true`, `passed: true`); the prediction
+digests in `paper/tables/p9_user03_provenance.json`; `docs/P9_USER03_EXTERNAL_VALIDATION_REPORT.md` §5.
+Consequence:
+- P9 is reproducibility-closed on `experiment/p9-user03-external-validation`. With OPEN-29 closed (D-062), the P9
+  results are neither conditional nor provisional.
+- Bitwise equality is verified on the environment recorded in `README.md` only. Another GPU, driver or library build
+  trains in the same deterministic way but may differ in the last bits.

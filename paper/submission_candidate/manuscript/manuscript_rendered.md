@@ -506,8 +506,9 @@ primary cohort, its results are not pooled with the three primary subjects, and 
     had identical pressure, temperature and humidity values in file order.
   - The second-level timestamp was taken from the complementary export and the values from the valid export.
   - Nothing was interpolated, imputed, re-timed or joined by nearest neighbour.
-  - Whether the setting problem affects the complementary timestamps awaits confirmation, so these results are
-    conditional on it.
+  - The data provider has since confirmed that the setting problem does not affect that export's second-level
+    timestamps for these seven nights, so these results are not conditional on that question. The source remains
+    excluded for every other purpose, and no value of it enters the reconstruction.
 - **Processing:** the reconstructed rows were processed with the canonical dataset rules and the window rule of
   Section 3.3, as a strict leave-one-subject-out held-out subject.
 - **Models:**
@@ -1467,8 +1468,10 @@ None of these safeguards was evaluated here; they are future work.
     diagnostics. They do not exclude a nonlinear relation or one at a longer time scale than the 40-s window, and
     night-centring removes between-night trends by design.
 - **Additional external subject:** it was evaluated post hoc with seven nights, too few for night-level intervals,
-  and its second-level timestamps depend on a complementary export whose timestamp validity awaits confirmation
-  (Section 3.5.7). It is not part of the primary cohort.
+  and its rows are reconstructed from two exports of the same nights, with the values taken from the subject's valid
+  export and the second-level timestamps from a complementary export that the data provider confirmed to be
+  unaffected by the setting problem for which that source is otherwise excluded (Section 3.5.7). It is not part of
+  the primary cohort.
 - **Inputs and scope:** only pressure was used, in one representation (40-s RAW windows), one model family (TCN)
   and fixed training and adaptation schedules. The negative result is scoped to this formulation. Room climate,
   bedding and the heater and controller state were unobserved; the heater codes were excluded from the inputs under

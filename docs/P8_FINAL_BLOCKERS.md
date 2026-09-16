@@ -14,7 +14,9 @@
 > - The PI's decisions are collected in `docs/P8_PI_APPROVAL_CHECKLIST.md`.
 > - **Additional external validation (P9, D-061; branch `experiment/p9-user03-external-validation`):** one further
 >   subject (User03) was evaluated post hoc as an external sensitivity subject (Section 3.5.7, Section 4.9, Table 9,
->   Tables S32–S34). It is not part of the primary cohort and changes no primary result. It is conditional on OPEN-29.
+>   Tables S32–S34). It is not part of the primary cohort and changes no primary result. **It is no longer
+>   conditional:** OPEN-29 was closed by the data-provider timestamp confirmation (D-062, 2026-09-16), and the P9
+>   reproducibility closure (D-063) retrained all nine models from scratch with bitwise-identical predictions.
 
 ## A. Scientific blockers
 
@@ -24,13 +26,17 @@ gains were mainly level corrections and that the pressure models showed no demon
 manuscript is framed as an evaluation with a substantial negative result (`docs/P8_POSTHOC_VALIDATION_REPORT.md` §6).
 See `docs/P8_PI_APPROVAL_CHECKLIST.md`, "Scientific content". No result may change during that review.
 
-**One confirmation from the additional external validation (P9, D-061), not a primary-result blocker:**
-- OPEN-29: the PI/provider confirms that the setting problem behind the D-017 exclusion does not affect the
-  second-level timestamps of the seven complementary User03 exports.
-- Until then, the P9 section is reported as conditional on it (Section 3.5.7 and the Limitations).
-- If it is not confirmed, Section 3.5.7, Section 4.9, Table 9 and Tables S32–S34 are withdrawn from the submission.
-  No primary result depends on them.
-- Report: `docs/P9_USER03_EXTERNAL_VALIDATION_REPORT.md`.
+**The one outstanding confirmation from the additional external validation (P9, D-061) is RESOLVED:**
+- OPEN-29 is **closed by D-062 (2026-09-16)**: the data provider confirmed that the setting problem behind the
+  D-017 exclusion does not affect the second-level timestamps of the seven complementary User03 exports. The
+  confirmation was relayed by the PI; the correspondence itself is private and is not reproduced here.
+- The conditional wording is removed from Section 3.5.7, Section 4.9 and the Limitations, and from the P9 documents.
+  No number changed: the confirmation removed a caveat.
+- The withdrawal contingency for Section 3.5.7, Section 4.9, Table 9 and Tables S32–S34 therefore lapses. They stay
+  in the submission. No primary result ever depended on them.
+- The P9 reproducibility closure (D-063) retrained all nine models from scratch under the frozen protocol after the
+  prediction-serialization change: 9/9 prediction files bitwise identical, P3–P8 frozen artifacts unchanged.
+- Report: `docs/P9_USER03_EXTERNAL_VALIDATION_REPORT.md`; decisions D-062 and D-063.
 
 ## B. Metadata blockers (PI / authors)
 

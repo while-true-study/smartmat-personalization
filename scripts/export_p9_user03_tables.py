@@ -97,7 +97,8 @@ def main() -> int:
     man = json.loads((paths.PROJECT_ROOT / "data" / "external" / "p9_user03_v1_manifest.json").read_text(encoding="utf-8"))
     write_json(TABLES / "p9_user03_provenance.json", {
         "description": "P9 post-hoc external sensitivity validation on User03 (protocol v1.3, D-061); not part of the "
-                       "primary cohort; conditional on OPEN-29", **{k: prov[k] for k in (
+                       "primary cohort; OPEN-29 closed by the provider timestamp confirmation (D-062), so the "
+                       "results are not conditional", **{k: prov[k] for k in (
                            "protocol_version", "decision", "status", "plan_sha256_lf", "config_sha256_lf",
                            "base_protocol_sha256")},
         "analysis_git_commit": prov.get("git_commit"), "analysis_tree_dirty": prov.get("git_dirty_tracked_files"),
