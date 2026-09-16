@@ -179,3 +179,14 @@ Every new cell is a formatted frozen cell of `paper/tables/p8_*.csv` (`scripts/e
 
 - **Main text size:** 8 tables and 5 figures.
 - No figure was added. The affine comparator was not triggered, so no affine table exists.
+
+## 8. Additional external validation (P9, D-061, D-062)
+
+| Item | Change | Evidence role |
+|---|---|---|
+| Table 9 (new) | additional external validation on one further subject: training-mean predictor and the three frozen RAW-TCN configurations (MAE with seed range, RMSE, bias, R, Q, pooled and within-night r) | post hoc, external sensitivity; not pooled with the primary results |
+| Tables S32–S34 (new) | `p9_user03_qa_coverage` + `p9_user03_qa_nights` + `p9_user03_qa_totals`, `p9_user03_summary` + `p9_user03_by_seed`, `p9_user03_per_night_summary` + `p9_user03_interpretation` | post hoc (D-061) |
+
+- **Main text size:** 9 tables and 5 figures.
+- No figure was added. OPEN-29 was closed by the data-provider timestamp confirmation (D-062, 2026-09-16),
+  so the results are no longer conditional and no table is withdrawn.

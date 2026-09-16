@@ -7292,5 +7292,653 @@
     "values": [
       "1.00"
     ]
+  },
+  {
+    "table": 9,
+    "row": 0,
+    "column": "MAE [seed range]",
+    "text": "2.43",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=temperature].mae"
+    ],
+    "values": [
+      "2.43"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 0,
+    "column": "RMSE",
+    "text": "2.62",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=temperature].rmse"
+    ],
+    "values": [
+      "2.62"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 0,
+    "column": "Bias",
+    "text": "−2.43",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=temperature].bias"
+    ],
+    "values": [
+      "−2.43"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 0,
+    "column": "R",
+    "text": "1.00",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=temperature].R"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 0,
+    "column": "Q",
+    "text": "0.00",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=temperature].Q"
+    ],
+    "values": [
+      "0.00"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 1,
+    "column": "MAE [seed range]",
+    "text": "2.72 [2.69–2.79]",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].mae",
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].mae_seed_min",
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].mae_seed_max"
+    ],
+    "values": [
+      "2.72",
+      "2.69",
+      "2.79"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 1,
+    "column": "RMSE",
+    "text": "2.94",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].rmse"
+    ],
+    "values": [
+      "2.94"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 1,
+    "column": "Bias",
+    "text": "−2.69",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].bias"
+    ],
+    "values": [
+      "−2.69"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 1,
+    "column": "R",
+    "text": "1.20",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].R"
+    ],
+    "values": [
+      "1.20"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 1,
+    "column": "Q",
+    "text": "0.65",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].Q"
+    ],
+    "values": [
+      "0.65"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 1,
+    "column": "r pooled",
+    "text": "−0.01",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].r_pooled"
+    ],
+    "values": [
+      "−0.01"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 1,
+    "column": "r within night",
+    "text": "−0.00",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=temperature].r_within"
+    ],
+    "values": [
+      "−0.00"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 2,
+    "column": "MAE [seed range]",
+    "text": "2.57 [2.50–2.65]",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].mae",
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].mae_seed_min",
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].mae_seed_max"
+    ],
+    "values": [
+      "2.57",
+      "2.50",
+      "2.65"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 2,
+    "column": "RMSE",
+    "text": "2.81",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].rmse"
+    ],
+    "values": [
+      "2.81"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 2,
+    "column": "Bias",
+    "text": "−2.50",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].bias"
+    ],
+    "values": [
+      "−2.50"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 2,
+    "column": "R",
+    "text": "1.29",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].R"
+    ],
+    "values": [
+      "1.29"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 2,
+    "column": "Q",
+    "text": "0.78",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].Q"
+    ],
+    "values": [
+      "0.78"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 2,
+    "column": "r pooled",
+    "text": "−0.01",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].r_pooled"
+    ],
+    "values": [
+      "−0.01"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 2,
+    "column": "r within night",
+    "text": "−0.01",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=temperature].r_within"
+    ],
+    "values": [
+      "−0.01"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 3,
+    "column": "MAE [seed range]",
+    "text": "2.72 [2.60–2.85]",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].mae",
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].mae_seed_min",
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].mae_seed_max"
+    ],
+    "values": [
+      "2.72",
+      "2.60",
+      "2.85"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 3,
+    "column": "RMSE",
+    "text": "2.95",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].rmse"
+    ],
+    "values": [
+      "2.95"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 3,
+    "column": "Bias",
+    "text": "−2.70",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].bias"
+    ],
+    "values": [
+      "−2.70"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 3,
+    "column": "R",
+    "text": "1.19",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].R"
+    ],
+    "values": [
+      "1.19"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 3,
+    "column": "Q",
+    "text": "0.66",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].Q"
+    ],
+    "values": [
+      "0.66"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 3,
+    "column": "r pooled",
+    "text": "+0.01",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].r_pooled"
+    ],
+    "values": [
+      "+0.01"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 3,
+    "column": "r within night",
+    "text": "+0.01",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=temperature].r_within"
+    ],
+    "values": [
+      "+0.01"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 4,
+    "column": "MAE [seed range]",
+    "text": "12.85",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=humidity].mae"
+    ],
+    "values": [
+      "12.85"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 4,
+    "column": "RMSE",
+    "text": "13.44",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=humidity].rmse"
+    ],
+    "values": [
+      "13.44"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 4,
+    "column": "Bias",
+    "text": "−12.85",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=humidity].bias"
+    ],
+    "values": [
+      "−12.85"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 4,
+    "column": "R",
+    "text": "1.00",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=humidity].R"
+    ],
+    "values": [
+      "1.00"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 4,
+    "column": "Q",
+    "text": "0.00",
+    "sources": [
+      "p9_user03_summary[model=training_mean, config_fold=, target=humidity].Q"
+    ],
+    "values": [
+      "0.00"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 5,
+    "column": "MAE [seed range]",
+    "text": "20.52 [20.38–20.65]",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].mae",
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].mae_seed_min",
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].mae_seed_max"
+    ],
+    "values": [
+      "20.52",
+      "20.38",
+      "20.65"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 5,
+    "column": "RMSE",
+    "text": "22.14",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].rmse"
+    ],
+    "values": [
+      "22.14"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 5,
+    "column": "Bias",
+    "text": "−20.49",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].bias"
+    ],
+    "values": [
+      "−20.49"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 5,
+    "column": "R",
+    "text": "2.12",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].R"
+    ],
+    "values": [
+      "2.12"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 5,
+    "column": "Q",
+    "text": "1.92",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].Q"
+    ],
+    "values": [
+      "1.92"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 5,
+    "column": "r pooled",
+    "text": "+0.05",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].r_pooled"
+    ],
+    "values": [
+      "+0.05"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 5,
+    "column": "r within night",
+    "text": "+0.09",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=1, target=humidity].r_within"
+    ],
+    "values": [
+      "+0.09"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 6,
+    "column": "MAE [seed range]",
+    "text": "19.67 [19.24–20.15]",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].mae",
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].mae_seed_min",
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].mae_seed_max"
+    ],
+    "values": [
+      "19.67",
+      "19.24",
+      "20.15"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 6,
+    "column": "RMSE",
+    "text": "21.88",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].rmse"
+    ],
+    "values": [
+      "21.88"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 6,
+    "column": "Bias",
+    "text": "−19.51",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].bias"
+    ],
+    "values": [
+      "−19.51"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 6,
+    "column": "R",
+    "text": "2.51",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].R"
+    ],
+    "values": [
+      "2.51"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 6,
+    "column": "Q",
+    "text": "2.35",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].Q"
+    ],
+    "values": [
+      "2.35"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 6,
+    "column": "r pooled",
+    "text": "+0.05",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].r_pooled"
+    ],
+    "values": [
+      "+0.05"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 6,
+    "column": "r within night",
+    "text": "+0.09",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=2, target=humidity].r_within"
+    ],
+    "values": [
+      "+0.09"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 7,
+    "column": "MAE [seed range]",
+    "text": "20.83 [20.58–20.98]",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].mae",
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].mae_seed_min",
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].mae_seed_max"
+    ],
+    "values": [
+      "20.83",
+      "20.58",
+      "20.98"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 7,
+    "column": "RMSE",
+    "text": "22.74",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].rmse"
+    ],
+    "values": [
+      "22.74"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 7,
+    "column": "Bias",
+    "text": "−20.79",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].bias"
+    ],
+    "values": [
+      "−20.79"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 7,
+    "column": "R",
+    "text": "2.34",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].R"
+    ],
+    "values": [
+      "2.34"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 7,
+    "column": "Q",
+    "text": "2.15",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].Q"
+    ],
+    "values": [
+      "2.15"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 7,
+    "column": "r pooled",
+    "text": "+0.04",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].r_pooled"
+    ],
+    "values": [
+      "+0.04"
+    ]
+  },
+  {
+    "table": 9,
+    "row": 7,
+    "column": "r within night",
+    "text": "+0.07",
+    "sources": [
+      "p9_user03_summary[model=raw_tcn, config_fold=3, target=humidity].r_within"
+    ],
+    "values": [
+      "+0.07"
+    ]
   }
 ]

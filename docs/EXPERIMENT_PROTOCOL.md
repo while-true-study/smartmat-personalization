@@ -331,3 +331,8 @@ checks pass.
     triggered comparator.
   - It reuses v1.0 and v1.1 unchanged.
   - It is the final planned diagnostic for the current manuscript.
+- v1.3 (D-061): a post-hoc external sensitivity addendum (`configs/experiments/v1.3/p9_user03_external_validation.yaml`,
+  `docs/P9_USER03_EXTERNAL_VALIDATION_PLAN.md`).
+  - It evaluates User03 as an additional external subject, RQ1-like only, with models trained on the three primary
+    subjects.
+  - It does not change the primary cohort, the splits or any v1.0–v1.2 result.

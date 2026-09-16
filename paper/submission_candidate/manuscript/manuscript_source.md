@@ -51,17 +51,18 @@ Smart-mat pressure could yield bed-microclimate temperature and humidity estimat
 deployed models face unseen users, periods and mats. We evaluated temporal convolutional networks on 40-s pressure
 windows from three subjects (four mat streams) under strict leave-one-subject-out evaluation; each held-out fold was an
 unseen domain of subject, period and mat. Models were fine-tuned on each subject's earliest 1–14 nights and tested
-on a fixed later span. Under strict evaluation, errors were dominated by level offsets, and for temperature the network did not outperform a
+on a fixed later span. Strict-evaluation errors were dominated by level offsets; for temperature, the network did not beat a
 training-mean predictor. Fine-tuning moved one subject's temperature bias from
 {{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_0 | +.2f}} to
 {{p5_adaptation_gain | subject_id=User02, target=temperature, budget_nights=14 | bias_b | +.2f}} °C after 14 nights,
 whereas another subject's seed-mean temperature error exceeded its base model's at every budget. Post-hoc comparators
 showed mainly level corrections: the mean target of the adaptation nights, which uses no pressure input, was not worse
 than full fine-tuning in {{COUNT:p8_interpretation_cases | case_A_B_le_E=True}} of 24 subject–target–budget cells.
-Night-centred correlations showed no consistent within-night co-variation between predictions and targets, and an
-affine recalibration fitted retrospectively on the test labels could not have lowered the residual standard deviation
+Night-centred correlations showed no consistent within-night co-variation between predictions and targets, and a
+retrospective affine recalibration on the test labels could not have lowered the residual standard deviation
 below {{p8_dynamic_summary | subject_id=User02, target=temperature, condition=S, budget_nights=14 | oracle_affine | .2f}} times the target's. Under the tested representation, architecture and schedules,
-pressure-based neural estimation showed no consistent advantage over simple level baselines. With three subjects, these
+pressure-based neural estimation showed no consistent advantage over simple level baselines, also for one
+post-hoc external subject. With three subjects, these
 findings are case-level.
 
 <!-- Eight keywords (template: three to ten), chosen to complement the title words rather than repeat them. -->
@@ -288,7 +289,8 @@ microclimate for every model in this study.
 - files with unresolved device attribution;
 - restricted participant metadata;
 - two legacy sources with minute-resolution timestamps, which are kept as auxiliary data and not used by the
-  protocol. The conference study's recordings without second-level timestamps are consistent with this retained
+  primary protocol. One of them, from a further subject, is used post hoc for an additional external validation
+  (Section 3.5.7). The conference study's recordings without second-level timestamps are consistent with this retained
   legacy minute-resolution lineage; exact file-level identity is not assumed.
 
 Table 1 summarises the cohort and the protocol.
@@ -506,6 +508,38 @@ model, full fine-tuning and the scratch control; nothing was retrained.
   possible additional comparator. It was to be run only if R_oracle of the base model was at most 0.90 for at least
   two subjects for the same target.
 
+#### 3.5.7. Additional External Validation on a Further Subject (Post Hoc)
+
+After the analyses above, one further subject (User03) was evaluated as an additional external sensitivity subject,
+under a third protocol addendum written before any of its data were windowed or scored. User03 is not added to the
+primary cohort, its results are not pooled with the three primary subjects, and no personalization is evaluated on it.
+- **Data:**
+  - User03's valid export has minute-resolution timestamps, which the window rule cannot use.
+  - A complementary export of the same seven nights carries second-level timestamps. It comes from a source that
+    was otherwise excluded after the data provider reported a setting problem.
+  - Rows were reconstructed only for minutes in which both exports had the same number of rows and every row pair
+    had identical pressure, temperature and humidity values in file order.
+  - The second-level timestamp was taken from the complementary export and the values from the valid export.
+  - Nothing was interpolated, imputed, re-timed or joined by nearest neighbour.
+  - The data provider has since confirmed that the setting problem does not affect that export's second-level
+    timestamps for these seven nights, so these results are not conditional on that question. The source remains
+    excluded for every other purpose, and no value of it enters the reconstruction.
+- **Processing:** the reconstructed rows were processed with the canonical dataset rules and the window rule of
+  Section 3.3, as a strict leave-one-subject-out held-out subject.
+- **Models:**
+  - The three strict leave-one-subject-out folds had selected different configurations, and none could be chosen
+    without using the new subject. All three were therefore trained, each with its frozen epoch count, on all
+    labelled windows of the three primary subjects, with seeds 0, 1 and 2.
+  - Comparator: the training-mean predictor of the same windows.
+  - The new subject was used only for evaluation.
+- **Metrics:** those of Sections 3.5.5–3.5.6.
+- **Rules, fixed in advance:**
+  - A predictor is better if every configuration's seed-mean MAE, and its per-night MAE on at least two-thirds of
+    the nights, favour it.
+  - Within-night co-variation is supported only if every configuration reaches a within-night correlation of at
+    least 0.10 with positive per-night correlations on at least two-thirds of the nights.
+  - Night-cluster intervals require at least 10 nights (Section 3.6).
+
 ### 3.6. Metrics and Statistical Analysis
 
 - **Primary endpoints:** MAE and root-mean-square error (RMSE) for temperature (°C) and humidity (%RH), computed
@@ -535,7 +569,8 @@ model, full fine-tuning and the scratch control; nothing was retrained.
     the same mat within 60 min before the target time, used for stratification only;
   - the comparators, the initialization control and the residual-variation ratio of Section 3.5.5, which follow a
     later protocol addendum;
-  - the dynamic-signal diagnostic of Section 3.5.6, which follows a second addendum written after those results.
+  - the dynamic-signal diagnostic of Section 3.5.6, which follows a second addendum written after those results;
+  - the additional external validation of Section 3.5.7, which follows a third addendum.
 
 ### 3.7. Reproducibility
 
@@ -1042,6 +1077,41 @@ diagnostic only.
   - the case of within-night co-variation held in `{{COUNT:p8_dynamic_cases | J3=True}}` cell;
   - linearly recoverable structure (R_oracle at most 0.90) held in `{{COUNT:p8_dynamic_cases | J8_cell=True}}`.
 
+### 4.9. Additional External Validation on a Further Subject (Post Hoc)
+
+Table 9 reports the additional external validation of Section 3.5.7. It is not pooled with the primary results.
+
+**Table 9.** Additional external validation (post hoc) on one further subject that is not part of the primary cohort:
+training-mean predictor and the three frozen RAW-TCN configurations, all trained on the three primary subjects
+(RAW-TCN: seed means, in brackets the seed range of MAE); MAE, RMSE and bias in °C or %RH, R, Q, pooled and
+within-night correlations. No night-bootstrap interval is computed (fewer than 10 nights).
+
+{{TABLE:table9_external_validation}}
+
+- **Data:** `{{p9_user03_qa_totals | protocol_version=v1.3 | reconstructed_rows | ,d}}` of the `{{p9_user03_qa_totals | protocol_version=v1.3 | csv_data_rows | ,d}}` rows of the valid export
+  passed the reconciliation. `{{p9_user03_qa_totals | protocol_version=v1.3 | excluded_minutes | d}}` minutes were excluded, most of them covered only
+  by the complementary export. The rows gave `{{p9_user03_qa_totals | protocol_version=v1.3 | labelled_windows | ,d}}` labelled windows on
+  `{{p9_user03_qa_totals | protocol_version=v1.3 | nights_with_labelled_windows | d}}` nights.
+- **The training mean was better for both targets, under the pre-registered rule.**
+  - Temperature: `{{p9_user03_summary | model=training_mean, config_fold=, target=temperature | mae | .2f}}` °C for the training mean, against
+    `{{p9_user03_summary | model=raw_tcn, config_fold=2, target=temperature | mae | .2f}}` to `{{p9_user03_summary | model=raw_tcn, config_fold=1, target=temperature | mae | .2f}}` °C for the
+    three configurations. The training mean was lower on at least `{{p9_user03_interpretation | target=temperature | cfg2_nights_tm_lower_mae | d}}`
+    of seven nights for every configuration.
+  - Humidity: `{{p9_user03_summary | model=training_mean, config_fold=, target=humidity | mae | .2f}}` against
+    `{{p9_user03_summary | model=raw_tcn, config_fold=2, target=humidity | mae | .2f}}` to `{{p9_user03_summary | model=raw_tcn, config_fold=3, target=humidity | mae | .2f}}` %RH. The
+    training mean was lower on every night.
+  - Both predictors under-estimated the new subject's level, the network more strongly for humidity.
+- **No demonstrable within-night co-variation.**
+  - The network's humidity predictions varied about twice as much as the target
+    (Q = `{{p9_user03_summary | model=raw_tcn, config_fold=1, target=humidity | Q | .2f}}` to `{{p9_user03_summary | model=raw_tcn, config_fold=2, target=humidity | Q | .2f}}`).
+  - Its within-night correlations were small: `{{p9_user03_summary | model=raw_tcn, config_fold=3, target=humidity | r_within | +.2f}}` to
+    `{{p9_user03_summary | model=raw_tcn, config_fold=2, target=humidity | r_within | +.2f}}` for humidity, below the pre-registered floor, and near
+    zero for temperature.
+  - Under the rule, within-night co-variation was absent for both targets.
+- **Relation to the primary findings:** the pre-registered comparison classifies the external result as strengthening
+  both primary conclusions: the advantage of a simple level baseline, and the absence of within-night co-variation.
+  It concerns one additional subject; it is not a replication and gives no population inference.
+
 ## 5. Discussion
 
 ### 5.1. What Did Personalization Correct?
@@ -1069,6 +1139,9 @@ The post-hoc comparators (Section 4.7) change how the personalization results sh
   - It does not support within-subject microclimate tracking by this formulation.
   This is the main negative result of the study. It is a result about the tested formulation, not a statement that
   pressure cannot carry microclimate information.
+- **One additional external subject (Section 4.9)** showed the same pattern: a simple level baseline beat all three
+  source-only network configurations, with no demonstrable within-night co-variation. It is one post-hoc subject, not
+  a replication.
 
 ### 5.2. Why Did the Same Recipe Help One Held-Out Domain and Hurt Another?
 
@@ -1232,6 +1305,11 @@ None of these safeguards was evaluated here; they are future work.
     although its rules were fixed before it was computed. Its correlations and the oracle ratio are linear
     diagnostics. They do not exclude a nonlinear relation or one at a longer time scale than the 40-s window, and
     night-centring removes between-night trends by design.
+- **Additional external subject:** it was evaluated post hoc with seven nights, too few for night-level intervals,
+  and its rows are reconstructed from two exports of the same nights, with the values taken from the subject's valid
+  export and the second-level timestamps from a complementary export that the data provider confirmed to be
+  unaffected by the setting problem for which that source is otherwise excluded (Section 3.5.7). It is not part of
+  the primary cohort.
 - **Inputs and scope:** only pressure was used, in one representation (40-s RAW windows), one model family (TCN)
   and fixed training and adaptation schedules. The negative result is scoped to this formulation. Room climate,
   bedding and the heater and controller state were unobserved; the heater codes were excluded from the inputs under
@@ -1270,6 +1348,8 @@ None of these safeguards was evaluated here; they are future work.
     predictions showed no consistent within-night co-variation with the targets. Where pooled associations appeared,
     they were level alignments between nights or mats.
   - Cross-subject pretraining added little over training on the adaptation nights alone.
+- **Additional external subject (post hoc):** a training-mean predictor again had a lower error than every
+  source-only network configuration, with no demonstrable within-night co-variation.
 - **Consequence:** under the tested 40-s RAW-pressure representation, TCN architecture and fixed training and
   adaptation schedules, pressure-dependent neural prediction did not show a consistent advantage over simple level
   baselines in these three cases. Future work should evaluate other formulations against the same baselines:
@@ -1302,7 +1382,10 @@ per seed; Table S22: User02 per-mat calibration diagnostic, post hoc; Table S23:
 Table S24: Initialization control, post hoc; Table S25: Night-level bootstrap of the comparator differences,
 post hoc; Table S26: Pre-registered interpretation map, post hoc; Table S27: Dynamic-signal diagnostic, second-order
 post hoc; Table S28: Dynamic-signal diagnostic per seed; Table S29: Night-level bootstrap of the correlations; Table
-S30: Retrospective oracle affine ratio and calibration trigger; Table S31: Dynamic-signal cases J1–J8.
+S30: Retrospective oracle affine ratio and calibration trigger; Table S31: Dynamic-signal cases J1–J8; Table S32:
+Additional external validation, reconciliation coverage and windows, post hoc; Table S33: Additional external
+validation per configuration and seed; Table S34: Additional external validation per night and pre-registered
+interpretation.
 
 ## Author Contributions
 
@@ -1346,7 +1429,8 @@ release scope and license.] Code repository: [CODE REPOSITORY]. Archive DOI: [DO
 From the derived release package and the frozen model selections, a clean
 checkout reproduced the selected leave-one-subject-out models (with their weight digests), the predictions of the
 feature-family and personalization runs, the night-level analyses and every reproduced result table, bitwise. The
-hyperparameter searches were not rerun (Section 3.7).
+hyperparameter searches were not rerun (Section 3.7). The reconstructed rows of the additional external subject
+(Section 3.5.7) are not part of the release candidate.
 
 ## Acknowledgments
 

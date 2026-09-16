@@ -11,8 +11,8 @@
     "figures/figure3_humidity_personalization.png": "e524424efb6accf8f73a229c998f52fb8e7920627f51ee3f00f0582bb1992dc2",
     "figures/figure4_night_robustness.png": "2d8abeab9eace0d929132b92ecd22146e279cd6b1fb5703bd0ea527574932585",
     "figures/figure5_posthoc_comparators.png": "698f73f721371f112ab6174131998f9fffa211883df067c57d63118198de37b7",
-    "manuscript/manuscript_rendered.md": "0b78525ac7b8614721a24cedb736eed79dd3e924390ffda35117b106c72be4c5",
-    "manuscript/manuscript_source.md": "3ef34707413759329f06b65c72fe4744c5c89afcd08e855fab2d8527e10c3d37",
+    "manuscript/manuscript_rendered.md": "5d163ea8894b80993bfefa65b082266dcd2068d699bcc4a68752a40ab84d3b98",
+    "manuscript/manuscript_source.md": "2de3a2f2de57410c8dde29a47facc3e887bf0aac15a12f5ddf0955a2901c8817",
     "manuscript/references.bib": "293f4fece3ea651e503f2e90ebeb789f1ea2fbe82d9d920a415924fdd8ab69fd",
     "supplementary/figures/figureS1_abs_bias.png": "8d95880fd5390ed60cdd9c9cc0d7cd7718386e602da66b305ff6b6b18b845e8f",
     "supplementary/figures/figureS2_start_span_sensitivity.png": "41031ee3f2fc85baa94c7339fcd2015a52e610702b15a79fa447e9a5f5bfda69",
@@ -20,7 +20,7 @@
     "supplementary/figures/figureS4_user02_mats.png": "5091f3419554c9dcd3b9cc52cbcaf12e30cb2a1d04e0c1bd1d43cad3bc405f37",
     "supplementary/tables/FigureData_p5_figure_data.csv": "3f58c479c57af0ec3956084b0fa453e79b6eedd52cc5fe06c175d4af60b1310c",
     "supplementary/tables/FigureData_p6_figure_data.csv": "a1f1df49ebb697c15ef5e6ab917d5fb93eebb71d3e9b50bfced2f7331e6034b2",
-    "supplementary/tables/README.md": "9433569d77f00f266a8abb9397ce5af52cfbcf4e40d66e0e11dc15ba9eb13bfe",
+    "supplementary/tables/README.md": "2fa81036df64c8d99b15bbe5c1e921b107b67d20da43d3c1eb64942844acb06a",
     "supplementary/tables/TableS01a_p3_tcn_outer_by_seed.csv": "e903ed2a6ff7dd5dfc189af04cd05854f1700c47af5133f33129c83e947d7e33",
     "supplementary/tables/TableS01b_p3_training_mean_by_fold.csv": "272278166fc4b22aee8f5888a5177598dac8f82634c0f9a70c25f34a2e0e98bd",
     "supplementary/tables/TableS02_p3_secondary_strata.csv": "517fc0e4fa2f551ae561d09b3f6919df920e5b6b3e6bf8bddc9df554ae738a36",
@@ -68,6 +68,13 @@
     "supplementary/tables/TableS30b_p8_dynamic_trigger.csv": "0be115fbcceef899bfed0eb23a729f8413ec92c565ca16a5ea183720e564ef47",
     "supplementary/tables/TableS31a_p8_dynamic_cases.csv": "9639da4622bf824daa69b0bc3cbc50d0311953ce61b25ec2c9f863c96a09e426",
     "supplementary/tables/TableS31b_p8_dynamic_headlines.csv": "0d3d04db5a71b6717d5c7c48a0fdf1c34b15bb1b8711482649f3f9b3641c372b",
+    "supplementary/tables/TableS32a_p9_user03_qa_coverage.csv": "76450508b8f86df0f62627ae8bc6069ef6ecbf7e3fca43dc96eabb6397d181ea",
+    "supplementary/tables/TableS32b_p9_user03_qa_nights.csv": "11c1389138f4221c3fb6fe19d837689e4d6c9a78c73217f570c3b9c73e326a9b",
+    "supplementary/tables/TableS32c_p9_user03_qa_totals.csv": "daeb1750b3f44914e3f1e7a4ad3a0a0d42515d3ea3a25d5f7cf301c85cbb7d88",
+    "supplementary/tables/TableS33a_p9_user03_summary.csv": "f94ef64bc994b28ef889ec87db3813a455f97a2d948a4e4f1ec256cc2a7e14e0",
+    "supplementary/tables/TableS33b_p9_user03_by_seed.csv": "4f7eabeba01614ac47f4e4b318c65f81675ca7a500ff39ea253f6e1cb32268fa",
+    "supplementary/tables/TableS34a_p9_user03_per_night_summary.csv": "71dfb985c9d51c7d7eb2fbdd43b4525adffea5818db72141ff8709c405c4b55a",
+    "supplementary/tables/TableS34b_p9_user03_interpretation.csv": "7623bf2c2a14e5507ae96f86aef74ccc39127fa6c76a840146ba3d3239d45870",
     "tables/table1_dataset_protocol.csv": "cf41b20def9bfadfda4d7dfe1a81a696e7ed5ab2c490da68bbdce0c343afa051",
     "tables/table1_dataset_protocol.md": "7962ab17b5f5d0f076a2303ca9e03f0412db15b21fd3c8b6bff2075c8e06960c",
     "tables/table2_strict_loso.csv": "c65b755488d1e18f1db1ca679d73b7e5fb1373854ddda87c8ce78d769c234be5",
@@ -83,6 +90,8 @@
     "tables/table7_posthoc_comparators.csv": "ab536317de98540fbce32e61f9a42ec427f90d9202f0c05e77d41fc18a06962e",
     "tables/table7_posthoc_comparators.md": "a2f0782f6e736a556ebe520e3a8dd577f77f03c968fef5ced3e5b23080374171",
     "tables/table8_dynamic_signal.csv": "310be1f9707d88bcfdc21d6098a3804b82b6ec40f61d6bed3b55307a43fb03c8",
-    "tables/table8_dynamic_signal.md": "8ec2b272fb1629f41fe776e5e362b5a5389dac1b0ccf8bf92cdc5a295df4e599"
+    "tables/table8_dynamic_signal.md": "8ec2b272fb1629f41fe776e5e362b5a5389dac1b0ccf8bf92cdc5a295df4e599",
+    "tables/table9_external_validation.csv": "b8051a1622435d40bdd5e36382c3a3bb5abd9567423c0af85228973299be758a",
+    "tables/table9_external_validation.md": "6dc20b8e584477bf131b8cab454c930fbef124bc01a0a39ce58a6cdc0ad993ca"
   }
 }

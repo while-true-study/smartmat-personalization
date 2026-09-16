@@ -87,3 +87,10 @@ The data provider's permission to use and release the data (D-002) is none of th
 - [ ] Scientific approval of the abstract, tables, figures and limitations, including the post-hoc validation
   (Tables 6–7, Figure 5, the A/B/D columns of Table 4; D-057), the dynamic-signal diagnostic (Table 8; D-059) and
   the revised interpretation (D-058, D-060). No result may change at this step: yes / comments ______
+- [ ] Additional external validation on User03 (post hoc; Section 3.5.7, Section 4.9, Table 9, Tables S32–S34;
+  D-061): keep in the submission / withdraw / comments ______
+- [x] **OPEN-29 — closed 2026-09-16 (D-062), no PI action required.** The data provider confirmed that the setting
+  problem reported for the excluded auxiliary folder does not affect the second-level timestamps of the seven
+  complementary User03 exports. The confirmation was relayed by the PI and recorded on 2026-09-16; the
+  correspondence is private and is not reproduced in the repository. The P9 results are no longer conditional, the
+  withdrawal contingency has lapsed, and no number changed.

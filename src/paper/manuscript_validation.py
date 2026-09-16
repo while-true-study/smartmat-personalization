@@ -32,7 +32,7 @@ from src.paper.manuscript_figures import FIGURES
 ALLOWED_SPECS = {".2f", "+.2f", ".1f", "+.1f", "d", ",d", "s"}
 MAIN_TABLES = ("table1_dataset_protocol", "table2_strict_loso", "table3_feature_family", "table4_personalization",
                "table5_night_robustness", "table6_residual_variation", "table7_posthoc_comparators",
-               "table8_dynamic_signal")
+               "table8_dynamic_signal", "table9_external_validation")
 MAIN_FIGURES = ("figure1_study_design", "figure2_temperature_personalization", "figure3_humidity_personalization",
                 "figure4_night_robustness", "figure5_posthoc_comparators")
 # Decimals or percentages that may be typed: design constants of the frozen protocol, not results.
@@ -43,7 +43,8 @@ PRIVATE = {
     "ISO calendar date": re.compile(r"\b(19|20)\d{2}-\d{2}-\d{2}\b"),
     "compact calendar date": re.compile(r"(?<![\d.])20\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(?!\d)"),
     "season label": re.compile(r"\b(winter|spring|summer|autumn)\b", re.I),
-    "excluded or auxiliary subject id": re.compile(r"User0[3-6]"),
+    # User03 may appear only as the post-hoc external sensitivity subject (D-061); User04–User06 never
+    "excluded or auxiliary subject id": re.compile(r"User0[4-6]"),
     "local path": re.compile(r"[A-Za-z]:\\|/Users/|/home/|\bDesktop\b|스마트|학술지|\.claude"),
     "e-mail address": re.compile(r"[\w.+-]+@[\w-]+\.[A-Za-z]{2,}"),
 }

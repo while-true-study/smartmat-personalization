@@ -1,0 +1,2 @@
+csv_data_rows,excluded_csv_rows,included_minutes,excluded_minutes,reconstructed_rows,canonical_rows,dedup_removed_rows,windows,labelled_windows,nights_with_labelled_windows,event_punctuation_only_rows,dot_value_rows,dot_value_equal_to_csv_p1,protocol_version,status
+107256,64,5097,249,107192,107192,0,13753,13749,7,1,92222,92222,v1.3,post_hoc_external_sensitivity

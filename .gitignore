@@ -25,6 +25,10 @@
 !/data/interim/manifest/canonical_v1_build.json
 /data/processed/*
 !/data/processed/.gitkeep
+# P9 external-validation artifact (D-061): values stay local; only the small manifest is committed
+/data/external/*
+!/data/external/.gitkeep
+!/data/external/p9_user03_v1_manifest.json
 /data/splits/*
 !/data/splits/.gitkeep
 # protocol v1.0 split definitions are committed: group assignments and time spans only, no sensor or target

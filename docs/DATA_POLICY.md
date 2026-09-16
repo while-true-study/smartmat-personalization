@@ -122,6 +122,21 @@ From P1 on, analyses read `data/interim/canonical_v1/` only, never raw.
 - Quality problems are flags, never row deletions. Raw values are copied unchanged.
 - Any change of rule or parameter creates a new dataset version.
 
+### 4.2 External-validation artifact (P9, D-061, D-062)
+
+- **What it is:** `data/external/p9_user03_v1/` holds User03 rows reconstructed from the valid `user03_legacy`
+  export and the second-level timestamps of the paired TXT export. Only minutes whose sensor values are verified
+  identical to the CSV are kept (D-061 narrows the D-017 exclusion for this purpose only).
+- **Separation:**
+  - it is processed with the canonical_v1 rules, but it is not canonical_v1;
+  - it is not in any primary split, training pool or public release;
+  - its values stay local and are git-ignored. The committed manifest holds hashes and counts only.
+- **Scope:** external sensitivity evaluation only (protocol v1.3); never primary results.
+- **Timestamp validity (D-062):** the data provider confirmed that the setting problem behind the D-017 exclusion
+  does not affect the second-level timestamps of these seven paired TXT nights. OPEN-29 is closed and the results
+  are no longer conditional. The `user06_auxiliary` source stays `excluded_invalid` as a whole; only the narrow
+  D-061 use is admitted.
+
 ## 5. Privacy and release
 
 Provider confirmation (DECISIONS D-002): the raw data may be used and publicly released for
