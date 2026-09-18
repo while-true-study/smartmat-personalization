@@ -78,6 +78,9 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
   heater-context diagnostic. Longer pressure histories lowered the temperature error for two subjects, but heater and
   controller context is a competing explanation that the observational data cannot separate. Extra dependency:
   `requirements-p10.txt`.
+- The submission-ready manuscript snapshot is on `main` (`paper/manuscript/manuscript_p15_final.md`, package
+  `paper/submission_p15/`; checkpoint branch `release/p15-submission-ready`). Only author, institutional, sensor and
+  data-provider metadata remain open; no result changed.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
