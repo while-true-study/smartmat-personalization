@@ -1,0 +1,67 @@
+subject_id,target,span,description,mean,minus_primary_mean
+User01,temperature,primary,nights >= 16,25.692494320148054,0.0
+User01,temperature,adaptation_b1,nights 1-1,27.782888684452622,2.0903943643045686
+User01,temperature,adaptation_b3,nights 1-3,27.72622950819672,2.0337351880486665
+User01,temperature,adaptation_b7,nights 1-7,27.562214983713353,1.8697206635652996
+User01,temperature,adaptation_b14,nights 1-14,27.114716593519468,1.422222273371414
+User01,temperature,future_from_12,nights >= 12,25.735797601445704,0.04330328129764993
+User01,temperature,future_from_14,nights >= 14,25.705874277912375,0.01337995776432166
+User01,temperature,future_from_16,nights >= 16,25.692494320148054,0.0
+User01,temperature,future_from_18,nights >= 18,25.67816877740265,-0.014325542745403652
+User01,temperature,future_from_21,nights >= 21,25.622834365379575,-0.06965995476847908
+User01,temperature,training_pool,base model outer training pool,28.442871179422394,2.75037685927434
+User01,humidity,primary,nights >= 16,25.089200006018388,0.0
+User01,humidity,adaptation_b1,nights 1-1,69.71757129714811,44.628371291129724
+User01,humidity,adaptation_b3,nights 1-3,69.24459016393443,44.155390157916045
+User01,humidity,adaptation_b7,nights 1-7,60.61315960912052,35.523959603102135
+User01,humidity,adaptation_b14,nights 1-14,44.14268372397049,19.053483717952105
+User01,humidity,future_from_12,nights >= 12,25.243082708139386,0.15388270212099897
+User01,humidity,future_from_14,nights >= 14,25.21690269393873,0.127702687920344
+User01,humidity,future_from_16,nights >= 16,25.089200006018388,0.0
+User01,humidity,future_from_18,nights >= 18,24.963198337890894,-0.12600166812749336
+User01,humidity,future_from_21,nights >= 21,25.074068713547515,-0.015131292470872637
+User01,humidity,training_pool,base model outer training pool,48.806235744113415,23.717035738095028
+User02,temperature,primary,nights >= 16,30.81772556057555,0.0
+User02,temperature,adaptation_b1,nights 1-1,28.91241084165478,-1.9053147189207706
+User02,temperature,adaptation_b3,nights 1-3,29.2070897324447,-1.6106358281308495
+User02,temperature,adaptation_b7,nights 1-7,29.201058201058203,-1.616667359517347
+User02,temperature,adaptation_b14,nights 1-14,29.93984375,-0.8778818105755484
+User02,temperature,future_from_12,nights >= 12,30.884086318310192,0.06636075773464256
+User02,temperature,future_from_14,nights >= 14,30.84037134247108,0.022645781895530348
+User02,temperature,future_from_16,nights >= 16,30.81772556057555,0.0
+User02,temperature,future_from_18,nights >= 18,30.73656656567457,-0.08115899490098144
+User02,temperature,future_from_21,nights >= 21,30.740190853885238,-0.0775347066903116
+User02,temperature,training_pool,base model outer training pool,25.962930521737515,-4.854795038838034
+User02,humidity,primary,nights >= 16,55.56115986185165,0.0
+User02,humidity,adaptation_b1,nights 1-1,64.91754636233952,9.356386500487872
+User02,humidity,adaptation_b3,nights 1-3,68.50806529508355,12.946905433231905
+User02,humidity,adaptation_b7,nights 1-7,70.26680544713332,14.705645585281673
+User02,humidity,adaptation_b14,nights 1-14,64.17069196428571,8.60953210243406
+User02,humidity,future_from_12,nights >= 12,55.10962535074811,-0.4515345111035387
+User02,humidity,future_from_14,nights >= 14,55.42420530766987,-0.13695455418177716
+User02,humidity,future_from_16,nights >= 16,55.56115986185165,0.0
+User02,humidity,future_from_18,nights >= 18,55.83702771342007,0.275867851568421
+User02,humidity,future_from_21,nights >= 21,56.22981782129136,0.6686579594397131
+User02,humidity,training_pool,base model outer training pool,30.710851099421944,-24.850308762429705
+User07,temperature,primary,nights >= 16,26.674193211306363,0.0
+User07,temperature,adaptation_b1,nights 1-1,24.452530120481928,-2.2216630908244355
+User07,temperature,adaptation_b3,nights 1-3,24.38943722943723,-2.2847559818691323
+User07,temperature,adaptation_b7,nights 1-7,24.51608222490931,-2.158110986397052
+User07,temperature,adaptation_b14,nights 1-14,24.579224469329766,-2.094968741976597
+User07,temperature,future_from_12,nights >= 12,26.577727865766047,-0.0964653455403166
+User07,temperature,future_from_14,nights >= 14,26.623662397662805,-0.05053081364355805
+User07,temperature,future_from_16,nights >= 16,26.674193211306363,0.0
+User07,temperature,future_from_18,nights >= 18,26.725249610124223,0.051056398817859616
+User07,temperature,future_from_21,nights >= 21,26.810428399316354,0.1362351880099908
+User07,temperature,training_pool,base model outer training pool,27.38345222824131,0.7092590169349471
+User07,humidity,primary,nights >= 16,39.234512966091366,0.0
+User07,humidity,adaptation_b1,nights 1-1,37.694939759036146,-1.53957320705522
+User07,humidity,adaptation_b3,nights 1-3,38.15341991341991,-1.0810930526714557
+User07,humidity,adaptation_b7,nights 1-7,37.13696090286175,-2.097552063229614
+User07,humidity,adaptation_b14,nights 1-14,39.63713855925121,0.40262559315984703
+User07,humidity,future_from_12,nights >= 12,39.170740367623985,-0.0637725984673807
+User07,humidity,future_from_14,nights >= 14,39.05467608791657,-0.17983687817479677
+User07,humidity,future_from_16,nights >= 16,39.234512966091366,0.0
+User07,humidity,future_from_18,nights >= 18,39.708570096976,0.4740571308846313
+User07,humidity,future_from_21,nights >= 21,40.25671271002027,1.0221997439289012
+User07,humidity,training_pool,base model outer training pool,37.08287036609788,-2.1516425999934867

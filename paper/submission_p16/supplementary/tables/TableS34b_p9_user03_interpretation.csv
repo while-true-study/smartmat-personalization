@@ -1,0 +1,3 @@
+target,n_nights,comparison,within_night_covariation,night_bootstrap,cfg1_nights_tcn_lower_mae,cfg1_nights_tm_lower_mae,cfg1_eligible_nights_r,cfg1_nights_r_positive,cfg2_nights_tcn_lower_mae,cfg2_nights_tm_lower_mae,cfg2_eligible_nights_r,cfg2_nights_r_positive,cfg3_nights_tcn_lower_mae,cfg3_nights_tm_lower_mae,cfg3_eligible_nights_r,cfg3_nights_r_positive,relation_to_n3,protocol_version,status
+temperature,7,training_mean_better,absent,not computed (< 10 nights),0,7,7,4,1,6,7,4,0,7,7,4,strengthened,v1.3,post_hoc_external_sensitivity
+humidity,7,training_mean_better,absent,not computed (< 10 nights),0,7,7,5,0,7,7,5,0,7,7,4,strengthened,v1.3,post_hoc_external_sensitivity

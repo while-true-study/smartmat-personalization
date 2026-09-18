@@ -30,7 +30,9 @@ from src.paper.manuscript_figures import FIGURES as P8_FIGURES
 ROOT = paths.PROJECT_ROOT
 SOURCE = ROOT / "paper" / "manuscript" / "manuscript_p15_final.md"
 PACKAGE = ROOT / "paper" / "submission_p15"
-RENDERED = PACKAGE / "manuscript" / "manuscript_p15_final_rendered.md"
+RENDERED_NAME = "manuscript_p15_final_rendered.md"
+RENDERED = PACKAGE / "manuscript" / RENDERED_NAME
+BUILD_SCRIPT, VALIDATE_SCRIPT = "scripts/build_p15_submission.py", "scripts/validate_p15_submission.py"
 FIGURE6 = P14.FIGURES_DIR / "figure6_target_distributions.png"
 BASE_COMMIT = "070d2eb"                    # tip before the final-candidate work; earlier sources are compared with it
 FROZEN = P14.FROZEN + ("paper/manuscript/manuscript_p14_revision.md",)
@@ -84,7 +86,7 @@ def render(source: str | None = None) -> str:
                         "![Figure 6](../figures/figure6_target_distributions.png)")
     out = RD.render_manuscript(text)
     return out.replace("Rendered by scripts/build_submission_candidate.py from paper/manuscript/manuscript.md",
-                       "Rendered by scripts/build_p15_submission.py from paper/manuscript/manuscript_p15_final.md")
+                       f"Rendered by {BUILD_SCRIPT} from {SOURCE.relative_to(ROOT).as_posix()}")
 
 
 def placeholders(source: str) -> list[tuple[str, str]]:
@@ -139,7 +141,7 @@ def metadata_sheet(source: str) -> str:
     rows = placeholders(source)
     out = ["# Open metadata before submission", "",
            "Every bracketed `[CONFIRM BEFORE SUBMISSION: …]` item of the manuscript. Fill the value in the manuscript "
-           "source, re-run `python scripts/build_p15_submission.py` and `python scripts/validate_p15_submission.py`.",
+           f"source, re-run `python {BUILD_SCRIPT}` and `python {VALIDATE_SCRIPT}`.",
            "", "| # | Section | Item | Value |", "|---|---|---|---|"]
     out += [f"| {i} | {sec} | {text} | |" for i, (sec, text) in enumerate(rows, 1)]
     return "\n".join(out) + "\n"
@@ -147,7 +149,7 @@ def metadata_sheet(source: str) -> str:
 
 def expected_files(rendered: str) -> dict[str, Path | str]:
     """Package path -> source file (Path) or generated text (str)."""
-    files: dict[str, Path | str] = {"manuscript/manuscript_p15_final_rendered.md": rendered,
+    files: dict[str, Path | str] = {f"manuscript/{RENDERED_NAME}": rendered,
                                     "manuscript/references.bib": R.BIB_PATH,
                                     "METADATA_PLACEHOLDERS.md": metadata_sheet(read_source()),
                                     "supplementary/README.md": supplementary_index()}
@@ -295,7 +297,7 @@ def validate() -> dict[str, list[str]]:
         "terminology_units": check_terminology(source) + [
             p for p in V.check_formatting(source, rendered)
             if not (p.startswith("formatting: more than two decimals") and p.split(": ")[-1].strip("'") in eta)],
-        "privacy": V.check_privacy({"manuscript_p15_final.md": source, "rendered": rendered}),
+        "privacy": V.check_privacy({SOURCE.name: source, "rendered": rendered}),
         "citations": V.check_citations(source, rendered),
         "rendered": [] if rendered == render(source) else ["package rendering differs from a fresh render"],
         "generated_tables": V.check_generated() + P13.check_exports(),
