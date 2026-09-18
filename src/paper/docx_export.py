@@ -145,6 +145,7 @@ def parse_blocks(markdown: str) -> list[Block]:
 @dataclass
 class Media:
     items: list[tuple[str, str, bytes]] = field(default_factory=list)     # (rel id, part name, bytes)
+    restarts: list[str] = field(default_factory=list)                    # numIds of numbered lists restarting at 1
 
 
 def _png_size(data: bytes) -> tuple[int, int]:
@@ -168,47 +169,145 @@ def image_xml(path: Path, media: Media, n: int) -> str:
             f'</a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>')
 
 
-def table_xml(rows: list[list[str]]) -> str:
+TABLE_WIDTH_TWIPS = 11906 - 720 - 720      # A4 page minus the template's left and right margins
+CELL_PADDING_TWIPS = 216
+KEEP_TOGETHER_ROWS = 12
+TEXT_SAFETY = 1.03
+TABLE_FONT = {False: "pala.ttf", True: "palab.ttf"}  # Palatino Linotype, the template's table-body font
+
+
+def _em_width(bold: bool):
+    """Advance width of a string in em: the installed table font's metrics, else a conservative estimate."""
+    try:
+        from PIL import ImageFont
+        font = ImageFont.truetype(TABLE_FONT[bold], 1000)
+        return lambda s: font.getlength(s) / 1000
+    except (ImportError, OSError):
+        return lambda s: sum(0.25 if ch == " " else 0.8 if ch.isupper() or ch in "%+±×=−–—~@&#" else
+                             0.3 if ch in ".,:;()[]'!|/-" else 0.56 for ch in s) * (1.08 if bold else 1.0)
+
+
+ZWSP = "\u200b"                                  # zero-width space: an invisible line-break opportunity
+NBSP = "\u00a0"                                  # no-break space: no line break here
+UNBREAKABLE = re.compile(r"[^ ]+(?: +[%°][^ ]*)*")  # Word keeps a word together with a following "%..." or "°..." token
+
+
+def _bind(cell: str) -> str:
+    """Line-break control in a layout table cell: "RAW+MOVEMENT+CONTACT" may wrap after a "+"; a value with its
+    range "1.83 (1.70–1.96)", "1.78 ± 0.01", an interval "[+0.11, +0.21]" and "b = 0" are kept on one line (the
+    column is made wide enough for them). Only a zero-width space and no-break spaces are inserted; the visible text
+    is unchanged."""
+    cell = re.sub(r"(?<=[A-Z])\+(?=[A-Z])", "+" + ZWSP, cell)
+    cell = re.sub(r"(?<=\d) (?=\([+−-]?\d[\d.]*–[+−-]?\d[\d.]*\))", NBSP, cell)          # "1.83 (1.70–1.96)"
+    cell = re.sub(r"(?<=\d) ± (?=\d)", NBSP + "±" + NBSP, cell)                               # "1.78 ± 0.01"
+    cell = re.sub(r"\[[^\]]+\]", lambda m: m.group(0).replace(", ", "," + NBSP), cell)
+    return re.sub(r"(?<=\b[A-Za-z]) = (?=[\d+−-])", NBSP + "=" + NBSP, cell)
+
+
+def _plain_cell(text: str) -> str:
+    return re.sub(r"\*\*|`", "", text)
+
+
+def column_widths(rows: list[list[str]], n_cols: int, size_half_points: int,
+                  total: int = TABLE_WIDTH_TWIPS) -> list[int]:
+    """Twips per column: at least the longest word of the column (no break inside a word), the rest shared in
+    proportion to the single-line content width."""
+    em = 20 * size_half_points / 2                        # twips per em
+    regular, bold = _em_width(False), _em_width(True)
+    need_min, need_line = [0.0] * n_cols, [0.0] * n_cols
+    for k, r in enumerate(rows):
+        width = bold if k == 0 else regular               # the header row is bold
+        for c, text in enumerate(r + [""] * (n_cols - len(r))):
+            t = _plain_cell(text)
+            longest = max((width(p) for w in UNBREAKABLE.findall(t) for p in w.split(ZWSP)), default=0)
+            need_min[c] = max(need_min[c], longest * em * TEXT_SAFETY + CELL_PADDING_TWIPS)
+            need_line[c] = max(need_line[c], width(t) * em * TEXT_SAFETY + CELL_PADDING_TWIPS)
+    if sum(need_line) <= total:
+        return [int(w * total / sum(need_line)) for w in need_line]
+    if sum(need_min) >= total:
+        return [int(w * total / sum(need_min)) for w in need_min]
+    spare, extra = total - sum(need_min), [b - a for a, b in zip(need_min, need_line)]
+    return [int(a + spare * e / sum(extra)) for a, e in zip(need_min, extra)]
+
+
+def table_xml(rows: list[list[str]], layout: bool = False) -> str:
+    """`layout=True`: fixed column widths from the content (no word split), no hyphenation in cells, rows never split
+    across pages, and short tables kept on one page."""
     n_cols = max(len(r) for r in rows)
     size = 16 if n_cols >= 6 else 18                      # 8 pt or 9 pt (journal minimum 8 pt)
-    grid = "".join('<w:gridCol w:w="1000"/>' for _ in range(n_cols))
-    out = [f'<w:tbl><w:tblPr><w:tblStyle w:val="{STYLE["table_style"]}"/><w:tblW w:w="5000" w:type="pct"/>'
-           f'<w:tblLayout w:type="autofit"/></w:tblPr><w:tblGrid>{grid}</w:tblGrid>']
+    if layout:
+        rows = [[_bind(c) for c in r] for r in rows]
+        widths = column_widths(rows, n_cols, size)
+        grid = "".join(f'<w:gridCol w:w="{w}"/>' for w in widths)
+        tbl_layout = '<w:tblW w:w="{}" w:type="dxa"/><w:tblLayout w:type="fixed"/>'.format(sum(widths))
+    else:
+        widths = [0] * n_cols
+        grid = "".join('<w:gridCol w:w="1000"/>' for _ in range(n_cols))
+        tbl_layout = '<w:tblW w:w="5000" w:type="pct"/><w:tblLayout w:type="autofit"/>'
+    out = [f'<w:tbl><w:tblPr><w:tblStyle w:val="{STYLE["table_style"]}"/>{tbl_layout}</w:tblPr>'
+           f'<w:tblGrid>{grid}</w:tblGrid>']
+    keep_all = layout and len(rows) <= KEEP_TOGETHER_ROWS
     for k, r in enumerate(rows):
         cells = []
-        for c in r + [""] * (n_cols - len(r)):
+        for c, text in enumerate(r + [""] * (n_cols - len(r))):
             border = '<w:tcBorders><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders>' \
                 if k == 0 else ""
-            cells.append(f'<w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/>{border}</w:tcPr>'
-                         f'{para("table_body", runs(c, bold=k == 0, size_half_points=size))}</w:tc>')
-        header = "<w:trPr><w:tblHeader/></w:trPr>" if k == 0 else ""
-        out.append(f"<w:tr>{header}{''.join(cells)}</w:tr>")
+            cell_ppr = ""
+            if layout:
+                cell_ppr = ("<w:keepNext/>" if keep_all and k < len(rows) - 1 else "") + "<w:suppressAutoHyphens/>"
+            width = f'<w:tcW w:w="{widths[c]}" w:type="dxa"/>' if layout else '<w:tcW w:w="0" w:type="auto"/>'
+            body = runs(text, bold=k == 0, size_half_points=size)
+            if layout:                                    # "40-s" never wraps at its hyphen
+                body = re.sub(r"(<w:t xml:space=\"preserve\">)([^<]*)", lambda m: m.group(1) + re.sub(
+                    r"(?<=\S)-(?=\S)", '</w:t><w:noBreakHyphen/><w:t xml:space="preserve">', m.group(2)), body)
+            cells.append(f'<w:tc><w:tcPr>{width}{border}</w:tcPr>'
+                         f'{para("table_body", body, cell_ppr)}</w:tc>')
+        tr = ("<w:cantSplit/>" if layout else "") + ("<w:tblHeader/>" if k == 0 else "")
+        out.append(f"<w:tr>{f'<w:trPr>{tr}</w:trPr>' if tr else ''}{''.join(cells)}</w:tr>")
     out.append("</w:tbl>")
     return "".join(out)
 
 
-def list_xml(items: list[tuple[int, str, bool]], style_override: str | None = None) -> str:
+def list_xml(items: list[tuple[int, str, bool]], style_override: str | None = None,
+             numbered_id: str | None = None) -> str:
     out = []
     for level, text, numbered in items:
         style = style_override or ("itemize" if numbered else "bullet")
+        num_id = numbered_id if numbered and numbered_id else BULLET_NUM_ID.get(style, "")
         numpr = "" if style_override else (f'<w:numPr><w:ilvl w:val="0"/>'
-                                           f'<w:numId w:val="{BULLET_NUM_ID[style]}"/></w:numPr>')
+                                           f'<w:numId w:val="{num_id}"/></w:numPr>')
         if level and not style_override:            # nested items: level-0 marker, indented one step further
             numpr += f'<w:ind w:left="{NESTED_LEFT + 425 * (min(level, 3) - 1)}" w:hanging="425"/>'
         out.append(para(style, runs(text), numpr))
     return "".join(out)
 
 
-def body_xml(markdown: str, figures_dir: Path, draft_note: str | None) -> tuple[str, Media]:
+SPACE_AFTER_TABLE = '<w:spacing w:before="120"/>'
+BODY_STYLES = "|".join(STYLE[k] for k in ("text", "text_no_indent", "itemize", "bullet"))   # body text and lists
+
+
+def _after_table(xml: str) -> str:
+    """Space between a table and the body paragraph or list that follows it (inserted in schema order)."""
+    head, sep, rest = xml.partition("</w:pPr>")
+    at = head.find("<w:ind ")
+    head = head[:at] + SPACE_AFTER_TABLE + head[at:] if at >= 0 else head + SPACE_AFTER_TABLE
+    return head + sep + rest
+
+
+def body_xml(markdown: str, figures_dir: Path, draft_note: str | None, layout: bool = False,
+             article_type: str | None = "Article", ragged: bool = False) -> tuple[str, Media]:
+    """`article_type=None` omits the article-type line; `ragged=True` left-aligns body text and lists."""
     blocks = parse_blocks(markdown)
     media = Media()
     out = []
     if draft_note:
         out.append(para("text_no_indent", runs(draft_note, bold=True)))
-    out.append(para("article_type", runs("Article")))
+    if article_type:
+        out.append(para("article_type", runs(article_type)))
     section, fig_n, prev = "", 0, None
     back_started: dict[str, bool] = {}
     for b in blocks:
+        n_out = len(out)
         if b.kind == "title":
             out.append(para("title", runs(b.text)))
         elif b.kind == "heading":
@@ -218,13 +317,16 @@ def body_xml(markdown: str, figures_dir: Path, draft_note: str | None) -> tuple[
             elif b.level == 2 and b.text == "Abstract":
                 pass
             else:
-                out.append(para({2: "h1", 3: "h2"}.get(b.level, "h3"), runs(b.text)))
+                out.append(para({2: "h1", 3: "h2"}.get(b.level, "h3"), runs(b.text),
+                                "<w:keepNext/><w:keepLines/>" if layout else ""))
         elif b.kind == "para":
             m = re.match(r"\*\*([^*]+):\*\*\s*(.*)", b.text)
             cap = re.match(r"\*\*(Table|Figure) ([0-9S]+)\.\*\*\s*(.*)", b.text)
             if cap:
                 style = "table_caption" if cap.group(1) == "Table" else "figure_caption"
-                out.append(para(style, runs(f"{cap.group(1)} {cap.group(2)}. ", bold=True) + runs(cap.group(3))))
+                keep = "<w:keepNext/><w:keepLines/>" if layout and cap.group(1) == "Table" else ""
+                out.append(para(style, runs(f"{cap.group(1)} {cap.group(2)}. ", bold=True) + runs(cap.group(3)),
+                                keep))
             elif m and m.group(1) in FRONT_LABELS:
                 style = FRONT_LABELS[m.group(1)]
                 if m.group(1) == "Authors":
@@ -243,23 +345,38 @@ def body_xml(markdown: str, figures_dir: Path, draft_note: str | None) -> tuple[
                 pass
             else:
                 style = "text_no_indent" if prev is None or prev.kind in ("heading", "table", "image", "list") \
-                    else "text"
+                    or (layout and re.fullmatch(r"\*\*[^*]+\*\*", b.text)) else "text"   # a bold label line
                 out.append(para(style, runs(b.text)))
         elif b.kind == "list":
             if section == "References":
-                out.append(list_xml([(0, re.sub(r"^\d+\.\s*", "", t), False) for _, t, _ in b.items],
-                                    "references"))
+                refs = list_xml([(0, re.sub(r"^\d+\.\s*", "", t), False) for _, t, _ in b.items], "references")
+                if layout:                                   # long DOIs and URLs: no stretched justified lines
+                    refs = refs.replace(f'<w:pStyle w:val="{STYLE["references"]}"/>',
+                                        f'<w:pStyle w:val="{STYLE["references"]}"/><w:jc w:val="left"/>')
+                out.append(refs)
             elif prev is not None and prev.kind == "para" and prev.text == "Notes:":
                 out.append("".join(para("table_footer", runs(t)) for _, t, _ in b.items))
             else:
-                out.append(list_xml(b.items))
+                numbered_id = None
+                if layout and any(num for _, _, num in b.items):     # each numbered list restarts at 1
+                    numbered_id = str(900 + len(media.restarts))
+                    media.restarts.append(numbered_id)
+                out.append(list_xml(b.items, numbered_id=numbered_id))
         elif b.kind == "table":
-            out.append(table_xml(b.rows))
+            out.append(table_xml(b.rows, layout))
         elif b.kind == "image":
             fig_n += 1
-            out.append(para("figure", image_xml(figures_dir / Path(b.text).name, media, fig_n)))
+            out.append(para("figure", image_xml(figures_dir / Path(b.text).name, media, fig_n),
+                            "<w:keepNext/>" if layout else ""))
+        if layout and prev is not None and prev.kind == "table" and len(out) > n_out \
+                and re.match(rf'<w:p><w:pPr><w:pStyle w:val="(?:{BODY_STYLES})"', out[n_out]):
+            out[n_out] = _after_table(out[n_out])
         prev = b
-    return "".join(out), media
+    body = "".join(out)
+    if ragged:
+        body = re.sub(rf'(<w:pPr><w:pStyle w:val="(?:{BODY_STYLES})"/>(?:(?!</w:pPr>).)*)</w:pPr>',
+                      r'\1<w:jc w:val="left"/></w:pPr>', body)
+    return body, media
 
 
 # --- package ------------------------------------------------------------------------------------------------------
@@ -275,13 +392,17 @@ APP = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Properties '
 
 
 def build_docx(template: Path, out: Path = OUTPUT, markdown: str | None = None, figures_dir: Path | None = None,
-               draft_note: str | None = None) -> Path:
+               draft_note: str | None = None, layout: bool = False, article_type: str | None = "Article",
+               ragged: bool = False) -> Path:
+    """`layout=True` (final submission build): no hyphenation in table cells, table rows kept on one page, table
+    captions kept with their table and figures with their caption, references left-aligned. Default off, so the P8
+    build is unchanged. `article_type=None` and `ragged=True` are used for the supplementary document."""
     markdown = markdown if markdown is not None else RD.RENDERED.read_text(encoding="utf-8")
     figures_dir = figures_dir or GENERATED / "figures"
     src = zipfile.ZipFile(template)
     doc = src.read("word/document.xml").decode("utf-8")
     sect = re.findall(r"<w:sectPr\b.*?</w:sectPr>", doc, re.S)[-1]
-    body, media = body_xml(markdown, figures_dir, draft_note)
+    body, media = body_xml(markdown, figures_dir, draft_note, layout, article_type, ragged)
     title = next((b.text for b in parse_blocks(markdown) if b.kind == "title"), "")
     document = (f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:document {NS}><w:body>{body}{sect}'
                 f'</w:body></w:document>')
@@ -298,6 +419,14 @@ def build_docx(template: Path, out: Path = OUTPUT, markdown: str | None = None, 
     parts["word/document.xml"] = document.encode("utf-8")
     parts["word/_rels/document.xml.rels"] = rels.encode("utf-8")
     parts["word/settings.xml"] = settings.encode("utf-8")
+    if media.restarts:
+        numbering = src.read("word/numbering.xml").decode("utf-8")
+        abstract = re.search(rf'<w:num w:numId="{BULLET_NUM_ID["itemize"]}"[^>]*>\s*<w:abstractNumId w:val="(\d+)"/>',
+                             numbering).group(1)
+        numbering = numbering.replace("</w:numbering>", "".join(
+            f'<w:num w:numId="{n}"><w:abstractNumId w:val="{abstract}"/><w:lvlOverride w:ilvl="0">'
+            f'<w:startOverride w:val="1"/></w:lvlOverride></w:num>' for n in media.restarts) + "</w:numbering>")
+        parts["word/numbering.xml"] = numbering.encode("utf-8")
     parts["docProps/core.xml"] = CORE.format(title=escape(title)).encode("utf-8")
     parts["docProps/app.xml"] = APP.encode("utf-8")
     for _, name, data in media.items:
@@ -314,5 +443,5 @@ def build_docx(template: Path, out: Path = OUTPUT, markdown: str | None = None, 
 def docx_text(path: Path) -> str:
     """Plain text of a DOCX body (for validation)."""
     xml = zipfile.ZipFile(path).read("word/document.xml").decode("utf-8")
-    xml = re.sub(r"</w:p>", "\n", xml)
+    xml = re.sub(r"</w:p>", "\n", xml).replace("<w:noBreakHyphen/>", "-").replace(ZWSP, "").replace(NBSP, " ")
     return re.sub(r"<[^>]+>", "", xml).replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").lstrip()

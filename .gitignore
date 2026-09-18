@@ -49,6 +49,9 @@
 # Restricted participant metadata must never leave the raw package
 *.xlsx
 *.xls
+# Exception: the supplementary-table workbook of the final submission (built from the committed P16 supplementary CSVs;
+# no participant metadata)
+!/paper/submission_final/supplementary/Supplementary_Tables_S1-S44.xlsx
 
 # Python / tooling
 __pycache__/
@@ -76,3 +79,6 @@ desktop.ini
 *.blg
 *.fdb_latexmk
 *.fls
+
+# Final submission build intermediates (rendered PDFs and page images for visual QA)
+paper/submission_final/work/
