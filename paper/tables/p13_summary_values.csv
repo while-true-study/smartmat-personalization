@@ -1,0 +1,6 @@
+key,value,derivation
+tcn_common_vs_hgb_40_temperature_absdiff_min,0.04991825636777758,"min over subjects of |MAE(RAW-TCN common, seed mean) - MAE(HGB 40 s)|, temperature"
+tcn_common_vs_hgb_40_temperature_absdiff_max,0.12292619987358933,"max over subjects of |MAE(RAW-TCN common, seed mean) - MAE(HGB 40 s)|, temperature"
+eta_humidity_full_three_states_max,0.049728304491201865,"max over subjects and centring variants of eta squared, humidity, full span, three states"
+User01_temperature_on_minus_other_mean_full,-1.625246252329017,"mean temperature of ON windows minus the window-weighted mean of OFF and UNKNOWN windows, full span"
+User07_temperature_on_minus_other_mean_full,-2.1807181635654196,"mean temperature of ON windows minus the window-weighted mean of OFF and UNKNOWN windows, full span"

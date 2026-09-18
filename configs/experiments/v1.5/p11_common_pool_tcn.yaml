@@ -1,0 +1,85 @@
+# Protocol v1.5 — P11 post-hoc exploratory addendum (D-066; docs/P11_COMMON_POOL_TCN_PLAN.md).
+# Written after every P3-P10 result was known (including the full-pool RAW-TCN on the P10 common test endpoints),
+# before any P11 metric was computed. It reuses the v1.0 protocol, canonical_v1, split files and windowing rule and the
+# v1.4 common endpoint rule unchanged, and edits no v1.0-v1.4 artifact. Everything here is post hoc and exploratory.
+protocol_version: v1.5
+kind: post_hoc_exploratory_addendum
+decision: D-066
+phase: P11
+purpose: remove_training_pool_confound_of_p10_part_h
+base_protocol:
+  version: v1.0
+  file: configs/experiments/v1.0/protocol.yaml
+builds_on: [v1.4]
+results_seen_before_design: [p3_strict_loso, p4_feature_families, p5_personalization, p6_robustness, p8_posthoc_v1_1,
+                             p8_dynamic_v1_2, p9_user03_v1_3, p10_level_baseline_history_v1_4,
+                             raw_tcn_full_pool_on_common_test_endpoints]
+status_of_results: post_hoc_exploratory
+subjects: [User01, User02, User07]
+targets: [temperature, humidity]
+user03: not_used
+
+model:
+  family: RAW
+  input: 40_s_window_8_steps_of_5_s_divided_by_4095      # unchanged; never a 900-s sequence
+  architecture_and_hyperparameters: configs/experiments/v1.0/p3_selected_configs.yaml   # frozen per fold
+  grid_search: none
+  new_hyperparameters: none
+
+endpoints:
+  rule: p10_common_endpoints            # labelled and available at 40, 300 and 900 s (src/evaluation/p10_history.py)
+  applied_to: [inner_train, inner_validation, outer_train, outer_test]
+  computed_per_subject: true            # from the subject's own timestamps and label validity only
+
+epochs:
+  inner_splits: v1.0_inner_A_B
+  inner_configuration: frozen_selected_configuration_of_the_fold
+  inner_seed: 0
+  criterion: v1.0 selection criterion, sd from the inner-training target scaler
+  early_stopping: {patience: 5, max_epochs: 50, best_epoch: first_strict_minimum}
+  final_rule: round_half_up(mean(inner A best epoch, inner B best epoch))     # p3_loso.final_epochs, unchanged
+  held_out_subject_in_selection: false
+
+final:
+  seeds: [0, 1, 2]
+  training_pool: common_endpoints_of_the_outer_training_subjects
+  target_scaler: zscore_fit_on_that_pool
+  validation_data: none
+  test: common_endpoints_of_the_held_out_subject_once_per_seed
+
+reused_without_recomputation:
+  hgb_and_ridge: outputs/runs/p10/history/fold{k}/{family}_h{history}/predictions.parquet
+  raw_tcn_full_pool: outputs/runs/p3/final/fold{k}_seed{s}/predictions.parquet
+  p10_tables: [outputs/metrics/p10/p10_history_metrics.csv, outputs/metrics/p10/p10_history_bootstrap.csv,
+               outputs/metrics/p10/p10_history_provenance.json]
+
+comparison_on_common_test_endpoints: [training_mean_common, training_median_common, raw_tcn_common, raw_tcn_full,
+                                      hgb_h40, hgb_h300, hgb_h900]
+metrics: [mae, rmse, bias, R, Q, r_pooled, r_within_night, r_within_night_mat]
+bootstrap: {unit: night, resamples: 2000, seed: 0, level: 0.95}    # the frozen v1.0 / P10 rule
+comparisons:                            # delta = MAE(first) - MAE(second); positive = second better
+  - [training_mean_common, raw_tcn_common]
+  - [training_median_common, raw_tcn_common]
+  - [raw_tcn_common, hgb_h40]
+  - [hgb_h40, hgb_h300]
+  - [hgb_h40, hgb_h900]
+  - [raw_tcn_full, raw_tcn_common]      # training-pool restriction, same seed on both sides
+bootstrap_seeds: {primary: 0, reported_separately: [1, 2]}
+
+interpretation:                         # fixed before any P11 metric; applied per target, temperature first
+  exceeds_level_baselines: >
+    seed-0 interval of MAE(training_mean_common) - MAE(raw_tcn_common) above zero AND
+    seed-0 interval of MAE(training_median_common) - MAE(raw_tcn_common) above zero
+  case_A: no subject exceeds the level baselines
+  case_B: exactly one subject exceeds the level baselines
+  case_C: at least two of three subjects exceed the level baselines
+  pool_restriction_effect: raw_tcn_common minus raw_tcn_full, per subject and target, seed mean and seed range
+  wording: no architecture superiority claim; N = 3 retrospective cases; no population inference
+
+validation:
+  p10_key_equality: test keys and y_true equal to every committed P10 prediction file of the fold
+  p10_count_equality: common training counts equal to p10_history_provenance.json
+  p10_value_regression: hgb and raw_tcn_full metrics and hgb bootstrap rows equal to the committed P10 tables (1e-9)
+  existing_outputs_unchanged: sha256 of outputs/runs/p3, outputs/runs/p10, outputs/metrics/p3, outputs/metrics/p10,
+                              paper/tables before and after
+output_root: outputs/p11_common_pool_tcn

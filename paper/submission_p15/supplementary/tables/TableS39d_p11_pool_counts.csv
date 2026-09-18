@@ -1,0 +1,4 @@
+fold,held_out_subject,source_subjects,full_source_endpoints,common_source_endpoints,retention_percent,full_test_endpoints,common_test_endpoints,test_retention_percent,test_nights_common,test_nights_full,source_nights_common,common_User02,full_User02,common_User07,full_User07,common_User01,full_User01
+1,User01,User02+User07,284970,136584,47.92925571112749,289437,139735,48.27820907485912,137,151,144,74802,143999,61782,140971,,
+2,User02,User01+User07,430408,201517,46.81999405215517,143999,74802,51.94619407079216,51,51,230,,,61782,140971,139735,289437
+3,User07,User01+User02,433436,214537,49.496811524654156,140971,61782,43.82603514197955,93,100,188,74802,143999,,,139735,289437

@@ -1,0 +1,6 @@
+# P10 addition (D-064; docs/P10_LEVEL_BASELINE_HISTORY_PLAN.md §7). Install on top of requirements.txt, which stays
+# the frozen P3-P9 environment. Needed only for the P10 history models (Ridge, HistGradientBoostingRegressor).
+scikit-learn==1.8.0
+scipy==1.17.1
+joblib==1.5.3
+threadpoolctl==3.6.0

@@ -1,0 +1,335 @@
+{
+  "design": {
+    "addendum_version": "v1.4",
+    "decision": "D-064",
+    "plan_sha256_lf": "3555ffa3cdb82dfd71bdcd431926d0a9b4a6458a94fcd3d1b77910926c2c9e79",
+    "config_sha256_lf": "cce1fb349442c2cf03f679bf2f0bf693a118062b4b087633d1b17fe692479191",
+    "base_protocol_sha256": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84"
+  },
+  "generated_at": "2026-09-18T00:53:11",
+  "protocol_version": "v1.0",
+  "protocol_sha256": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84",
+  "split_sha256": {
+    "v1.0_loso/outer_folds.csv": "59e53c903f8c5a70f8e8bcb8cd2917d314c8e2114b408b7806fada89eb76da86",
+    "v1.0_loso/inner_folds.csv": "567fadee4b731639593e4d1cc8610024a0d07ef3cb2f2dc3457ef753a96230df",
+    "v1.0_personalization/chronological.csv": "8007cfcd4e057cbb7771ea8327ceabc615c5c3ca5a4a08f47ecc73a8393eff59"
+  },
+  "split_manifest_protocol_sha256": "96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84",
+  "canonical_dataset_version": "canonical_v1",
+  "canonical_primary_content_sha256": "26b970a4edce2bd57767c62666d08cf46d274e675c78ed604b1116892a97dd0a",
+  "canonical_primary_file_sha256": "1b34342b9906d2882b6831bc5c04cb7082a067a6574026227e1e4219804673c8",
+  "git_commit": "9ed82d36feaf252d4cea74fba8bbd91e51bd6a76",
+  "git_dirty_tracked_files": false,
+  "p2_tag": "p2-protocol-freeze",
+  "p2_tag_commit": "969a24b0998e2edd53baa4c5e175b465aab140d0",
+  "p3_tag_commit": "950a51488816560abba401ac2aaf6081abd19f04",
+  "p4_tag_commit": "977b33d53119fded026129c136b4a3c6e35dda72",
+  "environment": {
+    "python": "3.12.1",
+    "numpy": "2.4.4",
+    "scikit_learn": "1.8.0",
+    "scipy": "1.17.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+    "threadpools": [
+      {
+        "internal_api": "openblas",
+        "num_threads": 20,
+        "version": "0.3.31.188.0"
+      },
+      {
+        "internal_api": "openmp",
+        "num_threads": 20,
+        "version": null
+      },
+      {
+        "internal_api": "openblas",
+        "num_threads": 20,
+        "version": "0.3.30"
+      }
+    ]
+  },
+  "split_level_gate_passed": true,
+  "features": {
+    "40": [
+      "h40_p1_mean",
+      "h40_p1_std",
+      "h40_p1_min",
+      "h40_p1_max",
+      "h40_p1_last",
+      "h40_p1_net_change",
+      "h40_p1_abs_change_sum",
+      "h40_p2_mean",
+      "h40_p2_std",
+      "h40_p2_min",
+      "h40_p2_max",
+      "h40_p2_last",
+      "h40_p2_net_change",
+      "h40_p2_abs_change_sum",
+      "h40_p3_mean",
+      "h40_p3_std",
+      "h40_p3_min",
+      "h40_p3_max",
+      "h40_p3_last",
+      "h40_p3_net_change",
+      "h40_p3_abs_change_sum",
+      "h40_p4_mean",
+      "h40_p4_std",
+      "h40_p4_min",
+      "h40_p4_max",
+      "h40_p4_last",
+      "h40_p4_net_change",
+      "h40_p4_abs_change_sum",
+      "h40_p5_mean",
+      "h40_p5_std",
+      "h40_p5_min",
+      "h40_p5_max",
+      "h40_p5_last",
+      "h40_p5_net_change",
+      "h40_p5_abs_change_sum",
+      "h40_p6_mean",
+      "h40_p6_std",
+      "h40_p6_min",
+      "h40_p6_max",
+      "h40_p6_last",
+      "h40_p6_net_change",
+      "h40_p6_abs_change_sum"
+    ],
+    "300": [
+      "h300_p1_mean",
+      "h300_p1_std",
+      "h300_p1_min",
+      "h300_p1_max",
+      "h300_p1_last",
+      "h300_p1_net_change",
+      "h300_p1_abs_change_sum",
+      "h300_p2_mean",
+      "h300_p2_std",
+      "h300_p2_min",
+      "h300_p2_max",
+      "h300_p2_last",
+      "h300_p2_net_change",
+      "h300_p2_abs_change_sum",
+      "h300_p3_mean",
+      "h300_p3_std",
+      "h300_p3_min",
+      "h300_p3_max",
+      "h300_p3_last",
+      "h300_p3_net_change",
+      "h300_p3_abs_change_sum",
+      "h300_p4_mean",
+      "h300_p4_std",
+      "h300_p4_min",
+      "h300_p4_max",
+      "h300_p4_last",
+      "h300_p4_net_change",
+      "h300_p4_abs_change_sum",
+      "h300_p5_mean",
+      "h300_p5_std",
+      "h300_p5_min",
+      "h300_p5_max",
+      "h300_p5_last",
+      "h300_p5_net_change",
+      "h300_p5_abs_change_sum",
+      "h300_p6_mean",
+      "h300_p6_std",
+      "h300_p6_min",
+      "h300_p6_max",
+      "h300_p6_last",
+      "h300_p6_net_change",
+      "h300_p6_abs_change_sum"
+    ],
+    "900": [
+      "h900_p1_mean",
+      "h900_p1_std",
+      "h900_p1_min",
+      "h900_p1_max",
+      "h900_p1_last",
+      "h900_p1_net_change",
+      "h900_p1_abs_change_sum",
+      "h900_p2_mean",
+      "h900_p2_std",
+      "h900_p2_min",
+      "h900_p2_max",
+      "h900_p2_last",
+      "h900_p2_net_change",
+      "h900_p2_abs_change_sum",
+      "h900_p3_mean",
+      "h900_p3_std",
+      "h900_p3_min",
+      "h900_p3_max",
+      "h900_p3_last",
+      "h900_p3_net_change",
+      "h900_p3_abs_change_sum",
+      "h900_p4_mean",
+      "h900_p4_std",
+      "h900_p4_min",
+      "h900_p4_max",
+      "h900_p4_last",
+      "h900_p4_net_change",
+      "h900_p4_abs_change_sum",
+      "h900_p5_mean",
+      "h900_p5_std",
+      "h900_p5_min",
+      "h900_p5_max",
+      "h900_p5_last",
+      "h900_p5_net_change",
+      "h900_p5_abs_change_sum",
+      "h900_p6_mean",
+      "h900_p6_std",
+      "h900_p6_min",
+      "h900_p6_max",
+      "h900_p6_last",
+      "h900_p6_net_change",
+      "h900_p6_abs_change_sum"
+    ]
+  },
+  "folds": {
+    "1": {
+      "held_out": "User01",
+      "train_subjects": [
+        "User02",
+        "User07"
+      ],
+      "inner": {
+        "A": [
+          "User02",
+          "User07"
+        ],
+        "B": [
+          "User07",
+          "User02"
+        ]
+      },
+      "n_train_common": 136584,
+      "n_test_common": 139735,
+      "selected": {
+        "ridge_h40": {
+          "alpha": 0.001
+        },
+        "hgb_h40": {
+          "max_leaf_nodes": 63,
+          "min_samples_leaf": 100
+        },
+        "ridge_h300": {
+          "alpha": 0.001
+        },
+        "hgb_h300": {
+          "max_leaf_nodes": 63,
+          "min_samples_leaf": 100
+        },
+        "ridge_h900": {
+          "alpha": 0.001
+        },
+        "hgb_h900": {
+          "max_leaf_nodes": 63,
+          "min_samples_leaf": 100
+        }
+      }
+    },
+    "2": {
+      "held_out": "User02",
+      "train_subjects": [
+        "User01",
+        "User07"
+      ],
+      "inner": {
+        "A": [
+          "User01",
+          "User07"
+        ],
+        "B": [
+          "User07",
+          "User01"
+        ]
+      },
+      "n_train_common": 201517,
+      "n_test_common": 74802,
+      "selected": {
+        "ridge_h40": {
+          "alpha": 1000.0
+        },
+        "hgb_h40": {
+          "max_leaf_nodes": 63,
+          "min_samples_leaf": 1000
+        },
+        "ridge_h300": {
+          "alpha": 1000.0
+        },
+        "hgb_h300": {
+          "max_leaf_nodes": 15,
+          "min_samples_leaf": 1000
+        },
+        "ridge_h900": {
+          "alpha": 1000.0
+        },
+        "hgb_h900": {
+          "max_leaf_nodes": 15,
+          "min_samples_leaf": 1000
+        }
+      }
+    },
+    "3": {
+      "held_out": "User07",
+      "train_subjects": [
+        "User01",
+        "User02"
+      ],
+      "inner": {
+        "A": [
+          "User01",
+          "User02"
+        ],
+        "B": [
+          "User02",
+          "User01"
+        ]
+      },
+      "n_train_common": 214537,
+      "n_test_common": 61782,
+      "selected": {
+        "ridge_h40": {
+          "alpha": 1000.0
+        },
+        "hgb_h40": {
+          "max_leaf_nodes": 63,
+          "min_samples_leaf": 1000
+        },
+        "ridge_h300": {
+          "alpha": 1000.0
+        },
+        "hgb_h300": {
+          "max_leaf_nodes": 15,
+          "min_samples_leaf": 1000
+        },
+        "ridge_h900": {
+          "alpha": 1000.0
+        },
+        "hgb_h900": {
+          "max_leaf_nodes": 63,
+          "min_samples_leaf": 1000
+        }
+      }
+    }
+  },
+  "prediction_files_sha256": {
+    "fold1/ridge_h40": "5a06f6b2ceb4f7a418a4afcb031e5c8f4322ad4481568bad753d8c33519d1436",
+    "fold1/hgb_h40": "5cfa92b81e3f904d54b1755002534218850b1ca0e49e9cff1bdc43f32f7d8362",
+    "fold1/ridge_h300": "41a48546b2fb10e9cf2ba5d7b65061a2b332d0b05792824245dd0441d2a73287",
+    "fold1/hgb_h300": "0265f5e9e809ef447f1019829c009625d2ea93996b3bf66b6b1a608f9c616941",
+    "fold1/ridge_h900": "eacf7257c0f4ebf8898f866e00d1fc7cd4a2b45e82b1b235ff74f36958ce0c89",
+    "fold1/hgb_h900": "35438f0d5d2bdef33778d645e2f8f5de124dc8885da2b03b81eb32f40ec89e37",
+    "fold2/ridge_h40": "8a3d181188d0f2bdb29b930f728c9bb3c013615be344941c713031fbc62e6286",
+    "fold2/hgb_h40": "b8c82ad3fc971f0575252b330337650955a921402962da228595ad4494f879ad",
+    "fold2/ridge_h300": "3d57e97ce35a9313cd396f2319959312304be6037690da958bb37b7e79743f5c",
+    "fold2/hgb_h300": "fffadcbac383ec77cfc04047264869b3ff002756875db7cc8b5a4d2013a1075e",
+    "fold2/ridge_h900": "8381feeabee8bfac8c9f58b38abc8619a9907bdb4904b18eb4fb0014f0838e08",
+    "fold2/hgb_h900": "87ba77f826538fea40244ef67cccb7d60b2f4ba751e63fe66be7b2d854d4c9d8",
+    "fold3/ridge_h40": "b1d26581b13709b047255657d1744e544d68bcda935e793ad430231a7f703120",
+    "fold3/hgb_h40": "fab99b99afdf125e0986519949e3f26da981108c4b9ab76a44b22c2a0d8150ba",
+    "fold3/ridge_h300": "28dbf8de41a441360fae7928b76fcc109b718e780ef185ec8be509ccab00ab26",
+    "fold3/hgb_h300": "04b1382949278d9930163b9e0c0bbe3db0c061b993e13dca10767a857f9cfcc5",
+    "fold3/ridge_h900": "5bf258ddac44096e0387c615fa6537b083232cabbf1afff997d0a2f1002bc0e8",
+    "fold3/hgb_h900": "861bc40a30b7198e2dba9935c4b31b8d353cc8345273511a08294988acaf8fb1"
+  }
+}

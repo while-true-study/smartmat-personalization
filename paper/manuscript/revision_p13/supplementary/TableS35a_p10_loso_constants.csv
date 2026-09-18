@@ -1,0 +1,13 @@
+fold,subject_id,statistic,target,value,n_train_windows,n_train_nights,train_subjects
+1,User01,training_mean,temperature,28.442871179422394,284970,151,User02+User07
+1,User01,training_median,temperature,29.0,284970,151,User02+User07
+1,User01,training_mean,humidity,48.806235744113415,284970,151,User02+User07
+1,User01,training_median,humidity,47.0,284970,151,User02+User07
+2,User02,training_mean,temperature,25.962930521737515,430408,251,User01+User07
+2,User02,training_median,temperature,26.0,430408,251,User01+User07
+2,User02,training_mean,humidity,30.710851099421944,430408,251,User01+User07
+2,User02,training_median,humidity,30.0,430408,251,User01+User07
+3,User07,training_mean,temperature,27.38345222824131,433436,202,User01+User02
+3,User07,training_median,temperature,27.0,433436,202,User01+User02
+3,User07,training_mean,humidity,37.08287036609788,433436,202,User01+User02
+3,User07,training_median,humidity,32.0,433436,202,User01+User02

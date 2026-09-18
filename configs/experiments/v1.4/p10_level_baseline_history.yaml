@@ -1,0 +1,95 @@
+# Protocol v1.4 — P10 post-hoc exploratory addendum (D-064; docs/P10_LEVEL_BASELINE_HISTORY_PLAN.md).
+# Written after every P3-P9 result and the manuscript v1.1 were known, before any P10 metric was computed.
+# It reuses the v1.0 protocol, canonical_v1, split files and windowing rule unchanged (verified by hash) and edits no
+# v1.0-v1.3 artifact. Everything here is post hoc and exploratory.
+protocol_version: v1.4
+kind: post_hoc_exploratory_addendum
+decision: D-064
+phase: P10
+base_protocol:
+  version: v1.0
+  file: configs/experiments/v1.0/protocol.yaml
+  sha256: 96eeb17ea3e3d3e4dd70e12d34ac09399dd43ad3bc74ade64f0b8144677e6e84
+  splits_manifest: data/splits/v1.0_manifest.json
+builds_on: [v1.1, v1.2, v1.3]
+results_seen_before_design: [p3_strict_loso, p4_feature_families, p5_personalization, p6_robustness,
+                             p8_posthoc_v1_1, p8_dynamic_v1_2, p9_user03_v1_3, manuscript_v1_1]
+status_of_results: post_hoc_exploratory
+subjects: [User01, User02, User07]
+targets: [temperature, humidity]
+seeds_neural: [0, 1, 2]
+user03: not_used
+
+reproduction:
+  tolerance_abs: 1.0e-9
+  tolerance_rel: 0.0
+  exact: [keys, y_true, window_counts, night_counts, night_sets]
+  loso_tables: [paper/tables/p3_training_mean_by_fold.csv, paper/tables/p3_tcn_outer_by_seed.csv,
+                paper/tables/p3_primary_summary.csv]
+  rq2_tables: [paper/tables/p5_by_seed.csv, paper/tables/p5_budget_counts.csv, paper/tables/p8_calibration_by_seed.csv,
+               paper/tables/p8_interpretation_cases.csv]
+  reused_not_recomputed: [D_offset_calibrated_base]
+  on_failure: stop_before_parts_M_and_H
+
+median_baselines:
+  statistic: numpy_median            # even count: mean of the two middle values
+  source: labelled_outer_training_windows
+  adaptation: labelled_adaptation_windows_of_budget
+  user02: pooled_over_mats
+  budgets_nights: [1, 3, 7, 14]
+  primary_test_from_ordinal: 16
+  seed_repetition: none
+  counts: point_estimate_only        # not non-inferiority, equivalence or no-difference
+
+history_models:
+  scheme: strict_loso
+  histories_s: [40, 300, 900]
+  bin_s: 5
+  stride_s: 20
+  max_gap_s: 5
+  step_value: last_observed_row_in_bin
+  same_second_ties: last_row_in_canonical_order
+  window_boundaries: [subject_id, device_id, session_id, sensor_phase, channel_quality_phase, partition]
+  night_boundary: none               # as in v1.0 strict LOSO windows
+  pressure_4095: kept_as_observed
+  availability: segment_start_le_t_end_minus_history
+  exclusion_reasons: [segment_starts_at_session_start, segment_starts_after_gap_gt_5s]
+  endpoint_set: common_to_all_histories   # train, inner train, inner validation and test
+  features:
+    scale: divide_by_4095
+    per_channel: [mean, std_ddof0, min, max, last, net_change, abs_change_sum]
+    channels: [P1, P2, P3, P4, P5, P6]
+    forbidden: [cross_channel, total_pressure, active_threshold, centre_of_pressure, calendar, identity, phase,
+                heater, event, target, firmware_label]
+  families:
+    ridge:
+      implementation: sklearn.linear_model.Ridge
+      feature_scaler: standard_fit_on_training_partition
+      target_scaler: zscore_fit_on_training_partition
+      grid: {alpha: [0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]}
+    hgb:
+      implementation: sklearn.ensemble.HistGradientBoostingRegressor
+      per_target: true
+      fixed: {learning_rate: 0.1, max_iter: 200, early_stopping: false, l2_regularization: 0.0, max_bins: 255,
+              random_state: 0}
+      grid: {max_leaf_nodes: [15, 63], min_samples_leaf: [100, 1000]}
+  selection:
+    splits: v1.0_inner_A_B
+    criterion: mean over inner A and B of (MAE_T/sd_T + MAE_H/sd_H)/2, sd from inner training
+    ties: first_in_grid_order
+    history_selected_on_test: false
+  comparators_on_common_test: [raw_tcn_frozen_seeds_0_1_2, training_mean_orig, training_median_orig,
+                               training_mean_common, training_median_common]
+  metrics: [mae, rmse, bias, R, Q, r_pooled, r_within_night, r_within_night_mat]
+  bootstrap: {unit: night, resamples: 2000, seed: 0, level: 0.95}
+  comparisons:                        # delta = MAE(first) - MAE(second); positive = second better
+    - [training_mean_common, model_H]
+    - [model_40, model_300]
+    - [model_40, model_900]
+    - [raw_tcn_seed0, model_H]        # descriptive only
+  interpretation:
+    beats_level_baseline: interval_of_A_common_minus_model_above_zero
+    longer_history_lower_error: interval_of_model_40_minus_model_H_above_zero
+    variation_beyond_level: {R_below: 1.0, r_within_min: 0.10, user02_r_within_mat_min: 0.10}
+    subject_rule: at_least_2_of_3
+environment_addition: requirements-p10.txt

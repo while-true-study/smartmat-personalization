@@ -1,0 +1,95 @@
+# Protocol v1.6 — P12 post-hoc descriptive confound diagnostic (D-067; docs/P12_HEATER_DIAGNOSTIC_PLAN.md).
+# Written after every P3-P11 result was known and before any P12 statistic was computed. It reuses the v1.0 protocol,
+# canonical_v1, split files and windows, the D-047 heater-context definition and the v1.4 common-endpoint rule
+# unchanged, and edits no v1.0-v1.5 artifact. Nothing here is a model; no heater field enters any predictive model.
+protocol_version: v1.6
+kind: post_hoc_descriptive_confound_diagnostic
+decision: D-067
+phase: P12
+base_protocol: {version: v1.0, file: configs/experiments/v1.0/protocol.yaml}
+builds_on: [v1.4, v1.5]
+results_seen_before_design: [p3_to_p11_all_results, p6_user02_heater_strata, p1_event_conditioned_trajectories]
+status_of_results: post_hoc_descriptive
+subjects: [User01, User02, User07]
+targets: [temperature, humidity]
+user03: not_used
+remote: local_only_no_push_before_pi_decision
+
+heater_context:
+  implementation: src/evaluation/p6_robustness.py (heater_events, heater_context), unchanged   # D-047 A.2
+  codes: [AHON, AHOF]                       # no other control code is added or reinterpreted
+  lookback_s: 3600
+  rule: most_recent_code_on_the_same_mat_with_event_time_le_target_time
+  per_subject_event_tables: true            # User01 and User07 share device_id "unknown"
+  session_boundary: not_applied             # as in D-047; affected windows are counted, not removed
+  states: {after_AHON_60min: "ON", after_AHOF_60min: "OFF", no_AHON_AHOF_60min: "UNKNOWN"}
+  meaning: most_recent_code_not_a_reconstructed_heater_state
+  changed_after_results: never
+
+exception:
+  name: post_hoc_diagnostic_only_exception_to_D-038
+  scope: heater-conditioned source constant only
+  not_a_model_input: true
+  not_an_estimator: true                    # control codes are derived from temperature (L9; P1 section 9)
+
+windows: frozen_v1.0_labelled_40_s_windows
+spans:                                      # reported separately, never averaged together
+  full: strict_loso_labelled_test_windows_of_the_held_out_subject
+  common: p10_p11_common_test_endpoints
+
+analysis_a:
+  per_state: [windows, nights, mean, median, sd_population, iqr]
+  user02_per_mat_coverage: true
+  eta_squared: ss_between_over_ss_total_one_way_three_states      # states without windows are dropped
+  variants:
+    A1: raw_target
+    A2: target_minus_mean_within_subject_night
+    A3: user02_only_target_minus_mean_within_subject_night_mat
+  sensitivity: eta_squared_on_ON_OFF_windows_only
+  interval: night_cluster_percentile_interval_with_the_frozen_bootstrap_settings
+  wording: proportion of observed target variance associated with heater context
+
+analysis_b:
+  fit_rows: labelled_training_partition_windows_of_the_two_source_subjects   # held-out subject never
+  fit_rows_common_span: common_endpoints_of_the_two_source_subjects
+  constants: [source_mean_ON, source_mean_OFF, source_mean_overall, source_median_overall]
+  rule: {"ON": source_mean_ON, "OFF": source_mean_OFF, "UNKNOWN": source_mean_overall}
+  empty_source_state: source_mean_overall
+  comparators: [source_mean, source_median, heater_conditioned_source_mean]
+  metrics: [mae, rmse, bias]
+
+analysis_c:                                 # supplementary, descriptive, committed predictions only, nothing refitted
+  span: common
+  table: mae_of_training_mean_common_hgb_h40_hgb_h300_hgb_h900_and_raw_tcn_common_by_heater_state
+
+bootstrap: {unit: night, resamples: 2000, seed: 0, level: 0.95}   # the frozen v1.0 / P10 / P11 rule
+comparisons:                                # delta = MAE(first) - MAE(second); positive = second lower
+  - [source_mean, heater_conditioned_source_mean]
+  - [source_median, heater_conditioned_source_mean]     # secondary
+
+interpretation:                             # fixed before any P12 statistic
+  eta_small_below: 0.06                     # Cohen's conventional medium threshold; 0.14 = large, reported as a label
+  eta_large_from: 0.14
+  case_A: raw eta2 < 0.06 and night-centred eta2 < 0.06
+  case_B: raw eta2 >= 0.06 and night-centred eta2 < 0.06
+  case_C: night-centred eta2 >= 0.06
+  user02_primary_sensitivity: night_x_mat_centred
+  competing_explanation:
+    applies_to: subject-target pairs whose P10 interval of MAE(training_mean_common) - MAE(hgb_h900) is above zero
+    plausible: >
+      common-span interval of MAE(source_mean) - MAE(heater_conditioned) above zero and its point estimate at least
+      half of MAE(training_mean_common) - MAE(hgb_h900)
+    not_supported: interval includes or is below zero and night-centred eta2 < 0.06
+    otherwise: unresolved
+  mechanisms: >
+    the analysis is observational; contact-history and heater/controller/environment context are not separated by it
+  wording: no causal heater effect; no population inference; N = 3
+
+validation:
+  heater_lookup: [no_future_event, beyond_60_min_is_unknown, other_mat_ignored, other_subject_ignored]
+  common_keys_equal_p11: true
+  source_mean_median_equal_committed_tables: 1.0e-9
+  deterministic_rerun: byte_identical_tables
+  existing_outputs_unchanged: [outputs/runs/p3, outputs/runs/p10, outputs/metrics/p3, outputs/metrics/p10,
+                               outputs/p11_common_pool_tcn, paper/tables]
+output_root: outputs/p12_heater_diagnostic

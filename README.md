@@ -31,8 +31,15 @@ whether short user-specific adaptation helps.
   analyses `docs/P8_POSTHOC_VALIDATION_REPORT.md` and `docs/P8_DYNAMIC_SIGNAL_REPORT.md`; submission metadata and
   release items open in `docs/P8_FINAL_BLOCKERS.md`; no `v1.0-paper` tag)
 - [x] P9 User03 external sensitivity validation (post hoc, D-061; `docs/P9_USER03_EXTERNAL_VALIDATION_REPORT.md`;
-  OPEN-29 closed by the provider timestamp confirmation, D-062; reproducibility closed, D-063; on branch
-  `experiment/p9-user03-external-validation`, not merged)
+  OPEN-29 closed by the provider timestamp confirmation, D-062; reproducibility closed, D-063; merged via PR #10)
+- [x] Exploratory level-baseline and pressure-history analysis (post hoc; protocol v1.4;
+  `docs/P10_LEVEL_BASELINE_HISTORY_REPORT.md`)
+- [x] Common-pool retraining of the frozen RAW-TCN (post hoc training-pool control; protocol v1.5;
+  `docs/P11_COMMON_POOL_TCN_REPORT.md`)
+- [x] Heater-context confound diagnostic (post hoc, descriptive; no model and no heater input; protocol v1.6;
+  `docs/P12_HEATER_DIAGNOSTIC_REPORT.md`)
+- [ ] Submission: the manuscript is submission-ready apart from author, institutional and data-provider metadata
+  (`paper/manuscript/manuscript_p15_final.md`, package `paper/submission_p15/`)
 
 Current status: P0 is closed and tagged `p0-data-freeze`.
 - The data audit is summarised in `docs/P0_DATASET_AUDIT_REPORT.md`, and the frozen policies are in
@@ -58,7 +65,7 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
 - P8 (manuscript) is merged as a PI-review candidate: a strict evaluation of smart-mat microclimate estimation
   against simple level baselines (D-057–D-060). Submission metadata, PI approval and the public release remain open
   (`docs/P8_FINAL_BLOCKERS.md`); the `v1.0-paper` tag is not created.
-- P9 (post-hoc external sensitivity validation on User03, protocol v1.3, D-061) is complete on its branch: the
+- P9 (post-hoc external sensitivity validation on User03, protocol v1.3, D-061) is complete and merged (PR #10): the
   training-mean predictor had a lower error than every source-only RAW-TCN configuration for both targets, with no
   demonstrable within-night co-variation. It is not pooled with the primary three-subject results.
   - OPEN-29 is closed (D-062): the data provider confirmed that the setting problem behind the D-017 exclusion does
@@ -66,6 +73,11 @@ Current status: P0 is closed and tagged `p0-data-freeze`.
   - Reproducibility is closed (D-063): all nine models were retrained from scratch under the frozen protocol after
     the prediction-serialization change, and every prediction file is bitwise identical
     (`python scripts/verify_p9_user03_reproduction.py --root <dir>`).
+- Exploratory post-hoc analyses (protocols v1.4–v1.6): median constants and Ridge / histogram-boosting models on
+  40-s, 300-s and 900-s pressure summaries; the RAW-TCN retrained on the same endpoints; and a descriptive
+  heater-context diagnostic. Longer pressure histories lowered the temperature error for two subjects, but heater and
+  controller context is a competing explanation that the observational data cannot separate. Extra dependency:
+  `requirements-p10.txt`.
 Phase definitions: `docs/RESEARCH_PROTOCOL.md` §5.
 
 ## Repository structure
@@ -157,6 +169,29 @@ python scripts/build_submission_docx.py --template <Applied Sciences Word templa
 ```
 
 Open submission and release items: `docs/P8_FINAL_BLOCKERS.md`.
+
+## Submission-ready manuscript
+
+The final manuscript source is `paper/manuscript/manuscript_p15_final.md`; every result number is a token resolved
+from `paper/tables/`. The earlier revision sources in `paper/manuscript/` are inputs of the same pipeline.
+
+```bash
+python scripts/build_p15_submission.py      # rendered manuscript, tables, figures, supplementary S1–S44 -> paper/submission_p15/
+python scripts/validate_p15_submission.py   # read-only checks of the source and the package
+```
+
+- The only open items are bracketed `[CONFIRM BEFORE SUBMISSION: …]` placeholders for author, institutional,
+  sensor and data-provider information (`paper/submission_p15/METADATA_PLACEHOLDERS.md`).
+- Some validator checks compare exported tables with the local result files under `outputs/`, which are not part of
+  this repository; in a fresh clone they report those files as unavailable. The manuscript-facing aggregate tables
+  are in `paper/tables/`.
+
+### Data availability for the heater-context diagnostic
+
+The public release does not include the controller-event records needed to reproduce the post-hoc heater-context
+diagnostic independently: its release candidate holds the heater codes of one subject only. The diagnostic's
+analysis code (`src/evaluation/p12_heater_diagnostic.py`) and its aggregate results (`paper/tables/p12_*.csv`,
+Table 11, Tables S41–S44) are provided; no claim is made that the diagnostic can be reproduced from the public data.
 
 Bitwise equality is verified on this stack only. A CPU run or another GPU, driver or library build trains in the
 same deterministic way, but its floating-point results can differ in the last bits. The digest checks then fail,

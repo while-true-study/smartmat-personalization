@@ -336,3 +336,19 @@ checks pass.
   - It evaluates User03 as an additional external subject, RQ1-like only, with models trained on the three primary
     subjects.
   - It does not change the primary cohort, the splits or any v1.0–v1.2 result.
+- v1.4 (D-064): a post-hoc exploratory addendum (`configs/experiments/v1.4/p10_level_baseline_history.yaml`,
+  `docs/P10_LEVEL_BASELINE_HISTORY_PLAN.md`), authorized as P10 after the D-059/D-060 stop rules.
+  - It re-checks the frozen mean-baseline and neural metrics, adds source and adaptation median baselines, and compares
+    Ridge and histogram-boosting models on 40-s, 300-s and 900-s pressure summaries under strict LOSO.
+  - It reuses the v1.0 data, splits and window rule unchanged and changes no v1.0–v1.3 result.
+- v1.5 (D-066): a post-hoc exploratory addendum (`configs/experiments/v1.5/p11_common_pool_tcn.yaml`,
+  `docs/P11_COMMON_POOL_TCN_PLAN.md`), requested as P11 after the D-059/D-060/D-065 stop rules.
+  - It retrains the frozen RAW-TCN (40-s input, frozen per-fold configuration, seeds 0/1/2) with the inner, training
+    and test windows restricted to the v1.4 common endpoints, re-deriving the epoch count with the unchanged v1.0 rule.
+  - It reuses the v1.0 data, splits and window rule unchanged and changes no v1.0–v1.4 result.
+- v1.6 (D-067): a post-hoc descriptive confound diagnostic (`configs/experiments/v1.6/p12_heater_diagnostic.yaml`,
+  `docs/P12_HEATER_DIAGNOSTIC_PLAN.md`), requested as P12.
+  - It stratifies the recorded targets by the D-047 heater context (now for all three primary subjects) and compares a
+    source-only heater-conditioned constant with the source mean and median, under a diagnostic-only exception to
+    D-038. No heater or control field enters any predictive model and no model is fitted.
+  - It reuses the v1.0 data, splits and window rule unchanged and changes no v1.0–v1.5 result.

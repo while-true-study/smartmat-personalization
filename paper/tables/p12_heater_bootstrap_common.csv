@@ -1,0 +1,13 @@
+fold,subject_id,target,first,second,role,point_estimate,ci_lower,ci_upper,interval,n_nights,n_windows,n_resamples,rng_seed,level,span
+1,User01,temperature,source_mean,heater_conditioned_source_mean,level_baseline_vs_heater_conditioned_constant,0.5468474822993366,0.480239173946101,0.6175071902574343,above_zero,137,139735,2000,0,0.95,common
+1,User01,humidity,source_mean,heater_conditioned_source_mean,level_baseline_vs_heater_conditioned_constant,2.4487549569930813,2.141942248424827,2.777955609053999,above_zero,137,139735,2000,0,0.95,common
+1,User01,temperature,source_median,heater_conditioned_source_mean,secondary,0.9121163769501353,0.8307063557812315,0.9941764855116414,above_zero,137,139735,2000,0,0.95,common
+1,User01,humidity,source_median,heater_conditioned_source_mean,secondary,1.0335877743419175,0.7295552248223519,1.3527026000767153,above_zero,137,139735,2000,0,0.95,common
+2,User02,temperature,source_mean,heater_conditioned_source_mean,level_baseline_vs_heater_conditioned_constant,-0.01541826327128959,-0.018852676757252218,-0.01241945351531011,below_zero,51,74802,2000,0,0.95,common
+2,User02,humidity,source_mean,heater_conditioned_source_mean,level_baseline_vs_heater_conditioned_constant,-0.24268179234026022,-0.30070412069733105,-0.1896779250366323,below_zero,51,74802,2000,0,0.95,common
+2,User02,temperature,source_median,heater_conditioned_source_mean,secondary,-0.08983382126384498,-0.09326823474981782,-0.08683501150785651,below_zero,51,74802,2000,0,0.95,common
+2,User02,humidity,source_median,heater_conditioned_source_mean,secondary,0.3674089293417744,0.3004902934032225,0.4259682143658633,above_zero,51,74802,2000,0,0.95,common
+3,User07,temperature,source_mean,heater_conditioned_source_mean,level_baseline_vs_heater_conditioned_constant,0.1668977987701914,0.11184621416285499,0.22185944970943897,above_zero,93,61782,2000,0,0.95,common
+3,User07,humidity,source_mean,heater_conditioned_source_mean,level_baseline_vs_heater_conditioned_constant,0.12368853803277702,-0.18257497104789802,0.4078736039224793,includes_zero,93,61782,2000,0,0.95,common
+3,User07,temperature,source_median,heater_conditioned_source_mean,secondary,-0.20259545763745912,-0.2772200663263148,-0.12405306417831705,below_zero,93,61782,2000,0,0.95,common
+3,User07,humidity,source_median,heater_conditioned_source_mean,secondary,0.49884253342379203,-0.35781240694237165,1.3586550483822883,includes_zero,93,61782,2000,0,0.95,common
