@@ -1,0 +1,50 @@
+{
+  "status": "submission_artifacts_complete_metadata_pending",
+  "source_commit": "62b1618c5df5726d1bc3b9cf7277e7dc7db35a2f",
+  "source_manuscript": "paper/manuscript/manuscript_p16_final.md",
+  "source_package": "paper/submission_p16",
+  "final_title": "Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines",
+  "abstract_words": 198,
+  "main_text_words": 14816,
+  "main_docx": "paper/submission_final/manuscript/Applied_Sciences_SmartMat_Final.docx",
+  "supplementary_docx": "paper/submission_final/supplementary/Supplementary_Materials.docx",
+  "supplementary_workbook": "paper/submission_final/supplementary/Supplementary_Tables_S1-S44.xlsx",
+  "figures_dir": "paper/submission_final/figures",
+  "cover_letter_draft": "paper/submission_final/cover_letter/cover_letter_final_draft.md",
+  "metadata_checklist": "paper/submission_final/metadata/FINAL_METADATA_CHECKLIST.md",
+  "reference_check": "paper/submission_final/metadata/REFERENCE_FINAL_CHECK.md",
+  "submission_checklist": "paper/submission_final/SUBMISSION_CHECKLIST.md",
+  "external_open_items": 18,
+  "manuscript_placeholders": 16,
+  "tables": 11,
+  "figures": 6,
+  "supplementary_tables": 44,
+  "supplementary_figures": 4,
+  "pages": {
+    "main": 39,
+    "supplementary": 8
+  },
+  "qa_reports": [
+    "paper/submission_final/qa/DOCX_STRUCTURAL_QA.md",
+    "paper/submission_final/qa/DOCX_VISUAL_QA.md",
+    "paper/submission_final/qa/SUPPLEMENTARY_QA.md"
+  ],
+  "sha256": {
+    "paper/submission_final/manuscript/Applied_Sciences_SmartMat_Final.docx": "86f6590b3b326487ffb66e4dfda2ef911540f88caf9ffdd29cbe2bcd0834224c",
+    "paper/submission_final/supplementary/Supplementary_Materials.docx": "ad9bd32aceb76530fc8cb9f598e601da6feff7b3327b6c8c7af26ea63339f67a",
+    "paper/submission_final/supplementary/Supplementary_Tables_S1-S44.xlsx": "041775c2e52d3c99367f2575a6cf432afe15d16db35ff32bd3832503fa83855c",
+    "paper/submission_final/figures/figure1_study_design.png": "145895fe5fae5f710d88cbd4264d5e796ce015a852d5ec88c6e45b7194939f13",
+    "paper/submission_final/figures/figure2_temperature_personalization.png": "921b3a533287a5726e40f098438c9f44b415d1481fe2321a88db2ad9fe272538",
+    "paper/submission_final/figures/figure3_humidity_personalization.png": "e524424efb6accf8f73a229c998f52fb8e7920627f51ee3f00f0582bb1992dc2",
+    "paper/submission_final/figures/figure4_night_robustness.png": "2d8abeab9eace0d929132b92ecd22146e279cd6b1fb5703bd0ea527574932585",
+    "paper/submission_final/figures/figure5_posthoc_comparators.png": "698f73f721371f112ab6174131998f9fffa211883df067c57d63118198de37b7",
+    "paper/submission_final/figures/figure6_target_distributions.png": "b65ab8978e2b945301a848939f3caa453a9b576d11af9450c256d04da4b14b69",
+    "paper/submission_final/cover_letter/cover_letter_final_draft.md": "8d6f97b7b4c39a5f9361dd81164aec8db7f0b651e5e4d607b4f7edce56e783e6",
+    "paper/submission_final/metadata/FINAL_METADATA_CHECKLIST.md": "79b1a6ef21fa236ce829cb7dfc956aff1528c010f9607ec5ad99835f8bdcd432",
+    "paper/submission_final/metadata/REFERENCE_FINAL_CHECK.md": "eaaa8a8df8683ceec625b785010659b936be5385d154aa170237f95171de2574",
+    "paper/submission_final/SUBMISSION_CHECKLIST.md": "37f2d68a68d7e2f9f0705612542b233f58e3ee61d6b62fcdc74cc02f33cd6caf",
+    "paper/submission_final/qa/DOCX_STRUCTURAL_QA.md": "4e44562065f5b89251982596cb8ca4c1d04a874aab7b8e5e6a6e6834a30138fa",
+    "paper/submission_final/qa/DOCX_VISUAL_QA.md": "420236a0f64cdea15ec896db9279f20f406a5e43ca11e8636ac0f4743cb50d4c",
+    "paper/submission_final/qa/SUPPLEMENTARY_QA.md": "1e15905595c151d6aa5ea8fd5342629924d337d18ac420f3c27d6d8dc0cb8d90"
+  }
+}
