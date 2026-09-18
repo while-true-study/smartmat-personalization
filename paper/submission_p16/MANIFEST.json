@@ -1,14 +1,14 @@
 {
   "description": "SHA-256 of every file of the submission-ready candidate package except this manifest",
   "files": {
-    "METADATA_PLACEHOLDERS.md": "a416cffd7fc26158f0ee1304de58e8c4acf9fc4ef1c72e274ddd6afaf3532322",
+    "METADATA_PLACEHOLDERS.md": "609b3d84293ccf09b7c6a9c3d31e18117ebd409ed919f4de4a134504c62d48f9",
     "figures/figure1_study_design.png": "145895fe5fae5f710d88cbd4264d5e796ce015a852d5ec88c6e45b7194939f13",
     "figures/figure2_temperature_personalization.png": "921b3a533287a5726e40f098438c9f44b415d1481fe2321a88db2ad9fe272538",
     "figures/figure3_humidity_personalization.png": "e524424efb6accf8f73a229c998f52fb8e7920627f51ee3f00f0582bb1992dc2",
     "figures/figure4_night_robustness.png": "2d8abeab9eace0d929132b92ecd22146e279cd6b1fb5703bd0ea527574932585",
     "figures/figure5_posthoc_comparators.png": "698f73f721371f112ab6174131998f9fffa211883df067c57d63118198de37b7",
     "figures/figure6_target_distributions.png": "b65ab8978e2b945301a848939f3caa453a9b576d11af9450c256d04da4b14b69",
-    "manuscript/manuscript_p16_final_rendered.md": "a5db4990fe6348318ceabb7b042b4769367a27366c9f844d3b5a7c5224941631",
+    "manuscript/manuscript_p16_final_rendered.md": "b6631b3d611eb0f15e33657fa1be90592573d3f23c3e68112d15498fb64f5a4e",
     "manuscript/references.bib": "293f4fece3ea651e503f2e90ebeb789f1ea2fbe82d9d920a415924fdd8ab69fd",
     "supplementary/README.md": "89b63b7f78985ad3bc21320682524752cb77120297d8aaa88ed3404b9c728f35",
     "supplementary/figures/figureS1_abs_bias.png": "8d95880fd5390ed60cdd9c9cc0d7cd7718386e602da66b305ff6b6b18b845e8f",

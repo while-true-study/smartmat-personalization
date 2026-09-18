@@ -44,6 +44,9 @@ def _load_base():
 B = _load_base()
 SOURCE, PACKAGE, RENDERED = B.SOURCE, B.PACKAGE, B.RENDERED
 KEYWORDS = (5, 8)
+FINAL_TITLE = ("Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation "
+               "against Simple Level Baselines")
+NOT_KEYWORDS = ("negative transfer",)      # the text reports mixed, level-dominated adaptation
 REVISION_HISTORY = re.compile(r"\breviewers?\b|\binternal\b|\bP1[0-9]\b|mock review|addendum|\bTODO\b|\bFIXME\b",
                               re.I)
 REQUIRED = (
@@ -81,8 +84,9 @@ def _flat(text: str) -> str:
 
 def check_front_matter(source: str) -> list[str]:
     out = []
-    if not re.search(r"(?m)^# \S", source):
-        out.append("title missing")
+    titles = re.findall(r"(?m)^# (.+)$", source)
+    if titles != [FINAL_TITLE]:
+        out.append(f"title is {titles!r}, expected the final title")
     m = re.search(r"\*\*Keywords:\*\*(.+?)\n\n", source, re.S)
     if not m:
         return out + ["keywords missing"]
@@ -91,6 +95,7 @@ def check_front_matter(source: str) -> list[str]:
         out.append(f"{len(kws)} keywords (required {KEYWORDS[0]}-{KEYWORDS[1]})")
     if len({k.lower() for k in kws}) != len(kws):
         out.append("duplicate keywords")
+    out += [f"keyword not supported as a general conclusion: {k}" for k in kws if k.lower() in NOT_KEYWORDS]
     return out
 
 

@@ -14,7 +14,7 @@
 | Results | sentences repeating table values removed (Sections 4.1–4.9); neutral wording ("lower/higher MAE", "interval included zero"); the external-validation reading softened from "strengthening" to "consistent with" |
 | Discussion | Section 5.2 condensed; "main negative result" → "main finding"; Section 5.5 limitations as eight numbered items (cohort, confounding, User02 mats, sensor metadata, fixed formulation and protocol, history subset, post-hoc diagnostics and heater endogeneity, no independent context measurement) |
 | Conclusions | two paragraphs without numbers: what was observed; what cannot be claimed and which data are needed |
-| Front matter | abstract 198 words with a closing implication on generalization; keywords: smart mat; pressure sensing; temperature and humidity estimation; temporal convolutional network; leave-one-subject-out evaluation; personalization; negative transfer; baseline comparison |
+| Front matter | abstract 198 words with a closing implication on generalization; keywords: smart mat; pressure sensing; temperature and humidity estimation; temporal convolutional network; leave-one-subject-out evaluation; personalization; domain shift; baseline comparison ("negative transfer" replaced: the text reports mixed, level-dominated adaptation, not negative transfer as a general conclusion) |
 | Supplementary citations | 13 previously uncited tables now cited (`docs/P16_SUPPLEMENTARY_REVIEW.md`) |
 | GenAI | Claude Code versions listed only as recorded (2.1.263, 2.1.270, 2.1.276, 2.1.277); approval placeholder kept |
 
@@ -37,8 +37,11 @@ Main-text length (rendered, Introduction to Conclusions, without tables, caption
 | Why is a post-hoc diagnostic in the main text? | Contribution 4; Sections 3.5.9 (scope) and 5.3 (it limits the mechanistic interpretation) |
 | Why can the public data not reproduce it? | Section 3.7 and the Data Availability Statement |
 
-## Title recommendation (not applied; authors decide)
+## Title (applied in the final editorial correction)
 
-Recommended: **"Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation
-against Simple Level Baselines"** — the current title with "Microclimate" replaced, so that the title matches the
-mat-level wording while the sensor metadata are open. Alternatives remain those listed in the P15 title options.
+Final: **"Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against
+Simple Level Baselines"**. The previous title's "Microclimate" is replaced, so that the title matches the mat-level
+wording and implies no physiological or body-interface microclimate while sensor placement is unconfirmed. The
+section heading "Smart Bedding, Pressure Sensing and Microclimate Monitoring" (Section 2.1) keeps the term, because it
+describes the clinical literature. The cover-letter draft still carries the earlier title and is updated when the
+cover letter is finalized.

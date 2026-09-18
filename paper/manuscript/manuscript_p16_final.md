@@ -2,13 +2,13 @@
 Manuscript source of the submission-ready candidate.
 - Result numbers are source tokens {{…}} resolved from paper/tables/; design parameters of the frozen protocol and
   release facts are written as text. {{TABLE:…}} and {{FIGURE:…}} insert generated assets.
-- Rendered and packaged by scripts/build_p15_submission.py; checked by scripts/validate_p15_submission.py.
+- Rendered and packaged by scripts/build_p16_submission.py; checked by scripts/validate_p16_submission.py.
 - The only open items are the bracketed [CONFIRM BEFORE SUBMISSION: …] placeholders, which need information from the
   authors, the institution or the data provider; nothing else is a placeholder.
 - No calendar date or month.
 -->
 
-# Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines
+# Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines
 
 **Authors:** [CONFIRM BEFORE SUBMISSION: final author names and order]
 
@@ -51,7 +51,7 @@ longer-history gain cannot be attributed specifically to pressure. Simple level 
 judge such estimators; generalization beyond three retrospective cases is untested.
 
 **Keywords:** smart mat; pressure sensing; temperature and humidity estimation; temporal convolutional network;
-leave-one-subject-out evaluation; personalization; negative transfer; baseline comparison
+leave-one-subject-out evaluation; personalization; domain shift; baseline comparison
 
 ## 1. Introduction
 

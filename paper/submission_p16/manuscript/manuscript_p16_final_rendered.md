@@ -2,7 +2,7 @@
 
 
 
-# Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines
+# Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines
 
 **Authors:** [CONFIRM BEFORE SUBMISSION: final author names and order]
 
@@ -40,7 +40,7 @@ longer-history gain cannot be attributed specifically to pressure. Simple level 
 judge such estimators; generalization beyond three retrospective cases is untested.
 
 **Keywords:** smart mat; pressure sensing; temperature and humidity estimation; temporal convolutional network;
-leave-one-subject-out evaluation; personalization; negative transfer; baseline comparison
+leave-one-subject-out evaluation; personalization; domain shift; baseline comparison
 
 ## 1. Introduction
 

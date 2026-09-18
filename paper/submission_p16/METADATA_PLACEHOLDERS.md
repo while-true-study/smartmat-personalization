@@ -4,11 +4,11 @@ Every bracketed `[CONFIRM BEFORE SUBMISSION: …]` item of the manuscript. Fill 
 
 | # | Section | Item | Value |
 |---|---|---|---|
-| 1 | Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines | final author names and order | |
-| 2 | Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines | affiliations | |
-| 3 | Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines | corresponding author and e-mail | |
-| 4 | Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines | ORCID iDs | |
-| 5 | Strict Unseen-Domain Evaluation of Smart-Mat Microclimate Estimation against Simple Level Baselines | conference copyright holder and reuse status of the conference paper | |
+| 1 | Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines | final author names and order | |
+| 2 | Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines | affiliations | |
+| 3 | Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines | corresponding author and e-mail | |
+| 4 | Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines | ORCID iDs | |
+| 5 | Strict Unseen-Domain Evaluation of Pressure-Based Smart-Mat Temperature and Humidity Estimation against Simple Level Baselines | conference copyright holder and reuse status of the conference paper | |
 | 6 | 3.1. Data and Cohort | temperature and humidity sensor models, accuracy, resolution, response time, physical placement and placement relative to the heater | |
 | 7 | 3.8. Use of Generative AI | approval of the generative-AI disclosure (this section and the Acknowledgments) | |
 | 8 | Author Contributions | CRediT author contributions and every author's approval of the submitted version | |

@@ -23,8 +23,11 @@ def test_equivalence_rejects_a_new_result_token_and_changed_questions():
 
 
 def test_front_matter_and_revision_history_rules():
-    assert P.check_front_matter("# T\n\n**Keywords:** a; b; c\n\n")          # too few keywords
-    assert P.check_front_matter("# T\n\n**Keywords:** a; b; c; d; e\n\n") == []
+    head = f"# {P.FINAL_TITLE}\n\n**Keywords:** "
+    assert P.check_front_matter(head + "a; b; c\n\n")                         # too few keywords
+    assert P.check_front_matter(head + "a; b; c; d; e\n\n") == []
+    assert P.check_front_matter(head + "a; b; c; d; negative transfer\n\n")   # not a keyword of this study
+    assert P.check_front_matter("# Old Microclimate Title\n\n**Keywords:** a; b; c; d; e\n\n")
     assert P.check_revision_history("After the internal review (P12), an addendum was written.")
     assert P.check_revision_history("Rendered by scripts/build_p16_submission.py.") == []
 
