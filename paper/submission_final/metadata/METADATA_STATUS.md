@@ -11,7 +11,7 @@ Update the YAML when an answer arrives, then regenerate this file.
 | Manuscript metadata | 0 / 18 items resolved |
 | Cover letter | 0 / 4 external items resolved |
 | External requests | 0 / 28 answered |
-| Dependent-text reviews | 0 / 4 done |
+| Reconciliation gates (author decisions) | 0 / 4 resolved |
 | CRediT input | OPEN |
 | Submission status | WAITING FOR EXTERNAL METADATA |
 
@@ -42,11 +42,13 @@ Update the YAML when an answer arrives, then regenerate this file.
 | L03 | section_or_special_issue | OPEN | D03 |
 | L04 | previous_mdpi_submission_status | OPEN | D04 |
 
-## Dependent-text reviews
+## Reconciliation gates
 
-| ID | Status | Text to review when the answer arrives |
-|---|---|---|
-| R1 | OPEN | Section 3.1 ("The temperature–humidity sensor model, its accuracy, resolution and response time, and its position relative to the body and the heater are not documented in the delivered data and are not assumed here") and Limitation 4 ("Sensor metadata ... were not documented") must be reconciled with the M06-M10 answers. |
-| R2 | OPEN | Data Availability ("Aggregate diagnostic results and the analysis code may be included in the research release, subject to final author and data-provider approval") must match the B08 answer. |
-| R3 | OPEN | The data- and code-release sentences assume a public release; if B07 or A11 says no release, they must be replaced by the authors' statement. |
-| R4 | OPEN | The cover letter ("no text, table or figure of the conference paper is reused") and the manuscript Note must match the confirmed CONFERENCE_REUSE_CHECK.md items 5-7 (C04, C05). |
+Policy: `METADATA_RECONCILIATION_GATES.md`. A gate is resolved only by an explicit author decision.
+
+| Gate | Trigger | Status | Outcome |
+|---|---|---|---|
+| R1 | answers to B01-B06 (M06-M10 sensor model, accuracy, resolution, response time, placement), including "unavailable" | OPEN | — |
+| R2 | answer to B08 (data-provider approval of the aggregate heater-diagnostic results and code; M16) | OPEN | — |
+| R3 | answers to B07 (data redistribution) and A11 (code release) (M16) | OPEN | — |
+| R4 | answers to C04 and C05 (conference copyright and reuse; M05) | OPEN | — |

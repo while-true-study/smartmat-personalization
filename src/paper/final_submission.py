@@ -46,7 +46,7 @@ EXTERNAL_REQUEST = FINAL / "metadata" / "EXTERNAL_INFORMATION_REQUEST.md"
 METADATA_SYSTEM = [FINAL / "metadata" / n for n in (
     "EXTERNAL_INFORMATION_CROSSWALK.md", "METADATA_VALUES_TEMPLATE.yaml", "CREDIT_INPUT_TEMPLATE.yaml",
     "ETHICS_STATEMENT_VARIANTS.md", "CONSENT_STATEMENT_VARIANTS.md", "GENAI_FINAL_DRAFT.md",
-    "CONFERENCE_REUSE_CHECK.md", "METADATA_STATUS.md")] + [
+    "CONFERENCE_REUSE_CHECK.md", "METADATA_STATUS.md", "METADATA_RECONCILIATION_GATES.md")] + [
     FINAL / "manuscript" / "manuscript_metadata_ready.md", FINAL / "cover_letter" / "cover_letter_metadata_ready.md"]
 CHECKLIST = FINAL / "SUBMISSION_CHECKLIST.md"
 QA_REPORTS = {name: FINAL / "qa" / name for name in ("DOCX_STRUCTURAL_QA.md", "DOCX_VISUAL_QA.md",
