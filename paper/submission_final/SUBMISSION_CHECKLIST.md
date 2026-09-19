@@ -18,7 +18,8 @@ Simple Level Baselines*
   - `supplementary/Supplementary_Tables_S1-S44.xlsx`: every supplementary table at full precision.
 - [x] References: 31. Every citation resolves, there are no duplicates, and no DOI was changed (`metadata/REFERENCE_FINAL_CHECK.md`).
 - [x] Word formatting: headings, captions, table layout, numbered lists, references, back-matter order (`qa/DOCX_STRUCTURAL_QA.md`).
-- [x] Visual QA: every page of both Word files rendered and inspected (`qa/DOCX_VISUAL_QA.md`, `qa/SUPPLEMENTARY_QA.md`).
+- [x] Visual QA: every page of both Word files rendered and inspected, first at 80 dpi and then at 180 dpi (PASS — HIGH-RESOLUTION VISUAL QA; `qa/DOCX_VISUAL_QA.md`, `qa/SUPPLEMENTARY_QA.md`).
+- [x] Supplementary workbook final QA: 81 data sheets equal to the source CSVs; no formulas, hidden sheets, links, macros, paths or private data.
 - [x] Privacy QA: no local paths, personal document properties, comments, tracked changes or hidden text.
 - [x] Scientific equivalence with P16: title, abstract, keywords, conclusions and every number identical.
 - [x] Cover letter draft updated to the final title (`cover_letter/cover_letter_final_draft.md`).
@@ -26,7 +27,7 @@ Simple Level Baselines*
 
 ## B. External confirmation required (18 items)
 
-Please send these to the corresponding author. Details are in `metadata/FINAL_METADATA_CHECKLIST.md`.
+Please send these to the corresponding author. The request to forward to the professor and co-authors, the data provider and the ethics office is `metadata/EXTERNAL_INFORMATION_REQUEST.md`; details are in `metadata/FINAL_METADATA_CHECKLIST.md`.
 
 | # | What is needed | From whom |
 |---|---|---|

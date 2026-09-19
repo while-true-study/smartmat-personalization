@@ -2,11 +2,11 @@
 
 | Field | Value |
 |---|---|
-| Files | `paper/submission_final/supplementary/Supplementary_Materials.docx` (SHA-256 ad9bd32aceb76530fc8cb9f598e601da6feff7b3327b6c8c7af26ea63339f67a); `paper/submission_final/supplementary/Supplementary_Tables_S1-S44.xlsx` (SHA-256 041775c2e52d3c99367f2575a6cf432afe15d16db35ff32bd3832503fa83855c) |
+| Files | `paper/submission_final/supplementary/Supplementary_Materials.docx` (SHA-256 472e2fb96217748027d957f30fff4c3ae3b0f197431e44c2f183e49b9189acc8); `paper/submission_final/supplementary/Supplementary_Tables_S1-S44.xlsx` (SHA-256 041775c2e52d3c99367f2575a6cf432afe15d16db35ff32bd3832503fa83855c) |
 | Source | `paper/submission_p16/supplementary/` (tables, figures, README index) and the Supplementary Materials paragraph of the P16 manuscript (figure captions) |
 | Template | the same Applied Sciences Word template as the main manuscript, read in place; no article-type line, left-aligned text |
-| Renderer | Microsoft Word 16.0 (build 16.0.20326) through `scripts/render_docx_pages.ps1`, then PyMuPDF at 80 dpi; PDF sha256 32152b536fd84730…; the PDF and images are in the uncommitted `work/` folder |
-| Pages | 8, all inspected in the final render (no spot check) |
+| Renderer | Microsoft Word 16.0 (build 16.0.20326) through `scripts/render_docx_pages.ps1`, then PyMuPDF. Previous QA: 80 dpi. Final QA: **180 dpi**, full pages and top and bottom halves. Final PDF sha256 3f3bfce3ef291c35…; the PDF and images are in the uncommitted `work/` folder |
+| Pages | 8. Every page was inspected at 80 dpi (previous QA) and again at 180 dpi (final QA), with no spot check. |
 
 ## Structure of the supplementary submission
 
@@ -50,9 +50,10 @@
 | S1 | "Article" type line on the title page. | Removed for the supplementary document. |
 | S1 | Justified lines stretched by long worksheet names and command lines (pages 2 and 4). | Left-aligned body text and lists. |
 | S1 | List items and paragraphs directly against the bottom rule of the reproduction tables (pages 5 and 6). | 6 pt of space after a table (the main-manuscript fix). |
-| Final | none | All 8 pages inspected again. |
+| S2 (180 dpi) | none of its own. The main-manuscript fix R8 (space after a body paragraph that directly precedes a table) also applies here: the lines "Local core result …:" and "Local extended result …:" now have 6 pt above their tables. | Only page 5 changed; the word positions of the other 7 pages are identical. |
+| Final | none | All 8 pages inspected again at 180 dpi. |
 
-## Page-by-page result (final render)
+## Page-by-page result (final render, 180 dpi)
 
 | Page | Content | Result |
 |---|---|---|
@@ -66,9 +67,36 @@
 | 8 | Figure S4 and caption | clean |
 
 Long tables, repeated headers and table splitting do not apply: the four reproduction tables are short and each stays on
-one page. The symbols (→, ×, §, ≥, …) render correctly.
+one page. The symbols (→, ×, §, ≥, –, …) render correctly. Figure axis labels, tick labels and legends of Figures S1–S4 are legible at 180 dpi.
+
+The Figure S1–S4 captions end without a full stop, because they are copied verbatim from the P16 caption list. The text was not changed.
 
 ## Final status
 
-**PASS** for the supplementary DOCX (all 8 pages inspected; structure checks pass) and the workbook (lossless against
-all 81 source CSV files).
+| QA pass | Resolution | Pages inspected | Issues found | Fixes applied | Status |
+|---|---|---|---|---|---|
+| Previous | 80 dpi | 8 of 8 | 3 (S1 above) | S1 | PASS |
+| Final | 180 dpi | 8 of 8 | none of its own | R8 applied, page 5 | PASS |
+
+**PASS — HIGH-RESOLUTION VISUAL QA** for the supplementary DOCX (all 8 pages at 180 dpi; structure checks pass).
+**PASS** for the workbook (final QA below).
+
+## Workbook final QA (Supplementary_Tables_S1-S44.xlsx, unchanged by this step)
+
+| Check | Result |
+|---|---|
+| Opens (openpyxl, read-only) | yes |
+| Sheets | 82: Index plus 81 data sheets |
+| Rows | 8,513 data rows (8,594 including the 81 header rows); up to 37 columns |
+| Coverage of Tables S1–S44 | complete: 43 tables in 81 sheets, and Table S19 in the supplementary DOCX |
+| Equality with the source CSVs | 81 of 81 sheets equal, cell by cell |
+| Formulas / error cells | 0 / 0 |
+| Hidden or very hidden sheets, defined names | none |
+| External links, external relationship targets | none |
+| Macros (vbaProject, macro-enabled content type) | none |
+| Windows absolute paths, local folder names, e-mail addresses | none |
+| Document properties | empty creator; fixed created and modified dates (2026-01-01) |
+| Participant metadata (names, ages, sex, contact data) | none |
+| Raw or private data (sensor logs, timestamps, clock times, calendar dates) | none; long digit strings are decimal fractions of result values |
+| Heater-event sequence | none; S41 holds aggregate counts per control code and subject, without times or order |
+| Figure S5 data, night-series or night-event assets | none |

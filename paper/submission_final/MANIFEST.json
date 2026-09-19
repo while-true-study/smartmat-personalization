@@ -12,6 +12,7 @@
   "figures_dir": "paper/submission_final/figures",
   "cover_letter_draft": "paper/submission_final/cover_letter/cover_letter_final_draft.md",
   "metadata_checklist": "paper/submission_final/metadata/FINAL_METADATA_CHECKLIST.md",
+  "external_information_request": "paper/submission_final/metadata/EXTERNAL_INFORMATION_REQUEST.md",
   "reference_check": "paper/submission_final/metadata/REFERENCE_FINAL_CHECK.md",
   "submission_checklist": "paper/submission_final/SUBMISSION_CHECKLIST.md",
   "external_open_items": 18,
@@ -30,8 +31,8 @@
     "paper/submission_final/qa/SUPPLEMENTARY_QA.md"
   ],
   "sha256": {
-    "paper/submission_final/manuscript/Applied_Sciences_SmartMat_Final.docx": "86f6590b3b326487ffb66e4dfda2ef911540f88caf9ffdd29cbe2bcd0834224c",
-    "paper/submission_final/supplementary/Supplementary_Materials.docx": "ad9bd32aceb76530fc8cb9f598e601da6feff7b3327b6c8c7af26ea63339f67a",
+    "paper/submission_final/manuscript/Applied_Sciences_SmartMat_Final.docx": "15fcadfe3996e0cd89440c7422009b2aafa9bf82b3b6050bc16949b749716810",
+    "paper/submission_final/supplementary/Supplementary_Materials.docx": "472e2fb96217748027d957f30fff4c3ae3b0f197431e44c2f183e49b9189acc8",
     "paper/submission_final/supplementary/Supplementary_Tables_S1-S44.xlsx": "041775c2e52d3c99367f2575a6cf432afe15d16db35ff32bd3832503fa83855c",
     "paper/submission_final/figures/figure1_study_design.png": "145895fe5fae5f710d88cbd4264d5e796ce015a852d5ec88c6e45b7194939f13",
     "paper/submission_final/figures/figure2_temperature_personalization.png": "921b3a533287a5726e40f098438c9f44b415d1481fe2321a88db2ad9fe272538",
@@ -41,10 +42,11 @@
     "paper/submission_final/figures/figure6_target_distributions.png": "b65ab8978e2b945301a848939f3caa453a9b576d11af9450c256d04da4b14b69",
     "paper/submission_final/cover_letter/cover_letter_final_draft.md": "8d6f97b7b4c39a5f9361dd81164aec8db7f0b651e5e4d607b4f7edce56e783e6",
     "paper/submission_final/metadata/FINAL_METADATA_CHECKLIST.md": "79b1a6ef21fa236ce829cb7dfc956aff1528c010f9607ec5ad99835f8bdcd432",
+    "paper/submission_final/metadata/EXTERNAL_INFORMATION_REQUEST.md": "1f75177d256799b05a91bc7a502d0e6dff75976170cb4be44a53859c0069fda8",
     "paper/submission_final/metadata/REFERENCE_FINAL_CHECK.md": "eaaa8a8df8683ceec625b785010659b936be5385d154aa170237f95171de2574",
-    "paper/submission_final/SUBMISSION_CHECKLIST.md": "37f2d68a68d7e2f9f0705612542b233f58e3ee61d6b62fcdc74cc02f33cd6caf",
-    "paper/submission_final/qa/DOCX_STRUCTURAL_QA.md": "4e44562065f5b89251982596cb8ca4c1d04a874aab7b8e5e6a6e6834a30138fa",
-    "paper/submission_final/qa/DOCX_VISUAL_QA.md": "420236a0f64cdea15ec896db9279f20f406a5e43ca11e8636ac0f4743cb50d4c",
-    "paper/submission_final/qa/SUPPLEMENTARY_QA.md": "1e15905595c151d6aa5ea8fd5342629924d337d18ac420f3c27d6d8dc0cb8d90"
+    "paper/submission_final/SUBMISSION_CHECKLIST.md": "1f3423360685f4fcf28f454d10efa24fa44e5299434e64806c74430a77d3d63a",
+    "paper/submission_final/qa/DOCX_STRUCTURAL_QA.md": "4b3c901cb0b9ab57cd13e3bdbdd498d648524ae84b46c0d867732ba1e7c6c025",
+    "paper/submission_final/qa/DOCX_VISUAL_QA.md": "991a84410c7f6ab71e8523fa34a3ada25130500e248eea229daac330292f3137",
+    "paper/submission_final/qa/SUPPLEMENTARY_QA.md": "8a4060118b858990f4692e8a8273e0b009686a739d61bf8b2831a64899da5705"
   }
 }

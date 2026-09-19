@@ -3,10 +3,10 @@
 | Field | Value |
 |---|---|
 | File | `paper/submission_final/manuscript/Applied_Sciences_SmartMat_Final.docx` |
-| SHA-256 of the rendered file | 86f6590b3b326487ffb66e4dfda2ef911540f88caf9ffdd29cbe2bcd0834224c (identical to the committed file) |
-| Renderer | Microsoft Word 16.0 (build 16.0.20326) through COM: `scripts/render_docx_pages.ps1` opens the file read-only, updates fields and exports a PDF (sha256 bb872699a88205e8…) |
-| Page images | PyMuPDF 1.28.2 at 80 dpi, one PNG per page. The PDF and the PNGs are in `paper/submission_final/work/`, which is not committed. |
-| Pages | 39, all inspected. The final render was inspected in full, every page, with no spot check. |
+| SHA-256 of the rendered file | 15fcadfe3996e0cd89440c7422009b2aafa9bf82b3b6050bc16949b749716810 (identical to the committed file; the earlier 80 dpi pass reviewed 86f6590b3b326487…, before fix R8) |
+| Renderer | Microsoft Word 16.0 (build 16.0.20326) through COM: `scripts/render_docx_pages.ps1` opens the file read-only, updates fields and exports a PDF (final render sha256 cfcd2fdfabe07582…) |
+| Page images | PyMuPDF 1.28.2. Previous QA: 80 dpi, one PNG per page. Final QA: **180 dpi**, each page as a full image and as top and bottom halves (1489 px wide) so that 8 pt table text, superscripts and figure labels are legible. The PDFs and PNGs are in `paper/submission_final/work/`, which is not committed. |
+| Pages | 39. Every page was inspected at 80 dpi (previous QA) and again at 180 dpi (final QA), with no spot check. |
 
 **Checks on every page:**
 - text clipping, overlapping text, broken glyphs;
@@ -17,6 +17,15 @@
 - large blank areas, bad manual page breaks, section-break anomalies;
 - reference formatting;
 - header and footer collisions, page numbers ("n of 39") and line numbers.
+
+**Additional checks at 180 dpi:**
+- °C, %RH, η², ², ±, ×, √, →, Δ, ≥, †, en dash and minus sign (−, distinct from the hyphen);
+- superscripts and subscript-style labels (η², r², R_oracle, G_b, MAE_0);
+- confidence intervals "[low, high]" and ranges "(low–high)" kept on one line;
+- table footnotes and 8 pt table text;
+- figure axis labels, tick labels, panel titles and legends (Figures 1–6);
+- the reference list;
+- clipping, overlap, page-edge overflow and caption separation.
 
 ## Render iterations and layout fixes
 
@@ -36,7 +45,8 @@ Every fix is a layout property in `src/paper/docx_export.py` (layout mode). No t
 | R6 | Page 5: the bold label "Cohort:" was indented, but "Sources not used:" was not. | Bold label lines are not indented. |
 | R6 | Table 6 ranges broke after the en dash ("1.70–" / "1.96)"), and "(b =" / "0)" split. Word ignored a word joiner around the dash. | No-break spaces keep "value (low–high)", "mean ± sd", "[low, high]" and "b = 0" on one line, and the column widths allow for them. |
 | R7 | Page 29: a body paragraph touched the bottom rule of Table 10. | 6 pt of space before the first body paragraph or list after a table. This moved Table 10's closing paragraph to page 30. Pages 29–31 changed; the pagination of every other page was unchanged. |
-| Final | none | The final render was inspected again in full, pages 1–39. |
+| R8 (180 dpi) | Page 37: the intro line "The following abbreviations are used in this manuscript:" sat on the top rule of the Abbreviations table; its descenders touched the rule (gap 0.2 pt in the PDF). Not visible at 80 dpi. A PDF scan of every page found no other text line within 1.5 pt of a table rule. | 6 pt of space after a body paragraph that directly precedes a table (layout mode). Only page 37 changed: the word positions of the other 38 pages are identical to the previous render. |
+| Final | none | The final render was inspected in full at 180 dpi, pages 1–39. |
 
 **Accepted as layout, not defects:**
 - Blank space at the foot of pages 5, 7, 22 and 30 comes from keeping tables and figures whole with their captions.
@@ -46,7 +56,7 @@ Every fix is a layout property in `src/paper/docx_export.py` (layout mode). No t
   are template fields that the journal fills in.
 - British spellings in the frozen source ("summarises", "initialised") are not changed.
 
-## Page-by-page result (final render)
+## Page-by-page result (final render, 180 dpi)
 
 | Page | Lines | Content | Result |
 |---|---|---|---|
@@ -86,12 +96,17 @@ Every fix is a layout property in `src/paper/docx_export.py` (layout mode). No t
 | 34 | 1202–1251 | 5.3, 5.4, 5.5 Limitations 1–4 (numbering restarts at 1) | clean |
 | 35 | 1252–1301 | Limitations 5–8, 6. Conclusions, Supplementary Materials | clean |
 | 36 | 1302–1349 | Supplementary Materials list (Figures S1–S4, Tables S1–S44), Author Contributions, Funding, IRB, Informed Consent, Data Availability (placeholders) | clean |
-| 37 | 1350–1382 | Data Availability (code, release, controller-event paragraphs), Acknowledgments (GenAI tools), Conflicts of Interest, Abbreviations table | clean |
+| 37 | 1350–1382 | Data Availability (code, release, controller-event paragraphs), Acknowledgments (GenAI tools), Conflicts of Interest, Abbreviations table (space above the table after fix R8) | clean |
 | 38 | 1383–1433 | References 1–19 (left-aligned, DOIs unbroken) | clean |
 | 39 | 1434–1460 | References 20–31 | clean |
 
 ## Final status
 
-**PASS.** All 39 pages of the final render were inspected, and no clipping, overlap, broken glyph, missing symbol,
-table or figure outside the margins, figure distortion, separated caption, orphan heading or header/footer
-collision remains.
+| QA pass | Resolution | Pages inspected | Issues found | Fixes applied | Status |
+|---|---|---|---|---|---|
+| Previous | 80 dpi | 39 of 39 | R1–R7 above | R1–R7 | PASS |
+| Final | 180 dpi | 39 of 39 | 1: page 37, a text line touching the table rule | R8 | PASS |
+
+**PASS — HIGH-RESOLUTION VISUAL QA.** All 39 pages of the final render were inspected at 180 dpi. No clipping,
+overlap, page-edge overflow, broken glyph, missing symbol, illegible table text, figure distortion, unreadable axis
+label or legend, separated caption, orphan heading or header/footer collision remains.

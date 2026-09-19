@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | File | `paper/submission_final/manuscript/Applied_Sciences_SmartMat_Final.docx` |
-| SHA-256 | 86f6590b3b326487ffb66e4dfda2ef911540f88caf9ffdd29cbe2bcd0834224c |
+| SHA-256 | 15fcadfe3996e0cd89440c7422009b2aafa9bf82b3b6050bc16949b749716810 |
 | Source | `paper/manuscript/manuscript_p16_final.md`, as rendered in `paper/submission_p16/manuscript/manuscript_p16_final_rendered.md` (source commit 62b1618c5df5726d1bc3b9cf7277e7dc7db35a2f); tables and figures from `paper/submission_p16/` |
 | Template | `applsci-template.docx` (MDPI Applied Sciences Word template, OOXML), read in place from the authors' journal folder and not copied into the repository. Styles, numbering, theme, fonts, headers, footers and page setup come from the template. |
 | Build | `python scripts/build_final_submission.py --template <applsci-template.docx>` (`src/paper/docx_export.py` in layout mode; deterministic: a rebuild gives the same bytes) |

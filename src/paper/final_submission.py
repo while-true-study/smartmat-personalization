@@ -42,6 +42,7 @@ FIGURES = FINAL / "figures"
 COVER_LETTER = FINAL / "cover_letter" / "cover_letter_final_draft.md"
 METADATA = FINAL / "metadata" / "FINAL_METADATA_CHECKLIST.md"
 REFERENCE_CHECK = FINAL / "metadata" / "REFERENCE_FINAL_CHECK.md"
+EXTERNAL_REQUEST = FINAL / "metadata" / "EXTERNAL_INFORMATION_REQUEST.md"
 CHECKLIST = FINAL / "SUBMISSION_CHECKLIST.md"
 QA_REPORTS = {name: FINAL / "qa" / name for name in ("DOCX_STRUCTURAL_QA.md", "DOCX_VISUAL_QA.md",
                                                      "SUPPLEMENTARY_QA.md")}
@@ -421,6 +422,17 @@ def metadata_problems(path: Path = METADATA) -> list[str]:
     return out
 
 
+def external_request_problems(path: Path = EXTERNAL_REQUEST) -> list[str]:
+    """The hand-off request: every row open, every checklist item M01-M18 and cover-letter item L1-L4 requested."""
+    if not path.is_file():
+        return ["external information request missing"]
+    rows = re.findall(r"^\| ([A-D]\d+) \|.*\| ((?:M|L)\d+) \| (\w+) \|$", path.read_text(encoding="utf-8"), re.M)
+    out = [f"{r[0]}: status {r[2]}" for r in rows if r[2] != "OPEN"]
+    ids = {r[1] for r in rows}
+    want = {f"M{k:02d}" for k in range(1, N_METADATA_ITEMS + 1)} | {f"L{k}" for k in range(1, 5)}
+    return out + [f"not requested: {i}" for i in sorted(want - ids)]
+
+
 def qa_problems(pages: dict[str, int]) -> list[str]:
     """Every rendered page has a row in the visual QA reports, and no report claims submission readiness."""
     out = [f"QA report missing: {p.name}" for p in QA_REPORTS.values() if not p.is_file()]
@@ -442,7 +454,7 @@ def qa_problems(pages: dict[str, int]) -> list[str]:
 
 def artifacts() -> list[Path]:
     return [MAIN_DOCX, SUPP_DOCX, SUPP_XLSX, *(FIGURES / f.name for f in main_figures()), COVER_LETTER, METADATA,
-            REFERENCE_CHECK, CHECKLIST, *QA_REPORTS.values()]
+            EXTERNAL_REQUEST, REFERENCE_CHECK, CHECKLIST, *QA_REPORTS.values()]
 
 
 def sha256(p: Path) -> str:
@@ -462,6 +474,7 @@ def write_manifest(pages: dict[str, int]) -> Path:
         "abstract_words": wc["abstract"], "main_text_words": wc["main_text"],
         "main_docx": rel(MAIN_DOCX), "supplementary_docx": rel(SUPP_DOCX), "supplementary_workbook": rel(SUPP_XLSX),
         "figures_dir": rel(FIGURES), "cover_letter_draft": rel(COVER_LETTER), "metadata_checklist": rel(METADATA),
+        "external_information_request": rel(EXTERNAL_REQUEST),
         "reference_check": rel(REFERENCE_CHECK), "submission_checklist": rel(CHECKLIST),
         "external_open_items": N_METADATA_ITEMS, "manuscript_placeholders": len(P16.B.placeholders(P16.read_source())),
         "tables": N_TABLES, "figures": N_FIGURES, "supplementary_tables": N_SUPP_TABLES,
@@ -531,6 +544,7 @@ def validate() -> dict[str, list[str]]:
             + workbook_privacy_problems(),
         "cover letter (final title, no overstatement, placeholders, P8 draft unchanged)": cover_letter_problems(),
         "metadata checklist (18 open items covering the 16 placeholders)": metadata_problems(),
+        "external information request (every item open and requested)": external_request_problems(),
         "QA reports (every rendered page recorded)": qa_problems(pages),
         "manifest (status, source commit, SHA-256 of every artifact)": manifest_problems(),
     }

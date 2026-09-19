@@ -283,14 +283,15 @@ def list_xml(items: list[tuple[int, str, bool]], style_override: str | None = No
 
 
 SPACE_AFTER_TABLE = '<w:spacing w:before="120"/>'
+SPACE_BEFORE_TABLE = '<w:spacing w:after="120"/>'
 BODY_STYLES = "|".join(STYLE[k] for k in ("text", "text_no_indent", "itemize", "bullet"))   # body text and lists
 
 
-def _after_table(xml: str) -> str:
+def _after_table(xml: str, spacing: str = SPACE_AFTER_TABLE) -> str:
     """Space between a table and the body paragraph or list that follows it (inserted in schema order)."""
     head, sep, rest = xml.partition("</w:pPr>")
     at = head.find("<w:ind ")
-    head = head[:at] + SPACE_AFTER_TABLE + head[at:] if at >= 0 else head + SPACE_AFTER_TABLE
+    head = head[:at] + spacing + head[at:] if at >= 0 else head + spacing
     return head + sep + rest
 
 
@@ -363,6 +364,9 @@ def body_xml(markdown: str, figures_dir: Path, draft_note: str | None, layout: b
                     media.restarts.append(numbered_id)
                 out.append(list_xml(b.items, numbered_id=numbered_id))
         elif b.kind == "table":
+            if layout and prev is not None and prev.kind == "para" and out \
+                    and re.match(rf'<w:p><w:pPr><w:pStyle w:val="(?:{BODY_STYLES})"', out[-1]):
+                out[-1] = _after_table(out[-1], SPACE_BEFORE_TABLE)      # body text directly above a table
             out.append(table_xml(b.rows, layout))
         elif b.kind == "image":
             fig_n += 1
