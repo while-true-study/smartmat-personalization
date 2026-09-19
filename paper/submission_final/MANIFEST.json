@@ -44,9 +44,19 @@
     "paper/submission_final/metadata/FINAL_METADATA_CHECKLIST.md": "79b1a6ef21fa236ce829cb7dfc956aff1528c010f9607ec5ad99835f8bdcd432",
     "paper/submission_final/metadata/EXTERNAL_INFORMATION_REQUEST.md": "1f75177d256799b05a91bc7a502d0e6dff75976170cb4be44a53859c0069fda8",
     "paper/submission_final/metadata/REFERENCE_FINAL_CHECK.md": "eaaa8a8df8683ceec625b785010659b936be5385d154aa170237f95171de2574",
-    "paper/submission_final/SUBMISSION_CHECKLIST.md": "1f3423360685f4fcf28f454d10efa24fa44e5299434e64806c74430a77d3d63a",
+    "paper/submission_final/SUBMISSION_CHECKLIST.md": "ad8ccec28aef2d469c83b5dd48d47a634a192050e5b924274d71945de2515f38",
     "paper/submission_final/qa/DOCX_STRUCTURAL_QA.md": "4b3c901cb0b9ab57cd13e3bdbdd498d648524ae84b46c0d867732ba1e7c6c025",
     "paper/submission_final/qa/DOCX_VISUAL_QA.md": "991a84410c7f6ab71e8523fa34a3ada25130500e248eea229daac330292f3137",
-    "paper/submission_final/qa/SUPPLEMENTARY_QA.md": "8a4060118b858990f4692e8a8273e0b009686a739d61bf8b2831a64899da5705"
+    "paper/submission_final/qa/SUPPLEMENTARY_QA.md": "8a4060118b858990f4692e8a8273e0b009686a739d61bf8b2831a64899da5705",
+    "paper/submission_final/metadata/EXTERNAL_INFORMATION_CROSSWALK.md": "bda376a6211b545c087eff451fbd7b69157990458b097c5cf43828137b379abc",
+    "paper/submission_final/metadata/METADATA_VALUES_TEMPLATE.yaml": "85c862a81537f7a300df832e691bbadf1d36fda272dca1e1739fecfa12d75f9e",
+    "paper/submission_final/metadata/CREDIT_INPUT_TEMPLATE.yaml": "8a0175c942d09922fd079b4f1ac09ba9cae84ec62914341c4f3ddb49f02b60a5",
+    "paper/submission_final/metadata/ETHICS_STATEMENT_VARIANTS.md": "68544fb65dfa6d33bda382d88ff22f81f5b5d29f06773f7d9e7bc0e88a41f78b",
+    "paper/submission_final/metadata/CONSENT_STATEMENT_VARIANTS.md": "643d75679677b3b7e497b9ed0743e8b5da42bd9a9c90f1eb454cf070152b8c31",
+    "paper/submission_final/metadata/GENAI_FINAL_DRAFT.md": "273bf6a3383b266f74cd755df6b38fcafe15b15771dd583a3593c60164ddec5f",
+    "paper/submission_final/metadata/CONFERENCE_REUSE_CHECK.md": "71bcf23ef63e05ac42c0103138448944a3016e733bbf46e129c3f7efb2f6087c",
+    "paper/submission_final/metadata/METADATA_STATUS.md": "cadeba3232d4cb5d847c6a7547db6a535d2e99bd846f1659263fe7894c61235d",
+    "paper/submission_final/manuscript/manuscript_metadata_ready.md": "ddeed746e64f89256a70f9359e932e6be477db40de5d28a5ae2e0876d141ed61",
+    "paper/submission_final/cover_letter/cover_letter_metadata_ready.md": "63ffac7ee5e0dbd2fda4f0f8801d594c390b514a5d3056e069cafd563769cf65"
   }
 }

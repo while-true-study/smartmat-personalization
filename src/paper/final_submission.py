@@ -43,6 +43,11 @@ COVER_LETTER = FINAL / "cover_letter" / "cover_letter_final_draft.md"
 METADATA = FINAL / "metadata" / "FINAL_METADATA_CHECKLIST.md"
 REFERENCE_CHECK = FINAL / "metadata" / "REFERENCE_FINAL_CHECK.md"
 EXTERNAL_REQUEST = FINAL / "metadata" / "EXTERNAL_INFORMATION_REQUEST.md"
+METADATA_SYSTEM = [FINAL / "metadata" / n for n in (
+    "EXTERNAL_INFORMATION_CROSSWALK.md", "METADATA_VALUES_TEMPLATE.yaml", "CREDIT_INPUT_TEMPLATE.yaml",
+    "ETHICS_STATEMENT_VARIANTS.md", "CONSENT_STATEMENT_VARIANTS.md", "GENAI_FINAL_DRAFT.md",
+    "CONFERENCE_REUSE_CHECK.md", "METADATA_STATUS.md")] + [
+    FINAL / "manuscript" / "manuscript_metadata_ready.md", FINAL / "cover_letter" / "cover_letter_metadata_ready.md"]
 CHECKLIST = FINAL / "SUBMISSION_CHECKLIST.md"
 QA_REPORTS = {name: FINAL / "qa" / name for name in ("DOCX_STRUCTURAL_QA.md", "DOCX_VISUAL_QA.md",
                                                      "SUPPLEMENTARY_QA.md")}
@@ -454,12 +459,12 @@ def qa_problems(pages: dict[str, int]) -> list[str]:
 
 def artifacts() -> list[Path]:
     return [MAIN_DOCX, SUPP_DOCX, SUPP_XLSX, *(FIGURES / f.name for f in main_figures()), COVER_LETTER, METADATA,
-            EXTERNAL_REQUEST, REFERENCE_CHECK, CHECKLIST, *QA_REPORTS.values()]
+            EXTERNAL_REQUEST, REFERENCE_CHECK, CHECKLIST, *QA_REPORTS.values(), *METADATA_SYSTEM]
 
 
 def sha256(p: Path) -> str:
     data = read_bytes(p)
-    if p.suffix in (".md", ".json", ".csv"):
+    if p.suffix in (".md", ".json", ".csv", ".yaml"):
         data = data.replace(b"\r\n", b"\n")
     return hashlib.sha256(data).hexdigest()
 

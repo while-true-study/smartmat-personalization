@@ -24,6 +24,7 @@ Simple Level Baselines*
 - [x] Scientific equivalence with P16: title, abstract, keywords, conclusions and every number identical.
 - [x] Cover letter draft updated to the final title (`cover_letter/cover_letter_final_draft.md`).
 - [x] Validator: `python scripts/validate_final_submission.py`.
+- [x] Metadata-ready system: `manuscript/manuscript_metadata_ready.md`, `cover_letter/cover_letter_metadata_ready.md`, values in `metadata/METADATA_VALUES_TEMPLATE.yaml`, status in `metadata/METADATA_STATUS.md`; fill with `python scripts/apply_submission_metadata.py`, check with `python scripts/validate_submission_metadata.py`.
 
 ## B. External confirmation required (18 items)
 

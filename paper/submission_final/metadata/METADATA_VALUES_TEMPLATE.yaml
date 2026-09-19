@@ -1,0 +1,225 @@
+# External metadata values for the final submission (P16 manuscript, source commit 62b1618).
+#
+# Fill an item only with information confirmed by the person named in EXTERNAL_INFORMATION_CROSSWALK.md:
+#   - value / fields: the confirmed text, exactly as it should appear;
+#   - status: OPEN -> CONFIRMED;
+#   - source: who confirmed it, how and when (e.g. "e-mail from the PI, 2026-10-02").
+# Items that only record an approval (M11, the approval field of M12, the heater-diagnostic approval of M16) print
+# nothing in the manuscript; their value is the approval record.
+# Nothing here may be guessed. Then run:
+#   python scripts/apply_submission_metadata.py --check          # what is still open
+#   python scripts/apply_submission_metadata.py --status         # refresh METADATA_STATUS.md
+#   python scripts/apply_submission_metadata.py --build-preview  # preview with open tokens kept
+#   python scripts/apply_submission_metadata.py --final          # fails while anything is open
+
+manuscript:
+  M01:
+    name: authors
+    token: M01_AUTHORS
+    value: null            # full names in order, as printed (requests A01)
+    status: OPEN
+    source: null
+  M02:
+    name: affiliations
+    token: M02_AFFILIATIONS
+    value: null            # per author: department, institution, city, country (A02)
+    status: OPEN
+    source: null
+  M03:
+    name: corresponding_author
+    token: M03_CORRESPONDING_AUTHOR
+    value: null            # name and e-mail; also signs the cover letter (A03)
+    status: OPEN
+    source: null
+  M04:
+    name: orcid
+    token: M04_ORCID
+    value: null            # per author: ORCID iD or none (A04)
+    status: OPEN
+    source: null
+  M05:
+    name: conference_copyright
+    token: M05_CONFERENCE_COPYRIGHT
+    value: null            # sentence on copyright holder and reuse status; see CONFERENCE_REUSE_CHECK.md (C04, C05)
+    status: OPEN
+    source: null
+  M06:
+    name: sensor_model
+    token: M06_SENSOR_MODEL
+    value: null            # manufacturer and model (B01)
+    status: OPEN
+    source: null
+  M07:
+    name: sensor_accuracy
+    token: M07_SENSOR_ACCURACY
+    value: null            # e.g. accuracy in °C and %RH with range, from the datasheet (B02)
+    status: OPEN
+    source: null
+  M08:
+    name: sensor_resolution
+    token: M08_SENSOR_RESOLUTION
+    value: null            # (B03)
+    status: OPEN
+    source: null
+  M09:
+    name: sensor_response_time
+    token: M09_SENSOR_RESPONSE_TIME
+    value: null            # (B04)
+    status: OPEN
+    source: null
+  M10:
+    name: sensor_placement
+    fields:
+      M10_SENSOR_PLACEMENT: null             # position in the mat (B05)
+      M10_HEATER_RELATIVE_PLACEMENT: null    # position relative to the heater (B06)
+    status: OPEN
+    source: null
+  M11:
+    name: genai_disclosure_approval
+    token: M11_GENAI_ALL_AUTHOR_APPROVAL
+    value: null            # approval record of every author (A09); prints nothing
+    status: OPEN
+    source: null
+  M12:
+    name: author_contributions
+    fields:
+      M12_ALL_AUTHOR_APPROVAL: null          # approval record of the submitted version (A10); prints nothing
+    # M12_AUTHOR_CONTRIBUTIONS is generated from CREDIT_INPUT_TEMPLATE.yaml (A05)
+    status: OPEN
+    source: null
+  M13:
+    name: funding
+    token: M13_FUNDING
+    value: null            # funding statement as confirmed; never filled by default (A06)
+    status: OPEN
+    source: null
+  M14:
+    name: irb_statement
+    fields:
+      variant: null                          # A-E from ETHICS_STATEMENT_VARIANTS.md (C01)
+      ETHICS_INSTITUTION: null
+      ETHICS_REFERENCE_NUMBER: null
+      ETHICS_DATE: null
+      SECONDARY_USE_BASIS: null              # (C02)
+    # M14_IRB_STATEMENT is generated from the chosen variant
+    status: OPEN
+    source: null
+  M15:
+    name: informed_consent
+    fields:
+      variant: null                          # 1-4 from CONSENT_STATEMENT_VARIANTS.md (C03); uses the M14 fields
+    # M15_INFORMED_CONSENT is generated from the chosen variant
+    status: OPEN
+    source: null
+  M16:
+    name: data_and_code_availability
+    fields:
+      M16_DATA_SCOPE: null                   # (B07)
+      M16_DATA_REPOSITORY_URL: null
+      M16_DATA_IDENTIFIER: null
+      M16_DATA_LICENSE: null
+      M16_CODE_SCOPE: null                   # (A11)
+      M16_CODE_REPOSITORY_URL: null
+      M16_CODE_IDENTIFIER: null
+      M16_CODE_LICENSE: null
+      M16_HEATER_DIAGNOSTIC_APPROVAL: null   # approval record of the data provider (B08); prints nothing
+    status: OPEN
+    source: null
+  M17:
+    name: acknowledgments
+    token: M17_ACKNOWLEDGMENTS
+    value: null            # (A07)
+    status: OPEN
+    source: null
+  M18:
+    name: conflicts_of_interest
+    token: M18_CONFLICTS_OF_INTEREST
+    value: null            # statement as confirmed; never filled by default (A08)
+    status: OPEN
+    source: null
+
+cover_letter:
+  L01:
+    name: submission_date
+    token: L01_SUBMISSION_DATE
+    value: null            # (D01)
+    status: OPEN
+    source: null
+  L02:
+    name: editor_name
+    token: L02_EDITOR_NAME
+    value: null            # (D02)
+    status: OPEN
+    source: null
+  L03:
+    name: section_or_special_issue
+    token: L03_SECTION_OR_SPECIAL_ISSUE
+    value: null            # (D03)
+    status: OPEN
+    source: null
+  L04:
+    name: previous_mdpi_submission_status
+    token: L04_PREVIOUS_MDPI_SUBMISSION_STATUS
+    value: null            # (D04)
+    status: OPEN
+    source: null
+
+# Text of the frozen P16 manuscript that a metadata answer can make inaccurate. Filling a token does not change it.
+# An author decides and records the decision here (status DONE); any edit to that text is outside this system.
+dependent_text_review:
+  R1:
+    text: >-
+      Section 3.1 ("The temperature–humidity sensor model, its accuracy, resolution and response time, and its
+      position relative to the body and the heater are not documented in the delivered data and are not assumed
+      here") and Limitation 4 ("Sensor metadata ... were not documented") must be reconciled with the M06-M10 answers.
+    status: OPEN
+    decision: null
+  R2:
+    text: >-
+      Data Availability ("Aggregate diagnostic results and the analysis code may be included in the research release,
+      subject to final author and data-provider approval") must match the B08 answer.
+    status: OPEN
+    decision: null
+  R3:
+    text: >-
+      The data- and code-release sentences assume a public release; if B07 or A11 says no release, they must be
+      replaced by the authors' statement.
+    status: OPEN
+    decision: null
+  R4:
+    text: >-
+      The cover letter ("no text, table or figure of the conference paper is reused") and the manuscript Note must
+      match the confirmed CONFERENCE_REUSE_CHECK.md items 5-7 (C04, C05).
+    status: OPEN
+    decision: null
+
+# External requests (EXTERNAL_INFORMATION_CROSSWALK.md): OPEN -> ANSWERED when the reply arrives.
+requests:
+  A01: {target: M01, status: OPEN}
+  A02: {target: M02, status: OPEN}
+  A03: {target: M03, status: OPEN}
+  A04: {target: M04, status: OPEN}
+  A05: {target: M12, status: OPEN}
+  A06: {target: M13, status: OPEN}
+  A07: {target: M17, status: OPEN}
+  A08: {target: M18, status: OPEN}
+  A09: {target: M11, status: OPEN}
+  A10: {target: M12, status: OPEN}
+  A11: {target: M16, status: OPEN}
+  B01: {target: M06, status: OPEN}
+  B02: {target: M07, status: OPEN}
+  B03: {target: M08, status: OPEN}
+  B04: {target: M09, status: OPEN}
+  B05: {target: M10, status: OPEN}
+  B06: {target: M10, status: OPEN}
+  B07: {target: M16, status: OPEN}
+  B08: {target: M16, status: OPEN}
+  C01: {target: M14, status: OPEN}
+  C02: {target: M14, status: OPEN}
+  C03: {target: M15, status: OPEN}
+  C04: {target: M05, status: OPEN}
+  C05: {target: M05, status: OPEN}
+  D01: {target: L01, status: OPEN}
+  D02: {target: L02, status: OPEN}
+  D03: {target: L03, status: OPEN}
+  D04: {target: L04, status: OPEN}

@@ -1,0 +1,30 @@
+# CRediT author contributions (request A05; checklist item M12). Fill only with the roles each author confirms.
+# One entry per author, in the final author order (M01). "initials" is optional (default: from the name, e.g.
+# "Gil-Dong Hong" -> "G.-D.H."). Roles must be taken from allowed_roles, spelled exactly as listed.
+# scripts/apply_submission_metadata.py turns this into the MDPI sentence, e.g.
+#   "Conceptualization, A.B. and C.D.; methodology, A.B.; ..."
+# followed by the manuscript's existing sentence "All authors have read and agreed to the published version ...".
+
+authors:
+  - name: null
+    initials: null
+    roles: []
+  - name: null
+    initials: null
+    roles: []
+
+allowed_roles:
+  - Conceptualization
+  - Methodology
+  - Software
+  - Validation
+  - Formal analysis
+  - Investigation
+  - Resources
+  - Data curation
+  - Writing – original draft
+  - Writing – review & editing
+  - Visualization
+  - Supervision
+  - Project administration
+  - Funding acquisition
